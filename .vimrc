@@ -10,6 +10,7 @@ Plugin 'VundleVim/Vundle.vim'
 Plugin 'vim-airline/vim-airline'
 Plugin 'preservim/nerdtree'
 Plugin 'vim-airline/vim-airline-themes'
+Plugin 'tomasr/molokai'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -41,17 +42,19 @@ let g:airline_powerline_fonts = 1
 let g:airline_theme="badwolf"
 " let g:airline_extensions = []
 
+let mapleader = "\<space>"
+
+map <leader>af :NERDTreeToggle<CR>
 let NERDTreeShowHidden=1
+
 " au VimEnter * :NERDTree
 " wincmd w
 " au VimEnter * wincmd w
 
-" map <C-n> :tabnew<CR>
+map <C-n> :tabnew<CR>
 " map <C-s> :w<CR>
 " map <C-q> :q<CR>
-" map bn :bn<CR>
-
-let mapleader = "\<space>"
+map bn :bn<CR>
 
 map <leader>er :vs $MYVIMRC<CR>
 map <leader>sf :source $MYVIMRC<CR>
@@ -62,8 +65,6 @@ map <leader>wq :wq<CR>
 map <leader>fq :q!<CR>
 map <leader>aq :q<CR><leader>aq
 map <leader>awq :wq<CR><leader>awq
-
-map <leader>af :NERDTreeToggle<CR>
 
 map <leader>h <C-w>h
 map <leader>j <C-w>j
