@@ -73,6 +73,8 @@ map <leader>l <C-w>l
 map <leader>s <C-w>s
 map <leader>v <C-w>v
 
+map <leader>cp "*y
+
 " map <leader>fj :w<CR>:!echo -e "\n--------Debugging--------\n" && g++ % && $PWD/a.out && echo -e "\n-----------End-----------"<CR>
 " map <leader>cp :!clip.exe < %<CR>
 
