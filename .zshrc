@@ -126,3 +126,9 @@ if [[ ! $VIFM ]]; then
 	# fortune|cowsay -f dragon-and-cow|lolcat
 	fortune|cowsay|lolcat
 fi
+
+# additional paths
+# ---openni2---
+# export OPENNI2_INCLUDE=/usr/local/include/ni2
+# export OPENNI2_REDIST=/usr/local/lib/ni2
+# -------------
