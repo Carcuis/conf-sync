@@ -42,7 +42,7 @@ ZSH_THEME="robbyrussell"
 # DISABLE_AUTO_TITLE="true"
 
 # Uncomment the following line to enable command auto-correction.
-# ENABLE_CORRECTION="true"
+ENABLE_CORRECTION="true"
 
 # Uncomment the following line to display red dots whilst waiting for completion.
 # COMPLETION_WAITING_DOTS="true"
@@ -104,6 +104,13 @@ source $ZSH/oh-my-zsh.sh
 
 # the bellow is cui_pref
 
+# if [[ ! $TMUX && ! $VIFM ]]; then
+if [[ ! $VIFM ]]; then
+	# neofetch
+	# fortune|cowsay -f dragon-and-cow|lolcat
+	fortune|cowsay|lolcat
+fi
+
 alias ll='ls -alF'
 alias la='ls -AF'
 alias l='ls -CF'
@@ -114,21 +121,19 @@ alias oneplus='ssh -i ~/.ssh/oneplus -p 8022 u0_a144@172.28.241.220'
 alias src='source ~/.zshrc'
 alias vifm='vifm .'
 alias vif='vifm .'
-alias sshon='sudo launchctl load -w /System/Library/LaunchDaemons/ssh.plist'
-alias sshoff='sudo launchctl unload -w /System/Library/LaunchDaemons/ssh.plist'
-alias fix='xattr -d com.apple.FinderInfo'
 alias al='la'
 # alias nethack='nethack@nethack-cn.com -p2222'
 
-# if [[ ! $TMUX && ! $VIFM ]]; then
-if [[ ! $VIFM ]]; then
-	# neofetch
-	# fortune|cowsay -f dragon-and-cow|lolcat
-	fortune|cowsay|lolcat
+if [[ "$OSTYPE" =~ ^darwin ]]; then
+	alias cmake-gui='/Applications/CMake.app/Contents/MacOS/CMake .'
+	alias sshon='sudo launchctl load -w /System/Library/LaunchDaemons/ssh.plist'
+	alias sshoff='sudo launchctl unload -w /System/Library/LaunchDaemons/ssh.plist'
+	alias fix='xattr -d com.apple.FinderInfo'
 fi
-
-# additional paths
+# additional PATHs
 # ---openni2---
+# ---Darwin---
 # export OPENNI2_INCLUDE=/usr/local/include/ni2
 # export OPENNI2_REDIST=/usr/local/lib/ni2
+# ------------
 # -------------
