@@ -2,7 +2,11 @@
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
-export ZSH="/Users/cui/.oh-my-zsh"
+if [[ "$OSTYPE" =~ ^darwin ]]; then
+	export ZSH="/Users/cui/.oh-my-zsh"
+elif [[ "$OSTYPE" =~ ^linux ]]; then
+	export ZSH="/home/cui/.oh-my-zsh"
+fi
 
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
@@ -102,7 +106,7 @@ source $ZSH/oh-my-zsh.sh
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
-# the bellow is cui_pref
+# ----the bellow is cui_pref----
 
 # if [[ ! $TMUX && ! $VIFM ]]; then
 if [[ ! $VIFM ]]; then
@@ -111,6 +115,7 @@ if [[ ! $VIFM ]]; then
 	fortune|cowsay|lolcat
 fi
 
+# ---------alias----------
 alias ll='ls -alF'
 alias la='ls -AF'
 alias l='ls -CF'
@@ -122,9 +127,22 @@ alias src='source ~/.zshrc'
 alias vifm='vifm .'
 alias vif='vifm .'
 alias al='la'
+# alias termux='ssh -p 8022 192.168.43.1'
+# alias xytermux='ssh -p 8022 10.44.68.197'
+# alias termux='ssh -p 8022 172.28.247.98'
+# alias tubuntu='ssh -p 2235 192.168.43.1'
+# alias xytubuntu='ssh -p 2235 10.44.68.197'
+# alias aliyun='ssh -p 2235 cui@47.107.62.60'
+# alias aliyunroot='ssh -p 2235 root@47.107.62.60'
+
 # alias nethack='nethack@nethack-cn.com -p2222'
 
-if [[ "$OSTYPE" =~ ^darwin ]]; then
+if [[ "$OSTYPE" =~ ^linux ]]; then
+	# alias sshon='sudo service ssh start'
+	# alias sshoff='sudo service ssh stop'
+	# alias byobu='LANG="en_US.UTF-8" ; byobu'
+	# alias cman='man -M /usr/local/share/man/zh_CN'
+elif [[ "$OSTYPE" =~ ^darwin ]]; then
 	alias cmake-gui='/Applications/CMake.app/Contents/MacOS/CMake .'
 	alias sshon='sudo launchctl load -w /System/Library/LaunchDaemons/ssh.plist'
 	alias sshoff='sudo launchctl unload -w /System/Library/LaunchDaemons/ssh.plist'
@@ -132,10 +150,26 @@ if [[ "$OSTYPE" =~ ^darwin ]]; then
 	alias o='open'
 	alias o.='open .'
 fi
-# additional PATHs
-# ---openni2---
-# ---Darwin---
-# export OPENNI2_INCLUDE=/usr/local/include/ni2
-# export OPENNI2_REDIST=/usr/local/lib/ni2
-# ------------
-# -------------
+# -----------------------
+
+# ----------env----------
+# ----opencv----
+# PKG_CONFIG_PATH=$PKG_CONFIG_PATH:/usr/local/lib/pkgconfig
+# export PKG_CONFIG_PATH
+# --------------
+if [[ "$OSTYPE" =~ ^linux ]]; then
+	# ------ros------
+	alias src-ros-env='source /opt/ros/melodic/setup.zsh'
+	# or auto source when shell start up
+	source /opt/ros/melodic/setup.zsh
+	# ----clion-----
+	alias clion='~/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/202.7319.72/bin/clion.sh'
+	# ---------------
+elif [[ "$OSTYPE" =~ ^darwin ]]; then
+	alias cmake-gui='/Applications/CMake.app/Contents/MacOS/CMake .'
+	# ---openni2---
+	# export OPENNI2_INCLUDE=/usr/local/include/ni2
+	# export OPENNI2_REDIST=/usr/local/lib/ni2
+	# -------------
+fi
+# ----------------------
