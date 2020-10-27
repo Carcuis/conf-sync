@@ -160,16 +160,16 @@ fi
 if [[ "$OSTYPE" =~ ^linux ]]; then
 	# ------ros------\
 	alias src-ros-env='source /opt/ros/melodic/setup.zsh'
-	# or auto source when shell start up
+	# *or auto source when shell start up
 	source /opt/ros/melodic/setup.zsh
 	# ---------------/
 	# -----clion-----\
 	alias clion='~/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/202.7319.72/bin/clion.sh'
 	# ---------------/
 	# ---openvino----\
-	alias src-openvino-env='source /opt/intel/openvino_2021/bin/setupvars.sh'
-	# or auto source when shell start up
-	# source /opt/intel/openvino_2021/bin/setupvars.sh
+	alias src-openvino-env='source /opt/intel/openvino/bin/setupvars.sh'
+	# *or auto source when shell start up
+	# source /opt/intel/openvino/bin/setupvars.sh
 	# ---------------/
 elif [[ "$OSTYPE" =~ ^darwin ]]; then
 	alias cmake-gui='/Applications/CMake.app/Contents/MacOS/CMake .'
