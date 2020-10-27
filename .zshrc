@@ -152,24 +152,30 @@ elif [[ "$OSTYPE" =~ ^darwin ]]; then
 fi
 # -----------------------
 
-# ----------env----------
-# ----opencv----
+# ----------env----------\
+# ----opencv----\
 # PKG_CONFIG_PATH=$PKG_CONFIG_PATH:/usr/local/lib/pkgconfig
 # export PKG_CONFIG_PATH
-# --------------
+# --------------/
 if [[ "$OSTYPE" =~ ^linux ]]; then
-	# ------ros------
+	# ------ros------\
 	alias src-ros-env='source /opt/ros/melodic/setup.zsh'
 	# or auto source when shell start up
 	source /opt/ros/melodic/setup.zsh
-	# ----clion-----
+	# ---------------/
+	# -----clion-----\
 	alias clion='~/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/202.7319.72/bin/clion.sh'
-	# ---------------
+	# ---------------/
+	# ---openvino----\
+	alias src-openvino-env='source /opt/intel/openvino_2021/bin/setupvars.sh'
+	# or auto source when shell start up
+	# source /opt/intel/openvino_2021/bin/setupvars.sh
+	# ---------------/
 elif [[ "$OSTYPE" =~ ^darwin ]]; then
 	alias cmake-gui='/Applications/CMake.app/Contents/MacOS/CMake .'
-	# ---openni2---
+	# ----openni2----\
 	# export OPENNI2_INCLUDE=/usr/local/include/ni2
 	# export OPENNI2_REDIST=/usr/local/lib/ni2
-	# -------------
+	# ---------------/
 fi
-# ----------------------
+# -----------------------/
