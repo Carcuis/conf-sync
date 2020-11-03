@@ -147,6 +147,8 @@ alias clp='clip.exe'
 alias oneplus='ssh -p 8022 u0_a144@192.168.137.156'
 alias adb='adb.exe'
 alias fastboot='fastboot.exe'
+alias bashconfig="vim ~/.bashrc"
+alias vimconfig="vim ~/.vimrc"
 
 # --------------powerline-shell-------------------
 function _update_ps1() {
