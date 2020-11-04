@@ -124,6 +124,7 @@ alias l='ls -CF'
 alias wtrsy='curl wttr.in/Songyuan\?lang=zh'
 alias wtrgz='curl wttr.in/Guangzhou\?lang=zh'
 alias aliyun='ssh -i ~/.ssh/aliyun -p 2235 cui@47.107.62.60'
+alias aliyunzh='LANG="zh_CN.UTF-8" ; ssh -i ~/.ssh/aliyun -p 2235 cui@47.107.62.60 ; LANG="en_US.UTF-8"'
 alias oneplus='ssh -i ~/.ssh/oneplus -p 8022 u0_a144@172.28.241.220'
 alias zshconfig="vim ~/.zshrc"
 alias vimconfig="vim ~/.vimrc"
@@ -142,11 +143,19 @@ alias al='la'
 # alias nethack='nethack@nethack-cn.com -p2222'
 
 if [[ $`uname -a` =~ Microsoft ]]; then
+	alias sshon='sudo service ssh start'
+	alias sshoff='sudo service ssh stop'
+	alias neofetch='neofetch --ascii_distro windows10'
+	# alias byobu='LANG="en_US.UTF-8" ; byobu'
+	alias x='export DISPLAY=:0.0'
+	alias cman='man -M /usr/local/share/man/zh_CN'
+	alias clp='clip.exe'
+	alias adb='adb.exe'
+	alias fastboot='fastboot.exe'
 elif [[ "$OSTYPE" =~ ^linux ]]; then
 	# alias sshon='sudo service ssh start'
 	# alias sshoff='sudo service ssh stop'
 	# alias byobu='LANG="en_US.UTF-8" ; byobu'
-	# alias cman='man -M /usr/local/share/man/zh_CN'
 elif [[ "$OSTYPE" =~ ^darwin ]]; then
 	alias cmake-gui='/Applications/CMake.app/Contents/MacOS/CMake .'
 	alias sshon='sudo launchctl load -w /System/Library/LaunchDaemons/ssh.plist'
@@ -165,6 +174,15 @@ fi
 # --------------/
 
 if [[ $`uname -a` =~ Microsoft ]]; then
+	# adjust login path
+	if [ "$PWD" = "/mnt/c/Users/cui" ]; then
+		cd ~
+	elif [ "$PWD" = "/mnt/c/Windows/system32" ]; then
+		cd ~
+	elif [ "$PWD" = "/mnt/c/Windows/System32" ]; then
+		cd ~
+	fi
+	# ---------------
 elif [[ "$OSTYPE" =~ ^linux ]]; then
 	# ------ros------\
 	alias src-ros-env='source /opt/ros/melodic/setup.zsh'
@@ -185,7 +203,7 @@ elif [[ "$OSTYPE" =~ ^linux ]]; then
 elif [[ "$OSTYPE" =~ ^darwin ]]; then
 	# ----cmake-gui----\
 	alias cmake-gui='/Applications/CMake.app/Contents/MacOS/CMake .'
-	# ---------------/
+	# -----------------/
 
 	# ----openni2----\
 	# export OPENNI2_INCLUDE=/usr/local/include/ni2
