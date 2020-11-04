@@ -117,7 +117,7 @@ if [[ ! $VIFM ]]; then
 	fortune|cowsay|lolcat
 fi
 
-# ---------alias----------
+# ---------alias----------\
 alias ll='ls -alF'
 alias la='ls -AF'
 alias l='ls -CF'
@@ -155,13 +155,15 @@ elif [[ "$OSTYPE" =~ ^darwin ]]; then
 	alias o='open'
 	alias o.='open .'
 fi
-# -----------------------
+# ---------alias---------/
 
 # ----------env----------\
+
 # ----opencv----\
 # PKG_CONFIG_PATH=$PKG_CONFIG_PATH:/usr/local/lib/pkgconfig
 # export PKG_CONFIG_PATH
 # --------------/
+
 if [[ $`uname -a` =~ Microsoft ]]; then
 elif [[ "$OSTYPE" =~ ^linux ]]; then
 	# ------ros------\
@@ -190,4 +192,4 @@ elif [[ "$OSTYPE" =~ ^darwin ]]; then
 	# export OPENNI2_REDIST=/usr/local/lib/ni2
 	# ---------------/
 fi
-# -----------------------/
+# ----------env----------/
