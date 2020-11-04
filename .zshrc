@@ -12,6 +12,7 @@ fi
 # load a random theme each time oh-my-zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
+# ZSH_THEME="robbyrussell"
 ZSH_THEME="agnoster"
 
 # Set list of themes to pick from when loading at random
@@ -140,7 +141,8 @@ alias al='la'
 
 # alias nethack='nethack@nethack-cn.com -p2222'
 
-if [[ "$OSTYPE" =~ ^linux ]]; then
+if [[ $`uname -a` =~ Microsoft ]]; then
+elif [[ "$OSTYPE" =~ ^linux ]]; then
 	# alias sshon='sudo service ssh start'
 	# alias sshoff='sudo service ssh stop'
 	# alias byobu='LANG="en_US.UTF-8" ; byobu'
@@ -160,7 +162,8 @@ fi
 # PKG_CONFIG_PATH=$PKG_CONFIG_PATH:/usr/local/lib/pkgconfig
 # export PKG_CONFIG_PATH
 # --------------/
-if [[ "$OSTYPE" =~ ^linux ]]; then
+if [[ $`uname -a` =~ Microsoft ]]; then
+elif [[ "$OSTYPE" =~ ^linux ]]; then
 	# ------ros------\
 	alias src-ros-env='source /opt/ros/melodic/setup.zsh'
 	# *or auto source when shell start up
