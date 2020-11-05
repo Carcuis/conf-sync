@@ -221,5 +221,10 @@ elif [[ "$OSTYPE" =~ ^darwin ]]; then
 fi
 # ----------env----------/
 
+# -----powerlevel10k-----
+
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
+# the bellow is cui_pref
+ZLE_RPROMPT_INDENT=0
