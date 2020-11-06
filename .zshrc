@@ -219,5 +219,5 @@ fi
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
-# the bellow is cui_pref
+# the bellow is cui_pref with p10k
 ZLE_RPROMPT_INDENT=0
