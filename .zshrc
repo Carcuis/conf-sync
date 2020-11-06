@@ -221,3 +221,4 @@ fi
 
 # the bellow is cui_pref with p10k
 ZLE_RPROMPT_INDENT=0
+POWERLEVEL9K_TIME_FORMAT=%D{%H:%M}
