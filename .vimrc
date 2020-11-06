@@ -64,7 +64,8 @@ map <leader>q :q<CR>
 map <leader>wq :wq<CR>
 map <leader>fq :q!<CR>
 map <leader>aq :q<CR><leader>aq
-map <leader>awq :wq<CR><leader>awq
+map <leader>ewq :wq<CR><leader>ewq
+map <leader>r :diffupdate<CR>
 
 map <leader>h <C-w>h
 map <leader>j <C-w>j
