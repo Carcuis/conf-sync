@@ -9,11 +9,18 @@ diff $zshrc_remote $zshrc_local > /dev/null
 zshrc_sync_status=$?
 diff $vimrc_remote $vimrc_local > /dev/null
 vimrc_sync_status=$?
-if [[ ! $zshrc_sync_status && ! $vimrc_sync_status ]]; then
+# sync_status=$[ $zshrc_sync_status && $vimrc_sync_status ]
+# echo $sync_status
+# a=$[ 1 && 0 ]
+# if [[ $a == 1 ]] ; then echo 1; else echo 0; fi
+check_status=0
+if [ $zshrc_sync_status == 0 ] && [ $vimrc_sync_status == 0 ]; then
 	echo -e "\033[32mAll files are the same.✔ \nNothing to do."
+	# echo -e "$zshrc_sync_status\n$vimrc_sync_status"
+	check_status=1
 else
 #	echo "Both file are different.✘ "
-	if [ ! $zshrc_sync_status ]; then
+	if [ $zshrc_sync_status != 0 ]; then
 		read -s -n1 -p "Zshrc unsynchronized. Edit in vimdiff? [y/n] " user_input
 		if [ $user_input == "y" ]; then
 			vim $zshrc_remote -c "vert diffsplit $zshrc_local"
@@ -30,7 +37,7 @@ else
 	else
 		echo -e "Zshrc is already synced."
 	fi
-	if [ $vimrc_sync_status ]; then
+	if [ $vimrc_sync_status != 0 ]; then
 		read -s -n1 -p "Vimrc unsynchronized. Edit in vimdiff? [y/n] " user_input
 		if [ $user_input == "y" ]; then
 			vim $vimrc_remote -c "vert diffsplit $vimrc_local"
@@ -46,6 +53,6 @@ else
 		fi
 	fi
 fi
-if [[ ! $zshrc_sync_status && ! $vimrc_sync_status ]]; then
+if [ $zshrc_sync_status == 0 ] && [ $vimrc_sync_status == 0 ] && [ $check_status == 0 ] ; then
 	echo -e "\033[32mAll files are same now.✔ "
 fi
