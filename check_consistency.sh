@@ -4,13 +4,10 @@ zshrc_remote=~/github/conf-sync/.zshrc
 zshrc_local=~/.zshrc
 vimrc_remote=~/github/conf-sync/.vimrc
 vimrc_local=~/.vimrc
-# diff $file1 $file2 > /dev/null
 diff $zshrc_remote $zshrc_local > /dev/null
 zshrc_sync_status=$?
 diff $vimrc_remote $vimrc_local > /dev/null
 vimrc_sync_status=$?
-# sync_status=$[ $zshrc_sync_status && $vimrc_sync_status ]
-# echo $sync_status
 # a=$[ 1 && 0 ]
 # if [[ $a == 1 ]] ; then echo 1; else echo 0; fi
 check_status=0
