@@ -20,7 +20,7 @@ else
 	if [ $zshrc_sync_status != 0 ]; then
 		read -s -n1 -p "Zshrc unsynchronized. Edit in vimdiff? [y/n] " user_input
 		if [ $user_input == "y" ]; then
-			vim $zshrc_remote -c "vert diffsplit $zshrc_local"
+			vim $zshrc_local -c "vert diffsplit $zshrc_remote"
 			diff $zshrc_remote $zshrc_local > /dev/null
 			zshrc_sync_status=$?
 			if [ $zshrc_sync_status == 0 ]; then
@@ -37,7 +37,7 @@ else
 	if [ $vimrc_sync_status != 0 ]; then
 		read -s -n1 -p "Vimrc unsynchronized. Edit in vimdiff? [y/n] " user_input
 		if [ $user_input == "y" ]; then
-			vim $vimrc_remote -c "vert diffsplit $vimrc_local"
+			vim $vimrc_local -c "vert diffsplit $vimrc_remote"
 			diff $vimrc_remote $vimrc_local > /dev/null
 			vimrc_sync_status=$?
 			if [ $vimrc_sync_status == 0 ]; then
