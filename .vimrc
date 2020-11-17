@@ -12,6 +12,8 @@ Plugin 'preservim/nerdtree'
 Plugin 'vim-airline/vim-airline-themes'
 Plugin 'tomasr/molokai'
 Plugin 'ryanoasis/vim-devicons'
+Plugin 'jiangmiao/auto-pairs'
+Plugin 'severin-lemaignan/vim-minimap'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -51,6 +53,12 @@ let NERDTreeShowHidden=1
 " au VimEnter * :NERDTree
 " wincmd w
 " au VimEnter * wincmd w
+
+" let g:minimap_highlight='Visual'
+let g:minimap_show='<leader>ms'
+let g:minimap_update='<leader>mr'
+let g:minimap_close='<leader>mc'
+let g:minimap_toggle='<leader>mm'
 
 map <C-n> :tabnew<CR>
 " map <C-s> :w<CR>
