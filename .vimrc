@@ -11,9 +11,14 @@ Plugin 'vim-airline/vim-airline'
 Plugin 'preservim/nerdtree'
 Plugin 'vim-airline/vim-airline-themes'
 Plugin 'tomasr/molokai'
-Plugin 'ryanoasis/vim-devicons'
 Plugin 'jiangmiao/auto-pairs'
 Plugin 'severin-lemaignan/vim-minimap'
+Plugin 'vimcn/vimcdoc'
+Plugin 'ryanoasis/vim-devicons'
+Plugin 'Xuyuanp/nerdtree-git-plugin'
+Plugin 'tiagofumo/vim-nerdtree-syntax-highlight'
+Plugin 'tpope/vim-commentary'
+Plugin 'ycm-core/YouCompleteMe'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -39,6 +44,9 @@ set encoding=utf-8
 " set t_u7=
 " set termencoding=utf-8
 
+set guifont=UbuntuMonoNerdFontCompleteM-Regular:h22
+
+" vim-airline
 let g:airline#extensions#tabline#enabled = 1
 let g:airline_powerline_fonts = 1
 " let g:airline_theme="dark"
@@ -47,6 +55,7 @@ let g:airline_theme="badwolf"
 
 let mapleader = "\<space>"
 
+" nerdtree
 map <leader>af :NERDTreeToggle<CR>
 let NERDTreeShowHidden=1
 
@@ -54,11 +63,33 @@ let NERDTreeShowHidden=1
 " wincmd w
 " au VimEnter * wincmd w
 
+" vim-nerdtree-syntax-highlight
+let g:NERDTreeFileExtensionHighlightFullName = 1
+let g:NERDTreeExactMatchHighlightFullName = 1
+let g:NERDTreePatternMatchHighlightFullName = 1
+
+let g:NERDTreeHighlightFolders = 1 " enables folder icon highlighting using exact match
+let g:NERDTreeHighlightFoldersFullName = 1 " highlights the folder name
+
+" nerdtree-git-plugin
+" let g:NERDTreeGitStatusShowClean = 1
+
+" vim-minimap
 " let g:minimap_highlight='Visual'
 let g:minimap_show='<leader>ms'
 let g:minimap_update='<leader>mr'
 let g:minimap_close='<leader>mc'
 let g:minimap_toggle='<leader>mm'
+
+" vim-devicons
+" let g:webdevicons_enable = 1
+" let g:webdevicons_enable_nerdtree = 1
+" let g:webdevicons_enable_airline_statusline = 1
+" let g:webdevicons_conceal_nerdtree_brackets = 0
+" let g:WebDevIconsUnicodeGlyphDoubleWidth = 1
+
+" YouCompleteMe
+let g:ycm_global_ycm_extra_conf = "~/.vim/bundle/YouCompleteMe/.ycm_extra_conf.py"
 
 map <C-n> :tabnew<CR>
 " map <C-s> :w<CR>
