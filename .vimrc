@@ -90,6 +90,13 @@ let g:minimap_toggle='<leader>mm'
 
 " YouCompleteMe
 let g:ycm_global_ycm_extra_conf = "~/.vim/bundle/YouCompleteMe/.ycm_extra_conf.py"
+" let g:syntastic_cpp_compiler = 'g++'
+" let g:syntastic_cpp_compiler_options = '-std=c++11 -stdlib=libc++'
+let g:ycm_min_num_of_chars_for_completion = 1
+let g:ycm_semantic_triggers =  {
+			\ 'c,cpp,python,java,go,erlang,perl': ['re!\w{2}'],
+			\ 'cs,lua,javascript': ['re!\w{2}'],
+			\ }
 
 map <C-n> :tabnew<CR>
 " map <C-s> :w<CR>
