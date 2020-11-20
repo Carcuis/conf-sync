@@ -46,6 +46,7 @@ set wildmenu
 set encoding=utf-8
 " set t_u7=
 " set termencoding=utf-8
+set list lcs=tab:\|\ 
 
 " gui_options
 set guifont=UbuntuMonoNerdFontCompleteM-Regular:h22
