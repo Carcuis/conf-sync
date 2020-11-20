@@ -20,6 +20,8 @@ Plugin 'tiagofumo/vim-nerdtree-syntax-highlight'
 Plugin 'tpope/vim-commentary'
 " Plugin 'ycm-core/YouCompleteMe'
 Plugin 'tpope/vim-fugitive'
+" Plugin 'vim-rhubarb'
+Plugin 'kien/ctrlp.vim'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -60,6 +62,7 @@ let mapleader = "\<space>"
 " nerdtree
 map <leader>af :NERDTreeToggle<CR>
 let NERDTreeShowHidden=1
+let NERDTreeShowBookmarks = 1
 
 " au VimEnter * :NERDTree
 " wincmd w
@@ -99,6 +102,9 @@ let g:ycm_semantic_triggers =  {
 			\ 'c,cpp,python,java,go,erlang,perl': ['re!\w{2}'],
 			\ 'cs,lua,javascript': ['re!\w{2}'],
 			\ }
+
+" CtrlP
+let g:ctrlp_map = '<leader>ff'
 
 map <C-n> :tabnew<CR>
 " map <C-s> :w<CR>
