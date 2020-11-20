@@ -18,7 +18,7 @@ Plugin 'ryanoasis/vim-devicons'
 Plugin 'Xuyuanp/nerdtree-git-plugin'
 Plugin 'tiagofumo/vim-nerdtree-syntax-highlight'
 Plugin 'tpope/vim-commentary'
-" Plugin 'ycm-core/YouCompleteMe'
+Plugin 'ycm-core/YouCompleteMe'
 Plugin 'tpope/vim-fugitive'
 " Plugin 'vim-rhubarb'
 Plugin 'kien/ctrlp.vim'
@@ -47,6 +47,7 @@ set encoding=utf-8
 " set t_u7=
 " set termencoding=utf-8
 
+" gui_options
 set guifont=UbuntuMonoNerdFontCompleteM-Regular:h22
 set guioptions-=L
 
