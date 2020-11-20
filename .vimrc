@@ -22,6 +22,7 @@ Plugin 'ycm-core/YouCompleteMe'
 Plugin 'tpope/vim-fugitive'
 " Plugin 'vim-rhubarb'
 Plugin 'kien/ctrlp.vim'
+Plugin 'nathanaelkane/vim-indent-guides'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -36,6 +37,7 @@ set nu
 set rnu
 set tabstop=4
 set shiftwidth=4
+set expandtab
 set smartindent
 set autoindent
 " set noundofile
@@ -46,7 +48,7 @@ set wildmenu
 set encoding=utf-8
 " set t_u7=
 " set termencoding=utf-8
-set list lcs=tab:\|\ 
+" set list lcs=tab:\|\ 
 
 " gui_options
 set guifont=UbuntuMonoNerdFontCompleteM-Regular:h22
@@ -108,6 +110,14 @@ let g:ycm_semantic_triggers =  {
 " CtrlP
 let g:ctrlp_map = '<leader>ff'
 
+" indent-guides
+let g:indent_guides_enable_on_vim_startup = 1
+let g:indent_guides_start_level = 2
+let g:indent_guides_guide_size = 1
+let g:indent_guides_auto_colors = 0
+hi IndentGuidesOdd  guibg=grey20 ctermbg=236
+hi IndentGuidesEven guibg=grey25 ctermbg=black
+
 map <C-n> :tabnew<CR>
 " map <C-s> :w<CR>
 " map <C-q> :q<CR>
@@ -141,3 +151,15 @@ map <leader>cp "*y
 
 " au BufRead,BufNewFile *vifmrc,*.vifm  set filetype=vifm
 " au BufRead,BufNewFile *vifminfo set filetype=vifminfo
+
+" auto change cursor shape in gnome-terminal
+if has("autocmd")
+  au InsertLeave * silent execute '!echo -ne "\e[1 q"' | redraw!
+  au InsertEnter,InsertChange *
+    \ if v:insertmode == 'i' |
+    \   silent execute '!echo -ne "\e[5 q"' | redraw! |
+    \ elseif v:insertmode == 'r' |
+    \   silent execute '!echo -ne "\e[3 q"' | redraw! |
+    \ endif
+  au VimLeave * silent execute '!echo -ne "\e[ q"' | redraw!
+endif
