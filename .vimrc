@@ -46,6 +46,7 @@ set encoding=utf-8
 " set termencoding=utf-8
 
 set guifont=UbuntuMonoNerdFontCompleteM-Regular:h22
+set guioptions-=L
 
 " vim-airline
 let g:airline#extensions#tabline#enabled = 1
