@@ -116,7 +116,7 @@ let g:indent_guides_start_level = 2
 let g:indent_guides_guide_size = 1
 let g:indent_guides_auto_colors = 0
 hi IndentGuidesOdd  guibg=grey20 ctermbg=236
-hi IndentGuidesEven guibg=grey25 ctermbg=237
+hi IndentGuidesEven guibg=grey25 ctermbg=235
 
 map <C-n> :tabnew<CR>
 " map <C-s> :w<CR>
