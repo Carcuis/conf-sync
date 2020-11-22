@@ -162,6 +162,7 @@ elif [[ "$OSTYPE" =~ ^darwin ]]; then
 	alias cmake-gui='/Applications/CMake.app/Contents/MacOS/CMake .'
 	alias sshon='sudo launchctl load -w /System/Library/LaunchDaemons/ssh.plist'
 	alias sshoff='sudo launchctl unload -w /System/Library/LaunchDaemons/ssh.plist'
+    alias fixroot='sudo mount -uw /'
 	alias fix='xattr -d com.apple.FinderInfo'
 	alias o='open'
 	alias o.='open .'
