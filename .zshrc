@@ -128,8 +128,8 @@ alias wtrgz='curl wttr.in/Guangzhou\?lang=zh'
 alias aliyun='ssh -i ~/.ssh/aliyun -p 2235 cui@47.107.62.60'
 alias aliyunzh='LANG="zh_CN.UTF-8" ; ssh -i ~/.ssh/aliyun -p 2235 cui@47.107.62.60 ; LANG="en_US.UTF-8"'
 alias oneplus='ssh -i ~/.ssh/oneplus -p 8022 u0_a144@172.28.241.220'
-alias zshconfig="vim ~/.zshrc"
-alias vimconfig="vim ~/.vimrc"
+alias zshc="vim ~/.zshrc"
+alias vimc="vim ~/.vimrc"
 alias src='source ~/.zshrc'
 alias vifm='vifm .'
 alias vif='vifm .'
