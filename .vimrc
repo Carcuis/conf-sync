@@ -23,6 +23,7 @@ Plugin 'tpope/vim-fugitive'
 " Plugin 'vim-rhubarb'
 Plugin 'kien/ctrlp.vim'
 Plugin 'nathanaelkane/vim-indent-guides'
+Plugin 'bronson/vim-trailing-whitespace'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
