@@ -1,0 +1,27 @@
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+Plugin 'tpope/vim-commentary'
+Plugin 'tpope/vim-surround'
+call vundle#end()
+
+set nu
+set rnu
+
+let mapleader = "\<space>"
+
+map <leader>w :w<CR>
+map <leader>q :q<CR>
+map <leader>wq :wq<CR>
+" map <leader>fq :q!<CR>
+map <leader>aq :q<CR><leader>aq
+map <leader>ewq :wq<CR><leader>ewq
+
+map <leader>h <C-w>h
+map <leader>j <C-w>j
+map <leader>k <C-w>k
+map <leader>l <C-w>l
+map <leader>s <C-w>s
+map <leader>v <C-w>v
+
+map <leader>b :tabp<CR>
+map <leader>n :tabn<CR>
