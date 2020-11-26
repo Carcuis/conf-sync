@@ -158,7 +158,7 @@ elif [[ "$OSTYPE" =~ ^linux ]]; then
 	# alias sshon='sudo service ssh start'
 	# alias sshoff='sudo service ssh stop'
 	# alias byobu='LANG="en_US.UTF-8" ; byobu'
-    alias pod-fix='pactl load-module module-bluetooth-discover'
+    alias fix-pod='pactl load-module module-bluetooth-discover'
 elif [[ "$OSTYPE" =~ ^darwin ]]; then
 	alias cmake-gui='/Applications/CMake.app/Contents/MacOS/CMake .'
 	alias sshon='sudo launchctl load -w /System/Library/LaunchDaemons/ssh.plist'
