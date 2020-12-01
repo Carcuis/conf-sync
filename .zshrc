@@ -191,7 +191,7 @@ elif [[ "$OSTYPE" =~ ^linux ]]; then
 	# ------ros------\
 	alias src-ros-env='source /opt/ros/melodic/setup.zsh'
 	# *or auto source when shell start up
-	source /opt/ros/melodic/setup.zsh
+	# source /opt/ros/melodic/setup.zsh
 	# ---------------/
 
 	# -----clion-----\
