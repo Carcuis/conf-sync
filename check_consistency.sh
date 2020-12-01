@@ -1,8 +1,8 @@
 #!/bin/bash
 
-zshrc_remote=~/github/conf-sync/.zshrc
+zshrc_remote=.zshrc
 zshrc_local=~/.zshrc
-vimrc_remote=~/github/conf-sync/.vimrc
+vimrc_remote=.vimrc
 vimrc_local=~/.vimrc
 diff $zshrc_remote $zshrc_local > /dev/null
 zshrc_sync_status=$?
