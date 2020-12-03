@@ -416,3 +416,4 @@ nnoremap <f8> :delete<cr>
 " the bellow is cui_pref
 map <space>q :q<cr>
 colorscheme ph
+" vim: ft=vim:
