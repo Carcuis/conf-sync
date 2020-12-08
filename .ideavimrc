@@ -25,3 +25,6 @@ map <leader>v <C-w>v
 
 map <leader>n :tabp<CR>
 map <leader>m :tabn<CR>
+
+map <leader>cp "+y<CR>
+map <leader>p "+p<CR>
