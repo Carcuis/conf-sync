@@ -2,11 +2,7 @@
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
-if [[ "$OSTYPE" =~ ^darwin ]]; then
-	export ZSH="/Users/cui/.oh-my-zsh"
-elif [[ "$OSTYPE" =~ ^linux ]]; then
-	export ZSH="/home/cui/.oh-my-zsh"
-fi
+export ZSH="$HOME/.oh-my-zsh"
 
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
@@ -154,6 +150,11 @@ if [[ $`uname -a` =~ Microsoft ]]; then
 	alias clp='clip.exe'
 	alias adb='adb.exe'
 	alias fastboot='fastboot.exe'
+elif [[ "$OSTYPE" =~ ^android ]]; then
+    alias tchroot='termux-chroot'
+    alias ubuntu='bash ~/ubuntu/start-ubuntu.sh'
+    alias chcolor='/data/data/com.termux/files/home/.termux/colors.sh'
+    alias chfont='/data/data/com.termux/files/home/.termux/fonts.sh'
 elif [[ "$OSTYPE" =~ ^linux ]]; then
 	# alias sshon='sudo service ssh start'
 	# alias sshoff='sudo service ssh stop'
