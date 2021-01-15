@@ -154,9 +154,10 @@ map <leader>cp "*y
 " au BufRead,BufNewFile *vifmrc,*.vifm  set filetype=vifm
 " au BufRead,BufNewFile *vifminfo set filetype=vifminfo
 
-" auto change cursor shape in gnome-terminal
-if ! has("gui_running")
-  if has("autocmd")
+if has("autocmd")
+
+  " auto change cursor shape in gnome-terminal
+  if ! has("gui_running")
     au InsertLeave * silent execute '!echo -ne "\e[1 q"' | redraw!
     au InsertEnter,InsertChange *
       \ if v:insertmode == 'i' |
@@ -166,4 +167,8 @@ if ! has("gui_running")
       \ endif
     au VimLeave * silent execute '!echo -ne "\e[ q"' | redraw!
   endif
+
+  " let Vim jump to the last position when reopening a file
+  au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\""
+
 endif
