@@ -155,6 +155,7 @@ elif [[ "$OSTYPE" =~ android ]]; then
     alias ubuntu='bash ~/ubuntu/start-ubuntu.sh'
     alias chcolor='/data/data/com.termux/files/home/.termux/colors.sh'
     alias chfont='/data/data/com.termux/files/home/.termux/fonts.sh'
+    alias termc='vim ~/.termux/termux.properties'
 elif [[ "$OSTYPE" =~ ^linux ]]; then
 	# alias sshon='sudo service ssh start'
 	# alias sshoff='sudo service ssh stop'
@@ -188,6 +189,11 @@ if [[ $`uname -a` =~ Microsoft ]]; then
 		cd ~
 	fi
 	# ---------------
+elif [[ "$OSTYPE" =~ android ]]; then
+    #sshd start-up
+    if [ `ps -ef |grep -w sshd|grep -v grep|wc -l` -le 0 ];then
+        sshd
+    fi
 elif [[ "$OSTYPE" =~ ^linux ]]; then
 	# ------ros------\
 	alias src-ros-env='source /opt/ros/melodic/setup.zsh'
