@@ -18,7 +18,7 @@ Plugin 'ryanoasis/vim-devicons'
 Plugin 'Xuyuanp/nerdtree-git-plugin'
 Plugin 'tiagofumo/vim-nerdtree-syntax-highlight'
 Plugin 'tpope/vim-commentary'
-Plugin 'ycm-core/YouCompleteMe'
+" Plugin 'ycm-core/YouCompleteMe'
 Plugin 'tpope/vim-fugitive'
 Plugin 'tpope/vim-surround'
 " Plugin 'vim-rhubarb'
@@ -54,7 +54,7 @@ set encoding=utf-8
 
 " gui_options
 set guifont=UbuntuMonoNerdFontCompleteM-Regular:h22
-set guioptions-=L
+" set guioptions-=L
 
 " vim-airline
 let g:airline#extensions#tabline#enabled = 1
