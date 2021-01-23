@@ -123,7 +123,8 @@ alias wtrsy='curl wttr.in/Songyuan\?lang=zh'
 alias wtrgz='curl wttr.in/Guangzhou\?lang=zh'
 alias aliyun='ssh -i ~/.ssh/aliyun -p 2235 cui@47.107.62.60'
 alias aliyunzh='LANG="zh_CN.UTF-8" ; ssh -i ~/.ssh/aliyun -p 2235 cui@47.107.62.60 ; LANG="en_US.UTF-8"'
-alias oneplus='ssh -i ~/.ssh/oneplus -p 8022 u0_a144@172.28.241.220'
+alias oneplus='ssh -i ~/.ssh/oneplus -p 8022 u0_a144@192.168.0.102'
+alias iphone='ssh -i ~/.ssh/ish -p 2235 cui@192.168.0.104'
 alias zshc="vim ~/.zshrc"
 alias vimc="vim ~/.vimrc"
 alias src='source ~/.zshrc'
