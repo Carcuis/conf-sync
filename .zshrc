@@ -47,6 +47,8 @@ CASE_SENSITIVE="true"
 ENABLE_CORRECTION="true"
 
 # Uncomment the following line to display red dots whilst waiting for completion.
+# Caution: this setting can cause issues with multiline prompts (zsh 5.7.1 and newer seem to work)
+# See https://github.com/ohmyzsh/ohmyzsh/issues/5765
 # COMPLETION_WAITING_DOTS="true"
 
 # Uncomment the following line if you want to disable marking untracked files
@@ -163,13 +165,14 @@ elif [[ "$OSTYPE" =~ ^linux ]]; then
 	# alias byobu='LANG="en_US.UTF-8" ; byobu'
     alias fix-pod='pactl load-module module-bluetooth-discover'
 elif [[ "$OSTYPE" =~ ^darwin ]]; then
-	alias cmake-gui='/Applications/CMake.app/Contents/MacOS/CMake .'
+	# alias cmake-gui='/Applications/CMake.app/Contents/MacOS/CMake .'
 	alias sshon='sudo launchctl load -w /System/Library/LaunchDaemons/ssh.plist'
 	alias sshoff='sudo launchctl unload -w /System/Library/LaunchDaemons/ssh.plist'
     alias fixroot='sudo mount -uw /'
 	alias fix='xattr -d com.apple.FinderInfo'
 	alias o='open'
 	alias o.='open .'
+    alias proxy='export all_proxy="socks5://127.0.0.1:1080"'
 fi
 # ---------alias---------/
 
@@ -214,7 +217,7 @@ elif [[ "$OSTYPE" =~ ^linux ]]; then
 
 elif [[ "$OSTYPE" =~ ^darwin ]]; then
 	# ----cmake-gui----\
-	alias cmake-gui='/Applications/CMake.app/Contents/MacOS/CMake .'
+	# alias cmake-gui='/Applications/CMake.app/Contents/MacOS/CMake .'
 	# -----------------/
 
 	# ----openni2----\
