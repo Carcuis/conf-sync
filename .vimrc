@@ -1,35 +1,30 @@
-set nocompatible              " be iMproved, required
-filetype off                  " required
+" Specify a directory for plugins
+" - For Neovim: stdpath('data') . '/plugged'
+" - Avoid using standard Vim directory names like 'plugin'
+call plug#begin()
 
-" set the runtime path to include Vundle and initialize
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
+Plug 'vim-airline/vim-airline'
+Plug 'preservim/nerdtree'
+Plug 'vim-airline/vim-airline-themes'
+Plug 'tomasr/molokai'
+Plug 'jiangmiao/auto-pairs'
+Plug 'severin-lemaignan/vim-minimap'
+Plug 'vimcn/vimcdoc'
+Plug 'ryanoasis/vim-devicons'
+Plug 'Xuyuanp/nerdtree-git-plugin'
+Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
+Plug 'tpope/vim-commentary'
+" Plug 'ycm-core/YouCompleteMe'
+Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-surround'
+" Plug 'vim-rhubarb'
+Plug 'kien/ctrlp.vim'
+Plug 'nathanaelkane/vim-indent-guides'
+Plug 'bronson/vim-trailing-whitespace'
 
-" let Vundle manage Vundle, required
-Plugin 'VundleVim/Vundle.vim'
-Plugin 'vim-airline/vim-airline'
-Plugin 'preservim/nerdtree'
-Plugin 'vim-airline/vim-airline-themes'
-Plugin 'tomasr/molokai'
-Plugin 'jiangmiao/auto-pairs'
-Plugin 'severin-lemaignan/vim-minimap'
-Plugin 'vimcn/vimcdoc'
-Plugin 'ryanoasis/vim-devicons'
-Plugin 'Xuyuanp/nerdtree-git-plugin'
-Plugin 'tiagofumo/vim-nerdtree-syntax-highlight'
-Plugin 'tpope/vim-commentary'
-" Plugin 'ycm-core/YouCompleteMe'
-Plugin 'tpope/vim-fugitive'
-Plugin 'tpope/vim-surround'
-" Plugin 'vim-rhubarb'
-Plugin 'kien/ctrlp.vim'
-Plugin 'nathanaelkane/vim-indent-guides'
-Plugin 'bronson/vim-trailing-whitespace'
-
-" All of your Plugins must be added before the following line
-call vundle#end()            " required
-filetype plugin indent on    " required
-" --------vundle---------
+" Initialize plugin system
+call plug#end()
+" --------vim-plug---------
 
 color molokai
 " let g:molokai_original = 1
@@ -100,14 +95,14 @@ let g:minimap_toggle='<leader>mm'
 " let g:WebDevIconsUnicodeGlyphDoubleWidth = 1
 
 " YouCompleteMe
-let g:ycm_global_ycm_extra_conf = "~/.vim/bundle/YouCompleteMe/.ycm_extra_conf.py"
+" let g:ycm_global_ycm_extra_conf = "~/.vim/bundle/YouCompleteMe/.ycm_extra_conf.py"
 " let g:syntastic_cpp_compiler = 'g++'
 " let g:syntastic_cpp_compiler_options = '-std=c++11 -stdlib=libc++'
-let g:ycm_min_num_of_chars_for_completion = 1
-let g:ycm_semantic_triggers =  {
-			\ 'c,cpp,python,java,go,erlang,perl': ['re!\w{2}'],
-			\ 'cs,lua,javascript': ['re!\w{2}'],
-			\ }
+" let g:ycm_min_num_of_chars_for_completion = 1
+" let g:ycm_semantic_triggers =  {
+" 			\ 'c,cpp,python,java,go,erlang,perl': ['re!\w{2}'],
+" 			\ 'cs,lua,javascript': ['re!\w{2}'],
+" 			\ }
 
 " CtrlP
 let g:ctrlp_map = '<leader>ff'
