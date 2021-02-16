@@ -121,8 +121,8 @@ alias la='ls -AF'
 alias l='ls -CF'
 alias wtrsy='curl wttr.in/Songyuan\?lang=zh'
 alias wtrgz='curl wttr.in/Guangzhou\?lang=zh'
-alias aliyun='ssh -i ~/.ssh/aliyun -p 2235 cui@47.107.62.60'
-alias aliyunzh='LANG="zh_CN.UTF-8" ; ssh -i ~/.ssh/aliyun -p 2235 cui@47.107.62.60 ; LANG="en_US.UTF-8"'
+# alias aliyun='ssh -i ~/.ssh/aliyun -p 2235 cui@47.107.62.60'
+# alias aliyunzh='LANG="zh_CN.UTF-8" ; ssh -i ~/.ssh/aliyun -p 2235 cui@47.107.62.60 ; LANG="en_US.UTF-8"'
 alias oneplus='ssh -i ~/.ssh/oneplus -p 8022 u0_a144@192.168.0.102'
 alias iphone='ssh -i ~/.ssh/ish -p 2235 cui@192.168.0.104'
 alias zshc="vim ~/.zshrc"
@@ -153,7 +153,7 @@ if [[ $`uname -a` =~ Microsoft ]]; then
 	alias fastboot='fastboot.exe'
 elif [[ "$OSTYPE" =~ android ]]; then
     alias tchroot='termux-chroot'
-    alias ubuntu='bash ~/ubuntu/start-ubuntu.sh'
+    # alias ubuntu='bash ~/ubuntu/start-ubuntu.sh'
     alias chcolor='/data/data/com.termux/files/home/.termux/colors.sh'
     alias chfont='/data/data/com.termux/files/home/.termux/fonts.sh'
     alias termc='vim ~/.termux/termux.properties'
@@ -192,9 +192,9 @@ if [[ $`uname -a` =~ Microsoft ]]; then
 	# ---------------
 elif [[ "$OSTYPE" =~ android ]]; then
     #sshd start-up
-    if [ `ps -ef |grep -w sshd|grep -v grep|wc -l` -le 0 ];then
-        sshd
-    fi
+    # if [ `ps -ef |grep -w sshd|grep -v grep|wc -l` -le 0 ];then
+    #     sshd
+    # fi
 elif [[ "$OSTYPE" =~ ^linux ]]; then
 	# ------ros------\
 	alias src-ros-env='source /opt/ros/melodic/setup.zsh'
