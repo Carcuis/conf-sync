@@ -1,8 +1,5 @@
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
-Plugin 'tpope/vim-commentary'
-Plugin 'tpope/vim-surround'
-call vundle#end()
+Plugin 'vim-commentary'
+Plugin 'vim-surround'
 
 set nu
 set rnu
