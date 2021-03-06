@@ -164,6 +164,7 @@ elif [[ "$OSTYPE" =~ ^linux ]]; then
 	# alias sshoff='sudo service ssh stop'
 	# alias byobu='LANG="en_US.UTF-8" ; byobu'
     alias fix-pod='pactl load-module module-bluetooth-discover'
+    alias o.='nautilus .'
 elif [[ "$OSTYPE" =~ ^darwin ]]; then
 	# alias cmake-gui='/Applications/CMake.app/Contents/MacOS/CMake .'
 	alias sshon='sudo launchctl load -w /System/Library/LaunchDaemons/ssh.plist'
@@ -200,17 +201,17 @@ elif [[ "$OSTYPE" =~ android ]]; then
     # fi
 elif [[ "$OSTYPE" =~ ^linux ]]; then
 	# ------ros------\
-	alias src-ros-env='source /opt/ros/melodic/setup.zsh'
+	# alias src-ros-env='source /opt/ros/melodic/setup.zsh'
 	# *or auto source when shell start up
 	# source /opt/ros/melodic/setup.zsh
 	# ---------------/
 
 	# -----clion-----\
-	alias clion='~/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/202.7319.72/bin/clion.sh'
+	# alias clion='~/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/202.7319.72/bin/clion.sh'
 	# ---------------/
 
 	# ---openvino----\
-	alias src-openvino-env='source /opt/intel/openvino/bin/setupvars.sh'
+	# alias src-openvino-env='source /opt/intel/openvino/bin/setupvars.sh'
 	# *or auto source when shell start up
 	# source /opt/intel/openvino/bin/setupvars.sh
 	# ---------------/
