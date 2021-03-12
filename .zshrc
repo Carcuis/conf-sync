@@ -176,7 +176,7 @@ elif [[ "$OSTYPE" =~ ^darwin ]]; then
 	alias fix='xattr -d com.apple.FinderInfo'
 	alias o='open'
 	alias o.='open .'
-    alias proxy='export all_proxy="socks5://127.0.0.1:1080"'
+    alias proxy='export https_proxy=socks5://127.0.0.1:1080'
 fi
 # ---------alias---------/
 
