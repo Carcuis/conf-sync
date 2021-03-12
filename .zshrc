@@ -166,6 +166,7 @@ elif [[ "$OSTYPE" =~ ^linux ]]; then
 	# alias sshoff='sudo service ssh stop'
 	# alias byobu='LANG="en_US.UTF-8" ; byobu'
     alias fix-pod='pactl load-module module-bluetooth-discover'
+    alias o='nautilus'
     alias o.='nautilus .'
 elif [[ "$OSTYPE" =~ ^darwin ]]; then
 	# alias cmake-gui='/Applications/CMake.app/Contents/MacOS/CMake .'

@@ -43,6 +43,7 @@ set cursorline
 set mouse=a
 set wildmenu
 set encoding=utf-8
+set incsearch
 " set t_u7=
 " set termencoding=utf-8
 " set list lcs=tab:\|\ 
@@ -151,7 +152,7 @@ map <leader>cp "+y
 
 if has("autocmd")
 
-  " auto change cursor shape in gnome-terminal
+  " auto change cursor shape
   if ! has("gui_running")
     au InsertLeave * silent execute '!echo -ne "\e[1 q"' | redraw!
     au InsertEnter,InsertChange *
