@@ -1,0 +1,25 @@
+{
+	"name": "Vimium C",
+	"@time": "2021/3/12上午10:19:37",
+	"time": 1615515577565,
+	"environment": {
+		"extension": "1.88.2",
+		"platform": "win",
+		"chrome": 89
+	},
+	"keyMappings": [
+		"unmap f",
+		"unmap J",
+		"unmap K",
+		"map a LinkHints.activate",
+		"map H previousTab",
+		"map L nextTab",
+		"unmap [[",
+		"unmap ]]",
+		"map <a-[> goPrevious",
+		"map <a-]> goNext",
+		"map < goBack",
+		"map > goForward",
+		""
+	]
+}
