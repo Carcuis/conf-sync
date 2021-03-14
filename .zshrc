@@ -168,6 +168,7 @@ elif [[ "$OSTYPE" =~ ^linux ]]; then
     alias fix-pod='pactl load-module module-bluetooth-discover'
     alias o='nautilus'
     alias o.='nautilus .'
+    alias proxy='export https_proxy=socks5://127.0.0.1:1089'
 elif [[ "$OSTYPE" =~ ^darwin ]]; then
 	# alias cmake-gui='/Applications/CMake.app/Contents/MacOS/CMake .'
 	alias sshon='sudo launchctl load -w /System/Library/LaunchDaemons/ssh.plist'
