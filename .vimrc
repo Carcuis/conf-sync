@@ -146,6 +146,7 @@ map <leader>m :tabn<CR>
 " map <leader>cp :!clip.exe < %<CR>
 
 map <leader>cp "+y
+map <leader>p "+p
 
 " au BufRead,BufNewFile *vifmrc,*.vifm  set filetype=vifm
 " au BufRead,BufNewFile *vifminfo set filetype=vifminfo
