@@ -16,10 +16,8 @@ curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.c
 #vifm-colors
 if [[ ! -e "$HOME/.config/vifm/colors/ph.vifm" ]]; then
     vifm
-    mv ~/.config/vifm/colors/Default.vifm ~/.config/Default.vifm.bak
-    rmdir ~/.config/vifm/colors
+    mv ~/.config/vifm/colors ~/.config/vifm/colors.bak
     git clone https://github.com/vifm/vifm-colors ~/.config/vifm/colors
-    mv ~/.config/Default.vifm.bak ~/.config/vifm/colors/
 else
     echo "Vifm colorshemes already exist."
 fi

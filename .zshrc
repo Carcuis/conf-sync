@@ -167,7 +167,9 @@ elif [[ "$OSTYPE" =~ ^linux ]]; then
 	# alias sshoff='sudo service ssh stop'
 	# alias byobu='LANG="en_US.UTF-8" ; byobu'
     alias fix-pod='pactl load-module module-bluetooth-discover'
+    alias o='nautilus'
     alias o.='nautilus .'
+    alias proxy='export https_proxy=socks5://127.0.0.1:1089'
 elif [[ "$OSTYPE" =~ ^darwin ]]; then
 	# alias cmake-gui='/Applications/CMake.app/Contents/MacOS/CMake .'
 	alias sshon='sudo launchctl load -w /System/Library/LaunchDaemons/ssh.plist'
@@ -176,7 +178,7 @@ elif [[ "$OSTYPE" =~ ^darwin ]]; then
 	alias fix='xattr -d com.apple.FinderInfo'
 	alias o='open'
 	alias o.='open .'
-    alias proxy='export all_proxy="socks5://127.0.0.1:1080"'
+    alias proxy='export https_proxy=socks5://127.0.0.1:1080'
 fi
 # ---------alias---------/
 

@@ -43,6 +43,7 @@ set cursorline
 set mouse=a
 set wildmenu
 set encoding=utf-8
+set incsearch
 " set t_u7=
 " set termencoding=utf-8
 " set list lcs=tab:\|\ 
@@ -145,13 +146,14 @@ map <leader>m :tabn<CR>
 " map <leader>cp :!clip.exe < %<CR>
 
 map <leader>cp "+y
+map <leader>p "+p
 
 " au BufRead,BufNewFile *vifmrc,*.vifm  set filetype=vifm
 " au BufRead,BufNewFile *vifminfo set filetype=vifminfo
 
 if has("autocmd")
 
-  " auto change cursor shape in gnome-terminal
+  " auto change cursor shape
   if ! has("gui_running")
     au InsertLeave * silent execute '!echo -ne "\e[1 q"' | redraw!
     au InsertEnter,InsertChange *
