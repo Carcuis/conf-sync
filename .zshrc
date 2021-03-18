@@ -161,6 +161,7 @@ elif [[ "$OSTYPE" =~ android ]]; then
     alias chcolor='/data/data/com.termux/files/home/.termux/colors.sh'
     alias chfont='/data/data/com.termux/files/home/.termux/fonts.sh'
     alias termc='vim ~/.termux/termux.properties'
+    alias ubuntu2004='~/ubuntu/2004/start-ubuntu20.sh'
 elif [[ "$OSTYPE" =~ ^linux ]]; then
 	# alias sshon='sudo service ssh start'
 	# alias sshoff='sudo service ssh stop'
