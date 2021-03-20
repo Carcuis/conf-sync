@@ -3,6 +3,7 @@ Plugin 'vim-surround'
 
 set nu
 set rnu
+set incsearch
 
 let mapleader = "\<space>"
 
