@@ -155,6 +155,7 @@ if [[ $`uname -a` =~ Microsoft ]]; then
 	alias fastboot='fastboot.exe'
     alias o='explorer.exe'
     alias o.='explorer.exe .'
+    alias proxy='export https_proxy=sock5://127.0.0.1:10808'
 elif [[ "$OSTYPE" =~ android ]]; then
     alias tchroot='termux-chroot'
     # alias ubuntu='bash ~/ubuntu/start-ubuntu.sh'
