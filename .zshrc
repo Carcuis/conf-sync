@@ -199,6 +199,8 @@ if [[ $`uname -a` =~ Microsoft ]]; then
 	elif [ "$PWD" = "/mnt/c/Windows/System32" ]; then
 		cd ~
 	fi
+    # display env
+    export DISPLAY=127.0.0.1:0.0
 	# ---------------
 elif [[ "$OSTYPE" =~ android ]]; then
     #sshd start-up
