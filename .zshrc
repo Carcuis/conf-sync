@@ -156,6 +156,7 @@ if [[ $`uname -a` =~ Microsoft ]]; then
     alias o='explorer.exe'
     alias o.='explorer.exe .'
     alias proxy='export https_proxy=socks5://127.0.0.1:10808'
+    alias unproxy='export https_proxy='
 elif [[ "$OSTYPE" =~ android ]]; then
     alias tchroot='termux-chroot'
     # alias ubuntu='bash ~/ubuntu/start-ubuntu.sh'
@@ -171,6 +172,7 @@ elif [[ "$OSTYPE" =~ ^linux ]]; then
     alias o='nautilus'
     alias o.='nautilus .'
     alias proxy='export https_proxy=socks5://127.0.0.1:1089'
+    alias unproxy='export https_proxy='
 elif [[ "$OSTYPE" =~ ^darwin ]]; then
 	# alias cmake-gui='/Applications/CMake.app/Contents/MacOS/CMake .'
 	alias sshon='sudo launchctl load -w /System/Library/LaunchDaemons/ssh.plist'
@@ -180,6 +182,7 @@ elif [[ "$OSTYPE" =~ ^darwin ]]; then
 	alias o='open'
 	alias o.='open .'
     alias proxy='export https_proxy=socks5://127.0.0.1:1080'
+    alias unproxy='export https_proxy='
 fi
 # ---------alias---------/
 
