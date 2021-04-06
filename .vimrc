@@ -106,7 +106,13 @@ let g:minimap_toggle='<leader>mm'
 " 			\ }
 
 " CtrlP
-let g:ctrlp_map = '<leader>ff'
+" let g:ctrlp_map = '<leader>ff'
+
+" LeaderF
+let g:Lf_WindowPosition = 'popup'
+
+" vim-commentary
+autocmd FileType java,c,cpp set commentstring=//\ %s
 
 " indent-guides
 let g:indent_guides_enable_on_vim_startup = 1
