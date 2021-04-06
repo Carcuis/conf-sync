@@ -157,6 +157,37 @@ if [[ $`uname -a` =~ Microsoft ]]; then
     alias o.='explorer.exe .'
     alias proxy='export https_proxy=socks5://127.0.0.1:10808'
     alias unproxy='export https_proxy='
+    function chpwd(){
+        if [[ "$PWD" =~ mnt ]]; then
+            alias gba='git.exe branch -a'
+            alias ga='git.exe add'
+            alias gcl='git.exe clone --recurse-submodules'
+            alias gcm='git.exe checkout $(git_main_branch)'
+            alias gcmsg='git.exe commit -m'
+            alias gco='git.exe checkout'
+            alias gd='git.exe diff'
+            alias gl='git.exe pull'
+            alias gm='git.exe merge'
+            alias gp='git.exe push'
+            alias grh='git.exe reset'
+            alias grset='git.exe remote set-url'
+            alias gst='git.exe status'
+        else
+            alias gba='git branch -a'
+            alias ga='git add'
+            alias gcl='git clone --recurse-submodules'
+            alias gcm='git checkout $(git_main_branch)'
+            alias gcmsg='git commit -m'
+            alias gco='git checkout'
+            alias gd='git diff'
+            alias gl='git pull'
+            alias gm='git merge'
+            alias gp='git push'
+            alias grh='git reset'
+            alias grset='git remote set-url'
+            alias gst='git status'
+        fi
+    }
 elif [[ "$OSTYPE" =~ android ]]; then
     alias tchroot='termux-chroot'
     # alias ubuntu='bash ~/ubuntu/start-ubuntu.sh'
