@@ -18,9 +18,10 @@ Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-surround'
 " Plug 'vim-rhubarb'
-Plug 'kien/ctrlp.vim'
+" Plug 'kien/ctrlp.vim'
 Plug 'nathanaelkane/vim-indent-guides'
 Plug 'bronson/vim-trailing-whitespace'
+Plug 'Yggdroot/LeaderF', {'do': ':LeaderfInstallCExtension'}
 
 " Initialize plugin system
 call plug#end()
