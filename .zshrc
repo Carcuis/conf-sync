@@ -157,6 +157,7 @@ if [[ $`uname -a` =~ Microsoft ]]; then
     alias o.='explorer.exe .'
     alias proxy='export https_proxy=socks5://127.0.0.1:10808'
     alias unproxy='export https_proxy='
+    alias bpi='ssh -i ~/.ssh/BPi pi@192.168.137.75'
     function chpwd(){
         if [[ "$PWD" =~ mnt ]]; then
             alias gba='git.exe branch -a'
@@ -170,6 +171,7 @@ if [[ $`uname -a` =~ Microsoft ]]; then
             alias gm='git.exe merge'
             alias gp='git.exe push'
             alias grh='git.exe reset'
+            alias grhh='git.exe reset --hard'
             alias grset='git.exe remote set-url'
             alias gst='git.exe status'
         else
