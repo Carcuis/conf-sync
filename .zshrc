@@ -118,9 +118,12 @@ if [[ ! $VIFM ]]; then
 fi
 
 # ---------alias----------\
-alias ll='ls -alF'
-alias la='ls -AF'
-alias l='ls -CF'
+# alias ll='ls -alF'
+# alias la='ls -AF'
+# alias l='ls -CF'
+alias ls='exa --icons'
+alias la='exa -a --icons'
+alias ll='exa -aabghHl@ --icons'
 alias wtrsy='curl wttr.in/Songyuan\?lang=zh'
 alias wtrgz='curl wttr.in/Guangzhou\?lang=zh'
 # alias aliyun='ssh -i ~/.ssh/aliyun -p 2235 cui@47.107.62.60'
