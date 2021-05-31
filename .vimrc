@@ -151,7 +151,7 @@ map <leader>v <C-w>v
 map <leader>n :tabp<CR>
 map <leader>m :tabn<CR>
 
-" map <leader>fj :w<CR>:!echo -e "\n--------Debugging--------\n" && g++ % && $PWD/a.out && echo -e "\n-----------End-----------"<CR>
+map <leader>fj :w<CR>:!echo -e "\n--------Debugging--------\n" && g++ % && $PWD/a.out && echo -e "\n-----------End-----------"<CR>
 " map <leader>cp :!clip.exe < %<CR>
 
 map <leader>cp "+y
