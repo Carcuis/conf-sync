@@ -128,7 +128,6 @@ alias wtrsy='curl wttr.in/Songyuan\?lang=zh'
 alias wtrgz='curl wttr.in/Guangzhou\?lang=zh'
 # alias aliyun='ssh -i ~/.ssh/aliyun -p 2235 cui@47.107.62.60'
 # alias aliyunzh='LANG="zh_CN.UTF-8" ; ssh -i ~/.ssh/aliyun -p 2235 cui@47.107.62.60 ; LANG="en_US.UTF-8"'
-alias oneplus='ssh -i ~/.ssh/oneplus -p 8022 u0_a144@192.168.0.102'
 alias iphone='ssh -i ~/.ssh/ish -p 2235 cui@192.168.0.104'
 alias zshc="vim ~/.zshrc"
 alias vimc="vim ~/.vimrc"
@@ -161,10 +160,11 @@ if [[ $`uname -a` =~ Microsoft ]]; then
     alias proxy='export https_proxy=socks5://127.0.0.1:10808'
     alias unproxy='export https_proxy='
     alias bpi='ssh -i ~/.ssh/BPi pi@192.168.137.75'
+    alias oneplus='ssh -i ~/.ssh/oneplus -p 8022 u0_a164@192.168.137.10'
     function chpwd(){
         if [[ "$PWD" =~ mnt ]]; then
-            alias gba='git.exe branch -a'
             alias ga='git.exe add'
+            alias gba='git.exe branch -a'
             alias gcl='git.exe clone --recurse-submodules'
             alias gcm='git.exe checkout $(git_main_branch)'
             alias gcmsg='git.exe commit -m'
@@ -178,8 +178,8 @@ if [[ $`uname -a` =~ Microsoft ]]; then
             alias grset='git.exe remote set-url'
             alias gst='git.exe status'
         else
-            alias gba='git branch -a'
             alias ga='git add'
+            alias gba='git branch -a'
             alias gcl='git clone --recurse-submodules'
             alias gcm='git checkout $(git_main_branch)'
             alias gcmsg='git commit -m'
@@ -189,6 +189,7 @@ if [[ $`uname -a` =~ Microsoft ]]; then
             alias gm='git merge'
             alias gp='git push'
             alias grh='git reset'
+            alias grhh='git reset --hard'
             alias grset='git remote set-url'
             alias gst='git status'
         fi
