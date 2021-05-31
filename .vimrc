@@ -7,6 +7,7 @@ Plug 'vim-airline/vim-airline'
 Plug 'preservim/nerdtree'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'tomasr/molokai'
+Plug 'doums/darcula'
 Plug 'jiangmiao/auto-pairs'
 Plug 'severin-lemaignan/vim-minimap'
 Plug 'vimcn/vimcdoc'
@@ -27,7 +28,7 @@ Plug 'Yggdroot/LeaderF', {'do': ':LeaderfInstallCExtension'}
 call plug#end()
 " --------vim-plug---------
 
-color molokai
+color darcula
 " let g:molokai_original = 1
 let g:rehash256 = 1
 syntax on
