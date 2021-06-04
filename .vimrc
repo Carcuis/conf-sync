@@ -7,7 +7,8 @@ Plug 'vim-airline/vim-airline'
 Plug 'preservim/nerdtree'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'tomasr/molokai'
-Plug 'doums/darcula'
+" Plug 'doums/darcula'
+Plug 'blueshirts/darcula'
 Plug 'jiangmiao/auto-pairs'
 Plug 'severin-lemaignan/vim-minimap'
 Plug 'vimcn/vimcdoc'
@@ -24,6 +25,7 @@ Plug 'nathanaelkane/vim-indent-guides'
 Plug 'bronson/vim-trailing-whitespace'
 Plug 'Yggdroot/LeaderF', {'do': ':LeaderfInstallCExtension'}
 Plug 'pprovost/vim-ps1'
+Plug 'romainl/vim-cool'
 
 " Initialize plugin system
 call plug#end()
@@ -40,20 +42,33 @@ set shiftwidth=4
 set expandtab
 set smartindent
 set autoindent
-" set noundofile
-" set nobackup
+set noundofile
+set nobackup
 set cursorline
 set mouse=a
 set wildmenu
 set encoding=utf-8
 set incsearch
-" set t_u7=
-" set termencoding=utf-8
-" set list lcs=tab:\|\ 
+set hlsearch
 
-" gui_options
-set guifont=UbuntuMonoNerdFontCompleteM-Regular:h22
-" set guioptions-=L
+if has("gui_running")
+  " set guioptions-=m  "remove menu bar
+  " set guioptions-=T  "remove toolbar
+  " set guioptions-=r  "remove right-hand scroll bar
+  set guioptions-=L  "remove left-hand scroll bar
+  if has('win32')
+    au GUIEnter * simalt ~x
+    source $VIMRUNTIME/delmenu.vim
+    set guifont=UbuntuMono_NF:h16:cANSI:qDRAFT
+    map <F11> :call libcallnr("gvimfullscreen.dll", "ToggleFullScreen", 0)<CR>
+  else
+    set guifont=UbuntuMonoNerdFontCompleteM-Regular:h22
+  endif
+else
+  if has('win32')
+    set termguicolors
+  endif
+endif
 
 " vim-airline
 let g:airline#extensions#tabline#enabled = 1
@@ -69,6 +84,12 @@ let mapleader = "\<space>"
 map <leader>af :NERDTreeToggle<CR>
 let NERDTreeShowHidden=1
 let NERDTreeShowBookmarks = 1
+if has("gui_running") && has("win32")
+    au VimEnter * :NERDTree
+    wincmd w
+    au VimEnter * wincmd w
+    map <F2> :NERDTree<CR>
+endif
 
 " au VimEnter * :NERDTree
 " wincmd w
@@ -136,6 +157,16 @@ map bn :bn<CR>
 
 map <leader>er :vs $MYVIMRC<CR>
 map <leader>sf :source $MYVIMRC<CR>
+
+map <leader>1 :1b<CR>
+map <leader>2 :2b<CR>
+map <leader>3 :3b<CR>
+map <leader>4 :4b<CR>
+map <leader>5 :5b<CR>
+map <leader>6 :6b<CR>
+map <leader>7 :7b<CR>
+map <leader>8 :8b<CR>
+map <leader>9 :9b<CR>
 
 map <leader>w :w<CR>
 map <leader>q :q<CR>
