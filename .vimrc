@@ -21,7 +21,8 @@ Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-surround'
 " Plug 'vim-rhubarb'
 " Plug 'kien/ctrlp.vim'
-Plug 'nathanaelkane/vim-indent-guides'
+" Plug 'nathanaelkane/vim-indent-guides'
+Plug 'Yggdroot/indentLine'
 Plug 'bronson/vim-trailing-whitespace'
 Plug 'Yggdroot/LeaderF', {'do': ':LeaderfInstallCExtension'}
 Plug 'pprovost/vim-ps1'
@@ -69,6 +70,7 @@ if has("gui_running")
 else
   if has('win32')
     set termguicolors
+    set nocursorline
   endif
 endif
 
@@ -146,12 +148,15 @@ autocmd FileType java,c,cpp set commentstring=//\ %s
 autocmd FileType ps1 set commentstring=#\ %s
 
 " indent-guides
-let g:indent_guides_enable_on_vim_startup = 1
-let g:indent_guides_start_level = 2
-let g:indent_guides_guide_size = 1
-let g:indent_guides_auto_colors = 0
-hi IndentGuidesOdd  guibg=grey20 ctermbg=236
-hi IndentGuidesEven guibg=grey25 ctermbg=237
+" let g:indent_guides_enable_on_vim_startup = 1
+" let g:indent_guides_start_level = 2
+" let g:indent_guides_guide_size = 1
+" let g:indent_guides_auto_colors = 0
+" hi IndentGuidesOdd  guibg=grey20 ctermbg=236
+" hi IndentGuidesEven guibg=grey25 ctermbg=237
+
+" indentline
+let g:indentLine_char = '│'
 
 " rainbow bracket
 let g:rainbow_active = 1
