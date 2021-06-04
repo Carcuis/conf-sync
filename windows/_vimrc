@@ -47,7 +47,8 @@ Plug 'vim-airline/vim-airline'
 Plug 'preservim/nerdtree'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'tomasr/molokai'
-Plug 'doums/darcula'
+" Plug 'doums/darcula'
+Plug 'blueshirts/darcula'
 Plug 'jiangmiao/auto-pairs'
 Plug 'severin-lemaignan/vim-minimap'
 Plug 'vimcn/vimcdoc'
@@ -64,6 +65,7 @@ Plug 'nathanaelkane/vim-indent-guides'
 Plug 'bronson/vim-trailing-whitespace'
 Plug 'Yggdroot/LeaderF', {'do': ':LeaderfInstallCExtension'}
 Plug 'pprovost/vim-ps1'
+Plug 'romainl/vim-cool'
 
 " Initialize plugin system
 call plug#end()
@@ -71,8 +73,8 @@ call plug#end()
 
 color darcula
 " let g:molokai_original = 1
-" let g:rehash256 = 1
-" syntax on
+let g:rehash256 = 1
+syntax on
 set nu
 set rnu
 set tabstop=4
@@ -87,29 +89,25 @@ set mouse=a
 set wildmenu
 set encoding=utf-8
 set incsearch
-set encoding=UTF-8
-" set helplang=cn
-set nohlsearch
+set hlsearch
 
 if has("gui_running")
   " set guioptions-=m  "remove menu bar
   " set guioptions-=T  "remove toolbar
   " set guioptions-=r  "remove right-hand scroll bar
   set guioptions-=L  "remove left-hand scroll bar
-  au GUIEnter * simalt ~x
-  source $VIMRUNTIME/delmenu.vim
-  " source $VIMRUNTIME/menu.vim
-  set guifont=UbuntuMono_NF:h16:cANSI:qDRAFT
-  " set guifontwide=新宋体:h14:cANSI:qDRAFT
-  " if pwd == C:/Users/cui
-  "   map <F2> :NERDTree D:/<CR>
-  " else
-  "   map <F2> :NERDTree<CR>
-  " endif
-  map <F11> :call libcallnr("gvimfullscreen.dll", "ToggleFullScreen", 0)<CR>
-  set clipboard+=unnamed
+  if has('win32')
+    au GUIEnter * simalt ~x
+    source $VIMRUNTIME/delmenu.vim
+    set guifont=UbuntuMono_NF:h16:cANSI:qDRAFT
+    map <F11> :call libcallnr("gvimfullscreen.dll", "ToggleFullScreen", 0)<CR>
+  else
+    set guifont=UbuntuMonoNerdFontCompleteM-Regular:h22
+  endif
 else
-  set termguicolors
+  if has('win32')
+    set termguicolors
+  endif
 endif
 
 " vim-airline
@@ -126,7 +124,7 @@ let mapleader = "\<space>"
 map <leader>af :NERDTreeToggle<CR>
 let NERDTreeShowHidden=1
 let NERDTreeShowBookmarks = 1
-if has("gui_running")
+if has("gui_running") && has("win32")
     au VimEnter * :NERDTree
     wincmd w
     au VimEnter * wincmd w
@@ -177,9 +175,13 @@ let g:minimap_toggle='<leader>mm'
 
 " LeaderF
 let g:Lf_WindowPosition = 'popup'
+let g:Lf_ShortcutF = '<leader>ff'
+let g:Lf_StlSeparator = { 'left': "\ue0b0", 'right': "\ue0b2" }
+map <leader>fr :LeaderfMru<CR>
 
 " vim-commentary
 autocmd FileType java,c,cpp set commentstring=//\ %s
+autocmd FileType ps1 set commentstring=#\ %s
 
 " indent-guides
 let g:indent_guides_enable_on_vim_startup = 1
@@ -191,12 +193,11 @@ hi IndentGuidesEven guibg=grey25 ctermbg=237
 
 map <C-n> :tabnew<CR>
 " map <C-s> :w<CR>
-" map <C-q> :q<CR>
 map bn :bn<CR>
 
-let mapleader = "\<space>"
 map <leader>er :vs $MYVIMRC<CR>
 map <leader>sf :source $MYVIMRC<CR>
+
 map <leader>1 :1b<CR>
 map <leader>2 :2b<CR>
 map <leader>3 :3b<CR>
@@ -225,30 +226,27 @@ map <leader>v <C-w>v
 map <leader>n :tabp<CR>
 map <leader>m :tabn<CR>
 
-" map <leader>fj :w<CR>:!echo -e "\n--------Debugging--------\n" && g++ % && $PWD/a.out && echo -e "\n-----------End-----------"<CR>
-" map <leader>cp :!clip.exe < %<CR>
+if has('win32')
+  au FileType cpp map <buffer> <leader>fj :w<CR>:!echo --------Debugging--------
+              \ && g++ % -o %:h\tmp.exe && %:h\tmp.exe<CR>
+else
+  au FileType cpp map <buffer> <leader>fj :w<CR>:!echo -e "\n--------Debugging--------"
+              \ && g++ % -o %:h/tmp.out && %:h/tmp.out &&<CR>
+endif
 
 map <leader>cp "+y
 map <leader>p "+p
 
-" au BufRead,BufNewFile *vifmrc,*.vifm  set filetype=vifm
-" au BufRead,BufNewFile *vifminfo set filetype=vifminfo
-
 if has("autocmd")
 
   " auto change cursor shape
-  " if ! has("gui_running")
-  "   au InsertLeave * silent execute '!echo -ne "\e[1 q"' | redraw!
-  "   au InsertEnter,InsertChange *
-  "     \ if v:insertmode == 'i' |
-  "     \   silent execute '!echo -ne "\e[5 q"' | redraw! |
-  "     \ elseif v:insertmode == 'r' |
-  "     \   silent execute '!echo -ne "\e[3 q"' | redraw! |
-  "     \ endif
-  "   au VimLeave * silent execute '!echo -ne "\e[ q"' | redraw!
-  " endif
+  if ! has("gui_running")
+    let &t_SI.="\e[5 q"
+    let &t_SR.="\e[4 q"
+    let &t_EI.="\e[1 q"
+  endif
 
   " let Vim jump to the last position when reopening a file
-  " au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\""
+  au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\""
 
 endif
