@@ -22,7 +22,7 @@ function ReloadProfile { . $profile }
 function GetAdminPriv { Start-Process pwsh -Verb runAs }
 function StartSshServiceInWsl { wsl -- sudo service ssh start }
 function StopSshServiceInWsl { wsl -- sudo service ssh stop }
-function SetProxyOn { $env:HTTP_PROXY="socks5://127.0.0.1:10808" }
+function SetProxyOn { $env:ALL_PROXY="socks5://127.0.0.1:10808" }
 function SetProxyOff { $env:HTTP_PROXY="" }
 
 Set-Alias .. GoUpOne
