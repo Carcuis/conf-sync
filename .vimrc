@@ -27,6 +27,7 @@ Plug 'Yggdroot/LeaderF', {'do': ':LeaderfInstallCExtension'}
 Plug 'pprovost/vim-ps1'
 Plug 'romainl/vim-cool'
 Plug 'luochen1990/rainbow'
+Plug 'easymotion/vim-easymotion'
 
 " Initialize plugin system
 call plug#end()
