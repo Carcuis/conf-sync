@@ -15,7 +15,7 @@ Plug 'ryanoasis/vim-devicons'
 Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
 Plug 'tpope/vim-commentary'
-" Plug 'ycm-core/YouCompleteMe'
+Plug 'ycm-core/YouCompleteMe'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-surround'
 " Plug 'vim-rhubarb'
@@ -23,6 +23,7 @@ Plug 'tpope/vim-surround'
 Plug 'nathanaelkane/vim-indent-guides'
 Plug 'bronson/vim-trailing-whitespace'
 Plug 'Yggdroot/LeaderF', {'do': ':LeaderfInstallCExtension'}
+Plug 'pprovost/vim-ps1'
 
 " Initialize plugin system
 call plug#end()
@@ -113,9 +114,13 @@ let g:minimap_toggle='<leader>mm'
 
 " LeaderF
 let g:Lf_WindowPosition = 'popup'
+let g:Lf_ShortcutF = '<leader>ff'
+let g:Lf_StlSeparator = { 'left': "\ue0b0", 'right': "\ue0b2" }
+map <leader>fr :LeaderfMru<CR>
 
 " vim-commentary
 autocmd FileType java,c,cpp set commentstring=//\ %s
+autocmd FileType ps1 set commentstring=#\ %s
 
 " indent-guides
 let g:indent_guides_enable_on_vim_startup = 1
@@ -123,11 +128,10 @@ let g:indent_guides_start_level = 2
 let g:indent_guides_guide_size = 1
 let g:indent_guides_auto_colors = 0
 hi IndentGuidesOdd  guibg=grey20 ctermbg=236
-hi IndentGuidesEven guibg=grey25 ctermbg=235
+hi IndentGuidesEven guibg=grey25 ctermbg=237
 
 map <C-n> :tabnew<CR>
 " map <C-s> :w<CR>
-" map <C-q> :q<CR>
 map bn :bn<CR>
 
 map <leader>er :vs $MYVIMRC<CR>
@@ -151,27 +155,24 @@ map <leader>v <C-w>v
 map <leader>n :tabp<CR>
 map <leader>m :tabn<CR>
 
-map <leader>fj :w<CR>:!echo -e "\n--------Debugging--------\n" && g++ % && $PWD/a.out && echo -e "\n-----------End-----------"<CR>
-" map <leader>cp :!clip.exe < %<CR>
+if has('win32')
+  au FileType cpp map <buffer> <leader>fj :w<CR>:!echo --------Debugging--------
+              \ && g++ % -o %:h\tmp.exe && %:h\tmp.exe<CR>
+else
+  au FileType cpp map <buffer> <leader>fj :w<CR>:!echo -e "\n--------Debugging--------"
+              \ && g++ % -o %:h/tmp.out && %:h/tmp.out &&<CR>
+endif
 
 map <leader>cp "+y
 map <leader>p "+p
-
-" au BufRead,BufNewFile *vifmrc,*.vifm  set filetype=vifm
-" au BufRead,BufNewFile *vifminfo set filetype=vifminfo
 
 if has("autocmd")
 
   " auto change cursor shape
   if ! has("gui_running")
-    au InsertLeave * silent execute '!echo -ne "\e[1 q"' | redraw!
-    au InsertEnter,InsertChange *
-      \ if v:insertmode == 'i' |
-      \   silent execute '!echo -ne "\e[5 q"' | redraw! |
-      \ elseif v:insertmode == 'r' |
-      \   silent execute '!echo -ne "\e[3 q"' | redraw! |
-      \ endif
-    au VimLeave * silent execute '!echo -ne "\e[ q"' | redraw!
+    let &t_SI.="\e[5 q"
+    let &t_SR.="\e[4 q"
+    let &t_EI.="\e[1 q"
   endif
 
   " let Vim jump to the last position when reopening a file
