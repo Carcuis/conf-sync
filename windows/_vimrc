@@ -47,8 +47,9 @@ Plug 'vim-airline/vim-airline'
 Plug 'preservim/nerdtree'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'tomasr/molokai'
-" Plug 'doums/darcula'
-Plug 'blueshirts/darcula'
+Plug 'doums/darcula'
+" Plug 'blueshirts/darcula'
+Plug 'joshdick/onedark.vim'
 Plug 'jiangmiao/auto-pairs'
 Plug 'severin-lemaignan/vim-minimap'
 Plug 'vimcn/vimcdoc'
@@ -67,7 +68,7 @@ Plug 'bronson/vim-trailing-whitespace'
 Plug 'Yggdroot/LeaderF', {'do': ':LeaderfInstallCExtension'}
 Plug 'pprovost/vim-ps1'
 Plug 'romainl/vim-cool'
-Plug 'luochen1990/rainbow'
+" Plug 'luochen1990/rainbow'
 Plug 'easymotion/vim-easymotion'
 
 " Initialize plugin system
@@ -100,6 +101,7 @@ if has("gui_running")
   " set guioptions-=r  "remove right-hand scroll bar
   set guioptions-=L  "remove left-hand scroll bar
   if has('win32')
+    color onedark
     au GUIEnter * simalt ~x
     source $VIMRUNTIME/delmenu.vim
     set guifont=UbuntuMono_NF:h16:cANSI:qDRAFT
