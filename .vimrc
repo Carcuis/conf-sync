@@ -26,6 +26,7 @@ Plug 'bronson/vim-trailing-whitespace'
 Plug 'Yggdroot/LeaderF', {'do': ':LeaderfInstallCExtension'}
 Plug 'pprovost/vim-ps1'
 Plug 'romainl/vim-cool'
+Plug 'luochen1990/rainbow'
 
 " Initialize plugin system
 call plug#end()
@@ -150,6 +151,9 @@ let g:indent_guides_guide_size = 1
 let g:indent_guides_auto_colors = 0
 hi IndentGuidesOdd  guibg=grey20 ctermbg=236
 hi IndentGuidesEven guibg=grey25 ctermbg=237
+
+" rainbow bracket
+let g:rainbow_active = 1
 
 map <C-n> :tabnew<CR>
 " map <C-s> :w<CR>
