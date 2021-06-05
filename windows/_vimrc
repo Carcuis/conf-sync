@@ -96,12 +96,12 @@ set incsearch
 set hlsearch
 
 if has("gui_running")
+  color onedark
   " set guioptions-=m  "remove menu bar
   " set guioptions-=T  "remove toolbar
   " set guioptions-=r  "remove right-hand scroll bar
   set guioptions-=L  "remove left-hand scroll bar
   if has('win32')
-    color onedark
     au GUIEnter * simalt ~x
     source $VIMRUNTIME/delmenu.vim
     set guifont=UbuntuMono_NF:h16:cANSI:qDRAFT
