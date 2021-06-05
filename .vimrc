@@ -28,7 +28,7 @@ Plug 'bronson/vim-trailing-whitespace'
 Plug 'Yggdroot/LeaderF', {'do': ':LeaderfInstallCExtension'}
 Plug 'pprovost/vim-ps1'
 Plug 'romainl/vim-cool'
-" Plug 'luochen1990/rainbow'
+Plug 'luochen1990/rainbow'
 Plug 'easymotion/vim-easymotion'
 Plug 'preservim/tagbar'
 
@@ -157,7 +157,7 @@ autocmd FileType ps1 set commentstring=#\ %s
 let g:indentLine_char = '│'
 
 " rainbow bracket
-" let g:rainbow_active = 1
+let g:rainbow_active = 0
 
 " tagbar
 map <leader>tb :TagbarToggle<CR>
