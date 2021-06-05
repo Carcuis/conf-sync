@@ -30,6 +30,7 @@ Plug 'pprovost/vim-ps1'
 Plug 'romainl/vim-cool'
 " Plug 'luochen1990/rainbow'
 Plug 'easymotion/vim-easymotion'
+Plug 'preservim/tagbar'
 
 " Initialize plugin system
 call plug#end()
@@ -88,18 +89,13 @@ let mapleader = "\<space>"
 
 " nerdtree
 map <leader>af :NERDTreeToggle<CR>
+map <F2> :NERDTree<CR>
 let NERDTreeShowHidden=1
 let NERDTreeShowBookmarks = 1
-if has("gui_running") && has("win32")
+if (winwidth(0) > 140 || has("gui_running")) && argc() < 2
     au VimEnter * :NERDTree
-    wincmd w
     au VimEnter * wincmd w
-    map <F2> :NERDTree<CR>
 endif
-
-" au VimEnter * :NERDTree
-" wincmd w
-" au VimEnter * wincmd w
 
 " vim-nerdtree-syntax-highlight
 let g:NERDTreeFileExtensionHighlightFullName = 1
@@ -161,13 +157,21 @@ autocmd FileType ps1 set commentstring=#\ %s
 let g:indentLine_char = '│'
 
 " rainbow bracket
-let g:rainbow_active = 1
+" let g:rainbow_active = 1
+
+" tagbar
+map <leader>tb :TagbarToggle<CR>
+let g:tagbar_width = max([25, winwidth(0) / 5])
+if (winwidth(0) > 100 || has("gui_running")) && argc() < 2
+  autocmd VimEnter * nested :TagbarOpen
+endif
 
 map <C-n> :tabnew<CR>
 " map <C-s> :w<CR>
 map bn :bn<CR>
 
 map <leader>er :vs $MYVIMRC<CR>
+map <leader>ef :e $MYVIMRC<CR>
 map <leader>sf :source $MYVIMRC<CR>
 
 map <leader>1 :1b<CR>
