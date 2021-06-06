@@ -39,6 +39,7 @@ call plug#end()
 color darcula
 " let g:molokai_original = 1
 let g:rehash256 = 1
+let mapleader = "\<space>"
 syntax on
 set nu
 set rnu
@@ -55,6 +56,7 @@ set wildmenu
 set encoding=utf-8
 set incsearch
 set hlsearch
+set scrolloff=5
 
 if has("gui_running")
   color onedark
@@ -84,8 +86,6 @@ let g:airline_powerline_fonts = 1
 " let g:airline_theme="badwolf"
 let g:airline_theme="powerlineish"
 " let g:airline_extensions = []
-
-let mapleader = "\<space>"
 
 " nerdtree
 map <leader>af :NERDTreeToggle<CR>
