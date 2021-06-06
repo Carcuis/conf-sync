@@ -5,6 +5,8 @@ call plug#begin()
 
 Plug 'vim-airline/vim-airline'
 Plug 'preservim/nerdtree'
+Plug 'Xuyuanp/nerdtree-git-plugin'
+Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'tomasr/molokai'
 Plug 'doums/darcula'
@@ -14,8 +16,6 @@ Plug 'jiangmiao/auto-pairs'
 Plug 'severin-lemaignan/vim-minimap'
 Plug 'vimcn/vimcdoc'
 Plug 'ryanoasis/vim-devicons'
-Plug 'Xuyuanp/nerdtree-git-plugin'
-Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
 Plug 'tpope/vim-commentary'
 Plug 'ycm-core/YouCompleteMe'
 Plug 'tpope/vim-fugitive'
@@ -31,6 +31,7 @@ Plug 'romainl/vim-cool'
 Plug 'luochen1990/rainbow'
 Plug 'easymotion/vim-easymotion'
 Plug 'preservim/tagbar'
+Plug 'airblade/vim-gitgutter'
 
 " Initialize plugin system
 call plug#end()
@@ -57,6 +58,7 @@ set encoding=utf-8
 set incsearch
 set hlsearch
 set scrolloff=5
+set updatetime=1000
 
 if has("gui_running")
   color onedark
