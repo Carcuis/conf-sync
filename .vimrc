@@ -170,7 +170,7 @@ endif
 
 map <C-n> :tabnew<CR>
 " map <C-s> :w<CR>
-map bn :bn<CR>
+map <leader>bn :bn<CR>
 
 map <leader>er :vs $MYVIMRC<CR>
 map <leader>ef :e $MYVIMRC<CR>
