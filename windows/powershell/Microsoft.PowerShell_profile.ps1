@@ -16,7 +16,7 @@ function GoUpFour { Set-Location ../../../.. }
 function OpenCwd { explorer.exe . }
 function EditProfileWithVim { vim $profile }
 function EditProfileWithGVim { gvim $profile }
-function EditVimrc { vim "D:\Program Files\Vim\_vimrc" }
+function EditVimrc { vim ~/_vimrc }
 function OpenVifmInPwd { vifm_copy.exe . }
 function ReloadProfile { . $profile }
 function GetAdminPriv { Start-Process pwsh -Verb runAs }

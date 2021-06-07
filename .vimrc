@@ -60,6 +60,10 @@ set hlsearch
 set scrolloff=5
 set updatetime=1000
 
+if has("win32")
+  set backspace=indent,eol,start
+endif
+
 if has("gui_running")
   color onedark
   " set guioptions-=m  "remove menu bar
@@ -193,6 +197,7 @@ map <leader>fq :q!<CR>
 map <leader>aq :q<CR><leader>aq
 map <leader>ewq :wq<CR><leader>ewq
 map <leader>r :diffupdate<CR>
+map <leader><leader>r :redraw!<CR>
 
 map <leader>h <C-w>h
 map <leader>j <C-w>j
