@@ -16,7 +16,8 @@ function GoUpFour { Set-Location ../../../.. }
 function OpenCwd { explorer.exe . }
 function EditProfileWithVim { vim $profile }
 function EditProfileWithGVim { gvim $profile }
-function EditVimrc { vim ~/_vimrc }
+function EditVimrcWithVim { vim ~/_vimrc }
+function EditVimrcWithGvim { gvim ~/_vimrc }
 function OpenVifmInPwd { vifm_copy.exe . }
 function ReloadProfile { . $profile }
 function GetAdminPriv { Start-Process pwsh -Verb runAs }
@@ -38,9 +39,11 @@ Set-Alias o explorer.exe
 Set-Alias o. OpenCwd
 Set-Alias touch New-Item
 Set-Alias vi vim
+Set-Alias gvi gvim
 Set-Alias pwshc EditProfileWithVim
 Set-Alias pwshcg EditProfileWithGVim
-Set-Alias vimc EditVimrc
+Set-Alias vimc EditVimrcWithVim
+Set-Alias gvimc EditVimrcWithGvim
 Set-Alias vifm OpenVifmInPwd
 Set-Alias src ReloadProfile
 Set-Alias su GetAdminPriv
