@@ -1,4 +1,17 @@
 # conf-sync
-Sync configure/rc files between GNU/Linux distros and MacOS X.
+## Sync `configure`/`rc`/`dot` files between Windows, GNU/Linux distros and MacOS.
 
-This project is currently under construction.
+### Two simple script for windows and unix:
+
+On Windows: to use `vimdiff` to quick compare pwsh profile `.ps1` and _vimrc in homedir, simply run:
+
+```powershell
+conf-sync> .\check_consistency.ps1
+```
+
+On Unix: to use `vimdiff` to quick compare .zshrc and .vimrc in homedir, simply run:
+
+```zsh
+conf-sync% ./check_consistency.sh
+```
+
