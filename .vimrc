@@ -32,6 +32,7 @@ Plug 'luochen1990/rainbow'
 Plug 'easymotion/vim-easymotion'
 Plug 'preservim/tagbar'
 Plug 'airblade/vim-gitgutter'
+Plug 'vim/killersheep'
 
 " Initialize plugin system
 call plug#end()
@@ -75,13 +76,19 @@ if has("gui_running")
     source $VIMRUNTIME/delmenu.vim
     set guifont=UbuntuMono_NF:h16:cANSI:qDRAFT
     map <F11> :call libcallnr("gvimfullscreen.dll", "ToggleFullScreen", 0)<CR>
-  else
-    set guifont=UbuntuMonoNerdFontCompleteM-Regular:h22
+  elseif has("linux")
+    set lines=45
+    set columns=200
+    set linespace=-3
+    set guifont=UbuntuMono\ Nerd\ Font\ Mono\ 12
   endif
 else
   if has('win32')
     set termguicolors
     set nocursorline
+  elseif has("linux")
+    let &t_TI=""
+    let &t_TE=""
   endif
 endif
 
@@ -96,7 +103,7 @@ let g:airline_theme="powerlineish"
 " nerdtree
 map <leader>af :NERDTreeToggle<CR>
 map <F2> :NERDTree<CR>
-let NERDTreeShowHidden=1
+let NERDTreeShowHidden = 1
 let NERDTreeShowBookmarks = 1
 if (winwidth(0) > 140 || has("gui_running")) && argc() < 2
     au VimEnter * :NERDTree
@@ -178,7 +185,7 @@ map <leader>bn :bn<CR>
 
 map <leader>er :vs $MYVIMRC<CR>
 map <leader>ef :e $MYVIMRC<CR>
-map <leader>sf :source $MYVIMRC<CR>
+map <leader>sf :w<CR>:source $MYVIMRC<CR>
 
 map <leader>1 :1b<CR>
 map <leader>2 :2b<CR>
