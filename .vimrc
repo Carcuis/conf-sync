@@ -174,7 +174,7 @@ let g:rainbow_active = 0
 
 " tagbar
 map <leader>tb :TagbarToggle<CR>
-let g:tagbar_width = max([25, winwidth(0) / 5])
+let g:tagbar_width = min([max([25, winwidth(0) / 5]), 30])
 if (winwidth(0) > 100 || has("gui_running")) && argc() < 2
   autocmd VimEnter * nested :TagbarOpen
 endif
