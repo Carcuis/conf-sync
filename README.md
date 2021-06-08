@@ -3,13 +3,13 @@
 
 ### Two simple script for windows and unix:
 
-On Windows: to use `vimdiff` to quick compare pwsh profile `.ps1` and `_vimrc` in homedir, simply run:
+On Windows: to use `vimdiff` to quick compare pwsh profile `.ps1` and `_vimrc` in remote repo and local homedir, simply run:
 
 ```powershell
 conf-sync> .\check_consistency.ps1
 ```
 
-On Unix: to use `vimdiff` to quick compare `.zshrc` and `.vimrc` in homedir, simply run:
+On Unix: to use `vimdiff` to quick compare `.zshrc` and `.vimrc` in remote repo and local homedir, simply run:
 
 ```zsh
 conf-sync% ./check_consistency.sh
