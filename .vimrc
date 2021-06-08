@@ -106,9 +106,16 @@ map <leader>af :NERDTreeToggle<CR>
 map <F2> :NERDTree<CR>
 let NERDTreeShowHidden = 1
 let NERDTreeShowBookmarks = 1
+let NERDTreeWinSize = min([max([25, winwidth(0) / 5]), 30])
 if (winwidth(0) > 140 || has("gui_running")) && argc() < 2
-    au VimEnter * :NERDTree
-    au VimEnter * wincmd w
+    au VimEnter * :NERDTree | wincmd p
+endif
+" Exit Vim if NERDTree is the only window left.
+autocmd BufEnter * if tabpagenr('$') == 1 && winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() |
+    \ quit | endif
+if has("win32")
+  let g:NERDTreeDirArrowExpandable = ''
+  let g:NERDTreeDirArrowCollapsible = ''
 endif
 
 " vim-nerdtree-syntax-highlight
