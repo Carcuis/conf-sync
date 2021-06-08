@@ -15,3 +15,9 @@ On Unix: to use `vimdiff` to quick compare `.zshrc` and `.vimrc` in homedir, sim
 conf-sync% ./check_consistency.sh
 ```
 
+### And a set-up script for `oh-my-zsh` and more with `zsh` pre-installed.
+
+```zsh
+conf-sync% ./setup_dependency.zsh
+```
+
