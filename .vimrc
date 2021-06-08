@@ -66,7 +66,8 @@ if has("win32")
 endif
 
 if has("gui_running")
-  color onedark
+  hi Cursor guifg=black guibg=white
+  " color onedark
   " set guioptions-=m  "remove menu bar
   " set guioptions-=T  "remove toolbar
   " set guioptions-=r  "remove right-hand scroll bar
@@ -215,6 +216,9 @@ map <leader>v <C-w>v
 
 map <leader>n :tabp<CR>
 map <leader>m :tabn<CR>
+
+map <C-J> ]c
+map <C-K> [c
 
 if has('win32')
   au FileType cpp map <buffer> <leader>fj :w<CR>:!echo --------Debugging--------
