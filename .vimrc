@@ -252,7 +252,7 @@ if has("autocmd")
 
 endif
 
-if (system('uname -a') =~ "Android")
+if has('unix') && (system('uname -a') =~ "Android")
   noremap `` <esc>
   inoremap `` <esc>
 endif
