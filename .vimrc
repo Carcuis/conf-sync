@@ -59,7 +59,7 @@ set encoding=utf-8
 set incsearch
 set hlsearch
 set scrolloff=5
-set updatetime=1000
+set updatetime=200
 
 if has("win32")
   set backspace=indent,eol,start
@@ -250,4 +250,9 @@ if has("autocmd")
   " let Vim jump to the last position when reopening a file
   au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\""
 
+endif
+
+if (system('uname -a') =~ "Android")
+  noremap `` <esc>
+  inoremap `` <esc>
 endif
