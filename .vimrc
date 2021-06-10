@@ -233,10 +233,10 @@ map <C-K> [c
 
 if has('win32')
   au FileType cpp map <buffer> <leader>fj :w<CR>:!echo --------Debugging--------
-              \ && g++ % -o %:h\tmp.exe && %:h\tmp.exe<CR>
+              \ && g++ % -o %:h\tmp_%:t:r.exe && %:h\tmp_%:t:r.exe<CR>
 else
   au FileType cpp map <buffer> <leader>fj :w<CR>:!echo -e "\n--------Debugging--------"
-              \ && g++ % -o %:h/tmp.out && %:h/tmp.out &&<CR>
+              \ && g++ % -o %:h/tmp_%:t:r.out && %:h/tmp_%:t:r.out &&<CR>
 endif
 
 map <leader>cp "+y
