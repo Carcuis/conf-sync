@@ -82,6 +82,10 @@ if has("gui_running")
     set columns=200
     set linespace=-3
     set guifont=UbuntuMono\ Nerd\ Font\ Mono\ 12
+  elseif has("mac")
+    set lines=45
+    set columns=162
+    set guifont=UbuntuMonoNerdFontCompleteM-Regular:h20
   endif
 else
   if has('win32')
