@@ -228,8 +228,20 @@ map <leader>v <C-w>v
 map <leader>n :tabp<CR>
 map <leader>m :tabn<CR>
 
+map <leader>cp "+y
+map <leader>p "+p
+
 map <C-J> ]c
 map <C-K> [c
+
+" recurse do or dp in vimdiff
+map ado do]cado
+map adp dp]cadp
+
+if has('unix') && (system('uname -a') =~ "Android")
+  noremap `` <esc>
+  inoremap `` <esc>
+endif
 
 if has('win32')
   au FileType cpp map <buffer> <leader>fj :w<CR>:!echo --------Debugging--------
@@ -239,24 +251,12 @@ else
               \ && g++ % -o %:h/tmp_%:t:r.out && %:h/tmp_%:t:r.out &&<CR>
 endif
 
-map <leader>cp "+y
-map <leader>p "+p
-
-if has("autocmd")
-
-  " auto change cursor shape
-  if ! has("gui_running")
-    let &t_SI.="\e[5 q"
-    let &t_SR.="\e[4 q"
-    let &t_EI.="\e[1 q"
-  endif
-
-  " let Vim jump to the last position when reopening a file
-  au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\""
-
+" auto change cursor shape
+if ! has("gui_running")
+  let &t_SI.="\e[5 q"
+  let &t_SR.="\e[4 q"
+  let &t_EI.="\e[1 q"
 endif
 
-if has('unix') && (system('uname -a') =~ "Android")
-  noremap `` <esc>
-  inoremap `` <esc>
-endif
+" let Vim jump to the last position when reopening a file
+au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\""
