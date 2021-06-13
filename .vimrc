@@ -78,6 +78,11 @@ if has("gui_running")
     source $VIMRUNTIME/delmenu.vim
     set guifont=UbuntuMono_NF:h16:cANSI:qDRAFT
     map <F11> :call libcallnr("gvimfullscreen.dll", "ToggleFullScreen", 0)<CR>
+  elseif (system('uname -a') =~ "Microsoft")
+    set lines=45
+    set columns=162
+    set linespace=0
+    set guifont=UbuntuMono\ Nerd\ Font\ Mono\ 16
   elseif has("linux")
     set lines=45
     set columns=200
