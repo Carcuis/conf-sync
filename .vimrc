@@ -33,6 +33,7 @@ Plug 'easymotion/vim-easymotion'
 Plug 'preservim/tagbar'
 Plug 'airblade/vim-gitgutter'
 Plug 'vim/killersheep'
+Plug 'mhinz/vim-startify'
 
 " Initialize plugin system
 call plug#end()
@@ -180,6 +181,7 @@ autocmd FileType ps1 set commentstring=#\ %s
 
 " indentline
 let g:indentLine_char = '│'
+au FileType startify :IndentLinesDisable
 
 " rainbow bracket
 let g:rainbow_active = 0
@@ -190,6 +192,22 @@ let g:tagbar_width = min([max([25, winwidth(0) / 5]), 30])
 if (winwidth(0) > 100 || has("gui_running")) && argc() < 2
   autocmd VimEnter * nested :TagbarOpen
 endif
+
+" vim-startify
+let g:startify_lists = [
+    \ { 'type': 'files',     'header': ['   MRU']            },
+    \ { 'type': 'dir',       'header': ['   MRU '. getcwd()] },
+    \ { 'type': 'sessions',  'header': ['   Sessions']       },
+    \ { 'type': 'bookmarks', 'header': ['   Bookmarks']      },
+    \ { 'type': 'commands',  'header': ['   Commands']       },
+    \ ]
+let g:startify_commands = [
+    \ {'h': 'h startify'},
+    \ ]
+let g:startify_fortune_use_unicode = 1
+function! StartifyEntryFormat()
+    return 'WebDevIconsGetFileTypeSymbol(absolute_path) ." ". entry_path'
+endfunction
 
 map <C-n> :tabnew<CR>
 " map <C-s> :w<CR>
