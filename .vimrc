@@ -169,6 +169,7 @@ let g:minimap_toggle='<leader>mm'
 " LeaderF
 let g:Lf_WindowPosition = 'popup'
 let g:Lf_ShortcutF = '<leader>ff'
+let g:Lf_ShortcutB = '<leader>bf'
 let g:Lf_StlSeparator = { 'left': "\ue0b0", 'right': "\ue0b2" }
 map <leader>fr :LeaderfMru<CR>
 
