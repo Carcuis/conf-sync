@@ -259,8 +259,8 @@ map <C-J> ]c
 map <C-K> [c
 
 " recurse do or dp in vimdiff
-map dao do]cdao
-map dap dp]cdap
+map ado do]cado
+map adp dp]cadp
 
 if has('unix') && (system('uname -a') =~ "Android")
   noremap `` <esc>
