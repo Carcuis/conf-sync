@@ -98,8 +98,8 @@ elseif has("gui_running")
     set guifont=UbuntuMonoNerdFontCompleteM-Regular:h20
   endif
 else
+  set termguicolors
   if has('win32')
-    set termguicolors
     set nocursorline
   elseif has("linux")
     let &t_TI=""
