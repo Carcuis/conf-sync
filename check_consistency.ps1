@@ -19,7 +19,7 @@ If ((Get-Command nvim).length -gt 0)
     $edit_tool = "vimdiff"
 } Else
 {
-    Write-Error "No vim or neovim on your device.`nAborting..."
+    Write-Error "No vim or neovim found on your device.`nAborting..."
     exit
 }
 
