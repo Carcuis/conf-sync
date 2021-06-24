@@ -45,6 +45,8 @@ Set-Alias pwshc EditProfileWithVim
 Set-Alias pwshcg EditProfileWithGVim
 Set-Alias vimc EditVimrcWithVim
 Set-Alias gvimc EditVimrcWithGvim
+Set-Alias nvi nvim
+Set-Alias gnvi nvim-qt
 Set-Alias vifm OpenVifmInPwd
 Set-Alias src ReloadProfile
 Set-Alias su GetAdminPriv
