@@ -66,7 +66,11 @@ if has("win32")
   set backspace=indent,eol,start
 endif
 
-if has("gui_running")
+if has("nvim")
+  set termguicolors
+  set guifont=UbuntuMono\ NF:h16
+  hi cursorline guifg=NONE
+elseif has("gui_running")
   hi Cursor guifg=black guibg=white
   " color onedark
   " set guioptions-=m  "remove menu bar
@@ -196,7 +200,8 @@ let g:rainbow_active = 0
 map <leader>tb :TagbarToggle<CR>
 let g:tagbar_width = min([max([25, winwidth(0) / 5]), 30])
 if (winwidth(0) > 100 || has("gui_running")) && argc() < 2
-  autocmd VimEnter * nested :TagbarOpen
+  " autocmd VimEnter * nested :TagbarOpen
+  autocmd BufEnter * nested :call tagbar#autoopen(0)
 endif
 
 " vim-startify
@@ -219,9 +224,20 @@ map <C-n> :tabnew<CR>
 " map <C-s> :w<CR>
 map <leader>bn :bn<CR>
 
-map <leader>er :vs $MYVIMRC<CR>
-map <leader>ef :e $MYVIMRC<CR>
 map <leader>sf :w<CR>:source $MYVIMRC<CR>
+if has("nvim")
+  map <leader>ev :e $MYVIMRC<CR>
+  if has("win32")
+    map <leader>er :vs ~/_vimrc<CR>
+    map <leader>ef :e ~/_vimrc<CR>
+  else
+    map <leader>er :vs ~/.vimrc<CR>
+    map <leader>ef :e ~/.vimrc<CR>
+  endif
+else
+  map <leader>er :vs $MYVIMRC<CR>
+  map <leader>ef :e $MYVIMRC<CR>
+endif
 
 map <leader>1 :1b<CR>
 map <leader>2 :2b<CR>
@@ -259,8 +275,8 @@ map <C-J> ]c
 map <C-K> [c
 
 " recurse do or dp in vimdiff
-map ado do]cado
-map adp dp]cadp
+map <leader>do do]c<leader>do
+map <leader>dp dp]c<leader>dp
 
 if has('unix') && (system('uname -a') =~ "Android")
   noremap `` <esc>
@@ -276,7 +292,7 @@ else
 endif
 
 " auto change cursor shape
-if ! has("gui_running")
+if !(has("gui_running") || has("nvim"))
   let &t_SI.="\e[5 q"
   let &t_SR.="\e[4 q"
   let &t_EI.="\e[1 q"
