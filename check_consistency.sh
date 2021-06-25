@@ -12,10 +12,10 @@ vimrc_sync_status=$?
 
 has_nvim=0
 has_vim=0
-if [[ $(command -v nvim > /dev/null) -eq 0 ]]; then
+if command -v nvim > /dev/null; then
     has_nvim=1
     diff_tool="nvim -d"
-elif [[ $(command -v vim > /dev/null) -eq 0 ]]; then
+elif command -v vim > /dev/null; then
     has_vim=1
     diff_tool="vimdiff"
 else
