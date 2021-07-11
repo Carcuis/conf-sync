@@ -78,6 +78,7 @@ plugins=(
 	z
 	zsh-syntax-highlighting
 	zsh-autosuggestions
+    zsh-completions
 )
 
 source $ZSH/oh-my-zsh.sh
@@ -109,6 +110,9 @@ source $ZSH/oh-my-zsh.sh
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
 # ----the bellow is cui_pref----
+
+# zsh-completions
+autoload -U compinit && compinit
 
 # if [[ ! $TMUX && ! $VIFM ]]; then
 if [[ ! $VIFM ]]; then
