@@ -66,7 +66,7 @@ if has("win32")
   set backspace=indent,eol,start
 endif
 
-if has("nvim")
+if has("nvim") && !has("mac")
   set termguicolors
   set guifont=UbuntuMono\ NF:h16
   hi cursorline guifg=NONE
@@ -77,7 +77,7 @@ elseif has("gui_running")
   " set guioptions-=T  "remove toolbar
   " set guioptions-=r  "remove right-hand scroll bar
   set guioptions-=L  "remove left-hand scroll bar
-  if has('win32')
+  if has("win32")
     au GUIEnter * simalt ~x
     source $VIMRUNTIME/delmenu.vim
     set guifont=UbuntuMono_NF:h16:cANSI:qDRAFT
@@ -98,8 +98,10 @@ elseif has("gui_running")
     set guifont=UbuntuMonoNerdFontCompleteM-Regular:h20
   endif
 else
-  set termguicolors
-  if has('win32')
+  if !has("mac")
+    set termguicolors
+  endif
+  if has("win32")
     set nocursorline
   elseif has("linux")
     let &t_TI=""
@@ -278,12 +280,12 @@ map <C-K> [c
 map <leader>do do]c<leader>do
 map <leader>dp dp]c<leader>dp
 
-if has('unix') && (system('uname -a') =~ "Android")
+if has("unix") && (system('uname -a') =~ "Android")
   noremap `` <esc>
   inoremap `` <esc>
 endif
 
-if has('win32')
+if has("win32")
   au FileType cpp map <buffer> <leader>fj :w<CR>:!echo --------Debugging--------
               \ && g++ % -o %:h\tmp_%:t:r.exe && %:h\tmp_%:t:r.exe<CR>
 else
