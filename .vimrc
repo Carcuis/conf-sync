@@ -280,9 +280,11 @@ map <C-K> [c
 map <leader>do do]c<leader>do
 map <leader>dp dp]c<leader>dp
 
+inoremap jj <esc>
+cnoremap jj <esc>
 if has("unix") && (system('uname -a') =~ "Android")
-  noremap `` <esc>
   inoremap `` <esc>
+  cnoremap `` <esc>
 endif
 
 if has("win32")
