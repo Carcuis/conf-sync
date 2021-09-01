@@ -285,6 +285,7 @@ cnoremap jj <esc>
 if has("unix") && (system('uname -a') =~ "Android")
   inoremap `` <esc>
   cnoremap `` <esc>
+  vnoremap `` <esc>
 endif
 
 if has("win32")
