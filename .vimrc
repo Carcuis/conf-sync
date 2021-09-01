@@ -46,6 +46,7 @@ let mapleader = "\<space>"
 syntax on
 set nu
 set rnu
+set nowrap
 set tabstop=4
 set shiftwidth=4
 set expandtab
@@ -203,7 +204,8 @@ map <leader>tb :TagbarToggle<CR>
 let g:tagbar_width = min([max([25, winwidth(0) / 5]), 30])
 if (winwidth(0) > 100 || has("gui_running")) && argc() < 2
   " autocmd VimEnter * nested :TagbarOpen
-  autocmd BufEnter * nested :call tagbar#autoopen(0)
+  " autocmd BufEnter * nested :call tagbar#autoopen(0)
+  autocmd FileType * nested :call tagbar#autoopen(0)
 endif
 
 " vim-startify
@@ -287,6 +289,9 @@ if has("unix") && (system('uname -a') =~ "Android")
   cnoremap `` <esc>
   vnoremap `` <esc>
 endif
+
+map <C-H> 10zh
+map <C-L> 10zl
 
 if has("win32")
   au FileType cpp map <buffer> <leader>fj :w<CR>:!echo --------Debugging--------
