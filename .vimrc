@@ -34,6 +34,7 @@ Plug 'preservim/tagbar'
 Plug 'airblade/vim-gitgutter'
 Plug 'vim/killersheep'
 Plug 'mhinz/vim-startify'
+Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
 
 " Initialize plugin system
 call plug#end()
@@ -161,14 +162,17 @@ let g:minimap_toggle='<leader>mm'
 " let g:WebDevIconsUnicodeGlyphDoubleWidth = 1
 
 " YouCompleteMe
-" let g:ycm_global_ycm_extra_conf = "~/.vim/bundle/YouCompleteMe/.ycm_extra_conf.py"
+let g:ycm_global_ycm_extra_conf = "~/.ycm_extra_conf.py"
+" let g:ycm_collect_identifiers_from_tag_files = 1
 " let g:syntastic_cpp_compiler = 'g++'
 " let g:syntastic_cpp_compiler_options = '-std=c++11 -stdlib=libc++'
-" let g:ycm_min_num_of_chars_for_completion = 1
+let g:ycm_min_num_of_chars_for_completion = 1
 " let g:ycm_semantic_triggers =  {
-" 			\ 'c,cpp,python,java,go,erlang,perl': ['re!\w{2}'],
-" 			\ 'cs,lua,javascript': ['re!\w{2}'],
-" 			\ }
+"             \ 'c,cpp,python,java,go,erlang,perl': ['re!\w{2}'],
+"             \ 'cs,lua,javascript': ['re!\w{2}'],
+"             \ }
+set completeopt-=preview
+set completeopt=longest,menu
 
 " CtrlP
 " let g:ctrlp_map = '<leader>ff'
@@ -225,7 +229,9 @@ function! StartifyEntryFormat()
 endfunction
 
 map <C-n> :tabnew<CR>
-" map <C-s> :w<CR>
+map <M-s> :w<CR>
+map <M-w> :q<CR>
+map <M-q> :q!<CR>
 map <leader>bn :bn<CR>
 
 map <leader>sf :w<CR>:source $MYVIMRC<CR>
