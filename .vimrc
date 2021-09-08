@@ -17,7 +17,7 @@ Plug 'severin-lemaignan/vim-minimap'
 Plug 'vimcn/vimcdoc'
 Plug 'ryanoasis/vim-devicons'
 Plug 'tpope/vim-commentary'
-Plug 'ycm-core/YouCompleteMe'
+" Plug 'ycm-core/YouCompleteMe'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-surround'
 " Plug 'vim-rhubarb'
@@ -35,6 +35,7 @@ Plug 'airblade/vim-gitgutter'
 Plug 'vim/killersheep'
 Plug 'mhinz/vim-startify'
 Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
 " Initialize plugin system
 call plug#end()
@@ -51,6 +52,7 @@ set nowrap
 set tabstop=4
 set shiftwidth=4
 set expandtab
+set smarttab
 set smartindent
 set autoindent
 set noundofile
@@ -63,6 +65,9 @@ set incsearch
 set hlsearch
 set scrolloff=5
 set updatetime=200
+set hidden
+set ignorecase
+set smartcase
 
 if has("win32")
   set backspace=indent,eol,start
@@ -227,6 +232,36 @@ let g:startify_fortune_use_unicode = 1
 function! StartifyEntryFormat()
     return 'WebDevIconsGetFileTypeSymbol(absolute_path) ." ". entry_path'
 endfunction
+
+" coc.nvim
+let g:coc_global_extensions = [
+            \ 'coc-json', 'coc-vimlsp', 'coc-marketplace', 'coc-markdownlint',
+            \ 'coc-pyright', 'coc-python', 'coc-powershell', 'coc-sh',
+            \ 'coc-cmake', 'coc-actions', 'coc-translator', 'coc-snippets',
+            \ 'coc-clangd']
+inoremap <silent><expr> <TAB>
+      \ pumvisible() ? "\<C-n>" :
+      \ <SID>check_back_space() ? "\<TAB>" :
+      \ coc#refresh()
+inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+function! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
+inoremap <silent><expr> <c-e> coc#refresh()
+inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
+                              \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+nmap <silent> [g <Plug>(coc-diagnostic-prev)
+nmap <silent> ]g <Plug>(coc-diagnostic-next)
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
+autocmd CursorHold * silent call CocActionAsync('highlight')
+nmap <leader>rn <Plug>(coc-rename)
+xmap <leader>a  <Plug>(coc-codeaction-selected)
+nmap <leader>a  <Plug>(coc-codeaction-selected)
+map <C-E> :call CocAction('doHover')<CR>
 
 map <C-n> :tabnew<CR>
 map <M-s> :w<CR>
