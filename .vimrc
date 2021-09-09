@@ -7,9 +7,9 @@ Plug 'vim-airline/vim-airline'
 Plug 'preservim/nerdtree'
 Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
-Plug 'vim-airline/vim-airline-themes'
+" Plug 'vim-airline/vim-airline-themes'
 Plug 'tomasr/molokai'
-Plug 'doums/darcula'
+Plug 'carcuis/darcula'
 " Plug 'blueshirts/darcula'
 Plug 'joshdick/onedark.vim'
 Plug 'jiangmiao/auto-pairs'
@@ -118,12 +118,33 @@ else
   endif
 endif
 
+" darcula
+hi! link GitGutterAdd GitAddStripe
+hi! link GitGutterChange GitChangeStripe
+hi! link GitGutterDelete GitDeleteStripe
+let g:gitgutter_sign_removed = '▶'
+hi! link CocErrorSign ErrorSign
+hi! link CocWarningSign WarningSign
+hi! link CocInfoSign InfoSign
+hi! link CocHintSign HintSign
+hi! link CocErrorFloat Pmenu
+hi! link CocWarningFloat Pmenu
+hi! link CocInfoFloat Pmenu
+hi! link CocHintFloat Pmenu
+hi! link CocHighlightText IdentifierUnderCaret
+hi! link CocHighlightRead IdentifierUnderCaret
+hi! link CocHighlightWrite IdentifierUnderCaretWrite
+hi! link CocErrorHighlight CodeError
+hi! link CocWarningHighlight CodeWarning
+hi! link CocInfoHighlight CodeInfo
+hi! link CocHintHighlight CodeHint
+
 " vim-airline
 let g:airline#extensions#tabline#enabled = 1
 let g:airline_powerline_fonts = 1
 " let g:airline_theme="dark"
 " let g:airline_theme="badwolf"
-let g:airline_theme="powerlineish"
+let g:airline_theme="darcula"
 " let g:airline_extensions = []
 
 " nerdtree
@@ -169,17 +190,17 @@ let g:minimap_toggle='<leader>mm'
 " let g:WebDevIconsUnicodeGlyphDoubleWidth = 1
 
 " YouCompleteMe
-let g:ycm_global_ycm_extra_conf = "~/.ycm_extra_conf.py"
+" let g:ycm_global_ycm_extra_conf = "~/.ycm_extra_conf.py"
 " let g:ycm_collect_identifiers_from_tag_files = 1
 " let g:syntastic_cpp_compiler = 'g++'
 " let g:syntastic_cpp_compiler_options = '-std=c++11 -stdlib=libc++'
-let g:ycm_min_num_of_chars_for_completion = 1
+" let g:ycm_min_num_of_chars_for_completion = 1
 " let g:ycm_semantic_triggers =  {
 "             \ 'c,cpp,python,java,go,erlang,perl': ['re!\w{2}'],
 "             \ 'cs,lua,javascript': ['re!\w{2}'],
 "             \ }
-set completeopt-=preview
-set completeopt=longest,menu
+" set completeopt-=preview
+" set completeopt=longest,menu
 
 " CtrlP
 " let g:ctrlp_map = '<leader>ff'
@@ -265,6 +286,8 @@ nmap <leader>rf <Plug>(coc-refactor)
 xmap <leader>a  <Plug>(coc-codeaction-selected)
 nmap <leader>a  <Plug>(coc-codeaction-selected)w
 map <C-E> :call CocActionAsync('doHover')<CR>
+nmap <Leader>tr <Plug>(coc-translator-p)
+vmap <Leader>tr <Plug>(coc-translator-pv)
 
 map <C-n> :tabnew<CR>
 map <M-s> :w<CR>
