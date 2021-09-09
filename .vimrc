@@ -285,7 +285,8 @@ nmap <leader>rn <Plug>(coc-rename)
 nmap <leader>rf <Plug>(coc-refactor)
 xmap <leader>a  <Plug>(coc-codeaction-selected)
 nmap <leader>a  <Plug>(coc-codeaction-selected)w
-map <C-E> :call CocActionAsync('doHover')<CR>
+nmap <M-f>  <Plug>(coc-fix-current)
+map <M-e> :call CocActionAsync('doHover')<CR>
 nmap <Leader>tr <Plug>(coc-translator-p)
 vmap <Leader>tr <Plug>(coc-translator-pv)
 
