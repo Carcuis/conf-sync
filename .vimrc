@@ -261,6 +261,7 @@ nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
 autocmd CursorHold * silent call CocActionAsync('highlight')
 nmap <leader>rn <Plug>(coc-rename)
+nmap <leader>rf <Plug>(coc-refactor)
 xmap <leader>a  <Plug>(coc-codeaction-selected)
 nmap <leader>a  <Plug>(coc-codeaction-selected)w
 map <C-E> :call CocActionAsync('doHover')<CR>
@@ -300,7 +301,6 @@ map <leader>w :w<CR>
 map <leader>q :q<CR>
 map <leader>wq :wq<CR>
 map <leader>fq :q!<CR>
-map <leader>qa :q<CR><leader>qa
 map <leader>ewq :wq<CR><leader>ewq
 map <leader>r :diffupdate<CR>
 map <leader><leader>r :redraw!<CR>
