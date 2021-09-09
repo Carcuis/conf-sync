@@ -69,6 +69,7 @@ set updatetime=100
 set hidden
 set ignorecase
 set smartcase
+set guicursor+=n:blinkon1
 
 if has("win32")
   set backspace=indent,eol,start
