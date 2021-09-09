@@ -73,11 +73,11 @@ ENABLE_CORRECTION="true"
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(
-	colored-man-pages
-	git
-	z
-	zsh-syntax-highlighting
-	zsh-autosuggestions
+    colored-man-pages
+    git
+    z
+    zsh-syntax-highlighting
+    zsh-autosuggestions
     zsh-completions
     command-not-found
 )
@@ -117,9 +117,17 @@ autoload -U compinit && compinit
 
 # if [[ ! $TMUX && ! $VIFM ]]; then
 if [[ ! $VIFM ]]; then
-	# neofetch
-	# fortune|cowsay -f dragon-and-cow|lolcat
-	fortune|cowsay|lolcat
+    # neofetch
+    # fortune|cowsay -f dragon-and-cow|lolcat
+    fortune|cowsay|lolcat
+fi
+
+if command -v nvim > /dev/null; then
+    export EDITOR=nvim
+elif command -v vim > /dev/null; then
+    export EDITOR=vim
+elif command -v vi > /dev/null; then
+    export EDITOR=vi
 fi
 
 # ---------alias----------\
@@ -134,10 +142,8 @@ alias wtrgz='curl wttr.in/Guangzhou\?lang=zh'
 # alias aliyun='ssh -i ~/.ssh/aliyun -p 2235 cui@47.107.62.60'
 # alias aliyunzh='LANG="zh_CN.UTF-8" ; ssh -i ~/.ssh/aliyun -p 2235 cui@47.107.62.60 ; LANG="en_US.UTF-8"'
 alias iphone='ssh -i ~/.ssh/ish -p 2235 cui@192.168.0.104'
-alias zshc='vim ~/.zshrc'
-alias zshcg='gvim ~/.zshrc'
-alias vimc='vim ~/.vimrc'
-alias gvimc='gvim ~/.vimrc'
+alias zshc="$EDITOR ~/.zshrc"
+alias vimc="$EDITOR ~/.vimrc"
 alias src='source ~/.zshrc'
 alias vifm='vifm .'
 alias vif='vifm .'
@@ -155,15 +161,15 @@ alias al='la'
 # alias nethack='nethack@nethack-cn.com -p2222'
 
 if [[ $`uname -a` =~ Microsoft ]]; then
-	alias sshon='sudo service ssh start'
-	alias sshoff='sudo service ssh stop'
-	# alias neofetch='neofetch --ascii_distro windows10'
-	# alias byobu='LANG="en_US.UTF-8" ; byobu'
-	alias x='export DISPLAY=:0.0'
-	# alias cman='man -M /usr/local/share/man/zh_CN'
-	alias clp='clip.exe'
-	alias adb='adb.exe'
-	alias fastboot='fastboot.exe'
+    alias sshon='sudo service ssh start'
+    alias sshoff='sudo service ssh stop'
+    # alias neofetch='neofetch --ascii_distro windows10'
+    # alias byobu='LANG="en_US.UTF-8" ; byobu'
+    alias x='export DISPLAY=:0.0'
+    # alias cman='man -M /usr/local/share/man/zh_CN'
+    alias clp='clip.exe'
+    alias adb='adb.exe'
+    alias fastboot='fastboot.exe'
     alias o='explorer.exe'
     alias o.='explorer.exe .'
     alias proxy='export https_proxy=socks5://127.0.0.1:10808'
@@ -211,22 +217,22 @@ elif [[ "$OSTYPE" =~ android ]]; then
     alias termc='vim ~/.termux/termux.properties'
     alias ubuntu2004='~/ubuntu/2004/start-ubuntu20.sh'
 elif [[ "$OSTYPE" =~ ^linux ]]; then
-	# alias sshon='sudo service ssh start'
-	# alias sshoff='sudo service ssh stop'
-	# alias byobu='LANG="en_US.UTF-8" ; byobu'
+    # alias sshon='sudo service ssh start'
+    # alias sshoff='sudo service ssh stop'
+    # alias byobu='LANG="en_US.UTF-8" ; byobu'
     alias fix-pod='pactl load-module module-bluetooth-discover'
     alias o='nautilus'
     alias o.='nautilus .'
     alias proxy='export https_proxy=socks5://127.0.0.1:1089'
     alias unproxy='export https_proxy='
 elif [[ "$OSTYPE" =~ ^darwin ]]; then
-	# alias cmake-gui='/Applications/CMake.app/Contents/MacOS/CMake .'
-	alias sshon='sudo launchctl load -w /System/Library/LaunchDaemons/ssh.plist'
-	alias sshoff='sudo launchctl unload -w /System/Library/LaunchDaemons/ssh.plist'
+    # alias cmake-gui='/Applications/CMake.app/Contents/MacOS/CMake .'
+    alias sshon='sudo launchctl load -w /System/Library/LaunchDaemons/ssh.plist'
+    alias sshoff='sudo launchctl unload -w /System/Library/LaunchDaemons/ssh.plist'
     alias fixroot='sudo mount -uw /'
-	alias fix='xattr -d com.apple.FinderInfo'
-	alias o='open'
-	alias o.='open .'
+    alias fix='xattr -d com.apple.FinderInfo'
+    alias o='open'
+    alias o.='open .'
     alias proxy='export https_proxy=socks5://127.0.0.1:1080'
     alias unproxy='export https_proxy='
 fi
@@ -240,48 +246,53 @@ fi
 # --------------/
 
 if [[ $`uname -a` =~ Microsoft ]]; then
-	# adjust login path
-	if [ "$PWD" = "/mnt/c/Users/cui" ]; then
-		cd ~
-	elif [ "$PWD" = "/mnt/c/Windows/system32" ]; then
-		cd ~
-	elif [ "$PWD" = "/mnt/c/Windows/System32" ]; then
-		cd ~
-	fi
+    # adjust login path
+    if [ "$PWD" = "/mnt/c/Users/cui" ]; then
+        cd ~
+    elif [ "$PWD" = "/mnt/c/Windows/system32" ]; then
+        cd ~
+    elif [ "$PWD" = "/mnt/c/Windows/System32" ]; then
+        cd ~
+    fi
     # display env
     export DISPLAY=127.0.0.1:0.0
-	# ---------------
+    # autostart ssh-agent
+    if [ -z "$SSH_AUTH_SOCK" ] ; then
+        eval `ssh-agent -s` > /dev/null
+        ssh-add ~/.ssh/github > /dev/null 2>&1
+    fi
+    # ---------------
 elif [[ "$OSTYPE" =~ android ]]; then
     #sshd start-up
     # if [ `ps -ef |grep -w sshd|grep -v grep|wc -l` -le 0 ];then
     #     sshd
     # fi
 elif [[ "$OSTYPE" =~ ^linux ]]; then
-	# ------ros------\
-	# alias src-ros-env='source /opt/ros/melodic/setup.zsh'
-	# *or auto source when shell start up
-	# source /opt/ros/melodic/setup.zsh
-	# ---------------/
+    # ------ros------\
+    # alias src-ros-env='source /opt/ros/melodic/setup.zsh'
+    # *or auto source when shell start up
+    # source /opt/ros/melodic/setup.zsh
+    # ---------------/
 
-	# -----clion-----\
-	# alias clion='~/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/202.7319.72/bin/clion.sh'
-	# ---------------/
+    # -----clion-----\
+    # alias clion='~/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/202.7319.72/bin/clion.sh'
+    # ---------------/
 
-	# ---openvino----\
-	# alias src-openvino-env='source /opt/intel/openvino/bin/setupvars.sh'
-	# *or auto source when shell start up
-	# source /opt/intel/openvino/bin/setupvars.sh
-	# ---------------/
+    # ---openvino----\
+    # alias src-openvino-env='source /opt/intel/openvino/bin/setupvars.sh'
+    # *or auto source when shell start up
+    # source /opt/intel/openvino/bin/setupvars.sh
+    # ---------------/
 
 elif [[ "$OSTYPE" =~ ^darwin ]]; then
-	# ----cmake-gui----\
-	# alias cmake-gui='/Applications/CMake.app/Contents/MacOS/CMake .'
-	# -----------------/
+    # ----cmake-gui----\
+    # alias cmake-gui='/Applications/CMake.app/Contents/MacOS/CMake .'
+    # -----------------/
 
-	# ----openni2----\
-	# export OPENNI2_INCLUDE=/usr/local/include/ni2
-	# export OPENNI2_REDIST=/usr/local/lib/ni2
-	# ---------------/
+    # ----openni2----\
+    # export OPENNI2_INCLUDE=/usr/local/include/ni2
+    # export OPENNI2_REDIST=/usr/local/lib/ni2
+    # ---------------/
 fi
 # ----------env----------/
 
@@ -294,5 +305,5 @@ fi
 ZLE_RPROMPT_INDENT=0
 POWERLEVEL9K_TIME_FORMAT=%D{%H:%M}
 # if [[ $`uname -a` =~ Microsoft ]]; then
-# 	POWERLEVEL9K_OS_ICON_CONTENT_EXPANSION=$'\ue70f'
+#   POWERLEVEL9K_OS_ICON_CONTENT_EXPANSION=$'\ue70f'
 # fi
