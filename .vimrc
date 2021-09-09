@@ -36,6 +36,7 @@ Plug 'vim/killersheep'
 Plug 'mhinz/vim-startify'
 Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'jackguo380/vim-lsp-cxx-highlight'
 
 " Initialize plugin system
 call plug#end()
@@ -64,7 +65,7 @@ set encoding=utf-8
 set incsearch
 set hlsearch
 set scrolloff=5
-set updatetime=200
+set updatetime=100
 set hidden
 set ignorecase
 set smartcase
