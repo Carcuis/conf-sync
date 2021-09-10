@@ -1,5 +1,5 @@
 # If you come from bash you might have to change your $PATH.
-# export PATH=$HOME/bin:/usr/local/bin:$PATH
+export PATH=$HOME/.local/bin:/usr/local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
@@ -150,6 +150,7 @@ alias vif='vifm .'
 alias gvi='gvim'
 alias nvi='nvim'
 alias al='la'
+alias lg='lazygit'
 # alias termux='ssh -p 8022 192.168.43.1'
 # alias xytermux='ssh -p 8022 10.44.68.197'
 # alias termux='ssh -p 8022 172.28.247.98'
