@@ -71,16 +71,20 @@ set hidden
 set ignorecase
 set smartcase
 set guicursor+=n:blinkon1
+set termguicolors
 
 if has("win32")
   set backspace=indent,eol,start
 endif
 
 if has("nvim")
-  set termguicolors
-  set guifont=UbuntuMono\ NF:h16
   hi cursorline guifg=NONE
-elseif has("gui_running")
+  if !has("mac")
+    set guifont=UbuntuMono\ NF:h16
+  else
+    set guifont=UbuntuMono\ Nerd\ Font\ Mono:h20
+  endif
+elseif has("gui_running") "gvim
   hi Cursor guifg=black guibg=white
   " color onedark
   " set guioptions-=m  "remove menu bar
@@ -92,7 +96,7 @@ elseif has("gui_running")
     source $VIMRUNTIME/delmenu.vim
     set guifont=UbuntuMono_NF:h16:cANSI:qDRAFT
     map <F11> :call libcallnr("gvimfullscreen.dll", "ToggleFullScreen", 0)<CR>
-  elseif (system('uname -a') =~ "Microsoft")
+  elseif (system('uname -a') =~ "Microsoft") "wsl
     set lines=45
     set columns=162
     set linespace=0
@@ -107,10 +111,7 @@ elseif has("gui_running")
     set columns=162
     set guifont=UbuntuMonoNerdFontCompleteM-Regular:h20
   endif
-else
-  if !has("mac")
-    set termguicolors
-  endif
+else "vim in tui
   if has("win32")
     set nocursorline
   elseif has("linux")
