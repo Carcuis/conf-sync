@@ -76,7 +76,7 @@ if has("win32")
   set backspace=indent,eol,start
 endif
 
-if has("nvim") && !has("mac")
+if has("nvim")
   set termguicolors
   set guifont=UbuntuMono\ NF:h16
   hi cursorline guifg=NONE
@@ -139,6 +139,7 @@ hi! link CocErrorHighlight CodeError
 hi! link CocWarningHighlight CodeWarning
 hi! link CocInfoHighlight CodeInfo
 hi! link CocHintHighlight CodeHint
+call darcula#Hi('Comment', [ '#629755', 255 ], darcula#palette.null, 'italic')
 
 " vim-airline
 let g:airline#extensions#tabline#enabled = 1
