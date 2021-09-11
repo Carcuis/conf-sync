@@ -72,6 +72,7 @@ set ignorecase
 set smartcase
 set guicursor+=n:blinkon1
 set termguicolors
+set signcolumn=yes
 
 if has("win32")
   set backspace=indent,eol,start
