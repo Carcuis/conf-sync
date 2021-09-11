@@ -362,6 +362,8 @@ endif
 
 map <C-H> 10zh
 map <C-L> 10zl
+imap <C-H> 10zh
+imap <C-L> 10zl
 
 if has("win32")
   au FileType cpp map <buffer> <leader>fj :w<CR>:!echo --------Debugging--------
