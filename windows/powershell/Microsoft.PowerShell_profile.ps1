@@ -42,7 +42,7 @@ function GoUpFour { Set-Location ../../../.. }
 function OpenCwd { explorer.exe . }
 function EditProfile { EditFile $profile }
 function EditVimrc { EditFile $HOME\_vimrc }
-function OpenVifmInPwd { vifm_copy.exe . }
+function OpenVifmInPwd { vifm.exe . }
 function ReloadProfile { . $profile }
 function GetAdminPriv { Start-Process pwsh -Verb runAs }
 function StartSshServiceInWsl { wsl -- sudo service ssh start }
@@ -77,3 +77,4 @@ Set-Alias sshoff StopSshServiceInWSl
 Set-Alias proxy SetProxyOn
 Set-Alias unproxy SetProxyOff
 Set-Alias oneplus8 SshToOneplus8pro
+Set-Alias lg lazygit
