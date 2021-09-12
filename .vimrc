@@ -118,8 +118,8 @@ else "vim in tui
   if has("win32")
     set nocursorline
   elseif has("linux")
-    let &t_TI=""
-    let &t_TE=""
+    " let &t_TI=""
+    " let &t_TE=""
   endif
 endif
 
