@@ -38,6 +38,7 @@ Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': 
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'jackguo380/vim-lsp-cxx-highlight'
 Plug 'vifm/vifm.vim'
+Plug 'liuchengxu/vim-which-key'
 
 " Initialize plugin system
 call plug#end()
@@ -73,6 +74,7 @@ set smartcase
 set guicursor+=n:blinkon1
 set termguicolors
 set signcolumn=yes
+set timeoutlen=500
 
 if has("win32")
   set backspace=indent,eol,start
@@ -234,7 +236,8 @@ autocmd FileType ps1 set commentstring=#\ %s
 
 " indentline
 let g:indentLine_char = '│'
-au FileType startify :IndentLinesDisable
+au FileType startify,which_key :IndentLinesDisable
+au TermOpen * IndentLinesDisable
 
 " rainbow bracket
 let g:rainbow_active = 0
@@ -297,6 +300,9 @@ nmap <M-f>  <Plug>(coc-fix-current)
 map <M-e> :call CocActionAsync('doHover')<CR>
 nmap <Leader>tr <Plug>(coc-translator-p)
 vmap <Leader>tr <Plug>(coc-translator-pv)
+
+" vim-which-key
+nnoremap <silent> <leader> :WhichKey '<Space>'<CR>
 
 map <C-n> :tabnew<CR>
 map <M-s> :w<CR>
@@ -369,6 +375,8 @@ map <C-H> 10zh
 map <C-L> 10zl
 imap <C-H> 10zh
 imap <C-L> 10zl
+
+let g:load_doxygen_syntax=1
 
 if has("win32")
   au FileType cpp map <buffer> <leader>fj :w<CR>:!echo --------Debugging--------
