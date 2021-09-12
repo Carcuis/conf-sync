@@ -237,7 +237,9 @@ autocmd FileType ps1 set commentstring=#\ %s
 " indentline
 let g:indentLine_char = '│'
 au FileType startify,which_key :IndentLinesDisable
-au TermOpen * IndentLinesDisable
+if has("nvim")
+  au TermOpen * IndentLinesDisable
+endif
 
 " rainbow bracket
 let g:rainbow_active = 0
