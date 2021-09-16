@@ -13,7 +13,7 @@ Plug 'carcuis/darcula'
 " Plug 'blueshirts/darcula'
 Plug 'joshdick/onedark.vim'
 Plug 'jiangmiao/auto-pairs'
-Plug 'severin-lemaignan/vim-minimap'
+" Plug 'severin-lemaignan/vim-minimap'
 Plug 'vimcn/vimcdoc'
 Plug 'ryanoasis/vim-devicons'
 Plug 'tpope/vim-commentary'
@@ -186,10 +186,10 @@ let g:NERDTreeHighlightFoldersFullName = 1 " highlights the folder name
 
 " vim-minimap
 " let g:minimap_highlight='Visual'
-let g:minimap_show='<leader>ms'
-let g:minimap_update='<leader>mr'
-let g:minimap_close='<leader>mc'
-let g:minimap_toggle='<leader>mm'
+" let g:minimap_show='<leader>ms'
+" let g:minimap_update='<leader>mr'
+" let g:minimap_close='<leader>mc'
+" let g:minimap_toggle='<leader>mm'
 
 " vim-devicons
 " let g:webdevicons_enable = 1
