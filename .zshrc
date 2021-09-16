@@ -72,6 +72,9 @@ ENABLE_CORRECTION="true"
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
+if ! [[ "$OSTYPE" =~ android ]]; then
+    CMD_NOT_FOUND="command-not-found"
+fi
 plugins=(
     colored-man-pages
     git
@@ -79,7 +82,7 @@ plugins=(
     zsh-syntax-highlighting
     zsh-autosuggestions
     zsh-completions
-    command-not-found
+    $CMD_NOT_FOUND
 )
 
 source $ZSH/oh-my-zsh.sh
