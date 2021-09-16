@@ -75,6 +75,7 @@ set guicursor+=n:blinkon1
 set termguicolors
 set signcolumn=yes
 set timeoutlen=500
+hi NonText guifg=bg
 
 if has("win32")
   set backspace=indent,eol,start
@@ -161,18 +162,16 @@ let g:airline_right_alt_sep = ''
 map <leader>tt :NERDTreeToggle<CR>
 map <F2> :NERDTree<CR>
 let NERDTreeShowHidden = 1
-let NERDTreeShowBookmarks = 1
+" let NERDTreeShowBookmarks = 1
 let NERDTreeWinSize = min([max([25, winwidth(0) / 5]), 30])
 if (winwidth(0) > 140 || has("gui_running")) && argc() < 2
-    au VimEnter * :NERDTree | wincmd p
+    au VimEnter * :NERDTree | set signcolumn=auto | wincmd p
 endif
 " Exit Vim if NERDTree is the only window left.
 autocmd BufEnter * if tabpagenr('$') == 1 && winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() |
     \ quit | endif
-if has("win32")
-  let g:NERDTreeDirArrowExpandable = ''
-  let g:NERDTreeDirArrowCollapsible = ''
-endif
+let g:NERDTreeDirArrowExpandable = ''
+let g:NERDTreeDirArrowCollapsible = ''
 
 " vim-nerdtree-syntax-highlight
 let g:NERDTreeFileExtensionHighlightFullName = 1
@@ -304,7 +303,9 @@ nmap <Leader>tr <Plug>(coc-translator-p)
 vmap <Leader>tr <Plug>(coc-translator-pv)
 
 " vim-which-key
+let g:which_key_fallback_to_native_key=1
 nnoremap <silent> <leader> :WhichKey '<Space>'<CR>
+nnoremap <silent> g :WhichKey 'g'<CR>
 
 map <C-n> :tabnew<CR>
 map <M-s> :w<CR>
@@ -327,33 +328,33 @@ else
   map <leader>ef :e $MYVIMRC<CR>
 endif
 
-map <leader>1 :1b<CR>
-map <leader>2 :2b<CR>
-map <leader>3 :3b<CR>
-map <leader>4 :4b<CR>
-map <leader>5 :5b<CR>
-map <leader>6 :6b<CR>
-map <leader>7 :7b<CR>
-map <leader>8 :8b<CR>
-map <leader>9 :9b<CR>
+" map <leader>1 :1b<CR>
+" map <leader>2 :2b<CR>
+" map <leader>3 :3b<CR>
+" map <leader>4 :4b<CR>
+" map <leader>5 :5b<CR>
+" map <leader>6 :6b<CR>
+" map <leader>7 :7b<CR>
+" map <leader>8 :8b<CR>
+" map <leader>9 :9b<CR>
 
-map <leader>w :w<CR>
+map <leader>ww :w<CR>
 map <leader>q :q<CR>
 map <leader>wq :wq<CR>
 map <leader>fq :q!<CR>
 map <leader>ewq :wq<CR><leader>ewq
-map <leader>r :diffupdate<CR>
+map <leader>du :diffupdate<CR>
 map <leader><leader>r :redraw!<CR>
 
 map <leader>h <C-w>h
 map <leader>j <C-w>j
 map <leader>k <C-w>k
 map <leader>l <C-w>l
-map <leader>s <C-w>s
-map <leader>v <C-w>v
+map <leader>sp <C-w>s
+map <leader>vs <C-w>v
 
-map <leader>n :tabp<CR>
-map <leader>m :tabn<CR>
+map <leader>tp :tabp<CR>
+map <leader>tn :tabn<CR>
 
 map <leader>cp "+y
 map <leader>p "+p
