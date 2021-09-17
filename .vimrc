@@ -154,9 +154,9 @@ let g:airline_powerline_fonts = 1
 let g:airline_theme="darcula"
 " let g:airline_extensions = []
 let g:airline_left_sep = ''
-let g:airline_left_alt_sep = ''
+let g:airline_left_alt_sep = '│'
 let g:airline_right_sep = ''
-let g:airline_right_alt_sep = ''
+let g:airline_right_alt_sep = '│'
 
 " nerdtree
 map <leader>tt :NERDTreeToggle<CR>
@@ -299,7 +299,7 @@ nmap <leader>rf <Plug>(coc-refactor)
 xmap <leader>a  <Plug>(coc-codeaction-selected)
 nmap <leader>a  <Plug>(coc-codeaction-selected)w
 nmap <M-f>  <Plug>(coc-fix-current)
-map <M-e> :call CocActionAsync('doHover')<CR>
+map <silent> <M-e> :call CocActionAsync('doHover')<CR>
 nmap <Leader>tr <Plug>(coc-translator-p)
 vmap <Leader>tr <Plug>(coc-translator-pv)
 
