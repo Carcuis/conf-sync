@@ -251,6 +251,7 @@ if (winwidth(0) > 100 || has("gui_running")) && argc() < 2
   " autocmd BufEnter * nested :call tagbar#autoopen(0)
   autocmd FileType * nested :call tagbar#autoopen(0)
 endif
+let g:tagbar_iconchars = ['▶', '▼']
 
 " vim-startify
 let g:startify_lists = [
