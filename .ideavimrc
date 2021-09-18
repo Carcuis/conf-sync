@@ -4,8 +4,13 @@ Plugin 'vim-surround'
 set nu
 set rnu
 set incsearch
+set easymotion
+set scrolloff=5
 
 let mapleader = "\<space>"
+
+imap jj <esc>
+cmap jj <esc>
 
 map <leader>w :w<CR>
 map <leader>q :q<CR>
@@ -26,3 +31,11 @@ map <leader>m :tabn<CR>
 
 map <leader>cp "+y<CR>
 map <leader>p "+p<CR>
+
+map <c-h> 10zh
+map <c-l> 10zl
+imap <c-h> 10zh
+imap <c-l> 10zl
+
+map H :bp<cr>
+map L :bn<cr>
