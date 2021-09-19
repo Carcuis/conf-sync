@@ -125,10 +125,9 @@ else "vim in tui
 endif
 
 " darcula
-hi! link GitGutterAdd GitAddStripe
-hi! link GitGutterChange GitChangeStripe
+" hi! link GitGutterAdd GitAddStripe
+" hi! link GitGutterChange GitChangeStripe
 hi! link GitGutterDelete GitDeleteStripe
-let g:gitgutter_sign_removed = '▶'
 hi! link CocErrorSign ErrorSign
 hi! link CocWarningSign WarningSign
 hi! link CocInfoSign InfoSign
@@ -285,8 +284,8 @@ function! s:check_back_space() abort
   return !col || getline('.')[col - 1]  =~# '\s'
 endfunction
 inoremap <silent><expr> <c-e> coc#refresh()
-inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
-                              \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+" inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
+"                               \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
 nmap <silent> [g <Plug>(coc-diagnostic-prev)
 nmap <silent> ]g <Plug>(coc-diagnostic-next)
 nmap <silent> gd <Plug>(coc-definition)
@@ -307,6 +306,14 @@ vmap <Leader>tr <Plug>(coc-translator-pv)
 let g:which_key_fallback_to_native_key=1
 nnoremap <silent> <leader> :WhichKey '<Space>'<CR>
 nnoremap <silent> g :WhichKey 'g'<CR>
+
+" vim-gitgutter
+let g:gitgutter_sign_added = '▎'
+let g:gitgutter_sign_modified = '▎'
+let g:gitgutter_sign_removed = '▶'
+let g:gitgutter_sign_removed_first_line = '▔'
+let g:gitgutter_sign_removed_above_and_below = '_▔'
+let g:gitgutter_sign_modified_removed = '▎▶'
 
 map <C-n> :tabnew<CR>
 map <M-s> :w<CR>
