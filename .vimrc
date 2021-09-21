@@ -261,8 +261,8 @@ let g:startify_lists = [
     \ { 'type': 'commands',  'header': ['   Commands']       },
     \ ]
 let g:startify_commands = [
-    \ {'h': 'h startify'},
-    \ {'c': 'call EditVimrc("normal")'}
+    \ {'h': ['help startify', 'h startify']},
+    \ {'c': ['edit vimrc', 'call EditVimrc("normal")']}
     \ ]
 let g:startify_fortune_use_unicode = 1
 function! StartifyEntryFormat()
