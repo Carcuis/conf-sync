@@ -262,6 +262,7 @@ let g:startify_lists = [
     \ ]
 let g:startify_commands = [
     \ {'h': 'h startify'},
+    \ {'c': 'call EditVimrc("normal")'}
     \ ]
 let g:startify_fortune_use_unicode = 1
 function! StartifyEntryFormat()
@@ -321,20 +322,28 @@ map <M-w> :q<CR>
 map <M-q> :q!<CR>
 map <leader>bn :bn<CR>
 
+function EditVimrc(way)
+  if has("win32")
+    if a:way == "normal"
+      execute ":e ~/_vimrc"
+    elseif a:way == "vs"
+      execute ":vs ~/_vimrc"
+    endif
+  else
+    if a:way == "normal"
+      execute ":e ~/.vimrc"
+    elseif a:way == "vs"
+      execute ":vs ~/.vimrc"
+    endif
+  endif
+endfunction
+
 map <leader>sf :w<CR>:source $MYVIMRC<CR>
 if has("nvim")
   map <leader>ev :e $MYVIMRC<CR>
-  if has("win32")
-    map <leader>er :vs ~/_vimrc<CR>
-    map <leader>ef :e ~/_vimrc<CR>
-  else
-    map <leader>er :vs ~/.vimrc<CR>
-    map <leader>ef :e ~/.vimrc<CR>
-  endif
-else
-  map <leader>er :vs $MYVIMRC<CR>
-  map <leader>ef :e $MYVIMRC<CR>
 endif
+map <leader>ef :call EditVimrc("normal")<CR>
+map <leader>er :call EditVimrc("vs")<CR>
 
 " map <leader>1 :1b<CR>
 " map <leader>2 :2b<CR>
@@ -363,6 +372,8 @@ map <leader>vs <C-w>v
 
 map <leader>tp :tabp<CR>
 map <leader>tn :tabn<CR>
+map H :bp<CR>
+map L :bn<CR>
 
 map <leader>cp "+y
 map <leader>p "+p
