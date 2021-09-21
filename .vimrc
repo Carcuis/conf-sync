@@ -39,6 +39,8 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'jackguo380/vim-lsp-cxx-highlight'
 Plug 'vifm/vifm.vim'
 Plug 'liuchengxu/vim-which-key'
+Plug 'nvim-lua/plenary.nvim'
+Plug 'nvim-telescope/telescope.nvim'
 
 " Initialize plugin system
 call plug#end()
@@ -315,6 +317,14 @@ let g:gitgutter_sign_removed = '▶'
 let g:gitgutter_sign_removed_first_line = '▔'
 let g:gitgutter_sign_removed_above_and_below = '_▔'
 let g:gitgutter_sign_modified_removed = '▎▶'
+
+" telescope.nvim
+if has("nvim")
+  nnoremap <leader>ff <cmd>Telescope find_files<cr>
+  nnoremap <leader>fg <cmd>Telescope live_grep<cr>
+  nnoremap <leader>fb <cmd>Telescope buffers<cr>
+  nnoremap <leader>fh <cmd>Telescope help_tags<cr>
+endif
 
 map <C-n> :tabnew<CR>
 map <M-s> :w<CR>
