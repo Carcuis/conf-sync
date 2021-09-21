@@ -326,6 +326,9 @@ if has("nvim")
   nnoremap <leader>fh <cmd>Telescope help_tags<cr>
 endif
 
+" vim-trailing-whitespace
+let g:extra_whitespace_ignored_filetypes = ['TelescopePrompt']
+
 map <C-n> :tabnew<CR>
 map <M-s> :w<CR>
 map <M-w> :q<CR>
