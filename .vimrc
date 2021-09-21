@@ -264,7 +264,8 @@ let g:startify_lists = [
     \ ]
 let g:startify_commands = [
     \ {'h': ['help startify', 'h startify']},
-    \ {'c': ['edit vimrc', 'call EditVimrc("normal")']}
+    \ {'c': ['edit vimrc', 'call EditVimrc("normal")']},
+    \ {'t': ['telescope', 'Telescope find_files']}
     \ ]
 let g:startify_fortune_use_unicode = 1
 function! StartifyEntryFormat()
@@ -309,6 +310,7 @@ vmap <Leader>tr <Plug>(coc-translator-pv)
 let g:which_key_fallback_to_native_key=1
 nnoremap <silent> <leader> :WhichKey '<Space>'<CR>
 nnoremap <silent> g :WhichKey 'g'<CR>
+let g:which_key_sep = '➜'
 
 " vim-gitgutter
 let g:gitgutter_sign_added = '▎'
