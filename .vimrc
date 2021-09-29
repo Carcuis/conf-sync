@@ -378,10 +378,14 @@ map <leader>ewq :wq<CR><leader>ewq
 map <leader>du :diffupdate<CR>
 map <leader><leader>r :redraw!<CR>
 
-map <leader>h <C-w>h
-map <leader>j <C-w>j
-map <leader>k <C-w>k
-map <leader>l <C-w>l
+" map <leader>h <C-w>h
+" map <leader>j <C-w>j
+" map <leader>k <C-w>k
+" map <leader>l <C-w>l
+map <M-h> <C-w>h
+map <M-j> <C-w>j
+map <M-k> <C-w>k
+map <M-l> <C-w>l
 map <leader>sp <C-w>s
 map <leader>vs <C-w>v
 
@@ -410,8 +414,6 @@ endif
 
 map <C-H> 10zh
 map <C-L> 10zl
-imap <C-H> 10zh
-imap <C-L> 10zl
 
 let g:load_doxygen_syntax=1
 
