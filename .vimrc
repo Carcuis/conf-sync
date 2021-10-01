@@ -45,6 +45,7 @@ if has("nvim")
   Plug 'nvim-telescope/telescope.nvim'
   Plug 'kyazdani42/nvim-web-devicons'
   Plug 'akinsho/bufferline.nvim'
+  Plug 'kyazdani42/nvim-tree.lua'
 endif
 
 " Initialize plugin system
@@ -165,27 +166,29 @@ let g:airline_right_sep = ''
 let g:airline_right_alt_sep = '│'
 
 " nerdtree
-map <leader>tt :NERDTreeToggle<CR>
-map <F2> :NERDTree<CR>
-let NERDTreeShowHidden = 1
-" let NERDTreeShowBookmarks = 1
-let NERDTreeWinSize = min([max([25, winwidth(0) / 5]), 30])
-if (winwidth(0) > 140 || has("gui_running")) && argc() < 2
-    au VimEnter * :NERDTree | set signcolumn=auto | wincmd p
+if ! has("nvim")
+  map <leader>tt :NERDTreeToggle<CR>
+  map <F2> :NERDTree<CR>
+  let NERDTreeShowHidden = 1
+  " let NERDTreeShowBookmarks = 1
+  let NERDTreeWinSize = min([max([25, winwidth(0) / 5]), 30])
+  if (winwidth(0) > 140 || has("gui_running")) && argc() < 2
+      au VimEnter * :NERDTree | set signcolumn=auto | wincmd p
+  endif
+  " Exit Vim if NERDTree is the only window left.
+  autocmd BufEnter * if tabpagenr('$') == 1 && winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() |
+      \ quit | endif
+  let g:NERDTreeDirArrowExpandable = ''
+  let g:NERDTreeDirArrowCollapsible = ''
+
+  " vim-nerdtree-syntax-highlight
+  let g:NERDTreeFileExtensionHighlightFullName = 1
+  let g:NERDTreeExactMatchHighlightFullName = 1
+  let g:NERDTreePatternMatchHighlightFullName = 1
+
+  let g:NERDTreeHighlightFolders = 1 " enables folder icon highlighting using exact match
+  let g:NERDTreeHighlightFoldersFullName = 1 " highlights the folder name
 endif
-" Exit Vim if NERDTree is the only window left.
-autocmd BufEnter * if tabpagenr('$') == 1 && winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() |
-    \ quit | endif
-let g:NERDTreeDirArrowExpandable = ''
-let g:NERDTreeDirArrowCollapsible = ''
-
-" vim-nerdtree-syntax-highlight
-let g:NERDTreeFileExtensionHighlightFullName = 1
-let g:NERDTreeExactMatchHighlightFullName = 1
-let g:NERDTreePatternMatchHighlightFullName = 1
-
-let g:NERDTreeHighlightFolders = 1 " enables folder icon highlighting using exact match
-let g:NERDTreeHighlightFoldersFullName = 1 " highlights the folder name
 
 " nerdtree-git-plugin
 " let g:NERDTreeGitStatusShowClean = 1
@@ -224,7 +227,7 @@ let g:NERDTreeHighlightFoldersFullName = 1 " highlights the folder name
 let g:Lf_WindowPosition = 'popup'
 let g:Lf_ShortcutF = '<leader>ff'
 let g:Lf_ShortcutB = '<leader>bf'
-let g:Lf_StlSeparator = { 'left': "\ue0b0", 'right': "\ue0b2" }
+let g:Lf_StlSeparator = { 'left': "", 'right': "" }
 map <leader>fr :LeaderfMru<CR>
 
 " vim-commentary
@@ -270,7 +273,8 @@ let g:startify_lists = [
 let g:startify_commands = [
     \ {'h': ['help startify', 'h startify']},
     \ {'c': ['edit vimrc', 'call EditVimrc("normal")']},
-    \ {'t': ['telescope', 'Telescope find_files']}
+    \ {'t': ['telescope', 'Telescope find_files']},
+    \ {'e': ['nvim-tree', 'NvimTreeToggle']},
     \ ]
 let g:startify_fortune_use_unicode = 1
 function! StartifyEntryFormat()
@@ -341,7 +345,31 @@ let g:extra_whitespace_ignored_filetypes = ['TelescopePrompt']
 " bufferline.nvim
 if has("nvim")
   lua << EOF
-  require("bufferline").setup{}
+  require("bufferline").setup{
+  options = {
+      middle_mouse_command = "bdelete",
+      separator_style = "slant"
+    }
+  }
+EOF
+endif
+
+"nvim-tree.lua
+if has("nvim")
+  if (winwidth(0) > 140) && argc() < 2
+    au VimEnter * :NvimTreeToggle
+    au VimEnter * wincmd p
+  endif
+  if (winwidth(0) < 150)
+    let g:nvim_tree_quit_on_open = 1
+  endif
+  noremap <leader>ee :NvimTreeToggle<CR>
+  lua << EOF
+  require'nvim-tree'.setup {
+    hijack_cursor = true,
+    auto_close = true,
+    lsp_diagnostics = true,
+    }
 EOF
 endif
 
