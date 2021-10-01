@@ -34,13 +34,18 @@ Plug 'preservim/tagbar'
 Plug 'airblade/vim-gitgutter'
 Plug 'vim/killersheep'
 Plug 'mhinz/vim-startify'
-Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
-Plug 'jackguo380/vim-lsp-cxx-highlight'
 Plug 'vifm/vifm.vim'
 Plug 'liuchengxu/vim-which-key'
-Plug 'nvim-lua/plenary.nvim'
-Plug 'nvim-telescope/telescope.nvim'
+
+if has("nvim")
+  Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
+  Plug 'neoclide/coc.nvim', {'branch': 'release'}
+  Plug 'jackguo380/vim-lsp-cxx-highlight'
+  Plug 'nvim-lua/plenary.nvim'
+  Plug 'nvim-telescope/telescope.nvim'
+  Plug 'kyazdani42/nvim-web-devicons'
+  Plug 'akinsho/bufferline.nvim'
+endif
 
 " Initialize plugin system
 call plug#end()
@@ -273,38 +278,40 @@ function! StartifyEntryFormat()
 endfunction
 
 " coc.nvim
-let g:coc_global_extensions = [
-            \ 'coc-json', 'coc-vimlsp', 'coc-marketplace', 'coc-markdownlint',
-            \ 'coc-pyright', 'coc-python', 'coc-powershell', 'coc-sh',
-            \ 'coc-cmake', 'coc-actions', 'coc-translator', 'coc-snippets',
-            \ 'coc-clangd']
-inoremap <silent><expr> <TAB>
-      \ pumvisible() ? "\<C-n>" :
-      \ <SID>check_back_space() ? "\<TAB>" :
-      \ coc#refresh()
-inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
-function! s:check_back_space() abort
-  let col = col('.') - 1
-  return !col || getline('.')[col - 1]  =~# '\s'
-endfunction
-inoremap <silent><expr> <c-e> coc#refresh()
-" inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
-"                               \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
-nmap <silent> [g <Plug>(coc-diagnostic-prev)
-nmap <silent> ]g <Plug>(coc-diagnostic-next)
-nmap <silent> gd <Plug>(coc-definition)
-nmap <silent> gy <Plug>(coc-type-definition)
-nmap <silent> gi <Plug>(coc-implementation)
-nmap <silent> gr <Plug>(coc-references)
-autocmd CursorHold * silent call CocActionAsync('highlight')
-nmap <leader>rn <Plug>(coc-rename)
-nmap <leader>rf <Plug>(coc-refactor)
-xmap <leader>a  <Plug>(coc-codeaction-selected)
-nmap <leader>a  <Plug>(coc-codeaction-selected)w
-nmap <M-f>  <Plug>(coc-fix-current)
-map <silent> <M-e> :call CocActionAsync('doHover')<CR>
-nmap <Leader>tr <Plug>(coc-translator-p)
-vmap <Leader>tr <Plug>(coc-translator-pv)
+  if has("nvim")
+  let g:coc_global_extensions = [
+              \ 'coc-json', 'coc-vimlsp', 'coc-marketplace', 'coc-markdownlint',
+              \ 'coc-pyright', 'coc-python', 'coc-powershell', 'coc-sh',
+              \ 'coc-cmake', 'coc-actions', 'coc-translator', 'coc-snippets',
+              \ 'coc-clangd']
+  inoremap <silent><expr> <TAB>
+        \ pumvisible() ? "\<C-n>" :
+        \ <SID>check_back_space() ? "\<TAB>" :
+        \ coc#refresh()
+  inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+  function! s:check_back_space() abort
+    let col = col('.') - 1
+    return !col || getline('.')[col - 1]  =~# '\s'
+  endfunction
+  inoremap <silent><expr> <c-e> coc#refresh()
+  " inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
+  "                               \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+  nmap <silent> [g <Plug>(coc-diagnostic-prev)
+  nmap <silent> ]g <Plug>(coc-diagnostic-next)
+  nmap <silent> gd <Plug>(coc-definition)
+  nmap <silent> gy <Plug>(coc-type-definition)
+  nmap <silent> gi <Plug>(coc-implementation)
+  nmap <silent> gr <Plug>(coc-references)
+  autocmd CursorHold * silent call CocActionAsync('highlight')
+  nmap <leader>rn <Plug>(coc-rename)
+  nmap <leader>rf <Plug>(coc-refactor)
+  xmap <leader>a  <Plug>(coc-codeaction-selected)
+  nmap <leader>a  <Plug>(coc-codeaction-selected)w
+  nmap <M-f>  <Plug>(coc-fix-current)
+  map <silent> <M-e> :call CocActionAsync('doHover')<CR>
+  nmap <Leader>tr <Plug>(coc-translator-p)
+  vmap <Leader>tr <Plug>(coc-translator-pv)
+endif
 
 " vim-which-key
 let g:which_key_fallback_to_native_key=1
@@ -330,6 +337,13 @@ endif
 
 " vim-trailing-whitespace
 let g:extra_whitespace_ignored_filetypes = ['TelescopePrompt']
+
+" bufferline.nvim
+if has("nvim")
+  lua << EOF
+  require("bufferline").setup{}
+EOF
+endif
 
 map <C-n> :tabnew<CR>
 map <M-s> :w<CR>
@@ -391,10 +405,11 @@ map <leader>vs <C-w>v
 
 map <leader>tp :tabp<CR>
 map <leader>tn :tabn<CR>
+map <leader>c :bd<CR>
 map H :bp<CR>
 map L :bn<CR>
 
-map <leader>cp "+y
+map <leader>y "+y
 map <leader>p "+p
 
 map <C-J> ]c
