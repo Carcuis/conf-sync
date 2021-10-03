@@ -384,7 +384,7 @@ endif
 
 " FixCursorHold.nvim
 if has("nvim")
-  let g:cursorhold_updatetime = 100
+  let g:cursorhold_updatetime = 50
 endif
 
 map <C-n> :tabnew<CR>
