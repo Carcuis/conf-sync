@@ -46,6 +46,7 @@ if has("nvim")
   Plug 'kyazdani42/nvim-web-devicons'
   Plug 'akinsho/bufferline.nvim'
   Plug 'kyazdani42/nvim-tree.lua'
+  Plug 'antoinemadec/FixCursorHold.nvim'
 endif
 
 " Initialize plugin system
@@ -264,11 +265,11 @@ let g:tagbar_iconchars = ['', '']
 
 " vim-startify
 let g:startify_lists = [
+    \ { 'type': 'commands',  'header': ['   Commands']       },
     \ { 'type': 'files',     'header': ['   MRU']            },
     \ { 'type': 'dir',       'header': ['   MRU '. getcwd()] },
     \ { 'type': 'sessions',  'header': ['   Sessions']       },
     \ { 'type': 'bookmarks', 'header': ['   Bookmarks']      },
-    \ { 'type': 'commands',  'header': ['   Commands']       },
     \ ]
 let g:startify_commands = [
     \ {'h': ['help startify', 'h startify']},
@@ -337,6 +338,14 @@ if has("nvim")
   nnoremap <leader>fg <cmd>Telescope live_grep<cr>
   nnoremap <leader>fb <cmd>Telescope buffers<cr>
   nnoremap <leader>fh <cmd>Telescope help_tags<cr>
+  lua << EOF
+  require('telescope').setup{
+    defaults = {
+      prompt_prefix = " ",
+      selection_caret = " ",
+    }
+  }
+EOF
 endif
 
 " vim-trailing-whitespace
@@ -354,7 +363,7 @@ if has("nvim")
 EOF
 endif
 
-"nvim-tree.lua
+" nvim-tree.lua
 if has("nvim")
   if (winwidth(0) > 140) && argc() < 2
     au VimEnter * :NvimTreeToggle
@@ -371,6 +380,11 @@ if has("nvim")
     lsp_diagnostics = true,
     }
 EOF
+endif
+
+" FixCursorHold.nvim
+if has("nvim")
+  let g:cursorhold_updatetime = 100
 endif
 
 map <C-n> :tabnew<CR>
