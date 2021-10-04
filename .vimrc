@@ -267,6 +267,7 @@ endif
 let g:tagbar_iconchars = ['', '']
 
 " vim-startify
+let g:startify_enable_special = 0
 let g:startify_lists = [
     \ { 'type': 'commands',  'header': ['   Commands']       },
     \ { 'type': 'files',     'header': ['   MRU']            },
@@ -275,10 +276,12 @@ let g:startify_lists = [
     \ { 'type': 'bookmarks', 'header': ['   Bookmarks']      },
     \ ]
 let g:startify_commands = [
-    \ {'h': ['help startify', 'h startify']},
-    \ {'c': ['edit vimrc', 'call EditVimrc("normal")']},
-    \ {'t': ['telescope', 'Telescope find_files']},
-    \ {'e': ['nvim-tree', 'NvimTreeToggle']},
+    \ {'f': ['  Find file', 'Telescope find_files']},
+    \ {'p': ['  Recent Projects', 'Telescope projects']},
+    \ {'r': ['  Recently Used Files', 'Telescope oldfiles']},
+    \ {'w': ['  Find Word', 'Telescope live_grep']},
+    \ {'e': ['  Nvim-tree', 'NvimTreeToggle']},
+    \ {'c': ['  Edit vimrc', 'call EditVimrc("normal")']},
     \ ]
 let g:startify_fortune_use_unicode = 1
 function! StartifyEntryFormat()
