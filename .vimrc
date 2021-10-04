@@ -36,6 +36,7 @@ Plug 'vim/killersheep'
 Plug 'mhinz/vim-startify'
 Plug 'vifm/vifm.vim'
 Plug 'liuchengxu/vim-which-key'
+Plug 'norcalli/nvim-terminal.lua'
 
 if has("nvim")
   Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
@@ -288,7 +289,7 @@ endfunction
               \ 'coc-json', 'coc-vimlsp', 'coc-marketplace', 'coc-markdownlint',
               \ 'coc-pyright', 'coc-python', 'coc-powershell', 'coc-sh',
               \ 'coc-cmake', 'coc-actions', 'coc-translator', 'coc-snippets',
-              \ 'coc-clangd']
+              \ 'coc-clangd', 'coc-lua']
   inoremap <silent><expr> <TAB>
         \ pumvisible() ? "\<C-n>" :
         \ <SID>check_back_space() ? "\<TAB>" :
@@ -365,6 +366,8 @@ endif
 
 " nvim-tree.lua
 if has("nvim")
+  noremap <leader>ee :NvimTreeToggle<CR>
+
   if (winwidth(0) > 140) && argc() < 2
     au VimEnter * :NvimTreeToggle
     au VimEnter * wincmd p
@@ -372,19 +375,31 @@ if has("nvim")
   if (winwidth(0) < 150)
     let g:nvim_tree_quit_on_open = 1
   endif
-  noremap <leader>ee :NvimTreeToggle<CR>
+
+  let g:nvim_tree_git_hl = 1
+  let g:nvim_tree_icons = { 'git': { 'ignored': "-" } }
+
   lua << EOF
   require'nvim-tree'.setup {
     hijack_cursor = true,
     auto_close = true,
     lsp_diagnostics = true,
-    }
+    update_focused_file = {
+      enable      = true,
+      update_cwd  = true,
+    },
+  }
 EOF
 endif
 
 " FixCursorHold.nvim
 if has("nvim")
   let g:cursorhold_updatetime = 50
+endif
+
+" nvim-terminal.lua
+if has("nvim")
+  lua require'terminal'.setup()
 endif
 
 map <C-n> :tabnew<CR>
@@ -442,6 +457,10 @@ map <M-h> <C-w>h
 map <M-j> <C-w>j
 map <M-k> <C-w>k
 map <M-l> <C-w>l
+tnoremap <M-h> <C-\><C-N><C-w>h
+tnoremap <M-j> <C-\><C-N><C-w>j
+tnoremap <M-k> <C-\><C-N><C-w>k
+tnoremap <M-l> <C-\><C-N><C-w>l
 map <leader>sp <C-w>s
 map <leader>vs <C-w>v
 
