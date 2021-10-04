@@ -89,10 +89,6 @@ set signcolumn=yes
 set timeoutlen=500
 hi NonText guifg=bg
 
-if has("win32")
-  set backspace=indent,eol,start
-endif
-
 if has("nvim")
   hi cursorline guifg=NONE
   if !has("mac")
@@ -108,6 +104,7 @@ elseif has("gui_running") "gvim
   " set guioptions-=r  "remove right-hand scroll bar
   set guioptions-=L  "remove left-hand scroll bar
   if has("win32")
+    set backspace=indent,eol,start
     au GUIEnter * simalt ~x
     source $VIMRUNTIME/delmenu.vim
     set guifont=UbuntuMono_NF:h16:cANSI:qDRAFT
@@ -129,6 +126,7 @@ elseif has("gui_running") "gvim
   endif
 else "vim in tui
   if has("win32")
+    set backspace=indent,eol,start
     set nocursorline
   elseif has("linux")
     " let &t_TI=""
