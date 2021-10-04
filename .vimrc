@@ -275,13 +275,13 @@ let g:startify_lists = [
     \ { 'type': 'bookmarks', 'header': ['   Bookmarks']      },
     \ ]
 let g:startify_commands = [
-    \ {'f': ['  Find file', 'Telescope find_files']},
+    \ {'f': ['  Find File', 'Telescope find_files']},
     \ {'p': ['  Recent Projects', 'Telescope projects']},
     \ {'r': ['  Recently Used Files', 'Telescope oldfiles']},
     \ {'w': ['  Find Word', 'Telescope live_grep']},
-    \ {'e': ['  Nvim-tree', 'NvimTreeToggle']},
-    \ {'c': ['  Edit vimrc', 'call EditVimrc("normal")']},
-    \ {'P': ['  Plugin install', 'PlugInstall']},
+    \ {'e': ['  Nvim-Tree', 'NvimTreeToggle']},
+    \ {'c': ['  Configuration', 'call EditVimrc("normal")']},
+    \ {'P': ['  Plugin Install', 'PlugInstall']},
     \ ]
 let g:startify_fortune_use_unicode = 1
 function! StartifyEntryFormat()
