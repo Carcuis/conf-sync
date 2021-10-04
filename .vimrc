@@ -48,6 +48,8 @@ if has("nvim")
   Plug 'akinsho/bufferline.nvim'
   Plug 'kyazdani42/nvim-tree.lua'
   Plug 'antoinemadec/FixCursorHold.nvim'
+  Plug 'akinsho/toggleterm.nvim'
+  Plug 'ahmedkhalf/project.nvim'
 endif
 
 " Initialize plugin system
@@ -378,6 +380,7 @@ if has("nvim")
 
   let g:nvim_tree_git_hl = 1
   let g:nvim_tree_icons = { 'git': { 'ignored': "-" } }
+  let g:nvim_tree_respect_buf_cwd = 1
 
   lua << EOF
   require'nvim-tree'.setup {
@@ -400,6 +403,29 @@ endif
 " nvim-terminal.lua
 if has("nvim")
   lua require'terminal'.setup()
+endif
+
+" toggleterm.nvim
+if has("nvim")
+  lua << EOF
+  require("toggleterm").setup {
+    open_mapping = [[<c-t>]],
+    direction = 'float',
+    shade_terminals = true,
+    shading_factor = 1,
+    float_opts = {
+      border = 'curved',
+    },
+  }
+EOF
+endif
+
+" project.nvim
+if has("nvim")
+  lua << EOF
+  require("project_nvim").setup{}
+  require('telescope').load_extension('projects')
+EOF
 endif
 
 map <C-n> :tabnew<CR>
@@ -457,6 +483,7 @@ map <M-h> <C-w>h
 map <M-j> <C-w>j
 map <M-k> <C-w>k
 map <M-l> <C-w>l
+map <M--> <C-w>_
 tnoremap <M-h> <C-\><C-N><C-w>h
 tnoremap <M-j> <C-\><C-N><C-w>j
 tnoremap <M-k> <C-\><C-N><C-w>k
