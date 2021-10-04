@@ -36,8 +36,6 @@ Plug 'vim/killersheep'
 Plug 'mhinz/vim-startify'
 Plug 'vifm/vifm.vim'
 Plug 'liuchengxu/vim-which-key'
-Plug 'norcalli/nvim-terminal.lua'
-Plug 'alec-gibson/nvim-tetris'
 
 if has("nvim")
   Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
@@ -51,6 +49,8 @@ if has("nvim")
   Plug 'antoinemadec/FixCursorHold.nvim'
   Plug 'akinsho/toggleterm.nvim'
   Plug 'ahmedkhalf/project.nvim'
+  Plug 'norcalli/nvim-terminal.lua'
+  Plug 'alec-gibson/nvim-tetris'
 endif
 
 " Initialize plugin system
