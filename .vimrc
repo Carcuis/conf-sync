@@ -37,6 +37,7 @@ Plug 'mhinz/vim-startify'
 Plug 'vifm/vifm.vim'
 Plug 'liuchengxu/vim-which-key'
 Plug 'norcalli/nvim-terminal.lua'
+Plug 'alec-gibson/nvim-tetris'
 
 if has("nvim")
   Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
@@ -280,6 +281,7 @@ let g:startify_commands = [
     \ {'w': ['  Find Word', 'Telescope live_grep']},
     \ {'e': ['  Nvim-tree', 'NvimTreeToggle']},
     \ {'c': ['  Edit vimrc', 'call EditVimrc("normal")']},
+    \ {'P': ['  Plugin install', 'PlugInstall']},
     \ ]
 let g:startify_fortune_use_unicode = 1
 function! StartifyEntryFormat()
