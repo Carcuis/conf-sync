@@ -277,14 +277,19 @@ let g:startify_lists = [
     \ { 'type': 'bookmarks', 'header': ['   Bookmarks']      },
     \ ]
 let g:startify_commands = [
+    \ {'c': ['  Configuration', 'call EditVimrc("normal")']},
+    \ {'P': ['  Plugin Install', 'PlugInstall']},
+    \ ]
+if has("nvim")
+    let g:startify_commands += [
     \ {'f': ['  Find File', 'Telescope find_files']},
     \ {'p': ['  Recent Projects', 'Telescope projects']},
     \ {'r': ['  Recently Used Files', 'Telescope oldfiles']},
     \ {'w': ['  Find Word', 'Telescope live_grep']},
     \ {'e': ['  Nvim-Tree', 'NvimTreeToggle']},
-    \ {'c': ['  Configuration', 'call EditVimrc("normal")']},
-    \ {'P': ['  Plugin Install', 'PlugInstall']},
+    \ {'C': ['  Configure CoC', 'CocConfig']},
     \ ]
+endif
 let g:startify_fortune_use_unicode = 1
 function! StartifyEntryFormat()
     return 'WebDevIconsGetFileTypeSymbol(absolute_path) ." ". entry_path'
