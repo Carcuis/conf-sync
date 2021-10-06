@@ -256,14 +256,16 @@ endif
 let g:rainbow_active = 0
 
 " tagbar
-map <leader>tb :TagbarToggle<CR>
-let g:tagbar_width = min([max([25, winwidth(0) / 5]), 30])
-if (winwidth(0) > 100 || has("gui_running")) && argc() < 2
-  " autocmd VimEnter * nested :TagbarOpen
-  " autocmd BufEnter * nested :call tagbar#autoopen(0)
-  autocmd FileType * nested :call tagbar#autoopen(0)
+if ! has("nvim")
+  map <leader>tb :TagbarToggle<CR>
+  let g:tagbar_width = min([max([25, winwidth(0) / 5]), 30])
+  if (winwidth(0) > 100 || has("gui_running")) && argc() < 2
+    " autocmd VimEnter * nested :TagbarOpen
+    " autocmd BufEnter * nested :call tagbar#autoopen(0)
+    autocmd FileType * nested :call tagbar#autoopen(0)
+  endif
+  let g:tagbar_iconchars = ['', '']
 endif
-let g:tagbar_iconchars = ['', '']
 
 " vim-startify
 let g:startify_enable_special = 0
@@ -289,7 +291,7 @@ function! StartifyEntryFormat()
 endfunction
 
 " coc.nvim
-  if has("nvim")
+if has("nvim")
   let g:coc_global_extensions = [
               \ 'coc-json', 'coc-vimlsp', 'coc-marketplace', 'coc-markdownlint',
               \ 'coc-pyright', 'coc-python', 'coc-powershell', 'coc-sh',
@@ -305,8 +307,8 @@ endfunction
     return !col || getline('.')[col - 1]  =~# '\s'
   endfunction
   inoremap <silent><expr> <c-e> coc#refresh()
-  " inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
-  "                               \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+  inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
+                                \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
   nmap <silent> [g <Plug>(coc-diagnostic-prev)
   nmap <silent> ]g <Plug>(coc-diagnostic-next)
   nmap <silent> gd <Plug>(coc-definition)
@@ -524,11 +526,11 @@ map <C-L> 10zl
 let g:load_doxygen_syntax=1
 
 if has("win32")
-  au FileType cpp map <buffer> <leader>fj :w<CR>:!echo --------Debugging--------
-              \ && g++ % -o %:h\tmp_%:t:r.exe && %:h\tmp_%:t:r.exe<CR>
+  au FileType cpp map <buffer> <leader>fj :w<CR>:!echo --------debugging--------
+              \ && g++ % -o %:h\debug_%:t:r.exe && %:h\debug_%:t:r.exe<CR>
 else
-  au FileType cpp map <buffer> <leader>fj :w<CR>:!echo -e "\n--------Debugging--------"
-              \ && g++ % -o %:h/tmp_%:t:r.out && %:h/tmp_%:t:r.out &&<CR>
+  au FileType cpp map <buffer> <leader>fj :w<CR>:!echo -e "\n--------debugging--------"
+              \ && g++ % -o %:h/debug_%:t:r.out && %:h/debug_%:t:r.out &&<CR>
 endif
 
 " auto change cursor shape
