@@ -155,6 +155,7 @@ hi! link CocWarningHighlight CodeWarning
 hi! link CocInfoHighlight CodeInfo
 hi! link CocHintHighlight CodeHint
 call darcula#Hi('Comment', [ '#629755', 255 ], darcula#palette.null, 'italic')
+hi VertSplit guibg=#313335 guifg=#313335
 
 " vim-airline
 let g:airline#extensions#tabline#enabled = 1
@@ -378,6 +379,7 @@ endif
 
 " nvim-tree.lua
 if has("nvim")
+  hi NvimTreeNormal guibg=#3C3F41
   noremap <leader>ee :NvimTreeToggle<CR>
 
   if (winwidth(0) > 140) && argc() < 2
