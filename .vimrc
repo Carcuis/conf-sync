@@ -1,41 +1,42 @@
-" Specify a directory for plugins
-" - For Neovim: stdpath('data') . '/plugged'
-" - Avoid using standard Vim directory names like 'plugin'
+" ======================================================
+"   _____                  _             _
+"  / ___/__ ___________ __(_)__    _  __(_)_ _  ________
+" / /__/ _ `/ __/ __/ // / (_-<  _| |/ / /  ' \/ __/ __/
+" \___/\_,_/_/  \__/\_,_/_/___/ (_)___/_/_/_/_/_/  \__/
+"
+" ======================================================
+
+" =================
+" ===  plugins  ===
+" =================
+"
 call plug#begin()
 
 Plug 'vim-airline/vim-airline'
-Plug 'preservim/nerdtree'
-Plug 'Xuyuanp/nerdtree-git-plugin'
-Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
 " Plug 'vim-airline/vim-airline-themes'
 Plug 'tomasr/molokai'
 Plug 'carcuis/darcula'
-" Plug 'blueshirts/darcula'
 Plug 'joshdick/onedark.vim'
 Plug 'jiangmiao/auto-pairs'
-" Plug 'severin-lemaignan/vim-minimap'
 Plug 'vimcn/vimcdoc'
 Plug 'ryanoasis/vim-devicons'
 Plug 'tpope/vim-commentary'
-" Plug 'ycm-core/YouCompleteMe'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-surround'
-" Plug 'vim-rhubarb'
-" Plug 'kien/ctrlp.vim'
-" Plug 'nathanaelkane/vim-indent-guides'
 Plug 'Yggdroot/indentLine'
 Plug 'bronson/vim-trailing-whitespace'
-Plug 'Yggdroot/LeaderF', {'do': ':LeaderfInstallCExtension'}
 Plug 'pprovost/vim-ps1'
 Plug 'romainl/vim-cool'
 Plug 'luochen1990/rainbow'
 Plug 'easymotion/vim-easymotion'
 Plug 'preservim/tagbar'
 Plug 'airblade/vim-gitgutter'
-Plug 'vim/killersheep'
 Plug 'mhinz/vim-startify'
 Plug 'vifm/vifm.vim'
 Plug 'liuchengxu/vim-which-key'
+Plug 'liuchengxu/vista.vim'
+Plug 'dstein64/vim-startuptime'
+Plug 'gcmt/wildfire.vim'
 
 if has("nvim")
   Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
@@ -51,15 +52,24 @@ if has("nvim")
   Plug 'ahmedkhalf/project.nvim'
   Plug 'norcalli/nvim-terminal.lua'
   Plug 'alec-gibson/nvim-tetris'
+else
+  Plug 'preservim/nerdtree'
+  Plug 'Xuyuanp/nerdtree-git-plugin'
+  Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
+  Plug 'Yggdroot/LeaderF', {'do': ':LeaderfInstallCExtension'}
+  Plug 'vim/killersheep'
 endif
 
-" Initialize plugin system
 call plug#end()
-" --------vim-plug---------
 
+" ===============
+
+" ========================
+" ===  basic settings  ===
+" ========================
+"
 color darcula
-" let g:molokai_original = 1
-let g:rehash256 = 1
+" let g:rehash256 = 1
 let mapleader = "\<space>"
 syntax on
 set nu
@@ -88,7 +98,6 @@ set guicursor+=n:blinkon1
 set termguicolors
 set signcolumn=yes
 set timeoutlen=500
-hi NonText guifg=bg
 
 if has("nvim")
   hi cursorline guifg=NONE
@@ -135,7 +144,20 @@ else "vim in tui
   endif
 endif
 
-" darcula
+if has("nvim")
+  hi NonText guifg=#3C3F41
+else
+  hi NonText guifg=bg
+endif
+
+" ===============
+
+" =========================
+" ===  plugin settings  ===
+" =========================
+"
+
+" === darcula ===
 " hi! link GitGutterAdd GitAddStripe
 " hi! link GitGutterChange GitChangeStripe
 hi! link GitGutterDelete GitDeleteStripe
@@ -157,7 +179,7 @@ hi! link CocHintHighlight CodeHint
 call darcula#Hi('Comment', [ '#629755', 255 ], darcula#palette.null, 'italic')
 hi VertSplit guibg=#313335 guifg=#313335
 
-" vim-airline
+" === vim-airline ===
 let g:airline#extensions#tabline#enabled = 1
 let g:airline_powerline_fonts = 1
 " let g:airline_theme="dark"
@@ -169,7 +191,7 @@ let g:airline_left_alt_sep = '│'
 let g:airline_right_sep = ''
 let g:airline_right_alt_sep = '│'
 
-" nerdtree
+" === nerdtree ===
 if ! has("nvim")
   map <leader>tt :NERDTreeToggle<CR>
   map <F2> :NERDTree<CR>
@@ -194,51 +216,28 @@ if ! has("nvim")
   let g:NERDTreeHighlightFoldersFullName = 1 " highlights the folder name
 endif
 
-" nerdtree-git-plugin
+" === nerdtree-git-plugin ===
 " let g:NERDTreeGitStatusShowClean = 1
 
-" vim-minimap
-" let g:minimap_highlight='Visual'
-" let g:minimap_show='<leader>ms'
-" let g:minimap_update='<leader>mr'
-" let g:minimap_close='<leader>mc'
-" let g:minimap_toggle='<leader>mm'
-
-" vim-devicons
+" === vim-devicons ===
 " let g:webdevicons_enable = 1
 " let g:webdevicons_enable_nerdtree = 1
 " let g:webdevicons_enable_airline_statusline = 1
 " let g:webdevicons_conceal_nerdtree_brackets = 0
 " let g:WebDevIconsUnicodeGlyphDoubleWidth = 1
 
-" YouCompleteMe
-" let g:ycm_global_ycm_extra_conf = "~/.ycm_extra_conf.py"
-" let g:ycm_collect_identifiers_from_tag_files = 1
-" let g:syntastic_cpp_compiler = 'g++'
-" let g:syntastic_cpp_compiler_options = '-std=c++11 -stdlib=libc++'
-" let g:ycm_min_num_of_chars_for_completion = 1
-" let g:ycm_semantic_triggers =  {
-"             \ 'c,cpp,python,java,go,erlang,perl': ['re!\w{2}'],
-"             \ 'cs,lua,javascript': ['re!\w{2}'],
-"             \ }
-" set completeopt-=preview
-" set completeopt=longest,menu
-
-" CtrlP
-" let g:ctrlp_map = '<leader>ff'
-
-" LeaderF
+" === LeaderF ===
 let g:Lf_WindowPosition = 'popup'
 let g:Lf_ShortcutF = '<leader>ff'
 let g:Lf_ShortcutB = '<leader>bf'
 let g:Lf_StlSeparator = { 'left': "", 'right': "" }
 map <leader>fr :LeaderfMru<CR>
 
-" vim-commentary
+" === vim-commentary ===
 autocmd FileType java,c,cpp set commentstring=//\ %s
 autocmd FileType ps1 set commentstring=#\ %s
 
-" indent-guides
+" === indent-guides ===
 " let g:indent_guides_enable_on_vim_startup = 1
 " let g:indent_guides_start_level = 2
 " let g:indent_guides_guide_size = 1
@@ -246,29 +245,27 @@ autocmd FileType ps1 set commentstring=#\ %s
 " hi IndentGuidesOdd  guibg=grey20 ctermbg=236
 " hi IndentGuidesEven guibg=grey25 ctermbg=237
 
-" indentline
+" === indentline ===
 let g:indentLine_char = '│'
 au FileType startify,which_key :IndentLinesDisable
 if has("nvim")
   au TermOpen * IndentLinesDisable
 endif
 
-" rainbow bracket
+" === rainbow bracket ===
 let g:rainbow_active = 0
 
-" tagbar
-if ! has("nvim")
-  map <leader>tb :TagbarToggle<CR>
-  let g:tagbar_width = min([max([25, winwidth(0) / 5]), 30])
-  if (winwidth(0) > 100 || has("gui_running")) && argc() < 2
-    " autocmd VimEnter * nested :TagbarOpen
-    " autocmd BufEnter * nested :call tagbar#autoopen(0)
-    autocmd FileType * nested :call tagbar#autoopen(0)
-  endif
-  let g:tagbar_iconchars = ['', '']
-endif
+" === tagbar ===
+map <leader>tb :TagbarToggle<CR>
+let g:tagbar_width = min([max([25, winwidth(0) / 5]), 30])
+" if (winwidth(0) > 100 || has("gui_running")) && argc() < 2
+"   " autocmd VimEnter * nested :TagbarOpen
+"   " autocmd BufEnter * nested :call tagbar#autoopen(0)
+"   autocmd FileType * nested :call tagbar#autoopen(0)
+" endif
+let g:tagbar_iconchars = ['', '']
 
-" vim-startify
+" === vim-startify ===
 let g:startify_enable_special = 0
 let g:startify_lists = [
     \ { 'type': 'commands',  'header': ['   Commands']       },
@@ -296,7 +293,7 @@ function! StartifyEntryFormat()
     return 'WebDevIconsGetFileTypeSymbol(absolute_path) ." ". entry_path'
 endfunction
 
-" coc.nvim
+" === coc.nvim ===
 if has("nvim")
   let g:coc_global_extensions = [
               \ 'coc-json', 'coc-vimlsp', 'coc-marketplace', 'coc-markdownlint',
@@ -332,13 +329,13 @@ if has("nvim")
   vmap <Leader>tr <Plug>(coc-translator-pv)
 endif
 
-" vim-which-key
+" === vim-which-key ===
 let g:which_key_fallback_to_native_key=1
 nnoremap <silent> <leader> :WhichKey '<Space>'<CR>
 nnoremap <silent> g :WhichKey 'g'<CR>
 let g:which_key_sep = '➜'
 
-" vim-gitgutter
+" === vim-gitgutter ===
 let g:gitgutter_sign_added = '▎'
 let g:gitgutter_sign_modified = '▎'
 let g:gitgutter_sign_removed = '▶'
@@ -346,7 +343,7 @@ let g:gitgutter_sign_removed_first_line = '▔'
 let g:gitgutter_sign_removed_above_and_below = '_▔'
 let g:gitgutter_sign_modified_removed = '▶'
 
-" telescope.nvim
+" === telescope.nvim ===
 if has("nvim")
   nnoremap <leader>ff <cmd>Telescope find_files<cr>
   nnoremap <leader>fg <cmd>Telescope live_grep<cr>
@@ -362,10 +359,10 @@ if has("nvim")
 EOF
 endif
 
-" vim-trailing-whitespace
+" === vim-trailing-whitespace ===
 let g:extra_whitespace_ignored_filetypes = ['TelescopePrompt']
 
-" bufferline.nvim
+" === bufferline.nvim ===
 if has("nvim")
   lua << EOF
   require("bufferline").setup{
@@ -377,7 +374,7 @@ if has("nvim")
 EOF
 endif
 
-" nvim-tree.lua
+" === nvim-tree.lua ===
 if has("nvim")
   hi NvimTreeNormal guibg=#3C3F41
   noremap <leader>ee :NvimTreeToggle<CR>
@@ -407,17 +404,17 @@ if has("nvim")
 EOF
 endif
 
-" FixCursorHold.nvim
+" === FixCursorHold.nvim ===
 if has("nvim")
   let g:cursorhold_updatetime = 50
 endif
 
-" nvim-terminal.lua
+" === nvim-terminal.lua ===
 if has("nvim")
   lua require'terminal'.setup()
 endif
 
-" toggleterm.nvim
+" === toggleterm.nvim ===
 if has("nvim")
   lua << EOF
   require("toggleterm").setup {
@@ -432,7 +429,7 @@ if has("nvim")
 EOF
 endif
 
-" project.nvim
+" === project.nvim ===
 if has("nvim")
   lua << EOF
   require("project_nvim").setup{}
@@ -440,6 +437,12 @@ if has("nvim")
 EOF
 endif
 
+" ===============
+
+" ==================
+" ===  mappings  ===
+" ==================
+"
 map <C-n> :tabnew<CR>
 map <M-s> :w<CR>
 map <M-w> :q<CR>
@@ -539,6 +542,13 @@ else
   au FileType cpp map <buffer> <leader>fj :w<CR>:!echo -e "\n--------debugging--------"
               \ && g++ % -o %:h/debug_%:t:r.out && %:h/debug_%:t:r.out &&<CR>
 endif
+
+" ===============
+
+" ==============
+" ===  misc  ===
+" ==============
+"
 
 " auto change cursor shape
 if !(has("gui_running") || has("nvim"))
