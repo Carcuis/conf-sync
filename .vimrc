@@ -52,6 +52,8 @@ if has("nvim")
   Plug 'ahmedkhalf/project.nvim'
   Plug 'norcalli/nvim-terminal.lua'
   Plug 'alec-gibson/nvim-tetris'
+  Plug 'nvim-lua/popup.nvim'
+  Plug 'norcalli/nvim-colorizer.lua'
 else
   Plug 'preservim/nerdtree'
   Plug 'Xuyuanp/nerdtree-git-plugin'
@@ -69,7 +71,6 @@ call plug#end()
 " ========================
 "
 color darcula
-" let g:rehash256 = 1
 let mapleader = "\<space>"
 syntax on
 set nu
@@ -186,10 +187,37 @@ let g:airline_powerline_fonts = 1
 " let g:airline_theme="badwolf"
 let g:airline_theme="darcula"
 " let g:airline_extensions = []
+if !exists('g:airline_symbols')
+  let g:airline_symbols = {}
+endif
+let g:airline_symbols.colnr = ' ㏇'
+let g:airline_symbols.linenr = ' ¶'
 let g:airline_left_sep = ''
-let g:airline_left_alt_sep = '│'
 let g:airline_right_sep = ''
+let g:airline_left_alt_sep = '│'
 let g:airline_right_alt_sep = '│'
+let g:airline_mode_map = {
+  \ '__'     : '-',
+  \ 'c'      : 'C',
+  \ 'i'      : 'I',
+  \ 'ic'     : 'I-C',
+  \ 'ix'     : 'I-X',
+  \ 'n'      : 'N',
+  \ 'multi'  : 'M',
+  \ 'ni'     : 'N',
+  \ 'no'     : 'N',
+  \ 'R'      : 'R',
+  \ 'Rv'     : 'R',
+  \ 's'      : 'S',
+  \ 'S'      : 'S',
+  \ ''     : 'S',
+  \ 't'      : 'T',
+  \ 'v'      : 'V',
+  \ 'V'      : 'V-L',
+  \ ''     : 'V-B',
+  \ }
+let airline#extensions#coc#error_symbol = ':'
+let airline#extensions#coc#warning_symbol = ':'
 
 " === nerdtree ===
 if ! has("nvim")
@@ -318,6 +346,7 @@ if has("nvim")
   nmap <silent> gy <Plug>(coc-type-definition)
   nmap <silent> gi <Plug>(coc-implementation)
   nmap <silent> gr <Plug>(coc-references)
+  nmap <silent> gp :call CocActionAsync('jumpDefinition', v:false)<CR>
   autocmd CursorHold * silent call CocActionAsync('highlight')
   nmap <leader>rn <Plug>(coc-rename)
   nmap <leader>rf <Plug>(coc-refactor)
@@ -327,12 +356,23 @@ if has("nvim")
   map <silent> <M-e> :call CocActionAsync('doHover')<CR>
   nmap <Leader>tr <Plug>(coc-translator-p)
   vmap <Leader>tr <Plug>(coc-translator-pv)
+  nmap <silent> <C-s> <Plug>(coc-range-select)
+  xmap <silent> <C-s> <Plug>(coc-range-select)
+
+  nnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
+  nnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
+  inoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(1)\<cr>" : "\<Right>"
+  inoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(0)\<cr>" : "\<Left>"
+  vnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
+  vnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
 endif
 
 " === vim-which-key ===
 let g:which_key_fallback_to_native_key=1
 nnoremap <silent> <leader> :WhichKey '<Space>'<CR>
 nnoremap <silent> g :WhichKey 'g'<CR>
+nnoremap <silent> [ :WhichKey '['<CR>
+nnoremap <silent> ] :WhichKey ']'<CR>
 let g:which_key_sep = '➜'
 
 " === vim-gitgutter ===
@@ -436,6 +476,9 @@ if has("nvim")
   require('telescope').load_extension('projects')
 EOF
 endif
+
+" === nvim-colorizer.lua ===
+lua require'colorizer'.setup()
 
 " ===============
 
