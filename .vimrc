@@ -348,6 +348,7 @@ if has("nvim")
   nmap <silent> gr <Plug>(coc-references)
   nmap <silent> gp :call CocActionAsync('jumpDefinition', v:false)<CR>
   autocmd CursorHold * silent call CocActionAsync('highlight')
+  autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
   nmap <leader>rn <Plug>(coc-rename)
   nmap <leader>rf <Plug>(coc-refactor)
   xmap <leader>a  <Plug>(coc-codeaction-selected)
