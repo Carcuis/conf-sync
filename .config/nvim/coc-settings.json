@@ -2,6 +2,8 @@
     "coc.preferences.extensionUpdateCheck": "daily",
     "suggest.noselect": true,
     "suggest.enablePreselect": false,
+    "suggest.enablePreview": true,
+    "suggest.numberSelect": true,
     "suggest.completionItemKindLabels": {
         "class": "\uf0e8",
         "color": "\ue22b",
@@ -45,5 +47,6 @@
     "snippets.ultisnips.enable": true,
     "powershell.integratedConsole.showOnStartup": false,
     "clangd.semanticHighlighting": true,
-    "codeLens.enable": true
+    "codeLens.enable": true,
+    "markdownlint.onOpen": false
 }
