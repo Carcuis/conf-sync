@@ -479,7 +479,9 @@ EOF
 endif
 
 " === nvim-colorizer.lua ===
-lua require'colorizer'.setup()
+if has("nvim")
+  lua require'colorizer'.setup()
+endif
 
 " ===============
 
