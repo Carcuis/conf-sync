@@ -1,7 +1,7 @@
 Set-PoshPrompt -Theme cui_theme
 
 Set-PSReadLineOption -PredictionSource History
-Set-PSReadLineOption -EditMode Vi
+Set-PSReadLineOption -EditMode Emacs
 Set-PSReadLineKeyHandler -Key Tab -Function MenuComplete
 Set-PSReadlineKeyHandler -Key UpArrow -Function HistorySearchBackward
 Set-PSReadlineKeyHandler -Key DownArrow -Function HistorySearchForward
