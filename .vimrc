@@ -432,15 +432,26 @@ if has("nvim")
   let g:nvim_tree_git_hl = 1
   let g:nvim_tree_icons = { 'git': { 'ignored': "-" } }
   let g:nvim_tree_respect_buf_cwd = 1
+  let g:nvim_tree_icons = {
+              \ 'default': '',
+              \ }
 
   lua << EOF
   require'nvim-tree'.setup {
     hijack_cursor = true,
     auto_close = true,
-    lsp_diagnostics = true,
     update_focused_file = {
       enable      = true,
       update_cwd  = true,
+    },
+    diagnostics = {
+        enable = true,
+        icons = {
+          hint = "",
+          info = "",
+          warning = "",
+          error = "",
+        }
     },
   }
 EOF
