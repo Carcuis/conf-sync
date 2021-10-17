@@ -134,12 +134,15 @@ elif command -v vi > /dev/null; then
 fi
 
 # ---------alias----------\
-# alias ll='ls -alF'
-# alias la='ls -AF'
-# alias l='ls -CF'
-alias ls='exa --icons'
-alias la='exa -a --icons'
-alias ll='exa -aabghHl --icons'
+if command -v exa > /dev/null; then
+    alias ls='exa --icons'
+    alias la='exa -a --icons'
+    alias ll='exa -aabghHl --icons'
+else
+    alias ll='ls -alF'
+    alias la='ls -AF'
+    alias l='ls -CF'
+fi
 alias wtrsy='curl wttr.in/Songyuan\?lang=zh'
 alias wtrgz='curl wttr.in/Guangzhou\?lang=zh'
 # alias aliyun='ssh -i ~/.ssh/aliyun -p 2235 cui@47.107.62.60'
