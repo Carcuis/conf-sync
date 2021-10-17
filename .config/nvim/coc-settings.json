@@ -48,5 +48,10 @@
     "powershell.integratedConsole.showOnStartup": false,
     "clangd.semanticHighlighting": true,
     "codeLens.enable": true,
-    "markdownlint.onOpen": false
+    "markdownlint.onOpen": false,
+    "translator.engines": [
+        "bing",
+        "youdao",
+        "haici"
+    ]
 }
