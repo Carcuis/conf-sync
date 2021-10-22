@@ -181,7 +181,7 @@ if [[ $`uname -a` =~ Microsoft ]]; then
     alias o='explorer.exe'
     alias o.='explorer.exe .'
     alias proxy='export https_proxy=socks5://127.0.0.1:10808'
-    alias unproxy='export https_proxy='
+    alias unproxy='env -u https_proxy > /dev/null'
     alias bpi='ssh -i ~/.ssh/BPi pi@192.168.137.75'
     alias oneplus='ssh -i ~/.ssh/oneplus -p 8022 u0_a164@192.168.137.10'
     # function chpwd(){
@@ -232,7 +232,7 @@ elif [[ "$OSTYPE" =~ ^linux ]]; then
     alias o='nautilus'
     alias o.='nautilus .'
     alias proxy='export https_proxy=socks5://127.0.0.1:1089'
-    alias unproxy='export https_proxy='
+    alias unproxy='env -u https_proxy > /dev/null'
 elif [[ "$OSTYPE" =~ ^darwin ]]; then
     # alias cmake-gui='/Applications/CMake.app/Contents/MacOS/CMake .'
     alias sshon='sudo launchctl load -w /System/Library/LaunchDaemons/ssh.plist'
@@ -242,7 +242,7 @@ elif [[ "$OSTYPE" =~ ^darwin ]]; then
     alias o='open'
     alias o.='open .'
     alias proxy='export https_proxy=socks5://127.0.0.1:1080'
-    alias unproxy='export https_proxy='
+    alias unproxy='env -u https_proxy > /dev/null'
 fi
 # ---------alias---------/
 
