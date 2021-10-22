@@ -37,6 +37,7 @@ Plug 'liuchengxu/vim-which-key'
 Plug 'liuchengxu/vista.vim'
 Plug 'dstein64/vim-startuptime'
 Plug 'gcmt/wildfire.vim'
+Plug 'lambdalisue/suda.vim'
 
 if has("nvim")
   Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
