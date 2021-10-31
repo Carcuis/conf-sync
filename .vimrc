@@ -500,8 +500,8 @@ endif
 " === code_runner.nvim ===
 lua << EOF
   require('code_runner').setup {
-    filetype_path = vim.fn.stdpath("data") .. "/code_runner/code_runner.json",
-    project_path = vim.fn.stdpath("data") .. "/code_runner/project_manager.json"
+    filetype_path = vim.fn.stdpath("config") .. "/code_runner.json",
+    project_path = vim.fn.stdpath("config") .. "/project_manager.json"
   }
 EOF
 map <leader>ru :RunCode<CR>
