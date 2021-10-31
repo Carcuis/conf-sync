@@ -38,6 +38,7 @@ Plug 'liuchengxu/vista.vim'
 Plug 'dstein64/vim-startuptime'
 Plug 'gcmt/wildfire.vim'
 Plug 'lambdalisue/suda.vim'
+Plug 'CRAG666/code_runner.nvim'
 
 if has("nvim")
   Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
@@ -495,6 +496,17 @@ endif
 if has("nvim")
   lua require'colorizer'.setup()
 endif
+
+" === code_runner.nvim ===
+lua << EOF
+  require('code_runner').setup {
+    filetype_path = vim.fn.stdpath("data") .. "/code_runner/code_runner.json",
+    project_path = vim.fn.stdpath("data") .. "/code_runner/project_manager.json"
+  }
+EOF
+map <leader>ru :RunCode<CR>
+map <leader>rf :RunFile<CR>
+map <leader>rp :RunProject<CR>
 
 " ===============
 
