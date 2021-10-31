@@ -341,6 +341,7 @@ if has("nvim")
     return !col || getline('.')[col - 1]  =~# '\s'
   endfunction
   let g:coc_snippet_next = '<tab>'
+  let g:coc_snippet_prev = '<s-tab>'
   inoremap <silent><expr> <c-e> coc#refresh()
   inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
                                 \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
