@@ -332,6 +332,7 @@ if has("nvim")
               \ 'coc-clangd', 'coc-lua']
   inoremap <silent><expr> <TAB>
         \ pumvisible() ? "\<C-n>" :
+        \ coc#expandableOrJumpable() ? "\<C-r>=coc#rpc#request('doKeymap', ['snippets-expand-jump',''])\<CR>" :
         \ <SID>check_back_space() ? "\<TAB>" :
         \ coc#refresh()
   inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
@@ -339,6 +340,7 @@ if has("nvim")
     let col = col('.') - 1
     return !col || getline('.')[col - 1]  =~# '\s'
   endfunction
+  let g:coc_snippet_next = '<tab>'
   inoremap <silent><expr> <c-e> coc#refresh()
   inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
                                 \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
@@ -498,12 +500,14 @@ if has("nvim")
 endif
 
 " === code_runner.nvim ===
-lua << EOF
+if has("nvim")
+  lua << EOF
   require('code_runner').setup {
     filetype_path = vim.fn.stdpath("config") .. "/code_runner.json",
     project_path = vim.fn.stdpath("config") .. "/project_manager.json"
   }
 EOF
+endif
 map <leader>ru :RunCode<CR>
 map <leader>rf :RunFile<CR>
 map <leader>rp :RunProject<CR>
