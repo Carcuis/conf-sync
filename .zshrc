@@ -181,7 +181,7 @@ if [[ $`uname -a` =~ Microsoft ]]; then
     alias o='explorer.exe'
     alias o.='explorer.exe .'
     alias proxy='export https_proxy=socks5://127.0.0.1:10808'
-    alias unproxy='env -u https_proxy > /dev/null'
+    alias unproxy='unset https_proxy'
     alias bpi='ssh -i ~/.ssh/BPi pi@192.168.137.75'
     alias oneplus='ssh -i ~/.ssh/oneplus -p 8022 u0_a164@192.168.137.10'
     # function chpwd(){
