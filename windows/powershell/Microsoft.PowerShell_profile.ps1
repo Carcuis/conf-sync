@@ -43,7 +43,7 @@ function OpenCwd { explorer.exe . }
 function EditProfile { EditFile $profile }
 function EditVimrc { EditFile $HOME\_vimrc }
 function OpenVifmInPwd { vifm.exe . }
-function ReloadProfile { . $profile }
+function ReloadProfile { & $profile }
 function GetAdminPriv { Start-Process pwsh -Verb runAs }
 function StartSshServiceInWsl { wsl -- sudo service ssh start }
 function StopSshServiceInWsl { wsl -- sudo service ssh stop }
