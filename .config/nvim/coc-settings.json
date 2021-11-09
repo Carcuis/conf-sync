@@ -3,7 +3,6 @@
     "suggest.noselect": true,
     "suggest.enablePreselect": false,
     "suggest.enablePreview": true,
-    "suggest.numberSelect": true,
     "suggest.completionItemKindLabels": {
         "class": "\uf0e8",
         "color": "\ue22b",
