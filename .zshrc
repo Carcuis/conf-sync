@@ -232,7 +232,7 @@ elif [[ "$OSTYPE" =~ ^linux ]]; then
     alias o='nautilus'
     alias o.='nautilus .'
     alias proxy='export https_proxy=socks5://127.0.0.1:1089'
-    alias unproxy='env -u https_proxy > /dev/null'
+    alias unproxy='unset https_proxy'
 elif [[ "$OSTYPE" =~ ^darwin ]]; then
     # alias cmake-gui='/Applications/CMake.app/Contents/MacOS/CMake .'
     alias sshon='sudo launchctl load -w /System/Library/LaunchDaemons/ssh.plist'
@@ -242,7 +242,7 @@ elif [[ "$OSTYPE" =~ ^darwin ]]; then
     alias o='open'
     alias o.='open .'
     alias proxy='export https_proxy=socks5://127.0.0.1:1080'
-    alias unproxy='env -u https_proxy > /dev/null'
+    alias unproxy='unset https_proxy'
 fi
 # ---------alias---------/
 
