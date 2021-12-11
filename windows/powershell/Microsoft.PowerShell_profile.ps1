@@ -1,11 +1,15 @@
 Set-PoshPrompt -Theme cui_theme
 
-Set-PSReadLineOption -PredictionSource History
+Import-Module Terminal-Icons
+
 Set-PSReadLineOption -EditMode Emacs
+Set-PSReadLineOption -PredictionSource History
+Set-PSReadLineOption -PredictionViewStyle ListView
 Set-PSReadLineKeyHandler -Key Tab -Function MenuComplete
 Set-PSReadlineKeyHandler -Key UpArrow -Function HistorySearchBackward
 Set-PSReadlineKeyHandler -Key DownArrow -Function HistorySearchForward
 Set-PSReadlineKeyHandler -Key "Ctrl+d" -Function DeleteCharOrExit
+Set-PsFzfOption -PSReadlineChordProvider 'Ctrl+f' -PSReadlineChordReverseHistory 'Ctrl+r'
 
 Get-quote|lolcat
 
@@ -33,8 +37,10 @@ function EditFile
     }
 }
 
-function ListAll { Get-ChildItemColorFormatWide -Force }
-function LLAll { Get-ChildItemColor -Force }
+function ListDir { Get-ChildItem | Format-Wide -AutoSize }
+function ListAll { Get-ChildItem -Force | Format-Wide -AutoSize }
+function LLDir { Get-ChildItem }
+function LLAll { Get-ChildItem -Force }
 function GoUpOne { Set-Location .. }
 function GoUpTwo { Set-Location ../.. }
 function GoUpThree { Set-Location ../../.. }
@@ -57,7 +63,8 @@ Set-Alias .... GoUpThree
 Set-Alias ..... GoUpFour
 Set-Alias al ListAll
 Set-Alias la ListAll
-Set-Alias ls Get-ChildItemColorFormatWide
+Set-Alias ls ListDir
+Set-Alias l LLDir
 Set-Alias ll LLAll
 Set-Alias which Get-Command
 Set-Alias o explorer.exe
@@ -69,6 +76,7 @@ Set-Alias pwshc EditProfile
 Set-Alias vimc EditVimrc
 Set-Alias nvi nvim
 Set-Alias gnvi nvim-qt
+Set-Alias vif OpenVifmInPwd
 Set-Alias vifm OpenVifmInPwd
 Set-Alias src ReloadProfile
 Set-Alias su GetAdminPriv
