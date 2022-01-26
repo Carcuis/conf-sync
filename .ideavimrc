@@ -39,3 +39,7 @@ imap <c-l> 10zl
 
 map H :bp<cr>
 map L :bn<cr>
+
+map <M-s> :w<CR>
+
+imap <c-j> <esc>o
