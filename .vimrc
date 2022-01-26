@@ -426,12 +426,12 @@ if has("nvim")
   hi NvimTreeNormal guibg=#3C3F41
   noremap <leader>ee :NvimTreeToggle<CR>
 
-  if (winwidth(0) > 140) && argc() < 2
+  if (winwidth(0) < 130)
+    let g:nvim_tree_quit_on_open = 1
+  endif
+  if (winwidth(0) >= 130) && argc() < 2
     au VimEnter * :NvimTreeToggle
     au VimEnter * wincmd p
-  endif
-  if (winwidth(0) < 150)
-    let g:nvim_tree_quit_on_open = 1
   endif
 
   let g:nvim_tree_git_hl = 1
