@@ -86,3 +86,4 @@ Set-Alias proxy SetProxyOn
 Set-Alias unproxy SetProxyOff
 Set-Alias oneplus8 SshToOneplus8pro
 Set-Alias lg lazygit
+Set-Alias ipy ipython
