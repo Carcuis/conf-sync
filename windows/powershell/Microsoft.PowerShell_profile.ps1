@@ -58,6 +58,7 @@ function SetProxyOff { $env:HTTP_PROXY="" }
 function SshToOneplus8pro { ssh -p 8022 192.168.137.68 -i ~\.ssh\oneplus8 }
 
 Remove-Item alias:\gl -Force
+Remove-Item alias:\gp -Force
 
 Set-Alias .. GoUpOne
 Set-Alias ... GoUpTwo
