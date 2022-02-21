@@ -510,7 +510,21 @@ endif
 if has("nvim")
   lua << EOF
   require('code_runner').setup {
-    filetype_path = vim.fn.stdpath("config") .. "/code_runner.json",
+    term = {
+		mode = "",
+		tab = false,
+		position = "belowright",
+		size = 8
+	},
+    filetype = {
+        java = "cd $dir && javac $fileName && java $fileNameWithoutExt",
+        python = "python",
+        typescript = "deno run",
+        rust = "cd $dir && rustc $fileName && $dir/$fileNameWithoutExt",
+        cpp = "cd $dir && g++ $fileName -o $fileNameWithoutExt.exe && $dir/$fileNameWithoutExt.exe",
+        sh = "bash",
+        zsh = "zsh"
+    },
     project_path = vim.fn.stdpath("config") .. "/project_manager.json"
   }
 EOF
