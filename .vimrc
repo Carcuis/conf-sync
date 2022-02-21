@@ -38,7 +38,6 @@ Plug 'liuchengxu/vista.vim'
 Plug 'dstein64/vim-startuptime'
 Plug 'gcmt/wildfire.vim'
 Plug 'lambdalisue/suda.vim'
-Plug 'CRAG666/code_runner.nvim'
 
 if has("nvim")
   Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
@@ -56,6 +55,8 @@ if has("nvim")
   Plug 'alec-gibson/nvim-tetris'
   Plug 'nvim-lua/popup.nvim'
   Plug 'norcalli/nvim-colorizer.lua'
+  Plug 'CRAG666/code_runner.nvim'
+  Plug 'tversteeg/registers.nvim'
 else
   Plug 'preservim/nerdtree'
   Plug 'Xuyuanp/nerdtree-git-plugin'
