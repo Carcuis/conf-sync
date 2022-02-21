@@ -296,6 +296,9 @@ let g:tagbar_width = min([max([25, winwidth(0) / 5]), 30])
 let g:tagbar_iconchars = ['', '']
 
 " === vim-startify ===
+if argc() == 0
+    au VimEnter * :Startify
+endif
 let g:startify_enable_special = 0
 let g:startify_lists = [
     \ { 'type': 'commands',  'header': ['   Commands']       },
@@ -431,13 +434,13 @@ if has("nvim")
   endif
   if (winwidth(0) >= 130) && argc() < 2
     au VimEnter * :NvimTreeToggle
-    au VimEnter * wincmd p
+    au FileType NvimTree call timer_start(1, { tid -> execute('wincmd p')})
   endif
 
   let g:nvim_tree_git_hl = 1
-  let g:nvim_tree_icons = { 'git': { 'ignored': "-" } }
   let g:nvim_tree_respect_buf_cwd = 1
   let g:nvim_tree_icons = {
+              \ 'git': {'ignored': "-" },
               \ 'default': '',
               \ }
 
@@ -457,6 +460,9 @@ if has("nvim")
           warning = "",
           error = "",
         }
+    },
+    git = {
+        ignore = false
     },
   }
 EOF
