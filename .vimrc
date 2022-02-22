@@ -409,7 +409,10 @@ EOF
 endif
 
 " === vim-trailing-whitespace ===
-let g:extra_whitespace_ignored_filetypes = ['TelescopePrompt']
+let g:extra_whitespace_ignored_filetypes = [
+            \'TelescopePrompt',
+            \'vim-plug'
+            \]
 
 " === bufferline.nvim ===
 if has("nvim")
