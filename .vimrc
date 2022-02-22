@@ -13,7 +13,6 @@
 call plug#begin()
 
 Plug 'vim-airline/vim-airline'
-" Plug 'vim-airline/vim-airline-themes'
 Plug 'tomasr/molokai'
 Plug 'carcuis/darcula'
 Plug 'joshdick/onedark.vim'
@@ -184,12 +183,10 @@ call darcula#Hi('Comment', [ '#629755', 255 ], darcula#palette.null, 'italic')
 hi VertSplit guibg=#313335 guifg=#313335
 
 " === vim-airline ===
+let g:airline#extensions#whitespace#enabled = 0
 let g:airline#extensions#tabline#enabled = 1
 let g:airline_powerline_fonts = 1
-" let g:airline_theme="dark"
-" let g:airline_theme="badwolf"
 let g:airline_theme="darcula"
-" let g:airline_extensions = []
 if !exists('g:airline_symbols')
   let g:airline_symbols = {}
 endif
