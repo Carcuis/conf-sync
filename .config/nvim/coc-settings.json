@@ -57,5 +57,6 @@
     "python.linting.pep8Args": [
         "--max-line-length=120",
         "--ignore=E701"
-    ]
+    ],
+    "python.jediEnabled": false
 }
