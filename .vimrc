@@ -56,6 +56,7 @@ if has("nvim")
   Plug 'norcalli/nvim-colorizer.lua'
   Plug 'CRAG666/code_runner.nvim'
   Plug 'tversteeg/registers.nvim'
+  Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 else
   Plug 'preservim/nerdtree'
   Plug 'Xuyuanp/nerdtree-git-plugin'
@@ -530,6 +531,21 @@ endif
 map <leader>ru :RunCode<CR>
 map <leader>rf :RunFile<CR>
 map <leader>rp :RunProject<CR>
+
+" === nvim-treesitter ===
+if has("nvim")
+    lua << EOF
+    require'nvim-treesitter.configs'.setup {
+      ensure_installed = {
+          "python", "cpp"
+      },
+      highlight = {
+        enable = true,
+        additional_vim_regex_highlighting = false,
+      },
+    }
+EOF
+endif
 
 " ===============
 
