@@ -56,7 +56,7 @@ if has("nvim")
   Plug 'norcalli/nvim-colorizer.lua'
   Plug 'CRAG666/code_runner.nvim'
   Plug 'tversteeg/registers.nvim'
-  Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+  Plug 'nvim-treesitter/nvim-treesitter'
 else
   Plug 'preservim/nerdtree'
   Plug 'Xuyuanp/nerdtree-git-plugin'
