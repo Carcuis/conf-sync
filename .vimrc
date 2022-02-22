@@ -309,6 +309,7 @@ let g:startify_lists = [
 let g:startify_commands = [
     \ {'c': ['  Configuration', 'call EditVimrc("normal")']},
     \ {'P': ['  Plugin Install', 'PlugInstall']},
+    \ {'U': ['ﮮ  Plugin Update', 'PlugUpdate']},
     \ ]
 if has("nvim")
     let g:startify_commands += [
