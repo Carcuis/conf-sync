@@ -330,24 +330,13 @@ endfunction
 if has("nvim")
   let g:coc_global_extensions = [
               \ 'coc-json', 'coc-vimlsp', 'coc-marketplace', 'coc-markdownlint',
-              \ 'coc-pyright', 'coc-python', 'coc-powershell', 'coc-sh',
+              \ 'coc-python', 'coc-powershell', 'coc-sh', 'coc-clangd',
               \ 'coc-cmake', 'coc-actions', 'coc-translator', 'coc-snippets',
-              \ 'coc-clangd', 'coc-lua']
+              \ 'coc-lua']
   inoremap <silent><expr> <TAB>
-        \ pumvisible() ? "\<C-n>" :
-        \ coc#expandableOrJumpable() ? "\<C-r>=coc#rpc#request('doKeymap', ['snippets-expand-jump',''])\<CR>" :
-        \ <SID>check_back_space() ? "\<TAB>" :
-        \ coc#refresh()
-  inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
-  function! s:check_back_space() abort
-    let col = col('.') - 1
-    return !col || getline('.')[col - 1]  =~# '\s'
-  endfunction
-  let g:coc_snippet_next = '<tab>'
-  let g:coc_snippet_prev = '<s-tab>'
+        \ pumvisible() ? coc#_select_confirm() :
+        \ coc#expandableOrJumpable() ? "\<C-r>=coc#rpc#request('doKeymap', ['snippets-expand-jump',''])\<CR>" : "\<TAB>"
   inoremap <silent><expr> <c-e> coc#refresh()
-  inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
-                                \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
   nmap <silent> [g <Plug>(coc-diagnostic-prev)
   nmap <silent> ]g <Plug>(coc-diagnostic-next)
   nmap <silent> gd <Plug>(coc-definition)

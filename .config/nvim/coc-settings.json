@@ -1,7 +1,6 @@
 {
-    "coc.preferences.extensionUpdateCheck": "daily",
-    "suggest.noselect": true,
-    "suggest.enablePreselect": false,
+    "coc.preferences.extensionUpdateCheck": "weekly",
+    "suggest.noselect": false,
     "suggest.enablePreview": true,
     "suggest.completionItemKindLabels": {
         "class": "\uf0e8",
