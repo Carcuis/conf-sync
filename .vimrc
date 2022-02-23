@@ -330,7 +330,7 @@ endfunction
 if has("nvim")
   let g:coc_global_extensions = [
               \ 'coc-json', 'coc-vimlsp', 'coc-marketplace', 'coc-markdownlint',
-              \ 'coc-python', 'coc-powershell', 'coc-sh', 'coc-clangd',
+              \ 'coc-pyright', 'coc-powershell', 'coc-sh', 'coc-clangd',
               \ 'coc-cmake', 'coc-actions', 'coc-translator', 'coc-snippets',
               \ 'coc-lua']
   inoremap <silent><expr> <TAB>
