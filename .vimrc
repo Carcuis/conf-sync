@@ -421,18 +421,26 @@ if has("nvim")
   hi NvimTreeNormal guibg=#3C3F41
   noremap <leader>ee :NvimTreeToggle<CR>
 
+  func OpenNvimTreeOnStartup()
+    NvimTreeToggle
+    call timer_start(1, { tid -> execute('wincmd p')})
+  endfunc
+
   if (winwidth(0) < 130)
     let g:nvim_tree_quit_on_open = 1
   endif
   if (winwidth(0) >= 130) && argc() < 2
-    au VimEnter * :NvimTreeToggle
-    au FileType NvimTree call timer_start(1, { tid -> execute('wincmd p')})
+    au VimEnter * call OpenNvimTreeOnStartup()
   endif
 
   let g:nvim_tree_git_hl = 1
   let g:nvim_tree_respect_buf_cwd = 1
   let g:nvim_tree_icons = {
-              \ 'git': {'ignored': "-" },
+              \ 'git': {
+                  \  'ignored': "-",
+                  \  'unstaged': "",
+                  \  'staged': "",
+                  \},
               \ 'default': '',
               \ }
 
