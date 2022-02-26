@@ -109,6 +109,7 @@ set guicursor+=n:blinkon1
 set termguicolors
 set signcolumn=yes
 set timeoutlen=500
+set conceallevel=2
 
 if has("nvim")
     hi cursorline guifg=NONE
