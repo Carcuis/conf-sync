@@ -61,6 +61,7 @@ if has("nvim")
     Plug 'SmiteshP/nvim-gps'
     Plug 'shaunsingh/moonlight.nvim'
     Plug 'petertriho/nvim-scrollbar'
+    Plug 'gelguy/wilder.nvim'
 else
     Plug 'vim-airline/vim-airline'
     Plug 'Yggdroot/indentLine'
@@ -649,6 +650,30 @@ if has("nvim")
         },
     }
 EOF
+endif
+
+" === wilder.nvim ===
+if has("nvim")
+    call wilder#setup({
+          \ 'modes': [':', '/', '?'],
+          \ 'next_key': '<Tab>',
+          \ 'previous_key': '<S-Tab>',
+          \ 'accept_key': '<Down>',
+          \ 'reject_key': '<Up>',
+          \ })
+    call wilder#set_option('renderer', wilder#popupmenu_renderer({
+          \ 'pumblend': 20,
+          \ 'highlighter': wilder#basic_highlighter(),
+          \ 'highlights': {
+          \   'accent': wilder#make_hl('WilderAccent', 'Pmenu', [{}, {}, {'foreground': '#cc7832'}]),
+          \ },
+          \ 'left': [
+          \   ' ', wilder#popupmenu_devicons(),
+          \ ],
+          \ 'right': [
+          \   ' ', wilder#popupmenu_scrollbar(),
+          \ ],
+          \ }))
 endif
 
 " ===============
