@@ -405,6 +405,7 @@ if has("nvim")
     nnoremap <leader>fb <cmd>Telescope buffers<cr>
     nnoremap <leader>fh <cmd>Telescope help_tags<cr>
     nnoremap <leader>fp <cmd>Telescope projects<cr>
+    nnoremap <leader>fo <cmd>Telescope oldfiles<cr>
     lua << EOF
     require('telescope').setup{
         defaults = {
