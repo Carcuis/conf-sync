@@ -347,7 +347,7 @@ if has("nvim")
                 \ 'coc-json', 'coc-vimlsp', 'coc-marketplace', 'coc-markdownlint',
                 \ 'coc-pyright', 'coc-powershell', 'coc-sh', 'coc-clangd',
                 \ 'coc-cmake', 'coc-actions', 'coc-translator', 'coc-snippets',
-                \ 'coc-lua']
+                \ 'coc-sumneko-lua']
     inoremap <silent><expr> <TAB>
           \ pumvisible() ? coc#_select_confirm() :
           \ coc#expandableOrJumpable() ? "\<C-r>=coc#rpc#request('doKeymap', ['snippets-expand-jump',''])\<CR>" : "\<TAB>"
