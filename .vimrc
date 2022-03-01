@@ -62,6 +62,7 @@ if has("nvim")
     Plug 'shaunsingh/moonlight.nvim'
     Plug 'petertriho/nvim-scrollbar'
     Plug 'gelguy/wilder.nvim'
+    Plug 'famiu/bufdelete.nvim'
 else
     Plug 'vim-airline/vim-airline'
     Plug 'Yggdroot/indentLine'
@@ -428,7 +429,9 @@ if has("nvim")
     lua << EOF
     require("bufferline").setup{
         options = {
-            middle_mouse_command = "bdelete",
+            middle_mouse_command = function(bufnum)
+                require('bufdelete').bufdelete(bufnum, true)
+            end,
             separator_style = "slant",
             offsets = {
                 {
@@ -677,6 +680,11 @@ if has("nvim")
           \ }))
 endif
 
+" === bufdelete.nvim ===
+if has("nvim")
+    nnoremap<silent> <leader>c :lua require('bufdelete').bufdelete(0, true)<CR>
+endif
+
 " ===============
 
 " ==================
@@ -748,7 +756,9 @@ map <leader>vs <C-w>v
 
 map <leader>tp :tabp<CR>
 map <leader>tn :tabn<CR>
-map <leader>c :bd<CR>
+if ! has("nvim")
+    map <leader>c :bd<CR>
+endif
 map H :bp<CR>
 map L :bn<CR>
 
