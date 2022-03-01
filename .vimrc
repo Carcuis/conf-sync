@@ -242,7 +242,7 @@ endif
 
 " === nerdtree ===
 if ! has("nvim")
-    map <leader>tt :NERDTreeToggle<CR>
+    nnoremap <leader>tt :NERDTreeToggle<CR>
     map <F2> :NERDTree<CR>
     let NERDTreeShowHidden = 1
     " let NERDTreeShowBookmarks = 1
@@ -281,7 +281,7 @@ if ! has("nvim")
     let g:Lf_ShortcutF = '<leader>ff'
     let g:Lf_ShortcutB = '<leader>bf'
     let g:Lf_StlSeparator = { 'left': "", 'right': "" }
-    map <leader>fr :LeaderfMru<CR>
+    nnoremap <leader>fr :LeaderfMru<CR>
 endif
 
 " === vim-commentary ===
@@ -301,7 +301,7 @@ endif
 let g:rainbow_active = 0
 
 " === tagbar ===
-map <leader>tb :TagbarToggle<CR>
+nnoremap <leader>tb :TagbarToggle<CR>
 let g:tagbar_width = min([max([25, winwidth(0) / 5]), 30])
 " if (winwidth(0) > 100 || has("gui_running")) && argc() < 2
 "   " autocmd VimEnter * nested :TagbarOpen
@@ -541,9 +541,9 @@ endif
 
 " === code_runner.nvim ===
 if has("nvim")
-    map <leader>ru :RunCode<CR>
-    map <leader>rf :RunFile<CR>
-    map <leader>rp :RunProject<CR>
+    nnoremap <leader>ru :RunCode<CR>
+    nnoremap <leader>rf :RunFile<CR>
+    nnoremap <leader>rp :RunProject<CR>
     lua << EOF
     require('code_runner').setup {
         term = {
@@ -691,11 +691,11 @@ endif
 " ===  mappings  ===
 " ==================
 "
-map <C-n> :tabnew<CR>
-map <M-s> :w<CR>
-map <M-w> :q<CR>
-map <M-q> :q!<CR>
-map <leader>bn :bn<CR>
+nnoremap <C-n> :tabnew<CR>
+nnoremap <M-s> :w<CR>
+nnoremap <M-w> :q<CR>
+nnoremap <M-q> :q!<CR>
+nnoremap <leader>bn :bn<CR>
 
 function EditVimrc(way)
     if has("win32")
@@ -713,64 +713,52 @@ function EditVimrc(way)
     endif
 endfunction
 
-map <leader>sf :w<CR>:source $MYVIMRC<CR>
+nnoremap <leader>sf :w<CR>:source $MYVIMRC<CR>
 if has("nvim")
-    map <leader>ev :e $MYVIMRC<CR>
+    nnoremap <leader>ev :e $MYVIMRC<CR>
 endif
-map <leader>ef :call EditVimrc("normal")<CR>
-map <leader>er :call EditVimrc("vs")<CR>
+nnoremap <leader>ef :call EditVimrc("normal")<CR>
+nnoremap <leader>er :call EditVimrc("vs")<CR>
 
-" map <leader>1 :1b<CR>
-" map <leader>2 :2b<CR>
-" map <leader>3 :3b<CR>
-" map <leader>4 :4b<CR>
-" map <leader>5 :5b<CR>
-" map <leader>6 :6b<CR>
-" map <leader>7 :7b<CR>
-" map <leader>8 :8b<CR>
-" map <leader>9 :9b<CR>
+nnoremap <leader>ww :w<CR>
+nnoremap <leader>q :q<CR>
+nnoremap <leader>wq :wq<CR>
+nnoremap <leader>fq :q!<CR>
+nmap <leader>ewq :wq<CR><leader>ewq
+nnoremap <leader>du :diffupdate<CR>
+nnoremap <leader><leader>r :redraw!<CR>
 
-map <leader>ww :w<CR>
-map <leader>q :q<CR>
-map <leader>wq :wq<CR>
-map <leader>fq :q!<CR>
-map <leader>ewq :wq<CR><leader>ewq
-map <leader>du :diffupdate<CR>
-map <leader><leader>r :redraw!<CR>
+nnoremap <silent> <M-h> <C-w>h
+nnoremap <silent> <M-j> <C-w>j
+nnoremap <silent> <M-k> <C-w>k
+nnoremap <silent> <M-l> <C-w>l
+nnoremap <silent> <M--> <C-w>_
+tnoremap <silent> <M-h> <C-\><C-N><C-w>h
+tnoremap <silent> <M-j> <C-\><C-N><C-w>j
+tnoremap <silent> <M-k> <C-\><C-N><C-w>k
+tnoremap <silent> <M-l> <C-\><C-N><C-w>l
+nnoremap <silent> <leader>sp <C-w>s
+nnoremap <silent> <leader>vs <C-w>v
 
-" map <leader>h <C-w>h
-" map <leader>j <C-w>j
-" map <leader>k <C-w>k
-" map <leader>l <C-w>l
-map <M-h> <C-w>h
-map <M-j> <C-w>j
-map <M-k> <C-w>k
-map <M-l> <C-w>l
-map <M--> <C-w>_
-tnoremap <M-h> <C-\><C-N><C-w>h
-tnoremap <M-j> <C-\><C-N><C-w>j
-tnoremap <M-k> <C-\><C-N><C-w>k
-tnoremap <M-l> <C-\><C-N><C-w>l
-map <leader>sp <C-w>s
-map <leader>vs <C-w>v
-
-map <leader>tp :tabp<CR>
-map <leader>tn :tabn<CR>
+nnoremap <leader>tp :tabp<CR>
+nnoremap <leader>tn :tabn<CR>
 if ! has("nvim")
-    map <leader>c :bd<CR>
+    nnoremap <leader>c :bd<CR>
 endif
-map H :bp<CR>
-map L :bn<CR>
+nnoremap <silent> H :bp<CR>
+nnoremap <silent> L :bn<CR>
 
-map <leader>y "+y
-map <leader>p "+p
+nnoremap <leader>y "+y
+nnoremap <leader>p "+p
 
-map <C-J> ]c
-map <C-K> [c
+nnoremap <C-J> ]c
+nnoremap <C-K> [c
+inoremap <C-J> <esc>o
+inoremap <C-K> <esc>O
 
 " recurse do or dp in vimdiff
-map <leader>do do]c<leader>do
-map <leader>dp dp]c<leader>dp
+nmap <leader>do do]c<leader>do
+nmap <leader>dp dp]c<leader>dp
 
 inoremap jj <esc>
 cnoremap jj <esc>
@@ -780,16 +768,16 @@ if has("unix") && (system('uname -a') =~ "Android")
     vnoremap `` <esc>
 endif
 
-map <C-H> 10zh
-map <C-L> 10zl
+nnoremap <silent> <C-H> 10zh
+nnoremap <silent> <C-L> 10zl
 
 let g:load_doxygen_syntax=1
 
 if has("win32")
-    au FileType cpp map <buffer> <leader>fj :w<CR>:!echo --------debugging--------
+    au FileType cpp nnoremap <buffer> <leader>fj :w<CR>:!echo --------debugging--------
               \ && g++ % -o %:h\debug_%:t:r.exe && %:h\debug_%:t:r.exe<CR>
 else
-    au FileType cpp map <buffer> <leader>fj :w<CR>:!echo -e "\n--------debugging--------"
+    au FileType cpp nnoremap <buffer> <leader>fj :w<CR>:!echo -e "\n--------debugging--------"
               \ && g++ % -o %:h/debug_%:t:r.out && %:h/debug_%:t:r.out &&<CR>
 endif
 
