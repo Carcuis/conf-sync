@@ -347,6 +347,10 @@ if has("nvim")
     inoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(0)\<cr>" : "\<Left>"
     vnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
     vnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
+
+    command! -nargs=0 Format :call CocActionAsync('format')
+    command! -nargs=? Fold :call CocAction('fold', <f-args>)
+    command! -nargs=0 OR :call CocActionAsync('runCommand', 'editor.action.organizeImport')
 endif
 
 " === vim-which-key ===
