@@ -325,6 +325,7 @@ if has("nvim")
     autocmd CursorHold * silent call CocActionAsync('highlight')
     autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
     nmap <leader>rn <Plug>(coc-rename)
+    nmap <S-F5> <Plug>(coc-rename)
     nmap <leader>rf <Plug>(coc-refactor)
     xmap <leader>a  <Plug>(coc-codeaction-selected)
     nmap <leader>a  <Plug>(coc-codeaction-selected)w
@@ -354,11 +355,11 @@ if ! has("nvim")
 endif
 
 " === vim-gitgutter ===
-let g:gitgutter_sign_added = '▎'
-let g:gitgutter_sign_modified = '▎'
+let g:gitgutter_sign_added = '█'
+let g:gitgutter_sign_modified = '█'
 let g:gitgutter_sign_removed = '▶'
-let g:gitgutter_sign_removed_first_line = '▔'
-let g:gitgutter_sign_removed_above_and_below = '_▔'
+let g:gitgutter_sign_removed_first_line = '▶'
+let g:gitgutter_sign_removed_above_and_below = '▶'
 let g:gitgutter_sign_modified_removed = '▶'
 
 " === telescope.nvim ===
@@ -368,7 +369,7 @@ if has("nvim")
     nnoremap <leader>fb <cmd>Telescope buffers<cr>
     nnoremap <leader>fh <cmd>Telescope help_tags<cr>
     nnoremap <leader>fp <cmd>Telescope projects<cr>
-    nnoremap <leader>fo <cmd>Telescope oldfiles<cr>
+    nnoremap <leader>fr <cmd>Telescope oldfiles<cr>
     lua << EOF
     require('telescope').setup{
         defaults = {
@@ -392,6 +393,9 @@ if has("nvim")
     require("bufferline").setup{
         options = {
             middle_mouse_command = function(bufnum)
+                require('bufdelete').bufdelete(bufnum, true)
+            end,
+            close_command = function(bufnum)
                 require('bufdelete').bufdelete(bufnum, true)
             end,
             separator_style = "slant",
@@ -478,12 +482,14 @@ endif
 if has("nvim")
     lua << EOF
     require("toggleterm").setup {
+        shell = (vim.fn.has("win32") == 1 and { 'pwsh' } or { vim.o.shell })[1],
         open_mapping = [[<c-t>]],
         direction = 'float',
         shade_terminals = true,
         shading_factor = 1,
         float_opts = {
             border = 'curved',
+            winblend = 10,
         },
     }
 EOF
@@ -521,6 +527,7 @@ if has("nvim")
             typescript = "deno run",
             rust = "cd $dir && rustc $fileName && $dir/$fileNameWithoutExt",
             cpp = "cd $dir && g++ $fileName -o $fileNameWithoutExt.exe && $dir/$fileNameWithoutExt.exe",
+            c = "cd $dir && gcc $fileName -o $fileNameWithoutExt.exe && $dir/$fileNameWithoutExt.exe",
             sh = "bash",
             zsh = "zsh"
         },
@@ -580,8 +587,18 @@ if has("nvim")
     lua << EOF
     require("which-key").setup {
         plugins = {
-            registers = false
-        }
+            registers = false,
+            spelling = {
+                enabled = true,
+                suggestions = 40,
+            }
+        },
+        window = {
+            winblend = 10,
+        },
+        layout = {
+            align = 'center',
+        },
     }
 EOF
 endif
@@ -611,11 +628,7 @@ endif
 " === nvim-scrollbar ===
 if has("nvim")
     lua << EOF
-    require("scrollbar").setup {
-        handle = {
-            color = '#565656',
-        },
-    }
+    require("scrollbar").setup {}
 EOF
 endif
 
