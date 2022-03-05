@@ -61,7 +61,11 @@ if has("nvim")
     Plug 'SmiteshP/nvim-gps'
     Plug 'shaunsingh/moonlight.nvim'
     Plug 'petertriho/nvim-scrollbar'
-    Plug 'gelguy/wilder.nvim'
+    function! UpdateRemotePlugins(...)
+        let &rtp=&rtp
+        UpdateRemotePlugins
+    endfunction
+    Plug 'gelguy/wilder.nvim', { 'do': function('UpdateRemotePlugins') }
     Plug 'famiu/bufdelete.nvim'
 else
     Plug 'carcuis/darcula'
