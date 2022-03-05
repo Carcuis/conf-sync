@@ -12,7 +12,6 @@
 "
 call plug#begin()
 
-Plug 'carcuis/darcula'
 Plug 'joshdick/onedark.vim'
 Plug 'jiangmiao/auto-pairs'
 Plug 'vimcn/vimcdoc'
@@ -35,6 +34,7 @@ Plug 'gcmt/wildfire.vim'
 Plug 'lambdalisue/suda.vim'
 
 if has("nvim")
+    Plug 'carcuis/darcula.nvim'
     Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
     Plug 'neoclide/coc.nvim', {'branch': 'release'}
     Plug 'jackguo380/vim-lsp-cxx-highlight'
@@ -64,6 +64,7 @@ if has("nvim")
     Plug 'gelguy/wilder.nvim'
     Plug 'famiu/bufdelete.nvim'
 else
+    Plug 'carcuis/darcula'
     Plug 'vim-airline/vim-airline'
     Plug 'Yggdroot/indentLine'
     Plug 'liuchengxu/vim-which-key'
@@ -114,15 +115,12 @@ set timeoutlen=500
 set conceallevel=2
 
 if has("nvim")
-    hi cursorline guifg=NONE
     if !has("mac")
         set guifont=UbuntuMono\ NF:h16
     else
         set guifont=UbuntuMono\ Nerd\ Font\ Mono:h20
     endif
 elseif has("gui_running") "gvim
-    hi Cursor guifg=black guibg=white
-    " color onedark
     " set guioptions-=m  "remove menu bar
     " set guioptions-=T  "remove toolbar
     " set guioptions-=r  "remove right-hand scroll bar
@@ -131,7 +129,7 @@ elseif has("gui_running") "gvim
         set backspace=indent,eol,start
         au GUIEnter * simalt ~x
         source $VIMRUNTIME/delmenu.vim
-        set guifont=UbuntuMono_NF:h16:cANSI:qDRAFT
+        set guifont=CaskaydiaCove_NF:h12:cANSI:qDRAFT
         map <F11> :call libcallnr("gvimfullscreen.dll", "ToggleFullScreen", 0)<CR>
     elseif (system('uname -a') =~ "Microsoft") "wsl
         set lines=45
@@ -158,48 +156,12 @@ else "vim in tui
     endif
 endif
 
-if has("nvim")
-    hi NonText guifg=#3C3F41
-else
-    hi NonText guifg=bg
-endif
-
 " ===============
 
 " =========================
 " ===  plugin settings  ===
 " =========================
 "
-
-" === darcula ===
-" hi! link GitGutterAdd GitAddStripe
-" hi! link GitGutterChange GitChangeStripe
-" hi! link GitGutterDelete GitDeleteStripe
-hi! link CocErrorSign ErrorSign
-hi! link CocWarningSign WarningSign
-hi! link CocInfoSign InfoSign
-hi! link CocHintSign HintSign
-hi! link CocErrorFloat Pmenu
-hi! link CocWarningFloat Pmenu
-hi! link CocInfoFloat Pmenu
-hi! link CocHintFloat Pmenu
-hi! link CocHighlightText IdentifierUnderCaret
-hi! link CocHighlightRead IdentifierUnderCaret
-hi! link CocHighlightWrite IdentifierUnderCaretWrite
-hi! link CocErrorHighlight CodeError
-hi! link CocWarningHighlight CodeWarning
-hi! link CocInfoHighlight CodeInfo
-hi! link CocHintHighlight CodeHint
-" call darcula#Hi('Comment', [ '#629755', 255 ], darcula#palette.null, 'italic')
-hi VertSplit guibg=#313335 guifg=#313335
-
-" === tokyonight.nvim ===
-if has("nvim")
-    lua << EOF
-    vim.g.tokyonight_style = "storm"
-EOF
-    " color tokyonight
-endif
 
 " === vim-airline ===
 if ! has("nvim")
