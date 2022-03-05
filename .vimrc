@@ -67,6 +67,7 @@ if has("nvim")
     endfunction
     Plug 'gelguy/wilder.nvim', { 'do': function('UpdateRemotePlugins') }
     Plug 'famiu/bufdelete.nvim'
+    Plug 'rcarriga/nvim-notify'
 else
     Plug 'carcuis/darcula'
     Plug 'vim-airline/vim-airline'
@@ -663,6 +664,15 @@ endif
 " === bufdelete.nvim ===
 if has("nvim")
     nnoremap<silent> <leader>c :lua require('bufdelete').bufdelete(0, true)<CR>
+endif
+
+" === nvim-notify ===
+if has("nvim")
+    lua << EOF
+    require('telescope').load_extension('notify')
+    vim.notify = require("notify")
+    require("notify").setup()
+EOF
 endif
 
 " ===============
