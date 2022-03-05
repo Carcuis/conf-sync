@@ -700,6 +700,7 @@ nnoremap <leader>ww :w<CR>
 nnoremap <leader>q :q<CR>
 nnoremap <leader>wq :wq<CR>
 nnoremap <leader>fq :q!<CR>
+nmap <leader>rq :q<CR><leader>rq
 nmap <leader>ewq :wq<CR><leader>ewq
 nnoremap <leader>du :diffupdate<CR>
 nnoremap <leader><leader>r :redraw!<CR>
@@ -724,8 +725,8 @@ endif
 nnoremap <silent> H :bp<CR>
 nnoremap <silent> L :bn<CR>
 
-nnoremap <leader>y "+y
-nnoremap <leader>p "+p
+noremap <leader>y "+y
+noremap <leader>p "+p
 
 nnoremap <C-J> ]c
 nnoremap <C-K> [c
