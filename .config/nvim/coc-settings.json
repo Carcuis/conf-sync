@@ -1,7 +1,8 @@
 {
     "coc.preferences.extensionUpdateCheck": "weekly",
-    "suggest.noselect": false,
     "suggest.enablePreview": true,
+    "suggest.noselect": true,
+    "suggest.enablePreselect": false,
     "suggest.completionItemKindLabels": {
         "class": "\uf0e8",
         "color": "\ue22b",
