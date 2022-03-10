@@ -13,7 +13,6 @@
 call plug#begin()
 
 Plug 'joshdick/onedark.vim'
-Plug 'jiangmiao/auto-pairs'
 Plug 'vimcn/vimcdoc'
 Plug 'ryanoasis/vim-devicons'
 Plug 'tpope/vim-commentary'
@@ -69,8 +68,10 @@ if has("nvim")
     Plug 'gelguy/wilder.nvim', { 'do': function('UpdateRemotePlugins') }
     Plug 'famiu/bufdelete.nvim'
     Plug 'rcarriga/nvim-notify'
+    Plug 'ZhiyuanLck/smart-pairs'
 else
     Plug 'carcuis/darcula'
+    Plug 'jiangmiao/auto-pairs'
     Plug 'vim-airline/vim-airline'
     Plug 'Yggdroot/indentLine'
     Plug 'liuchengxu/vim-which-key'
@@ -697,6 +698,13 @@ if has("nvim")
     require('telescope').load_extension('notify')
     vim.notify = require("notify")
     require("notify").setup()
+EOF
+endif
+
+" === smart-pairs ===
+if has("nvim")
+    lua << EOF
+    require('pairs'):setup()
 EOF
 endif
 
