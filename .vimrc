@@ -69,6 +69,7 @@ if has("nvim")
     Plug 'famiu/bufdelete.nvim'
     Plug 'rcarriga/nvim-notify'
     Plug 'JoosepAlviste/nvim-ts-context-commentstring'
+    Plug 'romgrk/nvim-treesitter-context'
     Plug 'ZhiyuanLck/smart-pairs'
 else
     Plug 'carcuis/darcula'
