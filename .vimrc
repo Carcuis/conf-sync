@@ -430,7 +430,6 @@ endif
 
 " === nvim-tree.lua ===
 if has("nvim")
-    hi NvimTreeNormal guibg=#3C3F41
     noremap <leader>ee :NvimTreeToggle<CR>
 
     func OpenNvimTreeOnStartup()
@@ -472,10 +471,20 @@ if has("nvim")
                 info = "",
                 warning = "",
                 error = "",
-            }
+            },
         },
         git = {
-            ignore = false
+            ignore = false,
+        },
+        view ={
+            mappings = {
+                list = {
+                    { key = { "l", "<CR>", "o" }, action = "edit", mode = "n" },
+                    { key = "h", action = "close_node" },
+                    { key = "v", action = "vsplit" },
+                    { key = "C", action = "cd" },
+                },
+            },
         },
     }
 EOF
