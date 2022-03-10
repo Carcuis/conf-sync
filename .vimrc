@@ -300,7 +300,7 @@ let g:startify_commands = [
     \ ]
 if has("nvim")
     let g:startify_commands += [
-    \ {'f': ['  Find File', 'Telescope find_files']},
+    \ {'f': ['  Find File', 'Telescope find_files']},
     \ {'p': ['  Recent Projects', 'Telescope projects']},
     \ {'r': ['  Recently Used Files', 'Telescope oldfiles']},
     \ {'w': ['  Find Word', 'Telescope live_grep']},
@@ -694,7 +694,7 @@ endif
 
 " === bufdelete.nvim ===
 if has("nvim")
-    nnoremap<silent> <leader>c :lua require('bufdelete').bufdelete(0, true)<CR>
+    nnoremap <silent> <leader>c :lua require('bufdelete').bufdelete(0, true)<CR>
 endif
 
 " === nvim-notify ===
