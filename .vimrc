@@ -68,6 +68,7 @@ if has("nvim")
     Plug 'gelguy/wilder.nvim', { 'do': function('UpdateRemotePlugins') }
     Plug 'famiu/bufdelete.nvim'
     Plug 'rcarriga/nvim-notify'
+    Plug 'JoosepAlviste/nvim-ts-context-commentstring'
     Plug 'ZhiyuanLck/smart-pairs'
 else
     Plug 'carcuis/darcula'
@@ -563,7 +564,10 @@ if has("nvim")
             disable = {},
             updatetime = 25, -- Debounced time for highlighting nodes in the playground from source code
             persist_queries = false, -- Whether the query persists across vim sessions
-        }
+        },
+        context_commentstring = {
+            enable = true
+        },
     }
 EOF
     nnoremap <silent> <M-c> :TSHighlightCapturesUnderCursor<CR>
