@@ -709,7 +709,11 @@ endif
 " === smart-pairs ===
 if has("nvim")
     lua << EOF
-    require('pairs'):setup()
+    require('pairs'):setup {
+        indent = {
+            python = 1,
+        },
+    }
 EOF
 endif
 
