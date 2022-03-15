@@ -71,6 +71,7 @@ if has("nvim")
     Plug 'romgrk/nvim-treesitter-context'
     Plug 'ZhiyuanLck/smart-pairs'
     Plug 'lewis6991/gitsigns.nvim'
+    Plug 'kdheepak/lazygit.nvim'
 else
     Plug 'carcuis/darcula'
     Plug 'jiangmiao/auto-pairs'
@@ -297,7 +298,7 @@ let g:startify_lists = [
 let g:startify_commands = [
     \ {'c': ['  Configuration', 'call EditVimrc("normal")']},
     \ {'P': ['  Plugin Install', 'PlugInstall']},
-    \ {'U': ['  Plug Update', 'PlugUpdate']},
+    \ {'U': ['  Plugin Update', 'PlugUpdate']},
     \ ]
 if has("nvim")
     let g:startify_commands += [
@@ -784,6 +785,12 @@ if has("nvim")
         end
     }
 EOF
+endif
+
+" === lazygit.nvim ===
+if has("nvim")
+    nnoremap <silent> <leader>gg :LazyGit<CR>
+    let g:lazygit_floating_window_use_plenary = 1
 endif
 
 " ===============
