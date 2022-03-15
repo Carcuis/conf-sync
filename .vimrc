@@ -532,7 +532,11 @@ endif
 " === project.nvim ===
 if has("nvim")
     lua << EOF
-    require("project_nvim").setup{}
+    require("project_nvim").setup {
+        exclude_dirs = {
+            "c:", "d:", "e:", "~", "/",
+        },
+    }
     require('telescope').load_extension('projects')
 EOF
 endif
