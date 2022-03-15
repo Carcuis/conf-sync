@@ -24,7 +24,6 @@ Plug 'romainl/vim-cool'
 Plug 'luochen1990/rainbow'
 Plug 'easymotion/vim-easymotion'
 Plug 'preservim/tagbar'
-Plug 'airblade/vim-gitgutter'
 Plug 'mhinz/vim-startify'
 Plug 'vifm/vifm.vim'
 Plug 'liuchengxu/vista.vim'
@@ -71,6 +70,7 @@ if has("nvim")
     Plug 'JoosepAlviste/nvim-ts-context-commentstring'
     Plug 'romgrk/nvim-treesitter-context'
     Plug 'ZhiyuanLck/smart-pairs'
+    Plug 'lewis6991/gitsigns.nvim'
 else
     Plug 'carcuis/darcula'
     Plug 'jiangmiao/auto-pairs'
@@ -82,6 +82,7 @@ else
     Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
     Plug 'Yggdroot/LeaderF', {'do': ':LeaderfInstallCExtension'}
     Plug 'vim/killersheep'
+    Plug 'airblade/vim-gitgutter'
 endif
 
 call plug#end()
@@ -727,6 +728,60 @@ if has("nvim")
         indent = {
             python = 1,
         },
+    }
+EOF
+endif
+
+" === gitsigns.nvim ===
+if has("nvim")
+    lua << EOF
+    require('gitsigns').setup {
+        signs = {
+            add          = {hl = 'GitSignsAdd'   , text = '█', numhl='GitSignsAddNr'   , linehl='GitSignsAddLn'},
+            change       = {hl = 'GitSignsChange', text = '█', numhl='GitSignsChangeNr', linehl='GitSignsChangeLn'},
+            delete       = {hl = 'GitSignsDelete', text = '▶', numhl='GitSignsDeleteNr', linehl='GitSignsDeleteLn'},
+            topdelete    = {hl = 'GitSignsDelete', text = '▶', numhl='GitSignsDeleteNr', linehl='GitSignsDeleteLn'},
+            changedelete = {hl = 'GitSignsChange', text = '█', numhl='GitSignsChangeNr', linehl='GitSignsChangeLn'},
+        },
+        current_line_blame_opts = {
+            delay = 10,
+            ignore_whitespace = true,
+        },
+        preview_config = {
+            border = 'none',
+        },
+        on_attach = function(bufnr)
+            local function map(mode, lhs, rhs, opts)
+                opts = vim.tbl_extend('force', {noremap = true, silent = true}, opts or {})
+                vim.api.nvim_buf_set_keymap(bufnr, mode, lhs, rhs, opts)
+            end
+
+            -- Navigation
+            map('n', ']c', "&diff ? ']c' : '<cmd>Gitsigns next_hunk<CR>'", {expr=true})
+            map('n', '[c', "&diff ? '[c' : '<cmd>Gitsigns prev_hunk<CR>'", {expr=true})
+
+            -- Actions
+            map('n', '<leader>gs', ':Gitsigns stage_hunk<CR>')
+            map('v', '<leader>gs', ':Gitsigns stage_hunk<CR>')
+            map('n', '<leader>gr', ':Gitsigns reset_hunk<CR>')
+            map('v', '<leader>gr', ':Gitsigns reset_hunk<CR>')
+            map('n', '<leader>gS', '<cmd>Gitsigns stage_buffer<CR>')
+            map('n', '<leader>gu', '<cmd>Gitsigns undo_stage_hunk<CR>')
+            map('n', '<leader>gR', '<cmd>Gitsigns reset_buffer<CR>')
+            map('n', '<leader>gp', '<cmd>Gitsigns preview_hunk<CR>')
+            map('n', '<leader>gb', '<cmd>lua require"gitsigns".blame_line{full=true}<CR>')
+            map('n', '<leader>gd', '<cmd>lua require"gitsigns".diffthis("~")<CR>')
+            map('n', '<leader>gtb', '<cmd>Gitsigns toggle_current_line_blame<CR>')
+            map('n', '<leader>gtd', '<cmd>Gitsigns toggle_deleted<CR>')
+            map('n', '<leader>gtl', '<cmd>Gitsigns toggle_linehl<CR>')
+            map('n', '<leader>gtn', '<cmd>Gitsigns toggle_numhl<CR>')
+            map('n', '<leader>gtw', '<cmd>Gitsigns toggle_word_diff<CR>')
+            map('n', '<leader>gts', '<cmd>Gitsigns toggle_signs<CR>')
+
+            -- Text object
+            map('o', 'ih', ':<C-U>Gitsigns select_hunk<CR>')
+            map('x', 'ih', ':<C-U>Gitsigns select_hunk<CR>')
+        end
     }
 EOF
 endif
