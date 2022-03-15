@@ -371,12 +371,14 @@ if ! has("nvim")
 endif
 
 " === vim-gitgutter ===
-let g:gitgutter_sign_added = '█'
-let g:gitgutter_sign_modified = '█'
-let g:gitgutter_sign_removed = '▶'
-let g:gitgutter_sign_removed_first_line = '▶'
-let g:gitgutter_sign_removed_above_and_below = '▶'
-let g:gitgutter_sign_modified_removed = '█'
+if ! has("nvim")
+    let g:gitgutter_sign_added = '█'
+    let g:gitgutter_sign_modified = '█'
+    let g:gitgutter_sign_removed = '▶'
+    let g:gitgutter_sign_removed_first_line = '▶'
+    let g:gitgutter_sign_removed_above_and_below = '▶'
+    let g:gitgutter_sign_modified_removed = '█'
+endif
 
 " === telescope.nvim ===
 if has("nvim")
