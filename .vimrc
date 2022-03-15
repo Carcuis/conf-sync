@@ -900,12 +900,18 @@ nmap <leader>do do]c<leader>do
 nmap <leader>dp dp]c<leader>dp
 
 inoremap jj <esc>
-cnoremap jj <esc>
+cnoremap jj <C-u><esc>
 if has("unix") && (system('uname -a') =~ "Android")
     inoremap `` <esc>
-    cnoremap `` <esc>
+    cnoremap `` <C-u><esc>
     vnoremap `` <esc>
 endif
+
+nnoremap <silent> <C-Up> :resize -2<CR>
+nnoremap <silent> <C-Down> :resize +2<CR>
+nnoremap <silent> <C-Left> :vertical resize -2<CR>
+nnoremap <silent> <C-Right> :vertical resize +2<CR>
+
 
 nnoremap <silent> <C-H> 10zh
 nnoremap <silent> <C-L> 10zl
