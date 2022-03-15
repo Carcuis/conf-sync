@@ -72,6 +72,7 @@ if has("nvim")
     Plug 'ZhiyuanLck/smart-pairs'
     Plug 'lewis6991/gitsigns.nvim'
     Plug 'kdheepak/lazygit.nvim'
+    Plug 'sindrets/diffview.nvim'
 else
     Plug 'carcuis/darcula'
     Plug 'jiangmiao/auto-pairs'
@@ -418,7 +419,11 @@ if has("nvim")
                 {
                     filetype = "NvimTree",
                     text = "Nvim Tree",
-                }
+                },
+                {
+                    filetype = "DiffviewFiles",
+                    text = "Source Control",
+                },
             },
             diagnostics = "coc",
             diagnostics_indicator = function(count, level, diagnostics_dict, context)
@@ -597,6 +602,10 @@ if has("nvim")
     require('lualine').setup {
         extensions = {
             'nvim-tree',
+            {
+                sections = { lualine_b = {'filetype'} },
+                filetypes = {'DiffviewFiles'},
+            },
         },
         options = {
             section_separators = { left = '', right = '' },
@@ -793,6 +802,20 @@ if has("nvim")
     let g:lazygit_floating_window_use_plenary = 1
 endif
 
+" === diffview.nvim ===
+if has("nvim")
+    nnoremap <silent> <leader>gD :DiffviewOpen<CR>
+    lua <<EOF
+    -- local cb = require'diffview.config'.diffview_callback
+    require'diffview'.setup {
+        enhanced_diff_hl = true, -- See ':h diffview-config-enhanced_diff_hl'
+        file_panel = {
+            width = 30,
+        },
+    }
+EOF
+endif
+
 " ===============
 
 " ==================
@@ -849,8 +872,9 @@ tnoremap <silent> <M-l> <C-\><C-N><C-w>l
 nnoremap <silent> <leader>sp <C-w>s
 nnoremap <silent> <leader>vs <C-w>v
 
-nnoremap <leader>tp :tabp<CR>
-nnoremap <leader>tn :tabn<CR>
+nnoremap <silent> <leader>tp :tabp<CR>
+nnoremap <silent> <leader>tn :tabn<CR>
+nnoremap <silent> <leader>tc :tabc<CR>
 if ! has("nvim")
     nnoremap <leader>c :bd<CR>
 endif
