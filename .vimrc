@@ -116,6 +116,7 @@ set encoding=utf-8
 set incsearch
 set hlsearch
 set scrolloff=5
+set sidescrolloff=10
 set updatetime=100
 set hidden
 set ignorecase
