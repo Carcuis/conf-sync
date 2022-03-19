@@ -456,6 +456,7 @@ if has("nvim")
 
     let g:nvim_tree_git_hl = 1
     let g:nvim_tree_respect_buf_cwd = 1
+    let g:nvim_tree_root_folder_modifier = ":t"
     let g:nvim_tree_icons = {
                 \ 'git': {
                     \  'ignored': "-",
