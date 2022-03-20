@@ -508,7 +508,7 @@ endif
 
 " === FixCursorHold.nvim ===
 if has("nvim")
-    let g:cursorhold_updatetime = 50
+    let g:cursorhold_updatetime = 0
 endif
 
 " === nvim-terminal.lua ===
