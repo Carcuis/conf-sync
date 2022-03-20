@@ -44,7 +44,7 @@
     ],
     "translator.window.enableBorder": false,
     "snippets.ultisnips.enable": true,
-    "powershell.powerShellExePath": "C:\\Program Files\\WindowsApps\\Microsoft.PowerShell_7.2.1.0_x64__8wekyb3d8bbwe\\pwsh.exe",
+    "powershell.powerShellExePath": "pwsh",
     "powershell.powerShellDefaultVersion": "Powershell Core 7 (x64)",
     "powershell.integratedConsole.showOnStartup": false,
     "codeLens.enable": true,
