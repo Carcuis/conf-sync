@@ -570,7 +570,8 @@ if has("nvim")
             cpp = "cd $dir && g++ $fileName -o $fileNameWithoutExt.exe && $dir/$fileNameWithoutExt.exe",
             c = "cd $dir && gcc $fileName -o $fileNameWithoutExt.exe && $dir/$fileNameWithoutExt.exe",
             sh = "bash",
-            zsh = "zsh"
+            zsh = "zsh",
+            go = "go run $fileName",
         },
         project_path = vim.fn.stdpath("config") .. "/project_manager.json"
     }
@@ -582,7 +583,7 @@ if has("nvim")
     lua << EOF
     require'nvim-treesitter.configs'.setup {
         ensure_installed = {
-            "python", "cpp", "lua", "bash", "vim"
+            "python", "cpp", "lua", "bash", "vim", "go"
         },
         highlight = {
             enable = true,
