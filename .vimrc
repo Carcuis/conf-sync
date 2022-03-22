@@ -902,10 +902,10 @@ nmap <leader>do do]c<leader>do
 nmap <leader>dp dp]c<leader>dp
 
 inoremap jj <esc>
-cnoremap jj <C-u><esc>
+cnoremap jj <C-c>
 if has("unix") && (system('uname -a') =~ "Android")
     inoremap `` <esc>
-    cnoremap `` <C-u><esc>
+    cnoremap `` <C-c>
     vnoremap `` <esc>
 endif
 
