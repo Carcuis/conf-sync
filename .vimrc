@@ -125,6 +125,7 @@ set termguicolors
 set signcolumn=yes
 set timeoutlen=500
 set conceallevel=2
+set fillchars=eob:\ ,diff:\ 
 
 if has("nvim")
     if !has("mac")
@@ -416,7 +417,7 @@ if has("nvim")
             close_command = function(bufnum)
                 require('bufdelete').bufdelete(bufnum, true)
             end,
-            separator_style = "slant",
+            separator_style = (vim.g.transparent_background == 1 and {"thin"} or {"slant"})[1],
             offsets = {
                 {
                     filetype = "NvimTree",
