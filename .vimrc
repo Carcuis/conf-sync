@@ -893,8 +893,8 @@ nnoremap <silent> L :bn<CR>
 noremap <leader>y "+y
 noremap <leader>p "+p
 
-nnoremap <C-J> ]c
-nnoremap <C-K> [c
+nmap <C-J> ]c
+nmap <C-K> [c
 inoremap <C-J> <esc>o
 inoremap <C-K> <esc>O
 
