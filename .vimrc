@@ -323,7 +323,7 @@ if has("nvim")
                 \ 'coc-json', 'coc-vimlsp', 'coc-marketplace', 'coc-markdownlint',
                 \ 'coc-pyright', 'coc-powershell', 'coc-sh', 'coc-clangd',
                 \ 'coc-cmake', 'coc-actions', 'coc-translator', 'coc-snippets',
-                \ 'coc-sumneko-lua']
+                \ 'coc-sumneko-lua', 'coc-tsserver', 'coc-eslint']
     inoremap <silent><expr> <TAB>
           \ pumvisible() ? coc#_select_confirm() :
           \ coc#expandableOrJumpable() ? "\<C-r>=coc#rpc#request('doKeymap', ['snippets-expand-jump',''])\<CR>" : "\<TAB>"
@@ -584,7 +584,7 @@ if has("nvim")
     lua << EOF
     require'nvim-treesitter.configs'.setup {
         ensure_installed = {
-            "python", "cpp", "lua", "bash", "vim", "go"
+            "python", "cpp", "lua", "bash", "vim", "go", "javascript", "typescript"
         },
         highlight = {
             enable = true,
