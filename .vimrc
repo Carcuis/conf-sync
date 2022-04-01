@@ -95,7 +95,21 @@ call plug#end()
 " ===  basic settings  ===
 " ========================
 "
-color darcula
+
+let g:transparent_background = 0
+" let g:color = "neon"
+let g:color = "darcula"
+if g:color == "darcula"
+    let g:darcula_transparent = g:transparent_background
+    color darcula
+elseif g:color == "neon"
+    lua << EOF
+    vim.g.neon_style = "doom"
+    vim.g.neon_transparent = vim.g.transparent_background
+EOF
+    color neon
+endif
+
 let mapleader = "\<space>"
 syntax on
 set nu
