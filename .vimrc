@@ -72,6 +72,7 @@ if has("nvim")
     Plug 'lewis6991/gitsigns.nvim'
     Plug 'kdheepak/lazygit.nvim'
     Plug 'sindrets/diffview.nvim'
+    Plug 'github/copilot.vim'
 else
     Plug 'carcuis/darcula'
     Plug 'jiangmiao/auto-pairs'
