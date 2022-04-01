@@ -909,14 +909,14 @@ nnoremap <silent> L :bn<CR>
 noremap <leader>y "+y
 noremap <leader>p "+p
 
-nmap <C-J> ]c
-nmap <C-K> [c
-inoremap <C-J> <esc>o
-inoremap <C-K> <esc>O
+nmap <silent> <C-J> ]c
+nmap <silent> <C-K> [c
+inoremap <silent> <C-J> <esc>o
+inoremap <silent> <C-K> <esc>O
 
 " recurse do or dp in vimdiff
-nmap <leader>do do]c<leader>do
-nmap <leader>dp dp]c<leader>dp
+nmap <silent> <leader>do do]c<leader>do
+nmap <silent> <leader>dp dp]c<leader>dp
 
 inoremap jj <esc>
 cnoremap jj <C-c>
