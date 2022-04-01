@@ -481,10 +481,11 @@ if has("nvim")
                 \ 'default': '',
                 \ }
 
+    autocmd BufEnter * ++nested if winnr('$') == 1 && bufname() == 'NvimTree_' . tabpagenr() | quit | endif
+
     lua << EOF
     require'nvim-tree'.setup {
         hijack_cursor = true,
-        auto_close = true,
         update_cwd = true,
         update_focused_file = {
             enable      = true,
