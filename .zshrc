@@ -168,20 +168,24 @@ alias lg='lazygit'
 
 # alias nethack='nethack@nethack-cn.com -p2222'
 
-if [[ $`uname -a` =~ Microsoft ]]; then
+if [[ $(uname -a) =~ Microsoft || $(uname -a) =~ WSL ]]; then
     alias sshon='sudo service ssh start'
     alias sshoff='sudo service ssh stop'
     # alias neofetch='neofetch --ascii_distro windows10'
     # alias byobu='LANG="en_US.UTF-8" ; byobu'
-    alias x='export DISPLAY=:0.0'
     # alias cman='man -M /usr/local/share/man/zh_CN'
     alias clp='clip.exe'
     alias adb='adb.exe'
     alias fastboot='fastboot.exe'
     alias o='explorer.exe'
     alias o.='explorer.exe .'
-    alias proxy='export https_proxy=socks5://127.0.0.1:10808'
-    alias unproxy='unset https_proxy'
+    if [[ $WSL_VERSION == 2 ]]; then
+        alias proxy="export all_proxy=http://$(cat /etc/resolv.conf |grep "nameserver" |cut -f 2 -d " "):10809"
+    else
+        alias proxy='export all_proxy=http://127.0.0.1:10809'
+        alias x='export DISPLAY=:0.0'
+    fi
+    alias unproxy='unset all_proxy'
     alias bpi='ssh -i ~/.ssh/BPi pi@192.168.137.75'
     alias oneplus='ssh -i ~/.ssh/oneplus -p 8022 u0_a164@192.168.137.10'
     # function chpwd(){
@@ -253,17 +257,19 @@ fi
 # export PKG_CONFIG_PATH
 # --------------/
 
-if [[ $`uname -a` =~ Microsoft ]]; then
-    # adjust login path
-    if [ "$PWD" = "/mnt/c/Users/cui" ]; then
-        cd ~
-    elif [ "$PWD" = "/mnt/c/Windows/system32" ]; then
-        cd ~
-    elif [ "$PWD" = "/mnt/c/Windows/System32" ]; then
-        cd ~
+if [[ $(uname -a) =~ Microsoft || $(uname -a) =~ WSL ]]; then
+    if [[ $WSL_VERSION != 2 ]]; then
+        # adjust login path
+        if [ "$PWD" = "/mnt/c/Users/cui" ]; then
+            cd ~
+        elif [ "$PWD" = "/mnt/c/Windows/system32" ]; then
+            cd ~
+        elif [ "$PWD" = "/mnt/c/Windows/System32" ]; then
+            cd ~
+        fi
+        # display env
+        export DISPLAY=127.0.0.1:0.0
     fi
-    # display env
-    export DISPLAY=127.0.0.1:0.0
     # autostart ssh-agent
     if [ -z "$SSH_AUTH_SOCK" ] ; then
         eval `ssh-agent -s` > /dev/null
