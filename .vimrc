@@ -140,9 +140,9 @@ set termguicolors
 set signcolumn=yes
 set timeoutlen=500
 set conceallevel=2
-set fillchars=eob:\ ,diff:\ 
 
 if has("nvim")
+    set fillchars=eob:\ ,diff:\ 
     if !has("mac")
         set guifont=UbuntuMono\ NF:h16
     else
