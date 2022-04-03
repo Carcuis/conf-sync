@@ -544,6 +544,9 @@ if has("nvim")
         float_opts = {
             border = 'curved',
             winblend = 10,
+            highlights = {
+                border = "Number",
+            }
         },
     }
 EOF
