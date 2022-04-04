@@ -168,6 +168,18 @@ alias lg='lazygit'
 
 # alias nethack='nethack@nethack-cn.com -p2222'
 
+set_proxy() {
+    export http_proxy=$1
+    export https_proxy=$1
+    export all_proxy=$1
+}
+
+unset_proxy() {
+    unset http_proxy
+    unset https_proxy
+    unset all_proxy
+}
+
 if [[ $(uname -a) =~ Microsoft || $(uname -a) =~ WSL ]]; then
     alias sshon='sudo service ssh start'
     alias sshoff='sudo service ssh stop'
@@ -180,12 +192,12 @@ if [[ $(uname -a) =~ Microsoft || $(uname -a) =~ WSL ]]; then
     alias o='explorer.exe'
     alias o.='explorer.exe .'
     if [[ $WSL_VERSION == 2 ]]; then
-        alias proxy="export all_proxy=http://$(cat /etc/resolv.conf |grep "nameserver" |cut -f 2 -d " "):10809"
+        alias px="set_proxy http://$(cat /etc/resolv.conf |grep "nameserver" |cut -f 2 -d " "):10809"
     else
-        alias proxy='export all_proxy=http://127.0.0.1:10809'
+        alias px='set_proxy http://127.0.0.1:10809'
         alias x='export DISPLAY=:0.0'
     fi
-    alias unproxy='unset all_proxy'
+    alias upx=unset_proxy
     alias bpi='ssh -i ~/.ssh/BPi pi@192.168.137.75'
     alias oneplus='ssh -i ~/.ssh/oneplus -p 8022 u0_a164@192.168.137.10'
 elif [[ "$OSTYPE" =~ android ]]; then
@@ -202,8 +214,8 @@ elif [[ "$OSTYPE" =~ ^linux ]]; then
     alias fix-pod='pactl load-module module-bluetooth-discover'
     alias o='nautilus'
     alias o.='nautilus .'
-    alias proxy='export all_proxy=socks5://127.0.0.1:1089'
-    alias unproxy='unset all_proxy'
+    alias px='set_proxy socks5://127.0.0.1:1089'
+    alias upx=unset_proxy
 elif [[ "$OSTYPE" =~ ^darwin ]]; then
     # alias cmake-gui='/Applications/CMake.app/Contents/MacOS/CMake .'
     alias sshon='sudo launchctl load -w /System/Library/LaunchDaemons/ssh.plist'
@@ -212,8 +224,8 @@ elif [[ "$OSTYPE" =~ ^darwin ]]; then
     alias fix='xattr -d com.apple.FinderInfo'
     alias o='open'
     alias o.='open .'
-    alias proxy='export all_proxy=http://127.0.0.1:1087'
-    alias unproxy='unset all_proxy'
+    alias px='set_proxy http://127.0.0.1:1087'
+    alias upx=unset_proxy
 fi
 # ---------alias---------/
 
