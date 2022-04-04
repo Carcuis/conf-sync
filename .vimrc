@@ -30,6 +30,7 @@ Plug 'liuchengxu/vista.vim'
 Plug 'dstein64/vim-startuptime'
 Plug 'gcmt/wildfire.vim'
 Plug 'lambdalisue/suda.vim'
+Plug 'tpope/vim-sleuth'
 
 if has("nvim")
     Plug 'carcuis/darcula.nvim'
