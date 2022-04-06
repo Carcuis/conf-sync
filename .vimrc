@@ -715,7 +715,12 @@ endif
 " === nvim-scrollbar ===
 if has("nvim")
     lua << EOF
-    require("scrollbar").setup {}
+    require("scrollbar").setup {
+        handlers = {
+            diagnostic = true,
+            search = true,
+        }
+    }
 EOF
 endif
 
