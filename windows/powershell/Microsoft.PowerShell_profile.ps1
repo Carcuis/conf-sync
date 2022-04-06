@@ -53,8 +53,8 @@ function ReloadProfile { & $profile }
 function GetAdminPriv { Start-Process pwsh -Verb runAs }
 function StartSshServiceInWsl { wsl -- sudo service ssh start }
 function StopSshServiceInWsl { wsl -- sudo service ssh stop }
-function SetProxyOn { $env:ALL_PROXY="socks5://127.0.0.1:10808" }
-function SetProxyOff { $env:HTTP_PROXY="" }
+function SetProxyOn { $env:ALL_PROXY="http://127.0.0.1:10809" }
+function SetProxyOff { $env:ALL_PROXY="" }
 function SshToOneplus8pro { ssh -p 8022 192.168.137.68 -i ~\.ssh\oneplus8 }
 
 Remove-Item alias:\gl -Force
@@ -85,8 +85,8 @@ Set-Alias src ReloadProfile
 Set-Alias su GetAdminPriv
 Set-Alias sshon StartSshServiceInWSl
 Set-Alias sshoff StopSshServiceInWSl
-Set-Alias proxy SetProxyOn
-Set-Alias unproxy SetProxyOff
+Set-Alias px SetProxyOn
+Set-Alias upx SetProxyOff
 Set-Alias oneplus8 SshToOneplus8pro
 Set-Alias lg lazygit
 Set-Alias ipy ipython
