@@ -485,7 +485,7 @@ if has("nvim")
     autocmd BufEnter * ++nested if winnr('$') == 1 && bufname() == 'NvimTree_' . tabpagenr() | quit | endif
 
     lua << EOF
-    require'nvim-tree'.setup {
+    require('nvim-tree').setup {
         hijack_cursor = true,
         update_cwd = true,
         update_focused_file = {
@@ -611,7 +611,7 @@ endif
 " === nvim-treesitter ===
 if has("nvim")
     lua << EOF
-    require'nvim-treesitter.configs'.setup {
+    require('nvim-treesitter.configs').setup {
         ensure_installed = {
             "python", "cpp", "lua", "bash", "vim", "go", "javascript", "typescript"
         },
@@ -840,7 +840,7 @@ if has("nvim")
     nnoremap <silent> <leader>gD :DiffviewOpen<CR>
     lua <<EOF
     -- local cb = require'diffview.config'.diffview_callback
-    require'diffview'.setup {
+    require('diffview').setup {
         enhanced_diff_hl = true, -- See ':h diffview-config-enhanced_diff_hl'
         file_panel = {
             width = 30,
