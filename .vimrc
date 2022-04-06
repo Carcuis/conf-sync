@@ -71,7 +71,6 @@ if has("nvim")
     Plug 'romgrk/nvim-treesitter-context'
     Plug 'ZhiyuanLck/smart-pairs'
     Plug 'lewis6991/gitsigns.nvim'
-    Plug 'kdheepak/lazygit.nvim'
     Plug 'sindrets/diffview.nvim'
     Plug 'github/copilot.vim'
 else
@@ -550,6 +549,15 @@ if has("nvim")
             }
         },
     }
+
+    local Terminal  = require('toggleterm.terminal').Terminal
+    local lazygit = Terminal:new({ cmd = "lazygit", hidden = true })
+
+    function _lazygit_toggle()
+      lazygit:toggle()
+    end
+
+    vim.api.nvim_set_keymap("n", "<leader>gg", "<cmd>lua _lazygit_toggle()<CR>", {noremap = true, silent = true})
 EOF
 endif
 
@@ -824,12 +832,6 @@ if has("nvim")
         end
     }
 EOF
-endif
-
-" === lazygit.nvim ===
-if has("nvim")
-    nnoremap <silent> <leader>gg :LazyGit<CR>
-    let g:lazygit_floating_window_use_plenary = 1
 endif
 
 " === diffview.nvim ===
