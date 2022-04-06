@@ -115,18 +115,19 @@ source $ZSH/oh-my-zsh.sh
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
-# ----the bellow is cui_pref----
+# ================================
+# ==== the bellow is cui_pref ====
+# ================================
 
 # zsh-completions
 autoload -U compinit && compinit
 
 # if [[ ! $TMUX && ! $VIFM ]]; then
 if [[ ! $VIFM ]]; then
-    # neofetch
-    # fortune|cowsay -f dragon-and-cow|lolcat
-    fortune|cowsay|lolcat
+    fortune | cowsay | lolcat
 fi
 
+# set editor
 if command -v nvim > /dev/null; then
     export EDITOR=nvim
 elif command -v vim > /dev/null; then
@@ -135,7 +136,31 @@ elif command -v vi > /dev/null; then
     export EDITOR=vi
 fi
 
-# ---------alias----------\
+# system detection
+function detect_system() {
+    local _uname_a=$(uname -a)
+
+    if [[ $_uname_a =~ Microsoft ]]; then
+        SYSTEM="WSL1"
+    elif [[ $_uname_a =~ WSL2 ]]; then
+        SYSTEM="WSL2"
+    elif [[ "$OSTYPE" =~ ^darwin ]]; then
+        SYSTEM="Darwin"
+    elif [[ "$OSTYPE" =~ ^linux ]]; then
+        SYSTEM="Linux"
+    elif [[ "$OSTYPE" =~ android ]]; then
+        SYSTEM="Android"
+    else
+        SYSTEM="Unknown"
+    fi
+}
+detect_system
+
+
+# ================================
+# ============ alias =============
+# ================================
+
 if command -v exa > /dev/null; then
     alias ls='exa --icons'
     alias la='exa -a --icons'
@@ -147,9 +172,6 @@ else
 fi
 alias wtrsy='curl wttr.in/Songyuan\?lang=zh'
 alias wtrgz='curl wttr.in/Guangzhou\?lang=zh'
-# alias aliyun='ssh -i ~/.ssh/aliyun -p 2235 cui@47.107.62.60'
-# alias aliyunzh='LANG="zh_CN.UTF-8" ; ssh -i ~/.ssh/aliyun -p 2235 cui@47.107.62.60 ; LANG="en_US.UTF-8"'
-alias iphone='ssh -i ~/.ssh/ish -p 2235 cui@192.168.0.104'
 alias zshc="$EDITOR ~/.zshrc"
 alias vimc="$EDITOR ~/.vimrc"
 alias src='source ~/.zshrc'
@@ -160,15 +182,6 @@ alias nvi='nvim'
 alias lvi='lvim'
 alias al='la'
 alias lg='lazygit'
-# alias termux='ssh -p 8022 192.168.43.1'
-# alias xytermux='ssh -p 8022 10.44.68.197'
-# alias termux='ssh -p 8022 172.28.247.98'
-# alias tubuntu='ssh -p 2235 192.168.43.1'
-# alias xytubuntu='ssh -p 2235 10.44.68.197'
-# alias aliyun='ssh -p 2235 cui@47.107.62.60'
-# alias aliyunroot='ssh -p 2235 root@47.107.62.60'
-
-# alias nethack='nethack@nethack-cn.com -p2222'
 
 set_proxy() {
     export http_proxy=$1
@@ -182,43 +195,41 @@ unset_proxy() {
     unset all_proxy
 }
 
-if [[ $(uname -a) =~ Microsoft || $(uname -a) =~ WSL ]]; then
+if [[ $SYSTEM == "WSL1" || $SYSTEM == "WSL2" ]]; then
     alias sshon='sudo service ssh start'
     alias sshoff='sudo service ssh stop'
-    # alias neofetch='neofetch --ascii_distro windows10'
-    # alias byobu='LANG="en_US.UTF-8" ; byobu'
     # alias cman='man -M /usr/local/share/man/zh_CN'
     alias clp='clip.exe'
     alias adb='adb.exe'
     alias fastboot='fastboot.exe'
     alias o='explorer.exe'
     alias o.='explorer.exe .'
-    if [[ $WSL_VERSION == 2 ]]; then
+    alias upx=unset_proxy
+    alias bpi='ssh -i ~/.ssh/BPi pi@192.168.137.75'
+    alias oneplus='ssh -i ~/.ssh/oneplus -p 8022 u0_a164@192.168.137.10'
+
+    if [[ $SYSTEM == "WSL2" ]]; then
         alias px="set_proxy http://$(cat /etc/resolv.conf |grep "nameserver" |cut -f 2 -d " "):10809"
     else
         alias px='set_proxy http://127.0.0.1:10809'
         alias x='export DISPLAY=:0.0'
     fi
-    alias upx=unset_proxy
-    alias bpi='ssh -i ~/.ssh/BPi pi@192.168.137.75'
-    alias oneplus='ssh -i ~/.ssh/oneplus -p 8022 u0_a164@192.168.137.10'
-elif [[ "$OSTYPE" =~ android ]]; then
+elif [[ $SYSTEM == "Android" ]]; then
     alias tchroot='termux-chroot'
     # alias ubuntu='bash ~/ubuntu/start-ubuntu.sh'
     alias chcolor='/data/data/com.termux/files/home/.termux/colors.sh'
     alias chfont='/data/data/com.termux/files/home/.termux/fonts.sh'
     alias termc='vim ~/.termux/termux.properties'
     alias ubuntu2004='~/ubuntu/2004/start-ubuntu20.sh'
-elif [[ "$OSTYPE" =~ ^linux ]]; then
+elif [[ $SYSTEM == "Android" ]]; then
     # alias sshon='sudo service ssh start'
     # alias sshoff='sudo service ssh stop'
-    # alias byobu='LANG="en_US.UTF-8" ; byobu'
-    alias fix-pod='pactl load-module module-bluetooth-discover'
+    # alias fix-pod='pactl load-module module-bluetooth-discover'
     alias o='nautilus'
     alias o.='nautilus .'
     alias px='set_proxy socks5://127.0.0.1:1089'
     alias upx=unset_proxy
-elif [[ "$OSTYPE" =~ ^darwin ]]; then
+elif [[ $SYSTEM == "Darwin" ]]; then
     # alias cmake-gui='/Applications/CMake.app/Contents/MacOS/CMake .'
     alias sshon='sudo launchctl load -w /System/Library/LaunchDaemons/ssh.plist'
     alias sshoff='sudo launchctl unload -w /System/Library/LaunchDaemons/ssh.plist'
@@ -229,17 +240,17 @@ elif [[ "$OSTYPE" =~ ^darwin ]]; then
     alias px='set_proxy http://127.0.0.1:1087'
     alias upx=unset_proxy
 fi
-# ---------alias---------/
 
-# ----------env----------\
+# ================================
+# ============= env ==============
+# ================================
 
-# ----opencv----\
+# === pkg-config ===
 # PKG_CONFIG_PATH=$PKG_CONFIG_PATH:/usr/local/lib/pkgconfig
 # export PKG_CONFIG_PATH
-# --------------/
 
-if [[ $(uname -a) =~ Microsoft || $(uname -a) =~ WSL ]]; then
-    if [[ $WSL_VERSION != 2 ]]; then
+if [[ $SYSTEM == "WSL1" || $SYSTEM == "WSL2" ]]; then
+    if [[ $SYSTEM == "WSL1" ]]; then
         # adjust login path
         if [ "$PWD" = "/mnt/c/Users/cui" ]; then
             cd ~
@@ -251,54 +262,38 @@ if [[ $(uname -a) =~ Microsoft || $(uname -a) =~ WSL ]]; then
         # display env
         export DISPLAY=127.0.0.1:0.0
     fi
+
     # autostart ssh-agent
     if [ -z "$SSH_AUTH_SOCK" ] ; then
         eval `ssh-agent -s` > /dev/null
         ssh-add ~/.ssh/github > /dev/null 2>&1
     fi
-    # ---------------
-elif [[ "$OSTYPE" =~ android ]]; then
-    #sshd start-up
+elif [[ $SYSTEM == "Android" ]]; then
+    ## sshd start-up
     # if [ `ps -ef |grep -w sshd|grep -v grep|wc -l` -le 0 ];then
     #     sshd
     # fi
-elif [[ "$OSTYPE" =~ ^linux ]]; then
-    # ------ros------\
+elif [[ $SYSTEM == "Linux" ]]; then
+    # === ROS ===
     # alias src-ros-env='source /opt/ros/melodic/setup.zsh'
-    # *or auto source when shell start up
+    ## or auto source when shell start up
     # source /opt/ros/melodic/setup.zsh
-    # ---------------/
 
-    # -----clion-----\
+    # === CLion ===
     # alias clion='~/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/202.7319.72/bin/clion.sh'
-    # ---------------/
 
-    # ---openvino----\
+    # === OpenVINO ===
     # alias src-openvino-env='source /opt/intel/openvino/bin/setupvars.sh'
-    # *or auto source when shell start up
+    ## or auto source when shell start up
     # source /opt/intel/openvino/bin/setupvars.sh
-    # ---------------/
 
-elif [[ "$OSTYPE" =~ ^darwin ]]; then
-    # ----cmake-gui----\
-    # alias cmake-gui='/Applications/CMake.app/Contents/MacOS/CMake .'
-    # -----------------/
-
-    # ----openni2----\
+elif [[ $SYSTEM == "Darwin" ]]; then
+    # === Openni2 ===
     # export OPENNI2_INCLUDE=/usr/local/include/ni2
     # export OPENNI2_REDIST=/usr/local/lib/ni2
-    # ---------------/
 fi
-# ----------env----------/
 
-# -----powerlevel10k-----
-
-# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+# === Powerlevel10k ===
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
-
-# the bellow is cui_pref with p10k
 ZLE_RPROMPT_INDENT=0
 POWERLEVEL9K_TIME_FORMAT=%D{%H:%M}
-# if [[ $`uname -a` =~ Microsoft ]]; then
-#   POWERLEVEL9K_OS_ICON_CONTENT_EXPANSION=$'\ue70f'
-# fi
