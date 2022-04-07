@@ -305,6 +305,7 @@ let g:tagbar_iconchars = ['', '']
 if argc() == 0
     au VimEnter * :Startify
 endif
+nnoremap <silent> <leader>; :Startify<CR>
 let g:startify_enable_special = 0
 let g:startify_lists = [
     \ { 'type': 'commands',  'header': ['   Commands']       },
@@ -317,6 +318,7 @@ let g:startify_commands = [
     \ {'c': ['  Configuration', 'call EditVimrc("normal")']},
     \ {'P': ['  Plugin Install', 'PlugInstall']},
     \ {'U': ['  Plugin Update', 'PlugUpdate']},
+    \ {'l': ['  Load Session', 'call LoadSession("")']},
     \ ]
 if has("nvim")
     let g:startify_commands += [
@@ -332,6 +334,47 @@ let g:startify_fortune_use_unicode = 1
 function! StartifyEntryFormat()
     return 'WebDevIconsGetFileTypeSymbol(absolute_path) ." ". entry_path'
 endfunction
+" save session
+function PreSaveSession()
+    if has("nvim")
+        NvimTreeClose
+        TSContextToggle
+    else
+        NERDTreeClose
+    endif
+endfunction
+function PostSaveSession()
+    if has("nvim")
+        if (winwidth(0) >= 130) && argc() < 2
+            call OpenNvimTreeOnStartup()
+        endif
+        TSContextToggle
+    else
+        if (winwidth(0) > 140 || has("gui_running")) && argc() < 2
+            NERDTree | set signcolumn=auto | wincmd p
+        endif
+    endif
+endfunction
+function SaveSession(session_name)
+    call PreSaveSession()
+    if a:session_name == ""
+        execute "SSave"
+    else
+        execute "SSave" a:session_name
+    endif
+    call PostSaveSession()
+endfunction
+function LoadSession(session_name)
+    call PreSaveSession()
+    if a:session_name == ""
+        execute "SLoad"
+    else
+        execute "SLoad" a:session_name
+    endif
+    call PostSaveSession()
+endfunction
+nnoremap <silent> <leader>ss :call SaveSession("")<CR>
+nnoremap <silent> <leader>sl :call LoadSession("")<CR>
 
 " === coc.nvim ===
 if has("nvim")
