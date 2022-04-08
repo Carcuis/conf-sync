@@ -443,7 +443,7 @@ endif
 " === telescope.nvim ===
 if has("nvim")
     nnoremap <leader>ff <cmd>Telescope find_files<cr>
-    nnoremap <leader>fg <cmd>Telescope live_grep<cr>
+    nnoremap <leader>fw <cmd>Telescope live_grep<cr>
     nnoremap <leader>fb <cmd>Telescope buffers<cr>
     nnoremap <leader>fh <cmd>Telescope help_tags<cr>
     nnoremap <leader>fp <cmd>Telescope projects<cr>
