@@ -694,19 +694,65 @@ if has("nvim")
             component_separators = { left = '', right = '' }
         },
         sections = {
+            lualine_a = {
+                {
+                    'mode',
+                    padding = { left = 1, right = 0 },
+                },
+            },
             lualine_b = {
-                'branch',
+                {
+                    "b:gitsigns_head",
+                    icon = "",
+                    color = { gui = "bold" },
+                    padding = { left = 1, right = 0 },
+                },
                 {
                     'diff',
                     symbols = { added = ' ', modified = ' ', removed = ' ' },
+                    padding = { left = 1, right = 0 },
                 },
-                'diagnostics',
+                {
+                    'diagnostics',
+                    padding = { left = 1, right = 0 },
+                },
             },
-			lualine_c = {
+            lualine_c = {
                 'filename',
-				{ gps.get_location, cond = gps.is_available },
+                { gps.get_location, cond = gps.is_available },
+            },
+            lualine_x = {
                 'g:coc_status',
-			},
+                'encoding',
+                {
+                    'fileformat',
+                    padding = { left = 0, right = 1 },
+                },
+            },
+            lualine_y = {
+                {
+                    'filetype',
+                    padding = { left = 0, right = 1 },
+                }
+            },
+            lualine_z = {
+                {
+                    'location',
+                    padding = { left = 0, right = 1 },
+                },
+                {
+                    function()
+                        local current_line = vim.fn.line "."
+                        local total_lines = vim.fn.line "$"
+                        local chars = { " ", "▁", "▂", "▃", "▄", "▅", "▆", "▇", "█" }
+                        local line_ratio = current_line / total_lines
+                        local index = math.ceil(line_ratio * #chars)
+                        return chars[index]
+                    end,
+                    padding = { left = 0, right = 0 },
+                    color = "Keyword",
+                },
+            },
         },
     }
 EOF
