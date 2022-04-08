@@ -630,10 +630,10 @@ if has("nvim")
     lua << EOF
     require('code_runner').setup {
         term = {
-        	mode = "",
-        	tab = false,
-        	position = "belowright",
-        	size = 8
+            mode = "",
+            tab = false,
+            position = "belowright",
+            size = 8
         },
         filetype = {
             java = "cd $dir && javac $fileName && java $fileNameWithoutExt",
