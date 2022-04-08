@@ -453,6 +453,7 @@ if has("nvim")
         defaults = {
             prompt_prefix = " ",
             selection_caret = " ",
+            winblend = 10,
         }
     }
 EOF
@@ -610,7 +611,7 @@ if has("nvim")
     lua << EOF
     require("project_nvim").setup {
         exclude_dirs = {
-            "c:", "d:", "e:", "~", "/",
+            "c:", "d:", "e:", "~", "/", "*//*"
         },
     }
     require('telescope').load_extension('projects')
