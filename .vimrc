@@ -736,6 +736,7 @@ if has("nvim")
                 {
                     'filetype',
                     padding = { left = 0, right = 1 },
+                    color = { gui = "bold" },
                 }
             },
             lualine_z = {
