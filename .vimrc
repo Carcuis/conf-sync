@@ -464,7 +464,8 @@ endif
 " === vim-trailing-whitespace ===
 let g:extra_whitespace_ignored_filetypes = [
             \'TelescopePrompt',
-            \'vim-plug'
+            \'vim-plug',
+            \'checkhealth',
             \]
 
 " === bufferline.nvim ===
