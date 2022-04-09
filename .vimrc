@@ -699,10 +699,7 @@ if has("nvim")
         },
         sections = {
             lualine_a = {
-                {
-                    'mode',
-                    padding = { left = 1, right = 0 },
-                },
+                { 'mode', padding = { left = 1, right = 0 }, },
             },
             lualine_b = {
                 {
@@ -716,35 +713,47 @@ if has("nvim")
                     symbols = { added = ' ', modified = ' ', removed = ' ' },
                     padding = { left = 1, right = 0 },
                 },
-                {
-                    'diagnostics',
-                    padding = { left = 1, right = 0 },
-                },
+                { 'diagnostics', padding = { left = 1, right = 0 }, },
             },
             lualine_c = {
                 'filename',
                 { gps.get_location, cond = gps.is_available },
             },
             lualine_x = {
-                'g:coc_status',
-                'encoding',
+                { 'g:coc_status', padding = { left = 1, right = 0 } },
                 {
-                    'fileformat',
-                    padding = { left = 0, right = 1 },
+                    function()
+                        local b = vim.api.nvim_get_current_buf()
+                        if next(vim.treesitter.highlighter.active[b]) then
+                            return ""
+                        end
+                        return ""
+                    end,
+                    color = { fg = "Green" },
+                    padding = { left = 1, right = 0 },
                 },
+                {
+                    function()
+                        local shift_width = vim.api.nvim_buf_get_option(0, "shiftwidth")
+                        local tab_stop = vim.api.nvim_buf_get_option(0, "tabstop")
+                        local expand_tab = ""
+                        if vim.api.nvim_buf_get_option(0, "expandtab") then
+                            expand_tab = "E"
+                        else
+                            expand_tab = "T"
+                        end
+                        return shift_width .. ":" .. tab_stop .. ":" .. expand_tab
+                    end,
+                    padding = { left = 1, right = 0 },
+                },
+                { 'encoding', padding = { left = 1, right = 0 }, },
+                'fileformat',
             },
             lualine_y = {
-                {
-                    'filetype',
-                    padding = { left = 0, right = 1 },
-                    color = { gui = "bold" },
-                }
+                { 'filetype', padding = { left = 0, right = 1 }, color = { gui = "bold" }, },
             },
             lualine_z = {
-                {
-                    'location',
-                    padding = { left = 0, right = 1 },
-                },
+                { 'location', padding = { left = 0, right = 1 }, },
                 {
                     function()
                         local current_line = vim.fn.line "."
