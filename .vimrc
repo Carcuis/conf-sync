@@ -34,6 +34,8 @@ Plug 'tpope/vim-sleuth'
 
 if has("nvim")
     Plug 'carcuis/darcula.nvim'
+    Plug 'rafamadriz/neon'
+    Plug 'Mofiqul/vscode.nvim'
     Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
     Plug 'neoclide/coc.nvim', {'branch': 'release'}
     Plug 'nvim-lua/plenary.nvim'
@@ -52,7 +54,6 @@ if has("nvim")
     Plug 'tversteeg/registers.nvim'
     Plug 'nvim-treesitter/nvim-treesitter'
     Plug 'nvim-treesitter/playground'
-    Plug 'rafamadriz/neon'
     Plug 'nvim-lualine/lualine.nvim'
     Plug 'folke/tokyonight.nvim'
     Plug 'folke/which-key.nvim'
@@ -98,17 +99,18 @@ call plug#end()
 "
 
 let g:transparent_background = 0
-" let g:color = "neon"
 let g:color = "darcula"
 if g:color == "darcula"
     let g:darcula_transparent = g:transparent_background
     color darcula
 elseif g:color == "neon"
-    lua << EOF
-    vim.g.neon_style = "doom"
-    vim.g.neon_transparent = vim.g.transparent_background
-EOF
+    let g:neon_style = "doom"
+    let g:neon_transparent = g:transparent_background
     color neon
+elseif g:color == "vscode"
+    let g:vscode_style = "dark"
+    let g:vscode_transparency = g:transparent_background
+    color vscode
 endif
 
 let mapleader = "\<space>"
