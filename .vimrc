@@ -31,6 +31,7 @@ Plug 'dstein64/vim-startuptime'
 Plug 'gcmt/wildfire.vim'
 Plug 'lambdalisue/suda.vim'
 Plug 'tpope/vim-sleuth'
+Plug 'tpope/vim-markdown'
 
 if has("nvim")
     Plug 'carcuis/darcula.nvim'
@@ -1004,6 +1005,9 @@ if has("nvim")
     }
 EOF
 endif
+
+" vim-markdown
+let g:markdown_fenced_languages = ['html', 'python', 'bash=sh', 'vim', 'zsh', 'lua', 'cpp', 'c']
 
 " ===============
 
