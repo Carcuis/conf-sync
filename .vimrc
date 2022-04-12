@@ -110,7 +110,7 @@ elseif g:color == "neon"
     color neon
 elseif g:color == "vscode"
     let g:vscode_style = "dark"
-    let g:vscode_transparency = g:transparent_background
+    let g:vscode_transparent = g:transparent_background
     color vscode
 endif
 
