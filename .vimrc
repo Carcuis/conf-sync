@@ -323,13 +323,20 @@ let g:startify_commands = [
     \ {'U': ['  Plugin Update', 'PlugUpdate']},
     \ {'l': ['  Load Session', 'call LoadSession("")']},
     \ ]
-if has("nvim")
+if ! has("nvim")
+    let g:startify_commands += [
+    \ {'f': ['  Find File', 'Leaderf file']},
+    \ {'r': ['  Recently Used Files', 'Leaderf mru']},
+    \ {'w': ['  Find Word', 'Leaderf rg']},
+    \ {'e': ['  Nerd-Tree', 'NERDTreeToggle']},
+    \ ]
+else
     let g:startify_commands += [
     \ {'f': ['  Find File', 'Telescope find_files']},
-    \ {'p': ['  Recent Projects', 'Telescope projects']},
-    \ {'r': ['  Recently Used Files', 'Telescope oldfiles']},
+    \ {'p': ['  Recent Projects', 'Telescope projects']},
+    \ {'r': ['  Recently Used Files', 'Telescope oldfiles']},
     \ {'w': ['  Find Word', 'Telescope live_grep']},
-    \ {'e': ['  Nvim-Tree', 'NvimTreeToggle']},
+    \ {'e': ['  Nvim-Tree', 'NvimTreeToggle']},
     \ {'C': ['  Configure CoC', 'CocConfig']},
     \ ]
 endif
