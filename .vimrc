@@ -795,7 +795,7 @@ endif
 
 " === indent-blankline.nvim ===
 if has("nvim")
-    let g:indent_blankline_filetype_exclude = ['checkhealth', 'help', '', 'startify', 'vim-plug']
+    let g:indent_blankline_filetype_exclude = ['checkhealth', 'help', '', 'startify', 'vim-plug', 'toggleterm']
     let g:indent_blankline_show_first_indent_level = v:false
     let g:indent_blankline_show_trailing_blankline_indent = v:false
     lua << EOF
