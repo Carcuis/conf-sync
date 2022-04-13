@@ -41,6 +41,7 @@ if has("nvim")
     Plug 'neoclide/coc.nvim', {'branch': 'release'}
     Plug 'nvim-lua/plenary.nvim'
     Plug 'nvim-telescope/telescope.nvim'
+    Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
     Plug 'kyazdani42/nvim-web-devicons'
     Plug 'akinsho/bufferline.nvim'
     Plug 'kyazdani42/nvim-tree.lua'
@@ -464,8 +465,18 @@ if has("nvim")
             prompt_prefix = " ",
             selection_caret = " ",
             winblend = 10,
-        }
+        },
+        extensions = {
+            fzf = {
+                fuzzy = true,                    -- false will only do exact matching
+                override_generic_sorter = true,  -- override the generic sorter
+                override_file_sorter = true,     -- override the file sorter
+                case_mode = "smart_case",        -- or "ignore_case" or "respect_case"
+                                                 -- the default case_mode is "smart_case"
+            },
+        },
     }
+    require('telescope').load_extension('fzf')
 EOF
 endif
 
@@ -1013,7 +1024,7 @@ if has("nvim")
 EOF
 endif
 
-" vim-markdown
+" === vim-markdown ===
 let g:markdown_fenced_languages = ['html', 'python', 'bash=sh', 'vim', 'zsh', 'lua', 'cpp', 'c']
 
 " ===============
