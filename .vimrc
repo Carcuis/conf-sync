@@ -494,10 +494,10 @@ if has("nvim")
     require("bufferline").setup{
         options = {
             middle_mouse_command = function(bufnum)
-                require('bufdelete').bufdelete(bufnum, true)
+                require('bufdelete').bufdelete(bufnum)
             end,
             close_command = function(bufnum)
-                require('bufdelete').bufdelete(bufnum, true)
+                require('bufdelete').bufdelete(bufnum)
             end,
             separator_style = (vim.g.transparent_background == 1 and {"thin"} or {"slant"})[1],
             offsets = {
@@ -885,7 +885,7 @@ endif
 
 " === bufdelete.nvim ===
 if has("nvim")
-    nnoremap <silent> <leader>c :lua require('bufdelete').bufdelete(0, true)<CR>
+    nnoremap <silent> <leader>c :lua require('bufdelete').bufdelete(0)<CR>
 endif
 
 " === nvim-notify ===
