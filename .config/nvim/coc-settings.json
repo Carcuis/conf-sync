@@ -1,5 +1,6 @@
 {
     "coc.preferences.extensionUpdateCheck": "weekly",
+    "coc.preferences.snippetHighlight": true,
     "hover.floatConfig": {
         "border": true,
         "winblend": 10,
