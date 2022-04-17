@@ -409,7 +409,8 @@ if has("nvim")
     autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
     nmap <leader>rn <Plug>(coc-rename)
     nmap <S-F5> <Plug>(coc-rename)
-    nmap <leader>rf <Plug>(coc-refactor)
+    nmap <leader>lf <Plug>(coc-refactor)
+    nmap <leader>lo <Plug>(coc-openlink)
     xmap <leader>a  <Plug>(coc-codeaction-selected)
     nmap <leader>a  <Plug>(coc-codeaction-selected)w
     nmap <M-f>  <Plug>(coc-fix-current)
@@ -429,6 +430,9 @@ if has("nvim")
     command! -nargs=0 Format :call CocActionAsync('format')
     command! -nargs=? Fold :call CocAction('fold', <f-args>)
     command! -nargs=0 OR :call CocActionAsync('runCommand', 'editor.action.organizeImport')
+
+    nnoremap <silent> <M-d> :CocCommand semanticTokens.inspect<CR>
+    let g:coc_borderchars = ['─', '│', '─', '│', '╭', '╮', '╯', '╰']
 endif
 
 " === vim-which-key ===
