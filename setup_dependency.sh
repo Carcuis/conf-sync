@@ -1,4 +1,4 @@
-#!/bin/zsh
+#!/bin/bash
 
 #oh-my-zsh
 if [[ ! -e "$HOME/.oh-my-zsh" ]]; then
@@ -39,7 +39,15 @@ fi
 if [[ ! -e "$HOME/.vim/autoload/plug.vim" ]]; then
     curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 else
-    echo "Vim-Plug has already installed."
+    echo "Vim-Plug for Vim has already installed."
+fi
+if command -v nvim > /dev/null; then
+    if [[ ! -e "$HOME/.local/share/nvim/site/autoload/plug.vim" ]]; then
+        curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs \
+           https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+    else
+        echo "Vim-Plug for NeoVim has already installed."
+    fi
 fi
 
 #vifm-colors
