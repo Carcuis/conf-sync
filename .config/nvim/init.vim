@@ -1,3 +1,1 @@
-set runtimepath^=~/.vim
-let &packpath=&runtimepath
-source ~/.vimrc
+/home/cui/github/conf-sync/.vimrc
