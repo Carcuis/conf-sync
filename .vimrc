@@ -928,7 +928,7 @@ if has("nvim")
             ignore_whitespace = true,
         },
         preview_config = {
-            border = 'none',
+            border = 'rounded',
         },
         on_attach = function(bufnr)
             local function map(mode, lhs, rhs, opts)
