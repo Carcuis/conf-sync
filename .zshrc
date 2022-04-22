@@ -227,7 +227,7 @@ elif [[ $SYSTEM == "Linux" ]]; then
     # alias fix-pod='pactl load-module module-bluetooth-discover'
     alias o='nautilus'
     alias o.='nautilus .'
-    alias px='set_proxy socks5://127.0.0.1:1089'
+    alias px='set_proxy http://127.0.0.1:1089'
     alias upx=unset_proxy
 elif [[ $SYSTEM == "Darwin" ]]; then
     # alias cmake-gui='/Applications/CMake.app/Contents/MacOS/CMake .'
