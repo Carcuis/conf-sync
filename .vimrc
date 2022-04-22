@@ -63,6 +63,7 @@ if has("nvim")
     Plug 'SmiteshP/nvim-gps'
     Plug 'shaunsingh/moonlight.nvim'
     Plug 'petertriho/nvim-scrollbar'
+    Plug 'romgrk/fzy-lua-native'
     function! UpdateRemotePlugins(...)
         let &rtp=&rtp
         UpdateRemotePlugins
@@ -879,39 +880,51 @@ endif
 
 " === wilder.nvim ===
 if has("nvim")
-    call wilder#setup({
-          \ 'modes': [':', '/', '?'],
-          \ 'next_key': '<C-n>',
-          \ 'previous_key': '<C-p>',
-          \ 'accept_key': '<Down>',
-          \ 'reject_key': '<Up>',
-          \ })
-    call wilder#set_option('renderer', wilder#popupmenu_renderer({
-          \ 'pumblend': 20,
-          \ 'highlighter': wilder#basic_highlighter(),
-          \ 'highlights': {
-          \   'accent': wilder#make_hl('WilderAccent', 'Pmenu', [{}, {}, {'foreground': '#cc7832'}]),
-          \ },
-          \ 'left': [
-          \   ' ', wilder#popupmenu_devicons(),
-          \ ],
-          \ 'right': [
-          \   ' ', wilder#popupmenu_scrollbar(),
-          \ ],
-          \ }))
-    call wilder#set_option('pipeline', [
-          \   wilder#branch(
-          \     wilder#cmdline_pipeline({
-          \       'language': 'python',
-          \       'fuzzy': 1,
-          \     }),
-          \     wilder#python_search_pipeline({
-          \       'pattern': wilder#python_fuzzy_pattern(),
-          \       'sorter': wilder#python_difflib_sorter(),
-          \       'engine': 're',
-          \     }),
-          \   ),
-          \ ])
+    lua << EOF
+    local wilder = require('wilder')
+    wilder.setup({
+        modes = {':', '/', '?'},
+        next_key = '<C-p>',
+        previous_key = '<C-n>',
+    })
+    wilder.set_option('pipeline', {
+        wilder.branch(
+            wilder.cmdline_pipeline({
+                fuzzy = 1,
+                fuzzy_filter = wilder.lua_fzy_filter(),
+            }),
+            wilder.vim_search_pipeline()
+        ),
+    })
+    local gradient = {
+        '#f4468f', '#fd4a85', '#ff507a', '#ff566f', '#ff5e63',
+        '#ff6658', '#ff704e', '#ff7a45', '#ff843d', '#ff9036',
+        '#f89b31', '#efa72f', '#e6b32e', '#dcbe30', '#d2c934',
+        '#c8d43a', '#bfde43', '#b6e84e', '#aff05b'
+    }
+    for i, fg in ipairs(gradient) do
+        gradient[i] = wilder.make_hl('WilderGradient' .. i, 'Normal', {{a = 1}, {a = 1}, {foreground = fg}})
+    end
+    wilder.set_option('renderer', wilder.popupmenu_renderer(
+        wilder.popupmenu_palette_theme({
+            highlights = {
+                gradient = gradient,
+                border = 'FloatBorder',
+            },
+            highlighter = wilder.highlighter_with_gradient({
+                wilder.basic_highlighter(),
+            }),
+            left = {' ', wilder.popupmenu_devicons()},
+            right = {' ', wilder.popupmenu_scrollbar()},
+            border = 'rounded',
+            max_height = '75%',
+            min_height = 0,
+            prompt_position = 'bottom',
+            reverse = 1,
+            pumblend = 20,
+        })
+    ))
+EOF
 endif
 
 " === bufdelete.nvim ===
