@@ -221,7 +221,7 @@ elif [[ $SYSTEM == "Android" ]]; then
     alias chfont='/data/data/com.termux/files/home/.termux/fonts.sh'
     alias termc='vim ~/.termux/termux.properties'
     alias ubuntu2004='~/ubuntu/2004/start-ubuntu20.sh'
-elif [[ $SYSTEM == "Android" ]]; then
+elif [[ $SYSTEM == "Linux" ]]; then
     # alias sshon='sudo service ssh start'
     # alias sshoff='sudo service ssh stop'
     # alias fix-pod='pactl load-module module-bluetooth-discover'
