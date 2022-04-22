@@ -617,7 +617,7 @@ if has("nvim")
             border = 'curved',
             winblend = 10,
             highlights = {
-                border = "Number",
+                border = "FloatBorder",
             }
         },
     }
