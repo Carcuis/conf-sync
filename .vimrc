@@ -71,7 +71,7 @@ if has("nvim")
     Plug 'famiu/bufdelete.nvim'
     Plug 'rcarriga/nvim-notify'
     Plug 'JoosepAlviste/nvim-ts-context-commentstring'
-    Plug 'romgrk/nvim-treesitter-context'
+    Plug 'lewis6991/nvim-treesitter-context'
     Plug 'ZhiyuanLck/smart-pairs'
     Plug 'lewis6991/gitsigns.nvim'
     Plug 'sindrets/diffview.nvim'
@@ -701,6 +701,33 @@ if has("nvim")
     }
 EOF
     nnoremap <silent> <M-c> :TSHighlightCapturesUnderCursor<CR>
+endif
+
+" === nvim-treesitter-context ===
+if has("nvim")
+    lua << EOF
+    require('treesitter-context').setup{
+        enable = true,
+        throttle = false,
+        max_lines = 0,
+        patterns = {
+            default = {
+                'class',
+                'function',
+                'method',
+                'for',
+                'while',
+                'if',
+                'else',
+                'elif',
+                'switch',
+                'case',
+            },
+        },
+        exact_patterns = {
+        }
+    }
+EOF
 endif
 
 " === lualine.nvim ===
