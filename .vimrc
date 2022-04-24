@@ -330,7 +330,7 @@ if ! has("nvim")
     \ {'f': ['  Find File', 'Leaderf file']},
     \ {'r': ['  Recently Used Files', 'Leaderf mru']},
     \ {'w': ['  Find Word', 'Leaderf rg']},
-    \ {'e': ['  Nerd-Tree', 'NERDTreeToggle']},
+    \ {'e': ['  Nerd-Tree', 'NERDTree']},
     \ ]
 else
     let g:startify_commands += [
@@ -338,7 +338,7 @@ else
     \ {'p': ['  Recent Projects', 'Telescope projects']},
     \ {'r': ['  Recently Used Files', 'Telescope oldfiles']},
     \ {'w': ['  Find Word', 'Telescope live_grep']},
-    \ {'e': ['  Nvim-Tree', 'NvimTreeToggle']},
+    \ {'e': ['  Nvim-Tree', 'NvimTreeOpen']},
     \ {'C': ['  Configure CoC', 'CocConfig']},
     \ ]
 endif
