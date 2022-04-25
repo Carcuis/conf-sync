@@ -67,6 +67,8 @@
     "coc.preferences.formatOnSaveFiletypes": [
         "json"
     ],
+    "list.nextKeymap": "<C-n>",
+    "list.previousKeymap": "<C-p>",
     "translator.window.enableBorder": false,
     "snippets.ultisnips.enable": true,
     "powershell.powerShellExePath": "pwsh",
