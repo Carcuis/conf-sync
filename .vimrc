@@ -1129,7 +1129,7 @@ nnoremap <silent> <leader>vs <C-w>v
 
 nnoremap <silent> <leader>tp :tabp<CR>
 nnoremap <silent> <leader>tn :tabn<CR>
-nnoremap <silent> <leader>tc :tabc<CR>
+nnoremap <silent> <leader>tq :tabc<CR>
 if ! has("nvim")
     nnoremap <leader>c :bd<CR>
 endif
