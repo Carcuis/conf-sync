@@ -1071,6 +1071,12 @@ endif
 " === vim-markdown ===
 let g:markdown_fenced_languages = ['html', 'python', 'bash=sh', 'vim', 'zsh', 'lua', 'cpp', 'c']
 
+" === copilot.vim ===
+if has("nvim")
+    imap <silent><script><expr> <M-a> copilot#Accept("\<CR>")
+    let g:copilot_no_tab_map = v:true
+endif
+
 " ===============
 
 " ==================
