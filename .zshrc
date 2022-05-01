@@ -146,10 +146,10 @@ function detect_system() {
         SYSTEM="WSL2"
     elif [[ "$OSTYPE" =~ ^darwin ]]; then
         SYSTEM="Darwin"
-    elif [[ "$OSTYPE" =~ ^linux ]]; then
-        SYSTEM="Linux"
     elif [[ "$OSTYPE" =~ android ]]; then
         SYSTEM="Android"
+    elif [[ "$OSTYPE" =~ ^linux ]]; then
+        SYSTEM="Linux"
     else
         SYSTEM="Unknown"
     fi
