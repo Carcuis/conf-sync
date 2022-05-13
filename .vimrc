@@ -545,7 +545,7 @@ if has("nvim")
     endfunc
 
     if (winwidth(0) < 130)
-        let g:s_nvim_tree_quit_on_open = 1
+        let g:s_nvim_tree_quit_on_open = v:true
     endif
     if (winwidth(0) >= 130) && argc() < 2
         au VimEnter * call OpenNvimTreeOnStartup()
