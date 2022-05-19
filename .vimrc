@@ -1047,7 +1047,9 @@ if has("nvim")
     require('diffview').setup {
         enhanced_diff_hl = true, -- See ':h diffview-config-enhanced_diff_hl'
         file_panel = {
-            width = 30,
+            win_config = {
+                width = 30,
+            },
         },
     }
 EOF
