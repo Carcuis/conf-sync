@@ -777,7 +777,30 @@ if has("nvim")
                 { 'diagnostics', padding = { left = 1, right = 0 }, },
             },
             lualine_c = {
-                'filename',
+                {
+                    'filename',
+                    file_status = false,
+                },
+                {
+                    function()
+                        if vim.bo.modified then
+                            return ''
+                        end
+                        return ''
+                    end,
+                    color = { fg = "Green" },
+                    padding = { left = 0, right = 1 },
+                },
+                {
+                    function()
+                        if vim.bo.readonly then
+                            return ''
+                        end
+                        return ''
+                    end,
+                    color = { fg = "Red" },
+                    padding = { left = 0, right = 1 },
+                },
                 { gps.get_location, cond = gps.is_available },
             },
             lualine_x = {
