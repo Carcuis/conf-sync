@@ -90,3 +90,4 @@ Set-Alias upx SetProxyOff
 Set-Alias oneplus8 SshToOneplus8pro
 Set-Alias lg lazygit
 Set-Alias ipy ipython
+Set-Alias pp ptpython
