@@ -182,6 +182,7 @@ alias nvi='nvim'
 alias lvi='lvim'
 alias al='la'
 alias lg='lazygit'
+alias pp='ptpython'
 
 set_proxy() {
     export http_proxy=$1
