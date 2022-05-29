@@ -551,24 +551,13 @@ if has("nvim")
         au VimEnter * call OpenNvimTreeOnStartup()
     endif
 
-    let g:nvim_tree_git_hl = 1
-    let g:nvim_tree_respect_buf_cwd = 1
-    let g:nvim_tree_root_folder_modifier = ":t"
-    let g:nvim_tree_icons = {
-                \ 'git': {
-                    \  'ignored': "-",
-                    \  'unstaged': "",
-                    \  'staged': "",
-                    \},
-                \ 'default': '',
-                \ }
-
     autocmd BufEnter * ++nested if winnr('$') == 1 && bufname() == 'NvimTree_' . tabpagenr() | quit | endif
 
     lua << EOF
     require('nvim-tree').setup {
         hijack_cursor = true,
         update_cwd = true,
+        respect_buf_cwd = true,
         update_focused_file = {
             enable      = true,
             update_cwd  = false,
@@ -598,6 +587,19 @@ if has("nvim")
         actions = {
             open_file = {
                 quit_on_open = vim.g.s_nvim_tree_quit_on_open,
+            },
+        },
+        renderer = {
+            highlight_git = true,
+            root_folder_modifier = ":t",
+            icons = {
+                git_placement = "after",
+                glyphs = {
+                    git = {
+                        unstaged = "",
+                        staged = "",
+                    },
+                },
             },
         },
     }
