@@ -733,6 +733,7 @@ if has("nvim")
                 'if',
                 'else',
                 'elif',
+                'elseif',
                 'switch',
                 'case',
             },
