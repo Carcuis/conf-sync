@@ -1194,8 +1194,10 @@ inoremap <silent> <C-K> <esc>O
 nmap <silent> <leader>do do]c<leader>do
 nmap <silent> <leader>dp dp]c<leader>dp
 
-inoremap jj <esc>
-cnoremap jj <C-c>
+for mapping in ['jj', 'jk', 'kj', 'kk']
+    execute 'inoremap '.mapping.' <esc>'
+    execute 'cnoremap '.mapping.' <C-c>'
+endfor
 if has("unix") && (system('uname -a') =~ "Android")
     inoremap `` <esc>
     cnoremap `` <C-c>
