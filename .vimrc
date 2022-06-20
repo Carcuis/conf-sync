@@ -202,6 +202,11 @@ else "vim in tui
     endif
 endif
 
+if exists("g:neovide")
+    let g:neovide_cursor_vfx_mode = "wireframe"
+    let g:neovide_cursor_trail_size = 0.1
+endif
+
 " ===============
 
 " =========================
