@@ -703,7 +703,7 @@ if has("nvim")
     lua << EOF
     require('nvim-treesitter.configs').setup {
         ensure_installed = {
-            "python", "cpp", "lua", "bash", "vim", "go", "javascript", "typescript"
+            "python", "c", "cpp", "lua", "bash", "vim", "go", "javascript", "typescript", "make"
         },
         highlight = {
             enable = true,
