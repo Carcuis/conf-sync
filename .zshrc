@@ -168,6 +168,29 @@ function unset_proxy() {
     unset all_proxy
 }
 
+# web connection detection
+function web_detection() {
+    local WEB_LIST=(
+        "https://www.baidu.com"
+        "https://www.google.com"
+        "https://github.com"
+    )
+
+    for i in $WEB_LIST
+    do
+        echo -n "[TEST] $i ... "
+        timeout 10 curl -vv $i 2>&1 | grep "HTTP/1.1 200" -q
+        local EXIT_NUM=$?
+        if [[ $EXIT_NUM == 0 ]]; then
+            echo "\033[1;32mOK\033[0m"
+        elif [[ $EXIT_NUM == 124 ]]; then
+            echo "\033[1;33mTIMEOUT\033[0m"
+        else
+            echo "\033[1;31mFAIL\033[0m"
+        fi
+    done
+}
+
 # ================================
 # ============ alias =============
 # ================================
@@ -194,6 +217,7 @@ alias lvi='lvim'
 alias al='la'
 alias lg='lazygit'
 alias pp='ptpython'
+alias wd=web_detection
 
 if [[ $SYSTEM == "WSL1" || $SYSTEM == "WSL2" ]]; then
     alias sshon='sudo service ssh start'
