@@ -156,6 +156,17 @@ function detect_system() {
 }
 detect_system
 
+# proxy env settings
+function set_proxy() {
+    export http_proxy=$1
+    export https_proxy=$1
+    export all_proxy=$1
+}
+function unset_proxy() {
+    unset http_proxy
+    unset https_proxy
+    unset all_proxy
+}
 
 # ================================
 # ============ alias =============
@@ -183,18 +194,6 @@ alias lvi='lvim'
 alias al='la'
 alias lg='lazygit'
 alias pp='ptpython'
-
-set_proxy() {
-    export http_proxy=$1
-    export https_proxy=$1
-    export all_proxy=$1
-}
-
-unset_proxy() {
-    unset http_proxy
-    unset https_proxy
-    unset all_proxy
-}
 
 if [[ $SYSTEM == "WSL1" || $SYSTEM == "WSL2" ]]; then
     alias sshon='sudo service ssh start'
