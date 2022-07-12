@@ -183,8 +183,8 @@ function web_detection() {
         local EXIT_NUM=$?
         if [[ $EXIT_NUM == 0 ]]; then
             echo "\033[1;32mOK\033[0m"
-        elif [[ $EXIT_NUM == 124 ]]; then
-            echo "\033[1;33mTIMEOUT\033[0m"
+        # elif [[ $EXIT_NUM == 124 ]]; then
+        #     echo "\033[1;33mTIMEOUT\033[0m"
         else
             echo "\033[1;31mFAIL\033[0m"
         fi
