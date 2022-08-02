@@ -413,8 +413,9 @@ if has("nvim")
                 \ 'coc-cmake', 'coc-actions', 'coc-translator', 'coc-snippets',
                 \ 'coc-sumneko-lua', 'coc-tsserver', 'coc-eslint']
     inoremap <silent><expr> <TAB>
-          \ pumvisible() ? coc#_select_confirm() :
+          \ coc#pum#visible() ? coc#_select_confirm() :
           \ coc#expandableOrJumpable() ? "\<C-r>=coc#rpc#request('doKeymap', ['snippets-expand-jump',''])\<CR>" : "\<TAB>"
+    inoremap <expr><S-TAB> "\<C-h>"
     inoremap <silent><expr> <c-e> coc#refresh()
     nmap <silent> [g <Plug>(coc-diagnostic-prev)
     nmap <silent> ]g <Plug>(coc-diagnostic-next)
