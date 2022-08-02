@@ -6,13 +6,12 @@
         "winblend": 10,
         "borderhighlight": "FloatBorder"
     },
-    "suggest.enablePreview": true,
-    "suggest.noselect": true,
-    "suggest.enablePreselect": false,
+    "suggest.noselect": false,
+    "suggest.enablePreselect": true,
     "suggest.completionItemKindLabels": {
-        "method": "  ",
+        "method": "[]",
         "function": "  ",
-        "variable": "[]",
+        "variable": "  ",
         "field": "  ",
         "typeParameter": "<>",
         "constant": "  ",
@@ -44,6 +43,13 @@
         "winblend": 10,
         "borderhighlight": "FloatBorder"
     },
+    "suggest.formatItems": [
+        "kind",
+        "menu",
+        "abbr",
+        "shortcut"
+    ],
+    "suggest.virtualText": true,
     "diagnostic.signPriority": 0,
     "diagnostic.checkCurrentLine": true,
     "diagnostic.virtualText": true,
