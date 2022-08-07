@@ -9,7 +9,7 @@
     "suggest.noselect": false,
     "suggest.enablePreselect": true,
     "suggest.completionItemKindLabels": {
-        "method": "[]",
+        "method": "  ",
         "function": "  ",
         "variable": "  ",
         "field": "  ",
