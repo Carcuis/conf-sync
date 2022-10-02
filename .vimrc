@@ -484,6 +484,7 @@ if has("nvim")
     nnoremap <leader>fh <cmd>Telescope help_tags<cr>
     nnoremap <leader>fp <cmd>Telescope projects<cr>
     nnoremap <leader>fr <cmd>Telescope oldfiles<cr>
+    nnoremap <leader>fc <cmd>Telescope command_history<cr>
     lua << EOF
     require('telescope').setup{
         defaults = {
@@ -1166,6 +1167,7 @@ nnoremap <leader>wq :wq<CR>
 nnoremap <leader>fq :q!<CR>
 nmap <leader>rq :q<CR><leader>rq
 nmap <leader>ewq :wq<CR><leader>ewq
+nnoremap <leader>gq :call SaveSession("")<CR>:qa<CR>
 nnoremap <leader>du :diffupdate<CR>
 nnoremap <leader><leader>r :redraw!<CR>
 
