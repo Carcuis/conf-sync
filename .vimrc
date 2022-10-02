@@ -1219,7 +1219,6 @@ nnoremap <silent> <C-Down> :resize +2<CR>
 nnoremap <silent> <C-Left> :vertical resize -2<CR>
 nnoremap <silent> <C-Right> :vertical resize +2<CR>
 
-
 nnoremap <silent> <C-H> 10zh
 nnoremap <silent> <C-L> 10zl
 
