@@ -389,9 +389,9 @@ endfunction
 function SaveSession(session_name)
     call PreSaveSession()
     if a:session_name == ""
-        execute "SSave"
+        execute "SSave!"
     else
-        execute "SSave" a:session_name
+        execute "SSave!" a:session_name
     endif
     call PostSaveSession()
 endfunction
