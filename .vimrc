@@ -161,8 +161,8 @@ set conceallevel=2
 
 if has("nvim")
     set fillchars=eob:\ ,diff:\ 
-    if has("win32")
-        set guifont=CaskaydiaCove_NF:h13
+    if has("win32") || (system('uname -a') =~ "Microsoft")
+        set guifont=CaskaydiaCove\ NF\ Mono:h13
     elseif has("linux")
         set guifont=UbuntuMono\ NF:h16
     elseif has("mac")
