@@ -1144,7 +1144,6 @@ nnoremap <C-n> :tabnew<CR>
 nnoremap <M-s> :w<CR>
 nnoremap <M-w> :q<CR>
 nnoremap <M-q> :q!<CR>
-nnoremap <leader>bn :bn<CR>
 
 function EditVimrc(way)
     if has("win32")
