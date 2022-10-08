@@ -512,6 +512,8 @@ let g:extra_whitespace_ignored_filetypes = [
             \'TelescopePrompt',
             \'vim-plug',
             \'checkhealth',
+            \'NvimTree',
+            \'help',
             \]
 
 " === bufferline.nvim ===
