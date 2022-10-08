@@ -38,9 +38,9 @@ Plug 'mhinz/vim-startify'
 Plug 'vifm/vifm.vim'
 Plug 'liuchengxu/vista.vim'
 Plug 'dstein64/vim-startuptime'
-Plug 'gcmt/wildfire.vim'
-Plug 'lambdalisue/suda.vim'
-Plug 'tpope/vim-markdown'
+Plug 'gcmt/wildfire.vim'    "<cr> select in brackets
+Plug 'lambdalisue/suda.vim' "save file by sudo
+Plug 'tpope/vim-markdown'   "highlight for code blocks in markdown
 
 if has("nvim")
     Plug 'carcuis/darcula.nvim'
