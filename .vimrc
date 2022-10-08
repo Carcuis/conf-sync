@@ -40,7 +40,6 @@ Plug 'liuchengxu/vista.vim'
 Plug 'dstein64/vim-startuptime'
 Plug 'gcmt/wildfire.vim'
 Plug 'lambdalisue/suda.vim'
-Plug 'tpope/vim-sleuth'
 Plug 'tpope/vim-markdown'
 
 if has("nvim")
@@ -88,6 +87,7 @@ if has("nvim")
     Plug 'sindrets/diffview.nvim'
     " Plug 'github/copilot.vim'
     Plug 'kevinhwang91/nvim-hlslens'
+    Plug 'NMAC427/guess-indent.nvim'    "indentation-detection
 else
     Plug 'carcuis/darcula'
     Plug 'jiangmiao/auto-pairs'
@@ -100,6 +100,7 @@ else
     Plug 'Yggdroot/LeaderF', {'do': ':LeaderfInstallCExtension'}
     Plug 'vim/killersheep'
     Plug 'airblade/vim-gitgutter'
+    Plug 'tpope/vim-sleuth'     "indentation-detection
 endif
 
 call plug#end()
@@ -1124,6 +1125,13 @@ let g:markdown_fenced_languages = ['html', 'python', 'bash=sh', 'vim', 'zsh', 'l
 if has("nvim")
     imap <silent><script><expr> <M-a> copilot#Accept("\<CR>")
     let g:copilot_no_tab_map = v:true
+endif
+
+" === guess-indent.nvim ===
+if has("nvim")
+    lua << EOF
+    require('guess-indent').setup {}
+EOF
 endif
 
 " ===============
