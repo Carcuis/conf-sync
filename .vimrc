@@ -455,6 +455,15 @@ if has("nvim")
 
     nnoremap <silent> <M-d> :CocCommand semanticTokens.inspect<CR>
     let g:coc_borderchars = ['─', '│', '─', '│', '╭', '╮', '╯', '╰']
+
+    xmap if <Plug>(coc-funcobj-i)
+    omap if <Plug>(coc-funcobj-i)
+    xmap af <Plug>(coc-funcobj-a)
+    omap af <Plug>(coc-funcobj-a)
+    xmap ic <Plug>(coc-classobj-i)
+    omap ic <Plug>(coc-classobj-i)
+    xmap ac <Plug>(coc-classobj-a)
+    omap ac <Plug>(coc-classobj-a)
 endif
 
 " === vim-which-key ===
