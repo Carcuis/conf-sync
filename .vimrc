@@ -62,7 +62,7 @@ if has("nvim")
     Plug 'nvim-lua/popup.nvim'
     Plug 'norcalli/nvim-colorizer.lua'
     Plug 'CRAG666/code_runner.nvim'
-    Plug 'tversteeg/registers.nvim'
+    " Plug 'tversteeg/registers.nvim'
     Plug 'nvim-treesitter/nvim-treesitter'
     Plug 'nvim-treesitter/playground'
     Plug 'nvim-lualine/lualine.nvim'
@@ -878,7 +878,7 @@ if has("nvim")
     lua << EOF
     require("which-key").setup {
         plugins = {
-            registers = false,
+            registers = true,
             spelling = {
                 enabled = true,
                 suggestions = 40,
