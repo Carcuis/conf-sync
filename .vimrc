@@ -51,6 +51,7 @@ if has("nvim")
     Plug 'nvim-lua/plenary.nvim'
     Plug 'nvim-telescope/telescope.nvim'
     Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
+    Plug 'nvim-telescope/telescope-symbols.nvim'
     Plug 'kyazdani42/nvim-web-devicons'
     Plug 'akinsho/bufferline.nvim'
     Plug 'kyazdani42/nvim-tree.lua'
@@ -503,6 +504,7 @@ if has("nvim")
     nnoremap <leader>fgc <cmd>Telescope git_commits<cr>
     nnoremap <leader>fgf <cmd>Telescope git_files<cr>
     nnoremap <leader>fgs <cmd>Telescope git_status<cr>
+    nnoremap <leader>fs :lua require'telescope.builtin'.symbols{ sources = {'emoji', 'kaomoji', 'gitmoji', 'math', 'latex'} }<CR>
     lua << EOF
     require('telescope').setup{
         defaults = {
