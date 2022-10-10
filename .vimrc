@@ -492,9 +492,17 @@ if has("nvim")
     nnoremap <leader>fw <cmd>Telescope live_grep<cr>
     nnoremap <leader>fb <cmd>Telescope buffers<cr>
     nnoremap <leader>fh <cmd>Telescope help_tags<cr>
+    nnoremap <leader>fH <cmd>Telescope highlights<cr>
     nnoremap <leader>fp <cmd>Telescope projects<cr>
     nnoremap <leader>fr <cmd>Telescope oldfiles<cr>
+    nnoremap <leader>fR <cmd>Telescope registers<cr>
     nnoremap <leader>fc <cmd>Telescope command_history<cr>
+    nnoremap <leader>fn <cmd>Telescope notify<cr>
+    nnoremap <leader>fgC <cmd>Telescope git_bcommits<cr>
+    nnoremap <leader>fgb <cmd>Telescope git_branches<cr>
+    nnoremap <leader>fgc <cmd>Telescope git_commits<cr>
+    nnoremap <leader>fgf <cmd>Telescope git_files<cr>
+    nnoremap <leader>fgs <cmd>Telescope git_status<cr>
     lua << EOF
     require('telescope').setup{
         defaults = {
