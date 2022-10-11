@@ -124,8 +124,16 @@ elseif g:color == "neon"
     color neon
 elseif g:color == "vscode"
     let g:vscode_style = "dark"
-    let g:vscode_transparent = g:transparent_background == 1 ? v:true : v:false
+    let g:vscode_transparent = g:transparent_background
     color vscode
+elseif g:color == "tokyonight"
+    lua << EOF
+    require("tokyonight").setup({
+        style = "night",
+        transparent = vim.g.transparent_background == 1,
+    })
+EOF
+    color tokyonight
 else
     execute 'colorscheme ' .. g:color
 endif
