@@ -433,7 +433,7 @@ if has("nvim")
     nmap <silent> ]g <Plug>(coc-diagnostic-next)
     nmap <silent> gd <Plug>(coc-definition)
     nmap <silent> gy <Plug>(coc-type-definition)
-    nmap <silent> gi <Plug>(coc-implementation)
+    nmap <silent> gI <Plug>(coc-implementation)
     nmap <silent> gr <Plug>(coc-references)
     nmap <silent> gp :call CocActionAsync('jumpDefinition', v:false)<CR>
     autocmd CursorHold * silent call CocActionAsync('highlight')
