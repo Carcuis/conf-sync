@@ -73,6 +73,9 @@
     "coc.preferences.formatOnSaveFiletypes": [
         "json"
     ],
+    "coc.preferences.enableMessageDialog": true,
+    "notification.statusLineProgress": false,
+    "notification.timeout": 5000,
     "list.nextKeymap": "<C-n>",
     "list.previousKeymap": "<C-p>",
     "tree.closedIcon": "",
