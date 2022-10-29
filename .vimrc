@@ -918,6 +918,12 @@ if has("nvim")
         layout = {
             align = 'center',
         },
+        triggers_blacklist = {
+            c = { "j", "k" },
+        },
+        icons = {
+            group = "",
+        },
     }
 EOF
 endif
