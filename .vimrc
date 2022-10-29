@@ -593,7 +593,9 @@ if has("nvim")
         au VimEnter * call OpenNvimTreeOnStartup()
     endif
 
-    autocmd BufEnter * ++nested if winnr('$') == 1 && bufname() == 'NvimTree_' . tabpagenr() | quit | endif
+    autocmd BufEnter * ++nested
+            \ if len(filter(nvim_list_wins(), {k,v->nvim_win_get_config(v).relative==""})) == 1
+            \ && bufname() == 'NvimTree_' . tabpagenr() | quit | endif
 
     lua << EOF
     require('nvim-tree').setup {
