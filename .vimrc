@@ -820,6 +820,11 @@ if has("nvim")
                 },
                 {
                     'diff',
+                    diff_color = {
+                        added = 'LualineGitAdd',
+                        modified = 'LualineGitChange',
+                        removed = 'LualineGitDelete',
+                    },
                     symbols = { added = ' ', modified = ' ', removed = ' ' },
                     padding = { left = 1, right = 0 },
                 },
