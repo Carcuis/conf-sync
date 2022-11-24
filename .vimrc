@@ -89,6 +89,7 @@ if has("nvim")
     " Plug 'github/copilot.vim'
     Plug 'kevinhwang91/nvim-hlslens'
     Plug 'NMAC427/guess-indent.nvim'    "indentation-detection
+    Plug 'lukas-reineke/virt-column.nvim'
 else
     Plug 'carcuis/darcula'
     Plug 'jiangmiao/auto-pairs'
@@ -168,6 +169,7 @@ set termguicolors
 set signcolumn=yes
 set timeoutlen=500
 set conceallevel=2
+set colorcolumn=120
 
 if has("nvim")
     set fillchars=eob:\ ,diff:\ 
@@ -1170,6 +1172,15 @@ endif
 if has("nvim")
     lua << EOF
     require('guess-indent').setup {}
+EOF
+endif
+
+" === virt-column.nvim ===
+if has("nvim")
+    lua << EOF
+    require("virt-column").setup {
+        char = "│"
+    }
 EOF
 endif
 
