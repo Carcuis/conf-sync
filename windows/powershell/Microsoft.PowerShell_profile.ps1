@@ -53,7 +53,11 @@ function ReloadProfile { & $profile }
 function GetAdminPriv { Start-Process pwsh -Verb runAs }
 function StartSshServiceInWsl { wsl -- sudo service ssh start }
 function StopSshServiceInWsl { wsl -- sudo service ssh stop }
-function SetProxyOn { $env:ALL_PROXY="http://127.0.0.1:10809" }
+function SetProxyOn {
+    $env:ALL_PROXY="http://127.0.0.1:10809"
+    $env:HTTP_PROXY="http://127.0.0.1:10809"
+    $env:HTTPS_PROXY="http://127.0.0.1:10809"
+}
 function SetProxyOff { $env:ALL_PROXY="" }
 function SshToOneplus8pro { ssh -p 8022 192.168.137.68 -i ~\.ssh\oneplus8 }
 
