@@ -1,80 +1,95 @@
 #!/bin/bash
 
-zshrc_remote=.zshrc
+dir=$(dirname $(realpath $0))
+all_synced=true
+param=$1
+
+TAIL="$(printf '\033[0m')"
+RED="$(printf '\033[31m')"; GREEN="$(printf '\033[32m')"; YELLOW="$(printf '\033[33m')"
+CYAN="$(printf '\033[36m')"; BLUE="$(printf '\033[34m')"; WHITE="$(printf '\033[37m')"
+
+file_list=(
+    zshrc
+    vimrc
+)
+extra_file_list=(
+    coc_settings
+)
+zshrc_remote=$dir/.zshrc
 zshrc_local=~/.zshrc
-vimrc_remote=.vimrc
+vimrc_remote=$dir/.vimrc
 vimrc_local=~/.vimrc
+coc_settings_remote=$dir/.config/nvim/coc-settings.json
+coc_settings_local=~/.config/nvim/coc-settings.json
 
-diff $zshrc_remote $zshrc_local > /dev/null
-zshrc_sync_status=$?
-diff $vimrc_remote $vimrc_local > /dev/null
-vimrc_sync_status=$?
-
-has_nvim=0
-has_vim=0
-if command -v nvim > /dev/null; then
-    has_nvim=1
-    diff_tool="nvim -d"
-elif command -v vim > /dev/null; then
-    has_vim=1
-    diff_tool="vimdiff"
-else
-    echo -e "\033[31mNo vim or neovim found on your device.\nAborting...\033[0m"
-    exit 1
-fi
-
-function DiffFunc
+function cmd_parser
 {
-    if [ $has_nvim == 1 ]; then
-        nvim -d $1 $2
-    elif [ $has_vim == 1 ]; then
-        vimdiff $1 $2
+    case "$param" in
+        a|-a) file_list=(${file_list[@]} ${extra_file_list[@]}) ;;
+    esac
+}
+
+function check_editor
+{
+    if command -v nvim > /dev/null; then
+        diff_command="nvim -d"
+    elif command -v vim > /dev/null; then
+        diff_command="vimdiff"
+    else
+        echo -e "${RED}No vim or neovim found on your device.\nAborting...${TAIL}"
+        exit 1
     fi
 }
 
-check_status=0
-
-if [ $zshrc_sync_status == 0 ] && [ $vimrc_sync_status == 0 ]; then
-    echo -e "\033[32mAll files are the same.✔ \nNothing to do."
-    check_status=1
-else
-    if [ $zshrc_sync_status != 0 ]; then
-        read -s -n1 -p "Zshrc unsynchronized. Edit with $diff_tool ? [Y/n] " user_input
-        if [ "$user_input" == "y" ] || [ "$user_input" == "" ]; then
-            echo ""
-            DiffFunc $zshrc_remote $zshrc_local
-            diff $zshrc_remote $zshrc_local > /dev/null
-            zshrc_sync_status=$?
-            if [ $zshrc_sync_status == 0 ]; then
-                echo -e "\nZshrc is now synced."
-            else
-                echo -e "\nZshrc is still unsynchronized.\n--Use \" $diff_tool $zshrc_remote $zshrc_local \" later\n--or try to rerun this wizard"
-            fi
-        else
-            echo -e "\nZshrc is still unsynchronized. Aborting."
+function run_diff_all
+{
+    all_synced=true
+    for file in ${file_list[@]}; do
+        eval diff \$"${file}_remote" \$"${file}_local" > /dev/null
+        if [ $? != 0 ]; then
+            all_synced=false
         fi
-    else
-        echo -e "Zshrc is already synced."
+    done
+}
+
+function run_edit
+{
+    run_diff_all
+    if $all_synced; then
+        echo -e "${GREEN}All files are the same.✔\nNothing to do.${TAIL}"
+        exit
     fi
 
-    if [ $vimrc_sync_status != 0 ]; then
-        read -s -n1 -p "Vimrc unsynchronized. Edit with $diff_tool ? [Y/n] " user_input
-        if [ "$user_input" == "y" ] || [ "$user_input" == "" ]; then
-            echo ""
-            DiffFunc $vimrc_remote $vimrc_local
-            diff $vimrc_remote $vimrc_local > /dev/null
-            vimrc_sync_status=$?
-            if [ $vimrc_sync_status == 0 ]; then
-                echo -e "\nVimrc is now synced."
+    for file in ${file_list[@]}; do
+        eval diff \$"${file}_remote" \$"${file}_local" > /dev/null
+        if [ $? != 0 ]; then
+            read -s -n1 -p "$file unsynchronized. Edit with $diff_command ? [Y/n] " user_input
+            if [ "$user_input" == "y" ] || [ "$user_input" == "" ]; then
+                echo
+                eval $diff_command \$"${file}_remote" \$"${file}_local"
+                eval diff \$"${file}_remote" \$"${file}_local" > /dev/null
+                if [ $? == 0 ]; then
+                    echo "${GREEN}$file is now synced.✔${TAIL}"
+                else
+                    echo "${CYAN}$file is still unsynchronized."
+                    echo "-- Use \`$diff_command $(eval echo \$${file}_remote \$${file}_local)\` later"
+                    echo "-- or try to rerun this wizard${TAIL}"
+                fi
             else
-                echo -e "\nVimrc still unsynchronized.\n--Use \" $diff_tool $vimrc_remote $vimrc_local \" later\n--or try to rerun this wizard"
+                echo -e "\n${YELLOW}$file is still unsynchronized. Aborting.${TAIL}"
             fi
         else
-            echo -e "\nVimrc still unsynchronized. Aborting."
+            echo "${GREEN}$file is already synced.✔${TAIL}"
         fi
-    fi
-fi
+    done
 
-if [ $zshrc_sync_status == 0 ] && [ $vimrc_sync_status == 0 ] && [ $check_status == 0 ] ; then
-    echo -e "\033[32mAll files are same now.✔ "
-fi
+    run_diff_all
+    if $all_synced; then
+        echo "${GREEN}All files are same now.✔${TAIL}"
+    fi
+}
+
+#main
+cmd_parser
+check_editor
+run_edit
