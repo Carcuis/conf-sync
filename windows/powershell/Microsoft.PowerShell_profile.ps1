@@ -58,7 +58,11 @@ function SetProxyOn {
     $env:HTTP_PROXY="http://127.0.0.1:10809"
     $env:HTTPS_PROXY="http://127.0.0.1:10809"
 }
-function SetProxyOff { $env:ALL_PROXY="" }
+function SetProxyOff {
+    $env:ALL_PROXY=""
+    $env:HTTP_PROXY=""
+    $env:HTTPS_PROXY=""
+}
 function SshToOneplus8pro { ssh -p 8022 192.168.137.68 -i ~\.ssh\oneplus8 }
 
 Remove-Item alias:\gl -Force
