@@ -1064,6 +1064,7 @@ if has("nvim")
             changedelete = {hl = 'GitSignsChange', text = '█', numhl='GitSignsChangeNr', linehl='GitSignsChangeLn'},
         },
         current_line_blame_opts = {
+            virt_text_pos = 'right_align',
             delay = 10,
             ignore_whitespace = true,
         },
