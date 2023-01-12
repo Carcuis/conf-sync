@@ -218,7 +218,8 @@ endif
 
 if exists("g:neovide")
     let g:neovide_cursor_vfx_mode = "wireframe"
-    let g:neovide_cursor_trail_size = 0.1
+    " let g:neovide_cursor_trail_size = 0.5
+    let g:neovide_profiler = v:true
 endif
 
 " ===============
