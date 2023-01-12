@@ -1,5 +1,5 @@
 $psprofile_remote = ".\windows\powershell\Microsoft.PowerShell_profile.ps1"
-$psprofile_local = "$profile"
+$psprofile_local = "$home\Documents\PowerShell\Microsoft.PowerShell_profile.ps1"
 
 $vimrc_remote = ".vimrc"
 $vimrc_local = "$home\_vimrc"
