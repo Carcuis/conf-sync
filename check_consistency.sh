@@ -1,7 +1,6 @@
 #!/bin/bash
 
 dir=$(dirname $(realpath $0))
-all_synced=true
 param=$1
 
 TAIL="$(printf '\033[0m')"
@@ -72,8 +71,8 @@ function run_edit
                     echo "${GREEN}$file is now synced.✔${TAIL}"
                 else
                     echo "${CYAN}$file is still unsynchronized."
-                    echo "-- Use \`$diff_command $(eval echo \$${file}_remote \$${file}_local)\` later"
-                    echo "-- or try to rerun this wizard${TAIL}"
+                    echo "-- Use \`$diff_command $(eval echo \$${file}_remote \$${file}_local)\` later,"
+                    echo "-- or try to rerun this wizard.${TAIL}"
                 fi
             else
                 echo -e "\n${YELLOW}$file is still unsynchronized. Aborting.${TAIL}"
