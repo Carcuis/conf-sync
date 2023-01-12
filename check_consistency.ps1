@@ -1,99 +1,97 @@
-$psprofile_remote = ".\windows\powershell\Microsoft.PowerShell_profile.ps1"
-$psprofile_local = "$home\Documents\PowerShell\Microsoft.PowerShell_profile.ps1"
+$psprofile = @{
+    name = "PSProfile"
+    remote = "$PSScriptRoot\windows\powershell\Microsoft.PowerShell_profile.ps1"
+    local = "$home\Documents\PowerShell\Microsoft.PowerShell_profile.ps1"
+}
+$vimrc = @{
+    name = "vimrc"
+    remote = "$PSScriptRoot\.vimrc"
+    local = "$home\_vimrc"
+}
+$coc_settings = @{
+    name = "coc-settings"
+    remote = "$PSScriptRoot\.config\nvim\coc-settings.json"
+    local = "$home\AppData\Local\nvim\coc-settings.json"
+}
+$file_list = @(
+    $psprofile
+    $vimrc
+)
+$extra_file_list = @(
+    $coc_settings
+)
 
-$vimrc_remote = ".vimrc"
-$vimrc_local = "$home\_vimrc"
-
-$psprofile_sync_status = ((Get-FileHash $psprofile_remote).hash) -eq ((Get-FileHash $psprofile_local).hash)
-$vimrc_sync_status = ((Get-FileHash $vimrc_remote).hash) -eq ((Get-FileHash $vimrc_local).hash)
-
-$hasNvim = $false
-$hasVim = $false
-If ((Get-Command nvim).length -gt 0)
-{
-    $hasNvim = $true
-    $edit_tool = "nvim -d"
-} ElseIf ((Get-Command vim).length -gt 0)
-{
-    $hasVim = $true
-    $edit_tool = "vimdiff"
-} Else
-{
-    Write-Error "No vim or neovim found on your device.`nAborting..."
-    exit
+function CmdParser {
+    if ($args -match "^-?a$") {
+        $script:file_list = $file_list + $extra_file_list
+    }
 }
 
-Function DiffFunc
-{
+function RunDiffAll {
+    $_all_synced = $true
+    foreach ($file in $file_list) {
+        if ((Get-FileHash $file.remote).hash -ne (Get-FileHash $file.local).hash) {
+            $_all_synced = $false
+        }
+    }
+    return $_all_synced
+}
+
+function CheckEditor {
+    if ((Get-Command nvim).length -gt 0) {
+        $_cmd = "nvim -d"
+    } elseif ((Get-Command vim).length -gt 0) {
+        $_cmd = "vimdiff"
+    } else {
+        Write-Error "No vim or neovim found on your device.`nAborting..."
+        exit 1
+    }
+    return $_cmd
+}
+
+function DiffFunc {
     param($file1, $file2)
-    if ($hasNvim)
+    if ($edit_cmd -eq "nvim -d")
     {
         nvim -d $file1 $file2
-    } ElseIf ($hasVim)
+    } elseif ($edit_cmd -eq "vimdiff")
     {
         vimdiff $file1 $file2
     }
 }
 
-$check_status = 0
-
-If ($psprofile_sync_status -and $vimrc_sync_status)
-{
-    Write-Host "All files are the same.✔ `nNothing to do." -ForegroundColor green
-    $check_status = 1
-} Else
-{
-    If (-not $psprofile_sync_status)
-    {
-        Write-Host "PsProfile unsynchronized. Edit with $edit_tool ? [Y/n]"
-        $user_input = [Console]::ReadKey('?')
-        If ($user_input.Key -eq "Y" -or $user_input.Key -eq "Enter")
-        {
-            DiffFunc -file1 "$psprofile_remote" -file2 "$psprofile_local"
-            $psprofile_sync_status = ((Get-FileHash $psprofile_remote).hash) -eq ((Get-FileHash $psprofile_local).hash)
-            If ($psprofile_sync_status)
-            {
-                Write-Host "PsProfile is now synced."
-            } Else
-            {
-                Write-Host "PsProfile is still unsynchronized."
-                Write-Host "--Use `" $edit_tool $psprofile_remote $psprofile_local `" later"
-                Write-Host "--or try to rerun this wizard"
+function RunEdit {
+    if (RunDiffAll) {
+        Write-Host "All files are the same.✔ `nNothing to do." -ForegroundColor green
+        exit
+    }
+    foreach ($file in $file_list){
+        if ((Get-FileHash $file.remote).hash -ne (Get-FileHash $file.local).hash) {
+            Write-Host "$($file.name) unsynchronized. Edit with $edit_cmd ? [Y/n]"
+            $user_input = [Console]::ReadKey('?')
+            if ($user_input.Key -eq "Y" -or $user_input.Key -eq "Enter") {
+                DiffFunc -file1 $file.remote -file2 $file.local
+                if ((Get-FileHash $file.remote).hash -eq (Get-FileHash $file.local).hash) {
+                    Write-Host "$($file.name) is now synced.✔" -ForegroundColor Green
+                } else {
+                    Write-Host "$($file.name) is still unsynchronized." -ForegroundColor Cyan
+                    Write-Host "-- Use ``$edit_cmd $($file.remote) $($file.local)`` later," -ForegroundColor Cyan
+                    Write-Host "-- or try to rerun this wizard." -ForegroundColor Cyan
+                }
+            } else {
+                Write-Host "$($file.name) is still unsynchronized. Aborting." -ForegroundColor Yellow
             }
-        } Else
-        {
-            Write-Host "PsProfile is still unsynchronized. Aborting."
+        } else {
+            Write-Host "$($file.name) is already synced.✔" -ForegroundColor Green
         }
-    } Else
-    {
-        Write-Host "PsProfile is already synced."
     }
 
-    If (-not $vimrc_sync_status)
-    {
-        Write-Host "Vimrc unsynchronized. Edit with $edit_tool ? [Y/n]"
-        $user_input = [Console]::ReadKey('?')
-        If ($user_input.Key -eq "Y" -or $user_input.Key -eq "Enter")
-        {
-            DiffFunc -file1 "$vimrc_remote" -file2 "$vimrc_local"
-            $vimrc_sync_status = ((Get-FileHash $vimrc_remote).hash) -eq ((Get-FileHash $vimrc_local).hash)
-            If ($vimrc_sync_status)
-            {
-                Write-Host "Vimrc is now synced."
-            } Else
-            {
-                Write-Host "Vimrc still unsynchronized."
-                Write-Host "--Use `" $edit_tool $vimrc_remote $vimrc_local `" later"
-                Write-Host "--or try to rerun this wizard"
-            }
-        } Else
-        {
-            Write-Host "Vimrc still unsynchronized. Aborting."
-        }
+    if (RunDiffAll) {
+        Write-Host "All files are synchronized now.✔ " -ForegroundColor Green
     }
 }
 
-If ($psprofile_sync_status -and $vimrc_sync_status -and ($check_status -eq 0))
-{
-    Write-Host "All files are synchronized now.✔ " -ForegroundColor green
-}
+# main
+CmdParser $args[0]
+$edit_cmd = CheckEditor
+RunEdit
