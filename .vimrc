@@ -733,6 +733,7 @@ if has("nvim")
             sh = "bash",
             zsh = "zsh",
             go = "go run $fileName",
+            ps1 = "pwsh -NoProfile -File $fileName",
         },
         project_path = vim.fn.stdpath("config") .. "/project_manager.json"
     }
