@@ -112,7 +112,7 @@ def configure(repl):
     # https://pygments.org/demo/
     # repl.use_code_colorscheme("default")
     # A colorscheme that looks good on dark backgrounds is 'native':
-    repl.use_code_colorscheme("native")
+    repl.use_code_colorscheme("material")
 
     # Set color depth (keep in mind that not all terminals support true color).
 
@@ -201,4 +201,3 @@ _custom_ui_colorscheme = {
     # Make the status toolbar red.
     "status-toolbar": "bg:#ff0000 #000000",
 }
-
