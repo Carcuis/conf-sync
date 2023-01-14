@@ -9,7 +9,7 @@ $vimrc = @{
     local = "$home\_vimrc"
 }
 $coc_settings = @{
-    name = "coc-settings"
+    name = "coc-settings.json"
     remote = "$PSScriptRoot\.config\nvim\coc-settings.json"
     local = "$home\AppData\Local\nvim\coc-settings.json"
 }
@@ -62,7 +62,7 @@ function DiffFunc {
 
 function RunEdit {
     if (RunDiffAll) {
-        Write-Host "All files are the same.✔ `nNothing to do." -ForegroundColor green
+        Write-Host "All files are the same.✔ `nNothing to do." -ForegroundColor Green
         exit
     }
     foreach ($file in $file_list){
