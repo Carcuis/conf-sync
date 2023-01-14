@@ -6,40 +6,62 @@ set rnu
 set incsearch
 set easymotion
 set scrolloff=5
+set sidescrolloff=10
+set visualbell
+set ideajoin
 
 let mapleader = "\<space>"
 
 imap jj <esc>
+imap jk <esc>
+imap kj <esc>
+imap kk <esc>
 cmap jj <esc>
+cmap jk <esc>
+cmap kj <esc>
+cmap kk <esc>
 
-map <leader>w :w<CR>
-map <leader>q :q<CR>
-map <leader>wq :wq<CR>
-" map <leader>fq :q!<CR>
-map <leader>aq :q<CR><leader>aq
-map <leader>ewq :wq<CR><leader>ewq
+" code navigation
+map gd <Action>(GotoDeclarationOnly)
+map gr <Action>(ShowUsages)
+map <C-o> <Action>(Back)
+map <C-i> <Action>(Forward)
+map <C-k> <Action>(VcsShowPrevChangeMarker)
+map <C-j> <Action>(VcsShowNextChangeMarker)
 
-map <leader>h <C-w>h
-map <leader>j <C-w>j
-map <leader>k <C-w>k
-map <leader>l <C-w>l
-map <leader>s <C-w>s
-map <leader>v <C-w>v
+" ide actions
+map ru <Action>(Run)
+map rd <Action>(Debug)
+map rn <Action>(RenameElement)
+map <c-t> <Action>(ActivateTerminalToolWindow)
+map <Leader>fr <Action>(RecentFiles)
+map <Leader>ff <Action>(GotoFile)
+map <Leader>fw <Action>(FindInPath)
 
-map <leader>n :tabp<CR>
-map <leader>m :tabn<CR>
+" navigate windows
+map <M-h> <C-w>h
+map <M-j> <C-w>j
+map <M-k> <C-w>k
+map <M-l> <C-w>l
+map <leader>sp :split<CR>
+map <leader>v :vsplit<CR>
+map H :tabp<cr>
+map L :tabn<cr>
+map <leader>c :bd<cr>
 
-map <leader>y "+y<CR>
-map <leader>p "+p<CR>
+" copy and paste
+map <leader>y "+y
+map <Leader>d "+d
+map <leader>p "+p
+map <leader>P "+P
+imap <C-p> <esc>"+pa
 
 map <c-h> 10zh
 map <c-l> 10zl
 imap <c-h> 10zh
 imap <c-l> 10zl
-
-map H :bp<cr>
-map L :bn<cr>
-
-map <M-s> :w<CR>
-
 imap <c-j> <esc>o
+map <M-s> :w<CR>
+map <leader>q :q<CR>
+map <leader>wq :wq<CR>
+map <leader>sf <Action>(IdeaVim.ReloadVimRc.reload)
