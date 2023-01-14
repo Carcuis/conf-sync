@@ -18,6 +18,11 @@ $ptpython = @{
     remote = "$PSScriptRoot\.config\ptpython\config.py"
     local = "$home\AppData\Local\prompt_toolkit\ptpython\config.py"
 }
+$ideavimrc = @{
+    name = "ideavimrc"
+    remote = "$PSScriptRoot\dot_files\.ideavimrc"
+    local = "$home\.ideavimrc"
+}
 $file_list = @(
     $psprofile
     $vimrc
@@ -25,6 +30,7 @@ $file_list = @(
 $extra_file_list = @(
     $coc_settings
     $ptpython
+    $ideavimrc
 )
 
 function CmdParser {
