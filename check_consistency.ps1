@@ -13,12 +13,18 @@ $coc_settings = @{
     remote = "$PSScriptRoot\.config\nvim\coc-settings.json"
     local = "$home\AppData\Local\nvim\coc-settings.json"
 }
+$ptpython = @{
+    name = "PtPython config.py"
+    remote = "$PSScriptRoot\.config\ptpython\config.py"
+    local = "$home\AppData\Local\prompt_toolkit\ptpython\config.py"
+}
 $file_list = @(
     $psprofile
     $vimrc
 )
 $extra_file_list = @(
     $coc_settings
+    $ptpython
 )
 
 function CmdParser {
