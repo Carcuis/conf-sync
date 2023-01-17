@@ -54,7 +54,6 @@ map <leader>y "+y
 map <Leader>d "+d
 map <leader>p "+p
 map <leader>P "+P
-imap <C-p> <esc>"+pa
 
 map <c-h> 10zh
 map <c-l> 10zl
