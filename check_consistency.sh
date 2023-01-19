@@ -1,7 +1,7 @@
 #!/bin/bash
 
 dir=$(dirname $(realpath $0))
-param=$1
+params=$@
 
 TAIL="$(printf '\033[0m')"
 RED="$(printf '\033[31m')"; GREEN="$(printf '\033[32m')"; YELLOW="$(printf '\033[33m')"
@@ -29,7 +29,7 @@ ideavimrc_local=~/.ideavimrc
 
 function cmd_parser
 {
-    case "$param" in
+    case ${params[0]} in
         a|-a) file_list=(${file_list[@]} ${extra_file_list[@]}) ;;
     esac
 }
@@ -48,37 +48,57 @@ function check_editor
 
 function run_diff_all
 {
-    all_synced=true
     for file in ${file_list[@]}; do
-        eval diff \$"${file}_remote" \$"${file}_local" > /dev/null
-        if [ $? != 0 ]; then
-            all_synced=false
+        local file_remote=$(eval echo \$${file}_remote)
+        local file_local=$(eval echo \$${file}_local)
+
+        if [ ! -f $file_local ]; then
+            return 1
+        fi
+
+        if ! diff $file_remote $file_local > /dev/null; then
+            return 1
         fi
     done
+    return
 }
 
 function run_edit
 {
-    run_diff_all
-    if $all_synced; then
+    if run_diff_all; then
         echo -e "${GREEN}All files are the same.✔\nNothing to do.${TAIL}"
-        exit
+        return
     fi
 
     for file in ${file_list[@]}; do
-        eval diff \$"${file}_remote" \$"${file}_local" > /dev/null
-        if [ $? != 0 ]; then
+        local file_remote=$(eval echo \$${file}_remote)
+        local file_local=$(eval echo \$${file}_local)
+
+        if [ ! -f $file_local ]; then
+            local file_local_dir=$(dirname $file_local)
+            read -s -n1 -p "$file not found, create a copy to $file_local_dir/ ? [Y/n] " user_input </dev/tty
+            if [ "$user_input" == "y" ] || [ "$user_input" == "" ]; then
+                echo
+                mkdir -p $file_local_dir
+                cp $file_remote $file_local_dir
+                echo "${GREEN}Copied \`$file_remote\` to \`$file_local\`.✔${TAIL}"
+            else
+                echo -e "\n${YELLOW}Abort.${TAIL}"
+            fi
+            continue
+        fi
+
+        if ! diff $file_remote $file_local > /dev/null; then
             read -s -n1 -p "$file unsynchronized. Edit with $diff_command ? [Y/n] " user_input </dev/tty
             if [ "$user_input" == "y" ] || [ "$user_input" == "" ]; then
                 echo
-                eval $diff_command \$"${file}_remote" \$"${file}_local"
-                eval diff \$"${file}_remote" \$"${file}_local" > /dev/null
-                if [ $? == 0 ]; then
+                $diff_command $file_remote $file_local
+                if diff $file_remote $file_local > /dev/null; then
                     echo "${GREEN}$file is now synced.✔${TAIL}"
                 else
                     echo "${CYAN}$file is still unsynchronized."
-                    echo "-- Use \`$diff_command $(eval echo \$${file}_remote \$${file}_local)\` later,"
-                    echo "-- or try to rerun this wizard.${TAIL}"
+                    echo "-- Use \`$diff_command $file_remote $file_local\` later,"
+                    echo "-- or try to rerun this script.${TAIL}"
                 fi
             else
                 echo -e "\n${YELLOW}$file is still unsynchronized. Aborting.${TAIL}"
@@ -88,8 +108,7 @@ function run_edit
         fi
     done
 
-    run_diff_all
-    if $all_synced; then
+    if run_diff_all; then
         echo "${GREEN}All files are same now.✔${TAIL}"
     fi
 }
