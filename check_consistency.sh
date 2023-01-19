@@ -65,7 +65,7 @@ function run_edit
     for file in ${file_list[@]}; do
         eval diff \$"${file}_remote" \$"${file}_local" > /dev/null
         if [ $? != 0 ]; then
-            read -s -n1 -p "$file unsynchronized. Edit with $diff_command ? [Y/n] " user_input
+            read -s -n1 -p "$file unsynchronized. Edit with $diff_command ? [Y/n] " user_input </dev/tty
             if [ "$user_input" == "y" ] || [ "$user_input" == "" ]; then
                 echo
                 eval $diff_command \$"${file}_remote" \$"${file}_local"
