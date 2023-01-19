@@ -32,7 +32,6 @@ Plug 'bronson/vim-trailing-whitespace'
 Plug 'pprovost/vim-ps1'
 Plug 'romainl/vim-cool'
 Plug 'luochen1990/rainbow'
-Plug 'easymotion/vim-easymotion'
 Plug 'preservim/tagbar'
 Plug 'mhinz/vim-startify'
 Plug 'vifm/vifm.vim'
@@ -90,10 +89,12 @@ if has("nvim")
     Plug 'kevinhwang91/nvim-hlslens'
     Plug 'NMAC427/guess-indent.nvim'    "indentation-detection
     Plug 'lukas-reineke/virt-column.nvim'
+    Plug 'ggandor/leap.nvim'
 else
     Plug 'carcuis/darcula'
     Plug 'jiangmiao/auto-pairs'
     Plug 'vim-airline/vim-airline'
+    Plug 'easymotion/vim-easymotion'
     Plug 'Yggdroot/indentLine'
     Plug 'liuchengxu/vim-which-key'
     Plug 'preservim/nerdtree'
@@ -1193,6 +1194,14 @@ if has("nvim")
     require("virt-column").setup {
         char = "│"
     }
+EOF
+endif
+
+" === leap.nvim ===
+if has("nvim")
+    lua << EOF
+    vim.keymap.set({'n', 'x', 'o'}, 'f', '<Plug>(leap-forward-to)')
+    vim.keymap.set({'n', 'x', 'o'}, 'F', '<Plug>(leap-backward-to)')
 EOF
 endif
 
