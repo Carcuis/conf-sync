@@ -13,6 +13,7 @@ file_list=(
 )
 extra_file_list=(
     coc_settings
+    ptpython
 )
 zshrc_remote=$dir/.zshrc
 zshrc_local=~/.zshrc
@@ -20,6 +21,8 @@ vimrc_remote=$dir/.vimrc
 vimrc_local=~/.vimrc
 coc_settings_remote=$dir/.config/nvim/coc-settings.json
 coc_settings_local=~/.config/nvim/coc-settings.json
+ptpython_remote=$dir/.config/ptpython/config.py
+ptpython_local=~/.config/ptpython/config.py
 
 function cmd_parser
 {
