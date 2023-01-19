@@ -14,6 +14,7 @@ file_list=(
 extra_file_list=(
     coc_settings
     ptpython
+    ideavimrc
 )
 zshrc_remote=$dir/.zshrc
 zshrc_local=~/.zshrc
@@ -23,6 +24,8 @@ coc_settings_remote=$dir/.config/nvim/coc-settings.json
 coc_settings_local=~/.config/nvim/coc-settings.json
 ptpython_remote=$dir/.config/ptpython/config.py
 ptpython_local=~/.config/ptpython/config.py
+ideavimrc_remote=$dir/dot_files/.ideavimrc
+ideavimrc_local=~/.ideavimrc
 
 function cmd_parser
 {
