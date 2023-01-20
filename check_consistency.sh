@@ -37,7 +37,11 @@ vimrc_local=~/.vimrc
 coc_settings_remote=$dir/.config/nvim/coc-settings.json
 coc_settings_local=~/.config/nvim/coc-settings.json
 ptpython_remote=$dir/.config/ptpython/config.py
-ptpython_local=~/.config/ptpython/config.py
+if [ "$SYSTEM" == "Darwin" ]; then
+    ptpython_local="$HOME/Library/Application Support/ptpython/config.py"
+else
+    ptpython_local=~/.config/ptpython/config.py
+fi
 ideavimrc_remote=$dir/dot_files/.ideavimrc
 ideavimrc_local=~/.ideavimrc
 
@@ -71,11 +75,11 @@ function run_diff_all
         local file_remote=$(eval echo \$${file}_remote)
         local file_local=$(eval echo \$${file}_local)
 
-        if [ ! -f $file_local ]; then
+        if [ ! -f "$file_local" ]; then
             return 1
         fi
 
-        if ! diff $file_remote $file_local > /dev/null; then
+        if ! diff "$file_remote" "$file_local" > /dev/null; then
             return 1
         fi
     done
@@ -93,13 +97,13 @@ function run_edit
         local file_remote=$(eval echo \$${file}_remote)
         local file_local=$(eval echo \$${file}_local)
 
-        if [ ! -f $file_local ]; then
-            local file_local_dir=$(dirname $file_local)
-            read -s -n1 -p "$file not found, create a copy to $file_local_dir/ ? [Y/n] " user_input </dev/tty
+        if [ ! -f "$file_local" ]; then
+            local file_local_dir=$(dirname "$file_local")
+            read -s -n1 -p "$file not found, create a copy to \`$file_local_dir/\` ? [Y/n] " user_input </dev/tty
             if [ "$user_input" == "y" ] || [ "$user_input" == "" ]; then
                 echo
-                mkdir -p $file_local_dir
-                cp $file_remote $file_local_dir
+                [ ! -d "$file_local_dir" ] && mkdir -p "$file_local_dir"
+                cp "$file_remote" "$file_local_dir"
                 echo "${GREEN}Copied \`$file_remote\` to \`$file_local\`.✔${TAIL}"
             else
                 echo -e "\n${YELLOW}Abort.${TAIL}"
@@ -107,16 +111,16 @@ function run_edit
             continue
         fi
 
-        if ! diff $file_remote $file_local > /dev/null; then
+        if ! diff "$file_remote" "$file_local" > /dev/null; then
             read -s -n1 -p "$file unsynchronized. Edit with $diff_command ? [Y/n] " user_input </dev/tty
             if [ "$user_input" == "y" ] || [ "$user_input" == "" ]; then
                 echo
-                $diff_command $file_remote $file_local
-                if diff $file_remote $file_local > /dev/null; then
+                $diff_command "$file_remote" "$file_local"
+                if diff "$file_remote" "$file_local" > /dev/null; then
                     echo "${GREEN}$file is now synced.✔${TAIL}"
                 else
                     echo "${CYAN}$file is still unsynchronized."
-                    echo "-- Use \`$diff_command $file_remote $file_local\` later,"
+                    echo "-- Use \`$diff_command \"$file_remote\" \"$file_local\"\` later,"
                     echo "-- or try to rerun this script.${TAIL}"
                 fi
             else
