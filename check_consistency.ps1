@@ -40,13 +40,16 @@ function CmdParser {
 }
 
 function RunDiffAll {
-    $_all_synced = $true
     foreach ($file in $file_list) {
+        if (! [System.IO.File]::Exists($file.local)) {
+            return $false
+        }
+
         if ((Get-FileHash $file.remote).hash -ne (Get-FileHash $file.local).hash) {
-            $_all_synced = $false
+            return $false
         }
     }
-    return $_all_synced
+    return $true
 }
 
 function CheckEditor {
@@ -77,7 +80,24 @@ function RunEdit {
         Write-Host "All files are the same.✔ `nNothing to do." -ForegroundColor Green
         exit
     }
-    foreach ($file in $file_list){
+
+    foreach ($file in $file_list) {
+        if (! [System.IO.File]::Exists($file.local)) {
+            $file_local_dir = Split-Path $file.local
+            Write-Host "$($file.name) not found, create a copy to $file_local_dir\ ? [Y/n] "
+            $user_input = [Console]::ReadKey('?')
+            if ($user_input.Key -eq "Y" -or $user_input.Key -eq "Enter") {
+                if (! [System.IO.Path]::Exists($file_local_dir)) {
+                    New-Item -ItemType "directory" -Path $file_local_dir
+                }
+                Copy-Item -Path $file.remote -Destination $file_local_dir
+                Write-Host "Copied ``$($file.remote)`` to ``$($file.local)``.✔" -ForegroundColor Green
+            } else {
+                Write-Host "Abort." -ForegroundColor Yellow
+            }
+            continue
+        }
+
         if ((Get-FileHash $file.remote).hash -ne (Get-FileHash $file.local).hash) {
             Write-Host "$($file.name) unsynchronized. Edit with $edit_cmd ? [Y/n]"
             $user_input = [Console]::ReadKey('?')
