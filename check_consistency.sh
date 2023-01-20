@@ -7,6 +7,20 @@ TAIL="$(printf '\033[0m')"
 RED="$(printf '\033[31m')"; GREEN="$(printf '\033[32m')"; YELLOW="$(printf '\033[33m')"
 CYAN="$(printf '\033[36m')"; BLUE="$(printf '\033[34m')"; WHITE="$(printf '\033[37m')"
 
+function detect_system() {
+    local _uname_a=$(uname -a)
+
+    if [[ $_uname_a =~ Microsoft ]]; then SYSTEM="WSL1"
+    elif [[ $_uname_a =~ WSL2 ]];    then SYSTEM="WSL2"
+    elif [[ $OSTYPE =~ ^darwin ]];   then SYSTEM="Darwin"
+    elif [[ $OSTYPE =~ android ]];   then SYSTEM="Android"
+    elif [[ $OSTYPE =~ ^linux ]];    then SYSTEM="Linux"
+    else SYSTEM="Unknown"
+    fi
+}
+detect_system
+
+
 file_list=(
     zshrc
     vimrc
