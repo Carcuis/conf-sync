@@ -28,8 +28,8 @@ file_list=(
 extra_file_list=(
     coc_settings
     ptpython
-    ideavimrc
 )
+
 zshrc_remote=$dir/.zshrc
 zshrc_local=~/.zshrc
 vimrc_remote=$dir/.vimrc
@@ -44,7 +44,12 @@ ideavimrc_local=~/.ideavimrc
 function cmd_parser
 {
     case ${params[0]} in
-        a|-a) file_list=(${file_list[@]} ${extra_file_list[@]}) ;;
+        a|-a)
+            case $SYSTEM in
+                WSL*|Android) ideavimrc=""; echo "${CYAN}Skipped ideavimrc on current system: $SYSTEM ✔" ;;
+                *) ideavimrc=ideavimrc ;;
+            esac
+            file_list=(${file_list[@]} ${extra_file_list[@]} $ideavimrc) ;;
     esac
 }
 
