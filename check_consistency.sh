@@ -20,7 +20,6 @@ function detect_system() {
 }
 detect_system
 
-
 file_list=(
     zshrc
     vimrc
@@ -50,7 +49,7 @@ function cmd_parser
     case ${params[0]} in
         a|-a)
             case $SYSTEM in
-                WSL*|Android) ideavimrc=""; echo "${CYAN}Skipped ideavimrc on current system: $SYSTEM ✔" ;;
+                WSL*|Android) ideavimrc=""; echo "${CYAN}Skipped ideavimrc on current system: $SYSTEM ✔${TAIL}" ;;
                 *) ideavimrc=ideavimrc ;;
             esac
             file_list=(${file_list[@]} ${extra_file_list[@]} $ideavimrc) ;;
