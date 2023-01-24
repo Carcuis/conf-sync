@@ -63,6 +63,26 @@ function SetProxyOff {
     $env:HTTP_PROXY = ""
     $env:HTTPS_PROXY = ""
 }
+function WebDetection {
+    $web_list = @(
+        "https://www.baidu.com"
+        "https://www.google.com"
+        "https://github.com"
+    )
+
+    foreach ($web in $web_list) {
+        try {
+            Write-Host -NoNewline "[TEST] $web ... "
+            $status = Invoke-WebRequest -Uri $web -DisableKeepAlive -Method Head -TimeoutSec 10 | ForEach-Object {$_.StatusCode}
+            if ($status -eq 200) {
+                Write-Host "OK" -ForegroundColor Green
+            }
+        }
+        catch {
+            Write-Host "FAIL" -ForegroundColor Red
+        }
+    }
+}
 function SshToOneplus8pro { ssh -p 8022 192.168.137.68 -i ~\.ssh\oneplus8 }
 
 Remove-Item alias:\gl -Force
@@ -95,6 +115,7 @@ Set-Alias sshon StartSshServiceInWSl
 Set-Alias sshoff StopSshServiceInWSl
 Set-Alias px SetProxyOn
 Set-Alias upx SetProxyOff
+Set-Alias wd WebDetection
 Set-Alias oneplus8 SshToOneplus8pro
 Set-Alias lg lazygit
 Set-Alias ipy ipython
