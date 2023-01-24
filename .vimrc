@@ -1243,8 +1243,8 @@ nnoremap <leader>ww :w<CR>
 nnoremap <leader>q :q<CR>
 nnoremap <leader>wq :wq<CR>
 nnoremap <leader>fq :q!<CR>
-nmap <leader>rq :q<CR><leader>rq
-nmap <leader>ewq :wq<CR><leader>ewq
+nnoremap <leader>rq :qa<CR>
+nnoremap <leader>ewq :wqa<CR>
 nnoremap <leader>gq :call SaveSession("")<CR>:qa<CR>
 nnoremap <leader>du :diffupdate<CR>
 nnoremap <leader><leader>r :redraw!<CR>
