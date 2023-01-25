@@ -38,6 +38,15 @@
                     }
                 },
                 {
+                    "type": "text",
+                    "style": "powerline",
+                    "powerline_symbol": "\ue0b2",
+                    "invert_powerline": true,
+                    "foreground": "#0097de",
+                    "background": "#19323e",
+                    "template": "{{if .Env.ALL_PROXY}}  {{ .Env.ALL_PROXY }} {{ end }}"
+                },
+                {
                     "type": "exit",
                     "style": "powerline",
                     "powerline_symbol": "\ue0b2",
