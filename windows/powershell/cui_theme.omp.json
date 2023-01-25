@@ -6,6 +6,20 @@
             "alignment": "right",
             "segments": [
                 {
+                    "type": "python",
+                    "style": "powerline",
+                    "powerline_symbol": "\uE0B2",
+                    "foreground": "#100e23",
+                    "background": "#3776ab",
+                    "invert_powerline": true,
+                    "properties": {
+                        "prefix": " \uE235 ",
+                        "display_mode": "environment",
+                        "fetch_virtual_env": true,
+                        "home_enabled": true
+                    }
+                },
+                {
                     "type": "git",
                     "style": "powerline",
                     "foreground": "#00ff22",
