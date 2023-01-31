@@ -175,7 +175,7 @@ set colorcolumn=120
 if has("nvim")
     set fillchars=eob:\ ,diff:\ 
     if has("win32") || (system('uname -a') =~ "Microsoft")
-        set guifont=CaskaydiaCove\ NF\ Mono:h13
+        set guifont=CaskaydiaCove\ NFM:h13
     elseif has("linux")
         set guifont=UbuntuMono\ NF:h16
     elseif has("mac")
