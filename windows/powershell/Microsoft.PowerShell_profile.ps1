@@ -1,4 +1,4 @@
-Set-PoshPrompt -Theme cui_theme
+oh-my-posh init pwsh --config "$env:POSH_THEMES_PATH/cui_theme.omp.json" | Invoke-Expression
 
 Import-Module Terminal-Icons
 
