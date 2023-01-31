@@ -800,7 +800,18 @@ if has("nvim")
     local gps = require("nvim-gps")
     require('lualine').setup {
         extensions = {
-            'nvim-tree',
+            {
+                sections = {
+                    lualine_a = {{
+                        function()
+                            return vim.fn.fnamemodify(vim.fn.getcwd(), ':~')
+                        end,
+                        padding = { left = 0, right = 0 },
+                        separator = { left = '', right = '' },
+                    }},
+                },
+                filetypes = {'NvimTree'},
+            },
             {
                 sections = { lualine_b = {'filetype'} },
                 filetypes = {'DiffviewFiles'},
@@ -813,7 +824,11 @@ if has("nvim")
         },
         sections = {
             lualine_a = {
-                { 'mode', padding = { left = 1, right = 0 }, },
+                {
+                    'mode',
+                    padding = { left = 0, right = 0 },
+                    separator = { left = '', right = '' },
+                },
             },
             lualine_b = {
                 {
@@ -822,17 +837,6 @@ if has("nvim")
                     color = { gui = "bold" },
                     padding = { left = 1, right = 0 },
                 },
-                {
-                    'diff',
-                    diff_color = {
-                        added = 'LualineGitAdd',
-                        modified = 'LualineGitChange',
-                        removed = 'LualineGitDelete',
-                    },
-                    symbols = { added = ' ', modified = ' ', removed = ' ' },
-                    padding = { left = 1, right = 0 },
-                },
-                { 'diagnostics', padding = { left = 1, right = 0 }, },
             },
             lualine_c = {
                 {
@@ -859,10 +863,21 @@ if has("nvim")
                     color = { fg = "Red" },
                     padding = { left = 0, right = 1 },
                 },
+                {
+                    'diff',
+                    diff_color = {
+                        added = 'LualineGitAdd',
+                        modified = 'LualineGitChange',
+                        removed = 'LualineGitDelete',
+                    },
+                    symbols = { added = ' ', modified = ' ', removed = ' ' },
+                    padding = { left = 0, right = 1 },
+                },
                 { gps.get_location, cond = gps.is_available },
             },
             lualine_x = {
                 { 'g:coc_status', padding = { left = 1, right = 0 } },
+                { 'diagnostics', padding = { left = 1, right = 0 } },
                 {
                     function()
                         local b = vim.api.nvim_get_current_buf()
@@ -895,7 +910,11 @@ if has("nvim")
                 { 'filetype', padding = { left = 0, right = 1 }, color = { gui = "bold" }, },
             },
             lualine_z = {
-                { 'location', padding = { left = 0, right = 1 }, },
+                {
+                    'location',
+                    padding = { left = 0, right = 0 },
+                    separator = { left = '', right = '' },
+                },
                 {
                     function()
                         local current_line = vim.fn.line "."
