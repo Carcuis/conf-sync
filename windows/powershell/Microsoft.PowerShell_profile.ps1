@@ -122,6 +122,7 @@ Set-Alias oneplus8 SshToOneplus8pro
 Set-Alias lg lazygit
 Set-Alias ipy ipython
 Set-Alias pp ptpython
+Set-Alias cdhk conda-hook
 
 # Import the Chocolatey Profile that contains the necessary code to enable
 # tab-completions to function for `choco`.
