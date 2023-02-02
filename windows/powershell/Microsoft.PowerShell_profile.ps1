@@ -15,27 +15,17 @@ Set-PsFzfOption -PSReadlineChordProvider 'Ctrl+f' -PSReadlineChordReverseHistory
 
 Get-quote|lolcat
 
-If ((Get-Command nvim).length -gt 0)
-{
-    $hasNvim = $true
-} ElseIf ((Get-Command vim).length -gt 0)
-{
-    $hasVim = $true
-} Else
-{
-    Write-Error "No vim or neovim found on your device.`nAborting..."
-    exit
-}
-
 function EditFile
 {
     param($file)
-    if ($hasNvim)
-    {
+    if ((Get-Command nvim).length -gt 0) {
         nvim $file
-    } ElseIf ($hasVim)
-    {
+    } elseif ((Get-Command vim).length -gt 0) {
         vim $file
+    } elseif ((Get-Command code).length -gt 0) {
+        code $file
+    } else {
+        notepad.exe $file
     }
 }
 
