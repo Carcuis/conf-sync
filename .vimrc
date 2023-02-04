@@ -877,7 +877,16 @@ if has("nvim")
             },
             lualine_x = {
                 { 'g:coc_status', padding = { left = 1, right = 0 } },
-                { 'diagnostics', padding = { left = 1, right = 0 } },
+                {
+                    'diagnostics',
+                    diagnostics_color = {
+                        error = 'CocErrorSign',
+                        warn  = 'CocWarnSign',
+                        info  = 'CocInfoSign',
+                        hint  = 'CocHintSign',
+                    },
+                    padding = { left = 1, right = 0 },
+                },
                 {
                     function()
                         local b = vim.api.nvim_get_current_buf()
