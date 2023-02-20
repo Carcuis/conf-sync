@@ -881,7 +881,7 @@ if has("nvim")
                     'diagnostics',
                     diagnostics_color = {
                         error = 'CocErrorSign',
-                        warn  = 'CocWarnSign',
+                        warn  = 'CocWarningSign',
                         info  = 'CocInfoSign',
                         hint  = 'CocHintSign',
                     },
