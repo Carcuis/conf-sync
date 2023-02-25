@@ -24,6 +24,7 @@ cmap kk <esc>
 
 " code navigation
 map gd <Action>(GotoDeclarationOnly)
+map ge <Action>(GotoImplementation)
 map gr <Action>(ShowUsages)
 map <C-o> <Action>(Back)
 map <C-i> <Action>(Forward)
