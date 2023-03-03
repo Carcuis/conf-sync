@@ -83,7 +83,7 @@ if has("nvim")
     Plug 'ZhiyuanLck/smart-pairs'
     Plug 'lewis6991/gitsigns.nvim'
     Plug 'sindrets/diffview.nvim'
-    " Plug 'github/copilot.vim'
+    Plug 'github/copilot.vim'
     Plug 'kevinhwang91/nvim-hlslens'
     Plug 'NMAC427/guess-indent.nvim'    "indentation-detection
     Plug 'lukas-reineke/virt-column.nvim'
