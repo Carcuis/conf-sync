@@ -1309,7 +1309,7 @@ inoremap <silent> <C-K> <esc>O
 nmap <silent> <leader>do do]c<leader>do
 nmap <silent> <leader>dp dp]c<leader>dp
 
-for mapping in ['jj', 'jk', 'kj', 'kk']
+for mapping in ['jj', 'jk', 'kj', 'kk', 'jl', 'jh']
     execute 'inoremap '.mapping.' <esc>'
     execute 'cnoremap '.mapping.' <C-c>'
 endfor
