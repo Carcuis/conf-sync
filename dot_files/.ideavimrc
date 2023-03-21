@@ -13,14 +13,10 @@ set ideajoin
 
 let mapleader = "\<space>"
 
-imap jj <esc>
-imap jk <esc>
-imap kj <esc>
-imap kk <esc>
-cmap jj <esc>
-cmap jk <esc>
-cmap kj <esc>
-cmap kk <esc>
+for mapping in ['jj', 'jk', 'kj', 'kk', 'jl', 'jh']
+    execute 'inoremap '.mapping.' <esc>'
+    execute 'cnoremap '.mapping.' <C-c>'
+endfor
 
 " code navigation
 map gd <Action>(GotoDeclarationOnly)
@@ -40,6 +36,7 @@ map <c-t> <Action>(ActivateTerminalToolWindow)
 map <Leader>fr <Action>(RecentFiles)
 map <Leader>ff <Action>(GotoFile)
 map <Leader>fw <Action>(FindInPath)
+imap <C-e> <Action>(CodeCompletion)
 
 " navigate windows
 map <M-h> <C-w>h
