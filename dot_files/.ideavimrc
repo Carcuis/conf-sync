@@ -37,6 +37,8 @@ map <Leader>fr <Action>(RecentFiles)
 map <Leader>ff <Action>(GotoFile)
 map <Leader>fw <Action>(FindInPath)
 imap <C-e> <Action>(CodeCompletion)
+map <C-n> <Action>(GotoNextElementUnderCaretUsage)
+map <C-p> <Action>(GotoPrevElementUnderCaretUsage)
 
 " navigate windows
 map <M-h> <C-w>h
