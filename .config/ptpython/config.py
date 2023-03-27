@@ -150,11 +150,9 @@ def configure(repl):
 
     # Typing ControlE twice should also execute the current command.
     # (Alternative for Meta-Enter.)
-    """
     @repl.add_key_binding("c-e", "c-e")
     def _(event):
         event.current_buffer.validate_and_handle()
-    """
 
     # Typing 'jj' in Vi Insert mode, should send escape. (Go back to navigation
     # mode.)
