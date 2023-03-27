@@ -775,16 +775,12 @@ if has("nvim")
         patterns = {
             default = {
                 'class',
-                'function',
-                'method',
-                'for',
-                'while',
-                'if',
-                'else',
-                'elif',
-                'elseif',
-                'switch',
-                'case',
+                'function', 'method',
+                'for', 'while', 'do',
+                'if', 'else', 'elif', 'elseif',
+                'switch', 'case',
+                'try', 'catch', 'finally', 'except',
+                'with',
             },
         },
         exact_patterns = {
