@@ -712,17 +712,11 @@ endif
 
 " === code_runner.nvim ===
 if has("nvim")
-    nnoremap <leader>ru :RunCode<CR>
-    nnoremap <leader>rf :RunFile<CR>
+    nnoremap <leader>ru :RunFile<CR>
     nnoremap <leader>rp :RunProject<CR>
     lua << EOF
     require('code_runner').setup {
-        term = {
-            mode = "",
-            tab = false,
-            position = "belowright",
-            size = 8
-        },
+        mode = "toggleterm",
         filetype = {
             java = "cd $dir && javac $fileName && java $fileNameWithoutExt",
             python = "python",
