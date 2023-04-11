@@ -769,7 +769,7 @@ if has("nvim")
         max_lines = 0,
         patterns = {
             default = {
-                'class',
+                'class', 'enum', 'struct',
                 'function', 'method',
                 'for', 'while', 'do',
                 'if', 'else', 'elif', 'elseif',
