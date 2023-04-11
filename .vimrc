@@ -435,7 +435,8 @@ if has("nvim")
     nmap <silent> [g <Plug>(coc-diagnostic-prev)
     nmap <silent> ]g <Plug>(coc-diagnostic-next)
     nmap <silent> gd <Plug>(coc-definition)
-    nmap <silent> gy <Plug>(coc-type-definition)
+    nmap <silent> gh <Plug>(coc-declaration)
+    nmap <silent> gt <Plug>(coc-type-definition)
     nmap <silent> ge <Plug>(coc-implementation)
     nmap <silent> gr <Plug>(coc-references)
     nmap <silent> gp :call CocActionAsync('jumpDefinition', v:false)<CR>
@@ -444,7 +445,7 @@ if has("nvim")
     nmap <leader>rn <Plug>(coc-rename)
     nmap <silent><leader>Rn :CocCommand document.renameCurrentWord<CR>
     nmap <S-F5> <Plug>(coc-rename)
-    nmap <leader>lf <Plug>(coc-refactor)
+    nmap <leader>rf <Plug>(coc-refactor)
     nmap <leader>lo <Plug>(coc-openlink)
     xmap <leader>a  <Plug>(coc-codeaction-selected)
     nmap <leader>a  <Plug>(coc-codeaction-selected)w
