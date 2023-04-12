@@ -41,6 +41,7 @@ map <Leader>fw <Action>(FindInPath)
 imap <C-e> <Action>(CodeCompletion)
 map <C-n> <Action>(GotoNextElementUnderCaretUsage)
 map <C-p> <Action>(GotoPrevElementUnderCaretUsage)
+map <M-e> <Action>(QuickJavaDoc)
 
 " navigate windows
 map <M-h> <C-w>h
