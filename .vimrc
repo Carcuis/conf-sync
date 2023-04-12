@@ -718,6 +718,9 @@ if has("nvim")
     lua << EOF
     require('code_runner').setup {
         mode = "toggleterm",
+        before_run_filetype = function()
+            vim.cmd(":wa")
+        end,
         filetype = {
             java = "cd $dir && javac $fileName && java $fileNameWithoutExt",
             python = "python",
