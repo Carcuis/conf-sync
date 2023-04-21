@@ -76,6 +76,9 @@ function WebDetection {
     }
 }
 function SshToOneplus8pro { ssh -p 8022 192.168.137.68 -i ~\.ssh\oneplus8 }
+function Create-Link($target, $link) {
+    New-Item -ItemType SymbolicLink -Path $link -Value $target
+}
 
 Remove-Item alias:\gl -Force
 Remove-Item alias:\gp -Force
@@ -113,6 +116,7 @@ Set-Alias lg lazygit
 Set-Alias ipy ipython
 Set-Alias pp ptpython
 Set-Alias cdhk conda-hook
+Set-Alias ln Create-Link
 
 # Import the Chocolatey Profile that contains the necessary code to enable
 # tab-completions to function for `choco`.
