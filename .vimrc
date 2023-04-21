@@ -603,7 +603,22 @@ if has("nvim")
             \ && bufname() == 'NvimTree_' . tabpagenr() | quit | endif
 
     lua << EOF
+    local function on_attach(bufnr)
+        -- @see: https://github.com/nvim-tree/nvim-tree.lua/wiki/Migrating-To-on_attach
+        local api = require('nvim-tree.api')
+        local function opts(desc)
+            return { desc = 'nvim-tree: ' .. desc, buffer = bufnr, noremap = true, silent = true, nowait = true }
+        end
+        api.config.mappings.default_on_attach(bufnr)
+        vim.keymap.set('n', 'l', api.node.open.edit, opts('Open'))
+        vim.keymap.set('n', '<CR>', api.node.open.edit, opts('Open'))
+        vim.keymap.set('n', 'o', api.node.open.edit, opts('Open'))
+        vim.keymap.set('n', 'h', api.node.navigate.parent_close, opts('Close Directory'))
+        vim.keymap.set('n', 'v', api.node.open.vertical, opts('Open: Vertical Split'))
+        vim.keymap.set('n', 'C', api.tree.change_root_to_node, opts('CD'))
+    end
     require('nvim-tree').setup {
+        on_attach = on_attach,
         hijack_cursor = true,
         update_cwd = true,
         respect_buf_cwd = true,
@@ -622,16 +637,6 @@ if has("nvim")
         },
         git = {
             ignore = false,
-        },
-        view ={
-            mappings = {
-                list = {
-                    { key = { "l", "<CR>", "o" }, action = "edit", mode = "n" },
-                    { key = "h", action = "close_node" },
-                    { key = "v", action = "vsplit" },
-                    { key = "C", action = "cd" },
-                },
-            },
         },
         actions = {
             open_file = {
