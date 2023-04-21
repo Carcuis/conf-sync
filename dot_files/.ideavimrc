@@ -4,6 +4,8 @@ Plugin 'vim-surround'
 set nu
 set rnu
 set incsearch
+set ignorecase
+set smartcase
 set easymotion
 set scrolloff=5
 set sidescrolloff=10
@@ -41,7 +43,8 @@ map <Leader>fw <Action>(FindInPath)
 imap <C-e> <Action>(CodeCompletion)
 map <C-n> <Action>(GotoNextElementUnderCaretUsage)
 map <C-p> <Action>(GotoPrevElementUnderCaretUsage)
-map <M-e> <Action>(QuickJavaDoc)
+map <M-e> <Action>(ShowErrorDescription)
+vmap <leader>tr <Action>($EditorTranslateAction)
 
 " navigate windows
 map <M-h> <C-w>h
