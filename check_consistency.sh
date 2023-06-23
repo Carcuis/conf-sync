@@ -99,21 +99,21 @@ function run_edit
         if [ ! -f "$file_local" ]; then
             local file_local_dir=$(dirname "$file_local")
             read -s -n1 -p "$file not found, create a copy to \`$file_local_dir/\` ? [Y/n] " user_input </dev/tty
+            echo
             if [ "$user_input" == "y" ] || [ "$user_input" == "" ]; then
-                echo
                 [ ! -d "$file_local_dir" ] && mkdir -p "$file_local_dir"
                 cp "$file_remote" "$file_local_dir"
                 echo "${GREEN}Copied \`$file_remote\` to \`$file_local\`.✔${TAIL}"
             else
-                echo -e "\n${YELLOW}Abort.${TAIL}"
+                echo "${YELLOW}Abort.${TAIL}"
             fi
             continue
         fi
 
         if ! diff "$file_remote" "$file_local" > /dev/null; then
             read -s -n1 -p "$file unsynchronized. Edit with $diff_command ? [Y/n] " user_input </dev/tty
+            echo
             if [ "$user_input" == "y" ] || [ "$user_input" == "" ]; then
-                echo
                 $diff_command "$file_remote" "$file_local"
                 if diff "$file_remote" "$file_local" > /dev/null; then
                     echo "${GREEN}$file is now synced.✔${TAIL}"
@@ -123,7 +123,7 @@ function run_edit
                     echo "-- or try to rerun this script.${TAIL}"
                 fi
             else
-                echo -e "\n${YELLOW}$file is still unsynchronized. Aborting.${TAIL}"
+                echo "${YELLOW}$file is still unsynchronized. Aborting.${TAIL}"
             fi
         else
             echo "${GREEN}$file is already synced.✔${TAIL}"
