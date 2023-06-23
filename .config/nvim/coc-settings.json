@@ -70,9 +70,12 @@
         "borderhighlight": "FloatBorder"
     },
     "dialog.floatBorderHighlight": "FloatBorder",
-    "coc.preferences.formatOnSaveFiletypes": [
-        "json"
-    ],
+    "[json]": {
+        "coc.preferences.formatOnSave": true
+    },
+    "[python]": {
+        "semanticTokens.enable": false
+    },
     "coc.preferences.enableMessageDialog": true,
     "notification.statusLineProgress": false,
     "notification.timeout": 5000,
@@ -98,6 +101,5 @@
         "haici"
     ],
     "sumneko-lua.enableNvimLuaDev": true,
-    "sumneko-lua.locale": "zh-cn",
-    "Lua.telemetry.enable": false
+    "sumneko-lua.locale": "zh-cn"
 }
