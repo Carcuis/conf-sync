@@ -67,7 +67,6 @@ if has("nvim")
     Plug 'folke/tokyonight.nvim'
     Plug 'folke/which-key.nvim'
     Plug 'lukas-reineke/indent-blankline.nvim'
-    Plug 'SmiteshP/nvim-gps'
     Plug 'shaunsingh/moonlight.nvim'
     Plug 'petertriho/nvim-scrollbar'
     Plug 'romgrk/fzy-lua-native'
@@ -426,7 +425,8 @@ if has("nvim")
                 \ 'coc-json', 'coc-vimlsp', 'coc-marketplace', 'coc-markdownlint',
                 \ 'coc-pyright', 'coc-powershell', 'coc-sh', 'coc-clangd',
                 \ 'coc-cmake', 'coc-actions', 'coc-translator', 'coc-snippets',
-                \ 'coc-sumneko-lua', 'coc-tsserver', 'coc-eslint']
+                \ 'coc-sumneko-lua', 'coc-tsserver', 'coc-eslint', 'coc-nav',
+                \ 'coc-xml' ]
     inoremap <silent><expr> <TAB>
           \ coc#pum#visible() ? coc#_select_confirm() :
           \ coc#expandableOrJumpable() ? "\<C-r>=coc#rpc#request('doKeymap', ['snippets-expand-jump',''])\<CR>" : "\<TAB>"
@@ -795,7 +795,6 @@ endif
 " === lualine.nvim ===
 if has("nvim")
     lua << EOF
-    local gps = require("nvim-gps")
     require('lualine').setup {
         extensions = {
             {
@@ -871,7 +870,27 @@ if has("nvim")
                     symbols = { added = ' ', modified = ' ', removed = ' ' },
                     padding = { left = 0, right = 1 },
                 },
-                { gps.get_location, cond = gps.is_available },
+                {
+                    function()
+                        local items = vim.b.coc_nav
+                        local t = {''}
+                        for k,v in ipairs(items) do
+                            local highlight = v.highlight or "Normal"
+                            local name = v.name or ''
+                            local has_label = type(v.label) ~= 'nil'
+                            if has_label then
+                                t[#t+1] = '%#' .. highlight .. '#' .. v.label .. ' %#Normal#'.. name
+                            else
+                                t[#t+1] = '%#' .. highlight .. '# ' .. name
+                            end
+                            if next(items,k) ~= nil then
+                                t[#t+1] = '%#Normal# '
+                            end
+                        end
+                        return table.concat(t)
+                    end,
+                    padding = { left = 0, right = 1 },
+                },
             },
             lualine_x = {
                 { 'g:coc_status', padding = { left = 1, right = 0 } },
@@ -976,15 +995,6 @@ if has("nvim")
     require("indent_blankline").setup {
         show_current_context = true,
         show_current_context_start = false,
-    }
-EOF
-endif
-
-" === nvim-gps ===
-if has("nvim")
-    lua << EOF
-    require("nvim-gps").setup {
-        separator = ' 〉',
     }
 EOF
 endif
