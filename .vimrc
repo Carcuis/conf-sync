@@ -896,7 +896,7 @@ if has("nvim")
                             if has_label then
                                 t[#t+1] = '%#' .. highlight .. '#' .. v.label .. ' %#Normal#'.. name
                             else
-                                t[#t+1] = '%#' .. highlight .. '# ' .. name
+                                t[#t+1] = '%#' .. highlight .. '#  %#Normal#' .. name
                             end
                             if next(items,k) ~= nil then
                                 t[#t+1] = '%#Normal# '
