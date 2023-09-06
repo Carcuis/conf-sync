@@ -87,6 +87,7 @@ if has("nvim")
     Plug 'NMAC427/guess-indent.nvim'    "indentation-detection
     Plug 'lukas-reineke/virt-column.nvim'
     Plug 'ggandor/leap.nvim'
+    Plug 'fannheyward/telescope-coc.nvim'
 else
     Plug 'carcuis/darcula'
     Plug 'pprovost/vim-ps1'
@@ -434,11 +435,20 @@ if has("nvim")
     inoremap <silent><expr> <c-e> coc#refresh()
     nmap <silent> [g <Plug>(coc-diagnostic-prev)
     nmap <silent> ]g <Plug>(coc-diagnostic-next)
-    nmap <silent> gd <Plug>(coc-definition)
-    nmap <silent> gh <Plug>(coc-declaration)
-    nmap <silent> gt <Plug>(coc-type-definition)
-    nmap <silent> ge <Plug>(coc-implementation)
-    nmap <silent> gr <Plug>(coc-references)
+
+    " nmap <silent> gd <Plug>(coc-definition)
+    " nmap <silent> gh <Plug>(coc-declaration)
+    " nmap <silent> gt <Plug>(coc-type-definition)
+    " nmap <silent> ge <Plug>(coc-implementation)
+    " nmap <silent> gr <Plug>(coc-references)
+
+    " see fannheyward/telescope-coc.nvim
+    nmap <silent> gd :Telescope coc definitions<CR>
+    nmap <silent> gh :Telescope coc declarations<CR>
+    nmap <silent> gt :Telescope coc type-definitions<CR>
+    nmap <silent> ge :Telescope coc implementations<CR>
+    nmap <silent> gr :Telescope coc references<CR>
+
     nmap <silent> gp :call CocActionAsync('jumpDefinition', v:false)<CR>
     autocmd CursorHold * silent call CocActionAsync('highlight')
     autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
@@ -533,9 +543,14 @@ if has("nvim")
                 case_mode = "smart_case",        -- or "ignore_case" or "respect_case"
                                                  -- the default case_mode is "smart_case"
             },
+            coc = {
+                theme = 'ivy',
+                prefer_locations = true, -- always use Telescope locations to preview definitions/declarations/implementations etc
+            }
         },
     }
     require('telescope').load_extension('fzf')
+    require('telescope').load_extension('coc')
 EOF
 endif
 
