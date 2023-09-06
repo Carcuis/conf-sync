@@ -531,8 +531,8 @@ if has("nvim")
     lua << EOF
     require('telescope').setup{
         defaults = {
-            prompt_prefix = " ",
-            selection_caret = " ",
+            prompt_prefix = " ",
+            selection_caret = " ",
             winblend = 10,
         },
         extensions = {
