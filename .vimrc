@@ -545,7 +545,7 @@ if has("nvim")
             },
             coc = {
                 theme = 'ivy',
-                prefer_locations = true, -- always use Telescope locations to preview definitions/declarations/implementations etc
+                prefer_locations = false, -- always use Telescope locations to preview definitions/declarations/implementations etc
             }
         },
     }
