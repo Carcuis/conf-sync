@@ -856,6 +856,10 @@ if has("nvim")
                 {
                     'filename',
                     file_status = false,
+                    path = 4,
+                    symbols = {
+                        unnamed = ' ', -- Text to show for unnamed buffers.
+                    },
                 },
                 {
                     function()
