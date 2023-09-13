@@ -180,6 +180,7 @@ if has("nvim")
     elseif has("mac")
         set guifont=UbuntuMono\ Nerd\ Font\ Mono:h20
     endif
+    set mousemoveevent
 elseif has("gui_running") "gvim
     " set guioptions-=m  "remove menu bar
     " set guioptions-=T  "remove toolbar
@@ -586,6 +587,11 @@ if has("nvim")
                     filetype = "DiffviewFiles",
                     text = "Source Control",
                 },
+            },
+            hover = {
+                enabled = true,
+                delay = 50,
+                reveal = {'close'}
             },
             diagnostics = "coc",
             diagnostics_indicator = function(count, level, diagnostics_dict, context)
