@@ -1268,7 +1268,9 @@ endif
 " ===  mappings  ===
 " ==================
 "
-nnoremap <C-n> :tabnew<CR>
+nmap <C-n> *
+nmap <C-p> #
+
 nnoremap <M-s> :w<CR>
 nnoremap <M-w> :q<CR>
 nnoremap <M-q> :q!<CR>
