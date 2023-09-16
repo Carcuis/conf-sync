@@ -919,7 +919,7 @@ if has("nvim")
                                 t[#t+1] = '%#' .. highlight .. '#  %#Normal#' .. name
                             end
                             if next(items,k) ~= nil then
-                                t[#t+1] = '%#Normal# '
+                                t[#t+1] = '%#Comment# '
                             end
                         end
                         return table.concat(t)
