@@ -25,7 +25,6 @@ call plug#begin()
 Plug 'vimcn/vimcdoc'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-fugitive'
-Plug 'tpope/vim-surround'
 Plug 'bronson/vim-trailing-whitespace'
 Plug 'ryanoasis/vim-devicons' " required by vim-startify
 Plug 'mhinz/vim-startify'
@@ -40,6 +39,7 @@ if has("nvim")
     Plug 'Mofiqul/vscode.nvim'
     Plug 'folke/tokyonight.nvim'
     Plug 'shaunsingh/moonlight.nvim'
+    Plug 'kylechui/nvim-surround'
     Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
     Plug 'neoclide/coc.nvim', {'branch': 'release'}
     Plug 'nvim-lua/plenary.nvim'
@@ -88,6 +88,7 @@ else
     Plug 'romainl/vim-cool'
     Plug 'pprovost/vim-ps1'
     Plug 'jiangmiao/auto-pairs'
+    Plug 'tpope/vim-surround'
     Plug 'vim-airline/vim-airline'
     Plug 'easymotion/vim-easymotion'
     Plug 'Yggdroot/indentLine'
