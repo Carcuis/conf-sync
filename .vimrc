@@ -22,27 +22,24 @@ autocmd VimEnter *
 
 call plug#begin()
 
-Plug 'joshdick/onedark.vim'
 Plug 'vimcn/vimcdoc'
-Plug 'ryanoasis/vim-devicons'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-surround'
 Plug 'bronson/vim-trailing-whitespace'
-Plug 'luochen1990/rainbow'
-Plug 'preservim/tagbar'
+Plug 'ryanoasis/vim-devicons' " required by vim-startify
 Plug 'mhinz/vim-startify'
 Plug 'vifm/vifm.vim'
-Plug 'liuchengxu/vista.vim'
 Plug 'dstein64/vim-startuptime'
-Plug 'gcmt/wildfire.vim'    "<cr> select in brackets
-Plug 'lambdalisue/suda.vim' "save file by sudo
-Plug 'tpope/vim-markdown'   "highlight for code blocks in markdown
+Plug 'gcmt/wildfire.vim'    " <cr> select in brackets
+Plug 'lambdalisue/suda.vim' " save file by sudo
 
 if has("nvim")
     Plug 'carcuis/darcula.nvim'
     Plug 'rafamadriz/neon'
     Plug 'Mofiqul/vscode.nvim'
+    Plug 'folke/tokyonight.nvim'
+    Plug 'shaunsingh/moonlight.nvim'
     Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
     Plug 'neoclide/coc.nvim', {'branch': 'release'}
     Plug 'nvim-lua/plenary.nvim'
@@ -63,12 +60,10 @@ if has("nvim")
     Plug 'nvim-treesitter/nvim-treesitter'
     Plug 'nvim-treesitter/playground'
     Plug 'nvim-lualine/lualine.nvim'
-    Plug 'folke/tokyonight.nvim'
     Plug 'folke/which-key.nvim'
     Plug 'lukas-reineke/indent-blankline.nvim'
-    Plug 'shaunsingh/moonlight.nvim'
     Plug 'petertriho/nvim-scrollbar'
-    Plug 'romgrk/fzy-lua-native'
+    Plug 'romgrk/fzy-lua-native'    " required by wilder.nvim
     function! UpdateRemotePlugins(...)
         let &rtp=&rtp
         UpdateRemotePlugins
@@ -83,12 +78,13 @@ if has("nvim")
     Plug 'sindrets/diffview.nvim'
     Plug 'github/copilot.vim'
     Plug 'kevinhwang91/nvim-hlslens'
-    Plug 'NMAC427/guess-indent.nvim'    "indentation-detection
+    Plug 'NMAC427/guess-indent.nvim'    " indentation-detection
     Plug 'lukas-reineke/virt-column.nvim'
     Plug 'ggandor/leap.nvim'
     Plug 'fannheyward/telescope-coc.nvim'
 else
     Plug 'carcuis/darcula'
+    Plug 'joshdick/onedark.vim'
     Plug 'romainl/vim-cool'
     Plug 'pprovost/vim-ps1'
     Plug 'jiangmiao/auto-pairs'
@@ -102,7 +98,11 @@ else
     Plug 'Yggdroot/LeaderF', {'do': ':LeaderfInstallCExtension'}
     Plug 'vim/killersheep'
     Plug 'airblade/vim-gitgutter'
-    Plug 'tpope/vim-sleuth'     "indentation-detection
+    Plug 'tpope/vim-sleuth'     " indentation-detection
+    Plug 'preservim/tagbar'
+    Plug 'liuchengxu/vista.vim'
+    Plug 'tpope/vim-markdown'   " highlight for code blocks in markdown
+    Plug 'luochen1990/rainbow'
 endif
 
 call plug#end()
@@ -300,7 +300,9 @@ if ! has("nvim")
 endif
 
 " === nerdtree-git-plugin ===
-" let g:NERDTreeGitStatusShowClean = 1
+" if ! has("nvim")
+    " let g:NERDTreeGitStatusShowClean = 1
+" endif
 
 " === vim-devicons ===
 " let g:webdevicons_enable = 1
@@ -332,17 +334,21 @@ if ! has("nvim")
 endif
 
 " === rainbow bracket ===
-let g:rainbow_active = 0
+if ! has("nvim")
+    let g:rainbow_active = 0
+endif
 
 " === tagbar ===
-nnoremap <leader>tb :TagbarToggle<CR>
-let g:tagbar_width = min([max([25, winwidth(0) / 5]), 30])
-" if (winwidth(0) > 100 || has("gui_running")) && argc() < 2
-"   " autocmd VimEnter * nested :TagbarOpen
-"   " autocmd BufEnter * nested :call tagbar#autoopen(0)
-"   autocmd FileType * nested :call tagbar#autoopen(0)
-" endif
-let g:tagbar_iconchars = ['', '']
+if ! has("nvim")
+    nnoremap <leader>tb :TagbarToggle<CR>
+    let g:tagbar_width = min([max([25, winwidth(0) / 5]), 30])
+    " if (winwidth(0) > 100 || has("gui_running")) && argc() < 2
+    "   " autocmd VimEnter * nested :TagbarOpen
+    "   " autocmd BufEnter * nested :call tagbar#autoopen(0)
+    "   autocmd FileType * nested :call tagbar#autoopen(0)
+    " endif
+    let g:tagbar_iconchars = ['', '']
+endif
 
 " === vim-startify ===
 if argc() == 0
@@ -1237,7 +1243,9 @@ EOF
 endif
 
 " === vim-markdown ===
-let g:markdown_fenced_languages = ['html', 'python', 'bash=sh', 'vim', 'zsh', 'lua', 'cpp', 'c']
+if ! has("nvim")
+    let g:markdown_fenced_languages = ['html', 'python', 'bash=sh', 'vim', 'zsh', 'lua', 'cpp', 'c']
+endif
 
 " === copilot.vim ===
 if has("nvim")
