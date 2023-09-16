@@ -208,6 +208,11 @@ elseif has("gui_running") "gvim
         set guifont=UbuntuMonoNerdFontCompleteM-Regular:h20
     endif
 else "vim in tui
+    " auto change cursor shape
+    let &t_SI.="\e[5 q"
+    let &t_SR.="\e[4 q"
+    let &t_EI.="\e[1 q"
+
     if has("win32")
         set backspace=indent,eol,start
         set nocursorline
@@ -1376,15 +1381,8 @@ endif
 " ==============
 "
 
-" auto change cursor shape
-if !(has("gui_running") || has("nvim"))
-    let &t_SI.="\e[5 q"
-    let &t_SR.="\e[4 q"
-    let &t_EI.="\e[1 q"
-endif
-
 " let Vim jump to the last position when reopening a file
-au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\""
+autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\""
 
 " disable auto insert comment leader
 autocmd FileType * set formatoptions-=cro
