@@ -17,7 +17,7 @@ if empty(glob(data_dir . '/autoload/plug.vim'))
 endif
 autocmd VimEnter *
     \  if len(filter(values(g:plugs), '!isdirectory(v:val.dir)'))
-    \|     PlugInstall --sync | source $MYVIMRC
+    \|     PlugInstall --sync | source $MYVIMRC | q
     \| endif
 
 call plug#begin()
