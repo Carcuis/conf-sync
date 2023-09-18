@@ -82,6 +82,7 @@ if has("nvim")
     Plug 'lukas-reineke/virt-column.nvim'
     Plug 'ggandor/leap.nvim'
     Plug 'fannheyward/telescope-coc.nvim'
+    Plug 'NeogitOrg/neogit'
 else
     Plug 'carcuis/darcula'
     Plug 'joshdick/onedark.vim'
@@ -1275,6 +1276,14 @@ if has("nvim")
     lua << EOF
     vim.keymap.set({'n', 'x', 'o'}, 'f', '<Plug>(leap-forward-to)')
     vim.keymap.set({'n', 'x', 'o'}, 'F', '<Plug>(leap-backward-to)')
+EOF
+endif
+
+" === neogit ===
+if has("nvim")
+    nnoremap <silent> <leader>gn :Neogit<CR>
+    lua << EOF
+    require("neogit").setup()
 EOF
 endif
 
