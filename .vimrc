@@ -889,7 +889,7 @@ if has("nvim")
                 {
                     function()
                         if vim.bo.readonly then
-                            return ''
+                            return ''
                         end
                         return ''
                     end,
