@@ -83,6 +83,7 @@ if has("nvim")
     Plug 'ggandor/leap.nvim'
     Plug 'fannheyward/telescope-coc.nvim'
     Plug 'NeogitOrg/neogit'
+    Plug 'Bekaboo/dropbar.nvim'
 else
     Plug 'carcuis/darcula'
     Plug 'joshdick/onedark.vim'
