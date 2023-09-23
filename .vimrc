@@ -441,7 +441,7 @@ if has("nvim")
                 \ 'coc-json', 'coc-vimlsp', 'coc-marketplace', 'coc-markdownlint',
                 \ 'coc-pyright', 'coc-powershell', 'coc-sh', 'coc-clangd',
                 \ 'coc-cmake', 'coc-actions', 'coc-translator', 'coc-snippets',
-                \ 'coc-sumneko-lua', 'coc-tsserver', 'coc-eslint', 'coc-nav',
+                \ 'coc-sumneko-lua', 'coc-tsserver', 'coc-eslint', 'https://github.com/Carcuis/coc-nav',
                 \ 'coc-xml' ]
     inoremap <silent><expr> <TAB>
           \ coc#pum#visible() ? coc#_select_confirm() :
