@@ -1293,6 +1293,11 @@ if has("nvim")
 EOF
 endif
 
+" === dropbar.nvim ===
+if has("nvim")
+    nnoremap <silent> <leader>ds :lua require('dropbar.api').pick()<CR>
+endif
+
 " ===============
 
 " ==================
