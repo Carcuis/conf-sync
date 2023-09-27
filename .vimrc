@@ -1088,6 +1088,11 @@ endif
 if has("nvim")
     lua << EOF
     require("scrollbar").setup {
+        excluded_buftypes = {
+        },
+        excluded_filetypes = {
+            "dropbar_menu"
+        },
         handlers = {
             cursor = true,
             diagnostic = true,
