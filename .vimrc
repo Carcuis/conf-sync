@@ -1298,6 +1298,13 @@ if has("nvim")
     nnoremap <silent> <leader>ds :lua require('dropbar.api').pick()<CR>
 endif
 
+" === nvim-surround ===
+if has("nvim")
+    lua << EOF
+    require("nvim-surround").setup {}
+EOF
+endif
+
 " ===============
 
 " ==================
