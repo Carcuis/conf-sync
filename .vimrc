@@ -1025,14 +1025,24 @@ endif
 
 " === indent-blankline.nvim ===
 if has("nvim")
-    let g:indent_blankline_filetype_exclude = ['checkhealth', 'help', '', 'startify', 'vim-plug', 'toggleterm']
-    let g:indent_blankline_show_first_indent_level = v:false
-    let g:indent_blankline_show_trailing_blankline_indent = v:false
     lua << EOF
-    require("indent_blankline").setup {
-        show_current_context = true,
-        show_current_context_start = false,
+    require("ibl").setup {
+        scope = {
+            enabled = true,
+            show_start = true,
+            show_end = false,
+        },
+        exclude = {
+            filetypes = {
+                'startify',
+            },
+        },
     }
+    local hooks = require "ibl.hooks"
+    hooks.register(
+        hooks.type.WHITESPACE,
+        hooks.builtin.hide_first_space_indent_level
+    )
 EOF
 endif
 
