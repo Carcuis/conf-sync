@@ -1102,7 +1102,8 @@ if has("nvim")
         excluded_buftypes = {
         },
         excluded_filetypes = {
-            "dropbar_menu"
+            "dropbar_menu",
+            "NvimTree",
         },
         handlers = {
             cursor = true,
