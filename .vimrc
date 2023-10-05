@@ -786,7 +786,7 @@ if has("nvim")
     require('nvim-treesitter.configs').setup {
         ensure_installed = {
             "python", "c", "cpp", "lua", "bash", "vim", "vimdoc", "go", "javascript", "typescript", "make",
-            "markdown", "markdown_inline", "toml", "yaml", "xml"
+            "markdown", "markdown_inline", "toml", "yaml", "xml", "git_config"
         },
         highlight = {
             enable = true,
