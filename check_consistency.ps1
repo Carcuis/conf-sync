@@ -23,6 +23,11 @@ $ideavimrc = @{
     remote = "$PSScriptRoot\dot_files\.ideavimrc"
     local = "$home\.ideavimrc"
 }
+$lazygit = @{
+    name = "lazygit config.yml"
+    remote = "$PSScriptRoot\.config\lazygit\config.yml"
+    local = "$home\AppData\Roaming\lazygit\config.yml"
+}
 $file_list = @(
     $psprofile
     $vimrc
@@ -31,6 +36,7 @@ $extra_file_list = @(
     $coc_settings
     $ptpython
     $ideavimrc
+    $lazygit
 )
 
 function CmdParser {
