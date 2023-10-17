@@ -53,7 +53,7 @@
     "diagnostic.signPriority": 0,
     "diagnostic.checkCurrentLine": true,
     "diagnostic.virtualText": true,
-    "diagnostic.virtualTextPrefix": "  ",
+    "diagnostic.virtualTextPrefix": " 󱓻 ",
     "diagnostic.virtualTextCurrentLineOnly": false,
     "diagnostic.warningSign": "",
     "diagnostic.infoSign": "",
