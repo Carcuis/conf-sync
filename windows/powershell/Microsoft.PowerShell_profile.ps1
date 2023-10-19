@@ -79,6 +79,54 @@ function SshToOneplus8pro { ssh -p 8022 192.168.137.68 -i ~\.ssh\oneplus8 }
 function Create-Link($target, $link) {
     New-Item -ItemType SymbolicLink -Path $link -Value $target
 }
+function Move-And-Create-Link($target, $link) {
+    if ( -not (Test-Path $target)) {
+        Write-Error "Error: '$target' does not exist."
+        return
+    }
+    $target_is_file = Test-Path -PathType Leaf $target
+    $target_basename = Split-Path $target -Leaf
+
+    $link_exists = Test-Path $link
+    $link_is_file = $link_exists -and (Test-Path -PathType Leaf $link)
+    $link_is_dir = $link_exists -and (Test-Path -PathType Container $link)
+    $link_parent_dir = Split-Path $link -Parent
+    $link_parent_exists = $link_exists -or (Test-Path $link_parent_dir -PathType Container)
+    if ( -not $link_parent_exists) {
+        Write-Error "Error: '$link_parent_dir' is not a directory or does not exist."
+        return
+    }
+
+    if ($target_is_file) {
+        if ($link_is_file) {
+            Write-Error "Error: '$link' already exists."
+            return
+        }
+        if ($link_is_dir) {
+            Move-Item $target $link
+            Create-Link (Join-Path $link $target_basename) $target
+        } else { # $link is a new file name
+            Move-Item $target $link
+            Create-Link $link $target
+        }
+    } else { # $target is a directory
+        if ($link_is_file) {
+            Write-Error "Error: '$link' is a existing file, cannot move."
+            return
+        }
+        if ($link_is_dir) {
+            if (Test-Path (Join-Path $link $target_basename)) {
+                Write-Error "Error: A file or directory named '$target_basename' already exists in $link ."
+                return
+            }
+            Move-Item $target $link
+            Create-Link (Join-Path $link $target_basename) $target
+        } else { # $link does not exist
+            Move-Item $target $link
+            Create-Link $link $target
+        }
+    }
+}
 
 if (Get-Alias gl -ErrorAction SilentlyContinue) { Remove-Item alias:\gl -Force }
 if (Get-Alias gp -ErrorAction SilentlyContinue) { Remove-Item alias:\gp -Force }
@@ -117,6 +165,7 @@ Set-Alias ipy ipython
 Set-Alias pp ptpython
 Set-Alias cdhk conda-hook
 Set-Alias ln Create-Link
+Set-Alias mvx Move-And-Create-Link
 
 # Import the Chocolatey Profile that contains the necessary code to enable
 # tab-completions to function for `choco`.
