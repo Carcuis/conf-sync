@@ -80,8 +80,8 @@ function Create-Link($target, $link) {
     New-Item -ItemType SymbolicLink -Path $link -Value $target
 }
 
-Remove-Item alias:\gl -Force
-Remove-Item alias:\gp -Force
+if (Get-Alias gl -ErrorAction SilentlyContinue) { Remove-Item alias:\gl -Force }
+if (Get-Alias gp -ErrorAction SilentlyContinue) { Remove-Item alias:\gp -Force }
 
 Set-Alias .. GoUpOne
 Set-Alias ... GoUpTwo
