@@ -1333,9 +1333,9 @@ nnoremap <M-q> :q!<CR>
 function EditVimrc(way)
     if has("win32")
         if a:way == "normal"
-            execute ":e ~/_vimrc"
+            execute ":e ~\\_vimrc"
         elseif a:way == "vs"
-            execute ":vs ~/_vimrc"
+            execute ":vs ~\\_vimrc"
         endif
     else
         if a:way == "normal"
