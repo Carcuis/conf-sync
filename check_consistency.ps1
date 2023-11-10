@@ -28,6 +28,11 @@ $lazygit = @{
     remote = "$PSScriptRoot\.config\lazygit\config.yml"
     local = "$home\AppData\Roaming\lazygit\config.yml"
 }
+$git_config = @{
+    name = "Globle git config"
+    remote = "$PSScriptRoot\dot_files\.gitconfig"
+    local = "$home\.gitconfig"
+}
 $file_list = @(
     $psprofile
     $vimrc
@@ -37,6 +42,7 @@ $extra_file_list = @(
     $ptpython
     $ideavimrc
     $lazygit
+    $git_config
 )
 
 function CmdParser {

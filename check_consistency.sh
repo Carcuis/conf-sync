@@ -28,6 +28,7 @@ extra_file_list=(
     coc_settings
     ptpython
     lazygit
+    git_config
 )
 
 zshrc_remote=$dir/.zshrc
@@ -47,6 +48,8 @@ else
 fi
 ideavimrc_remote=$dir/dot_files/.ideavimrc
 ideavimrc_local=~/.ideavimrc
+git_config_remote=$dir/dot_files/.gitconfig
+git_config_local=~/.gitconfig
 
 function cmd_parser
 {
