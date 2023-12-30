@@ -41,6 +41,7 @@ function GoUpFour { Set-Location ../../../.. }
 function OpenCwd { explorer.exe . }
 function EditProfile { EditFile $profile }
 function EditVimrc { EditFile $HOME\_vimrc }
+function EditHistory { EditFile (Get-PSReadLineOption).HistorySavePath }
 function OpenVifmInPwd { vifm.exe . }
 function ReloadProfile { & $profile }
 function GetAdminPriv { Start-Process pwsh -Verb runAs }
@@ -148,6 +149,7 @@ Set-Alias vi vim
 Set-Alias gvi gvim
 Set-Alias pwshc EditProfile
 Set-Alias vimc EditVimrc
+Set-Alias histc EditHistory
 Set-Alias nvi nvim
 Set-Alias gnvi nvim-qt
 Set-Alias vif OpenVifmInPwd
