@@ -75,7 +75,6 @@ function WebDetection {
         }
     }
 }
-function SshToOneplus8pro { ssh -p 8022 192.168.137.68 -i ~\.ssh\oneplus8 }
 function Create-Link($target, $link) {
     New-Item -ItemType SymbolicLink -Path $link -Value $target
 }
@@ -159,7 +158,6 @@ Set-Alias sshoff StopSshServiceInWSl
 Set-Alias px SetProxyOn
 Set-Alias upx SetProxyOff
 Set-Alias wd WebDetection
-Set-Alias oneplus8 SshToOneplus8pro
 Set-Alias lg lazygit
 Set-Alias ipy ipython
 Set-Alias pp ptpython
