@@ -5,7 +5,8 @@ $env:POSH_GIT_ENABLED = $true
 Import-Module Terminal-Icons
 
 Set-PSReadLineOption -EditMode Emacs
-Set-PSReadLineOption -PredictionSource History
+Set-PSReadLineOption -HistorySearchCursorMovesToEnd:$true
+Set-PSReadLineOption -PredictionSource HistoryAndPlugin
 Set-PSReadLineOption -PredictionViewStyle ListView
 Set-PSReadLineKeyHandler -Key Tab -Function MenuComplete
 Set-PSReadlineKeyHandler -Key UpArrow -Function HistorySearchBackward
