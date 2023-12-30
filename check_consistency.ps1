@@ -96,13 +96,14 @@ function RunEdit {
     foreach ($file in $file_list) {
         if (! [System.IO.File]::Exists($file.local)) {
             $file_local_dir = Split-Path $file.local
-            Write-Host "$($file.name) not found, create a copy to $file_local_dir\ ? [Y/n] "
+            Write-Host "$($file.name) not found, create a copy to $($file.local) ? [Y/n] "
             $user_input = [Console]::ReadKey('?')
             if ($user_input.Key -eq "Y" -or $user_input.Key -eq "Enter") {
                 if (! [System.IO.Path]::Exists($file_local_dir)) {
+                    Write-Host "$file_local_dir not found, creating..."
                     New-Item -ItemType "directory" -Path $file_local_dir
                 }
-                Copy-Item -Path $file.remote -Destination $file_local_dir
+                Copy-Item -Path $file.remote -Destination $file.local
                 Write-Host "Copied ``$($file.remote)`` to ``$($file.local)``.✔" -ForegroundColor Green
             } else {
                 Write-Host "Abort." -ForegroundColor Yellow
