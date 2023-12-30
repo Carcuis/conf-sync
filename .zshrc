@@ -230,8 +230,6 @@ if [[ $SYSTEM == "WSL1" || $SYSTEM == "WSL2" ]]; then
     alias o.='explorer.exe .'
     alias no.='nautilus .'
     alias upx=unset_proxy
-    alias bpi='ssh -i ~/.ssh/BPi pi@192.168.137.75'
-    alias oneplus='ssh -i ~/.ssh/oneplus -p 8022 u0_a164@192.168.137.10'
 
     function wtw() {
         sed -e "s/\(.:\)/\/mnt\/\L\0/g" -e 's/\\/\//g' -e 's/://' <<< $1
