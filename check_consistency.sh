@@ -105,11 +105,11 @@ function run_edit
 
         if [ ! -f "$file_local" ]; then
             local file_local_dir=$(dirname "$file_local")
-            read -s -n1 -p "$file not found, create a copy to \`$file_local_dir/\` ? [Y/n] " user_input </dev/tty
+            read -s -n1 -p "$file not found, create a copy to \`$file_local\` ? [Y/n] " user_input </dev/tty
             echo
             if [ "$user_input" == "y" ] || [ "$user_input" == "" ]; then
                 [ ! -d "$file_local_dir" ] && mkdir -p "$file_local_dir"
-                cp "$file_remote" "$file_local_dir"
+                cp "$file_remote" "$file_local"
                 echo "${GREEN}Copied \`$file_remote\` to \`$file_local\`.✔${TAIL}"
             else
                 echo "${YELLOW}Abort.${TAIL}"
