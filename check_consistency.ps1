@@ -3,6 +3,11 @@ $psprofile = @{
     remote = "$PSScriptRoot\windows\powershell\Microsoft.PowerShell_profile.ps1"
     local = "$home\Documents\PowerShell\Microsoft.PowerShell_profile.ps1"
 }
+$windows_psprofile_v5 = @{
+    name = "Windows Powershell (v5) Profile"
+    remote = "$PSScriptRoot\windows\powershell\Microsoft.PowerShell_profile.windows_powershell_v5.ps1"
+    local = "$home\Documents\WindowsPowerShell\Microsoft.PowerShell_profile.ps1"
+}
 $vimrc = @{
     name = "vimrc"
     remote = "$PSScriptRoot\.vimrc"
@@ -38,6 +43,7 @@ $file_list = @(
     $vimrc
 )
 $extra_file_list = @(
+    $windows_psprofile_v5
     $coc_settings
     $ptpython
     $ideavimrc
