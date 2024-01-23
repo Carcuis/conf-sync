@@ -1320,8 +1320,8 @@ endif
 " ===  mappings  ===
 " ==================
 "
-nmap <C-n> *
-nmap <C-p> #
+nmap <C-n> g*
+nmap <C-p> g#
 
 nnoremap <M-s> :w<CR>
 nnoremap <M-w> :q<CR>
