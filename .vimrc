@@ -657,14 +657,16 @@ if has("nvim")
     require('nvim-tree').setup {
         on_attach = on_attach,
         hijack_cursor = true,
-        update_cwd = true,
+        sync_root_with_cwd = true,
         respect_buf_cwd = true,
         update_focused_file = {
             enable      = true,
-            update_cwd  = false,
+            update_root  = false,
         },
         diagnostics = {
             enable = true,
+            show_on_dirs = true,
+            show_on_open_dirs = false,
             icons = {
                 hint = "",
                 info = "",
@@ -673,7 +675,7 @@ if has("nvim")
             },
         },
         git = {
-            ignore = false,
+            timeout = 1000,
         },
         actions = {
             open_file = {
@@ -681,8 +683,10 @@ if has("nvim")
             },
         },
         renderer = {
-            highlight_git = true,
-            root_folder_modifier = ":t",
+            group_empty = true,
+            full_name = true,
+            root_folder_label = ":t",
+            highlight_git = "all",
             icons = {
                 git_placement = "after",
                 glyphs = {
@@ -692,6 +696,14 @@ if has("nvim")
                     },
                 },
             },
+        },
+        modified = {
+            enable = true,
+            show_on_dirs = true,
+            show_on_open_dirs = false,
+        },
+        filters = {
+            git_ignored = false,
         },
     }
 EOF
