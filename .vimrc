@@ -683,10 +683,10 @@ if has("nvim")
             },
         },
         renderer = {
-            group_empty = true,
+            group_empty = false,
             full_name = true,
             root_folder_label = ":t",
-            highlight_git = "all",
+            highlight_git = "name",
             icons = {
                 git_placement = "after",
                 glyphs = {
