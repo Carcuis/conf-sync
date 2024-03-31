@@ -1333,7 +1333,9 @@ endif
 " ==================
 "
 nmap <C-n> g*
+vmap <C-n> *
 nmap <C-p> g#
+vmap <C-p> #
 
 nnoremap <M-s> :w<CR>
 nnoremap <M-w> :q<CR>
