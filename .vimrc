@@ -1435,6 +1435,9 @@ else
               \ && g++ % -o %:h/debug_%:t:r.out && %:h/debug_%:t:r.out &&<CR>
 endif
 
+" comment before duplicate a line
+nmap <leader>dc gccyypgcc
+
 " ===============
 
 " ==============
