@@ -195,7 +195,13 @@ function web_detection() {
 # ============ alias =============
 # ================================
 
-if command -v exa > /dev/null; then
+if command -v eza > /dev/null; then
+    alias ls='eza --hyperlink --icons=auto'
+    alias la='eza --hyperlink --icons=auto -a'
+    alias lag='eza --hyperlink --icons=auto -a --git-ignore'
+    alias ll='eza --hyperlink --icons=auto -aghHlM --git'
+    alias llt='eza --hyperlink --icons=auto -aghHlM --git --git-ignore -T -L3'
+elif command -v exa > /dev/null; then
     alias ls='exa --icons'
     alias la='exa -a --icons'
     alias ll='exa -aabghHl --icons'
