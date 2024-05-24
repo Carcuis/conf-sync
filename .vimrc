@@ -697,11 +697,11 @@ if has("nvim")
                 },
             },
         },
-        modified = {
-            enable = true,
-            show_on_dirs = true,
-            show_on_open_dirs = false,
-        },
+        -- modified = {
+        --     enable = true,
+        --     show_on_dirs = true,
+        --     show_on_open_dirs = false,
+        -- },
         filters = {
             git_ignored = false,
         },
