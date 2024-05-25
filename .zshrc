@@ -332,3 +332,6 @@ fi
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 ZLE_RPROMPT_INDENT=0
 POWERLEVEL9K_TIME_FORMAT=%D{%H:%M}
+
+# === fzf ===
+command -v fzf > /dev/null && source <(fzf --zsh)
