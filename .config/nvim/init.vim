@@ -1,1 +1,0 @@
-/home/cui/github/conf-sync/.vimrc
