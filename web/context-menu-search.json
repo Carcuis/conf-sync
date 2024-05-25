@@ -1,0 +1,46 @@
+{
+    "fieldsets": [
+        {
+            "name": "Baidu",
+            "url": "https://www.baidu.com/s?ie=UTF-8&wd=%s"
+        },
+        {
+            "name": "Bing",
+            "url": "https://cn.bing.com/search?q=%s"
+        },
+        {
+            "name": "Google Exact Match",
+            "url": "https://google.com/search?q=\"%s\""
+        },
+        {
+            "name": "_separator_"
+        },
+        {
+            "name": "Minecraft Wiki",
+            "url": "https://zh.minecraft.wiki/w/%s"
+        },
+        {
+            "name": "ZhiHu",
+            "url": "https://www.zhihu.com/search?type=content&q=%s"
+        },
+        {
+            "name": "YouTube",
+            "url": "https://youtube.com/results?search_query=%s"
+        },
+        {
+            "name": "Bilibili",
+            "url": "https://search.bilibili.com/all?keyword=%s"
+        },
+        {
+            "name": "_separator_"
+        },
+        {
+            "name": "JD",
+            "url": "https://search.jd.com/Search?keyword=%s&enc=utf-8"
+        },
+        {
+            "name": "Taobao",
+            "url": "https://s.taobao.com/search?q=%s"
+        }
+    ]
+}
