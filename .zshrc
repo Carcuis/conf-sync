@@ -200,6 +200,7 @@ if command -v eza > /dev/null; then
     alias la='eza --hyperlink --icons=auto -a'
     alias lag='eza --hyperlink --icons=auto -a --git-ignore'
     alias ll='eza --hyperlink --icons=auto -aghHlM --git'
+    alias llg='eza --hyperlink --icons=auto -aghHlM --git --git-ignore'
     alias llt='eza --hyperlink --icons=auto -aghHlM --git --git-ignore -T -L3'
 elif command -v exa > /dev/null; then
     alias ls='exa --icons'
