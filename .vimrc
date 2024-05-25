@@ -32,6 +32,7 @@ Plug 'vifm/vifm.vim'
 Plug 'dstein64/vim-startuptime'
 Plug 'gcmt/wildfire.vim'    " <cr> select in brackets
 Plug 'lambdalisue/suda.vim' " save file by sudo
+Plug 'fladson/vim-kitty' " syntax highlight for kitty.conf
 
 if has("nvim")
     Plug 'carcuis/darcula.nvim'

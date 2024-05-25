@@ -224,6 +224,7 @@ alias al='la'
 alias lg='lazygit'
 alias pp='ptpython'
 alias wd=web_detection
+alias ktc='nvi ~/.config/kitty/kitty.conf'
 
 if [[ $SYSTEM == "WSL1" || $SYSTEM == "WSL2" ]]; then
     alias sshon='sudo service ssh start'
@@ -248,6 +249,7 @@ if [[ $SYSTEM == "WSL1" || $SYSTEM == "WSL2" ]]; then
         alias x='export DISPLAY=:0.0'
     fi
 elif [[ $SYSTEM == "Android" ]]; then
+    unalias ktc
     alias tchroot='termux-chroot'
     # alias ubuntu='bash ~/ubuntu/start-ubuntu.sh'
     alias chcolor='/data/data/com.termux/files/home/.termux/colors.sh'

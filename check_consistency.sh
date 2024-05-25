@@ -50,6 +50,8 @@ ideavimrc_remote=$dir/dot_files/.ideavimrc
 ideavimrc_local=~/.ideavimrc
 git_config_remote=$dir/dot_files/.gitconfig
 git_config_local=~/.gitconfig
+kitty_config_remote=$dir/.config/kitty/kitty.conf
+kitty_config_local=~/.config/kitty/kitty.conf
 
 function cmd_parser
 {
@@ -59,7 +61,11 @@ function cmd_parser
                 WSL*|Android) ideavimrc=""; echo "${CYAN}Skipped ideavimrc on current system: $SYSTEM ✔${TAIL}" ;;
                 *) ideavimrc=ideavimrc ;;
             esac
-            file_list=(${file_list[@]} ${extra_file_list[@]} $ideavimrc) ;;
+            case $SYSTEM in
+                Android) kitty_config=""; echo "${CYAN}Skipped kitty config on current system: $SYSTEM ✔${TAIL}" ;;
+                *) kitty_config=kitty_config ;;
+            esac
+            file_list=(${file_list[@]} ${extra_file_list[@]} $ideavimrc $kitty_config) ;;
     esac
 }
 
