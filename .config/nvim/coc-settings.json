@@ -43,6 +43,10 @@
         "winblend": 10,
         "borderhighlight": "FloatBorder"
     },
+    "suggest.pumFloatConfig": {
+        "border": false,
+        "winblend": 10,
+    },
     "suggest.formatItems": [
         "kind",
         "menu",
