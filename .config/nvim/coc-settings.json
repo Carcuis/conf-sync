@@ -81,6 +81,9 @@
         "semanticTokens.enable": false
     },
     "coc.preferences.enableMessageDialog": true,
+    "notification.border": false,
+    "notification.highlightGroup": "Ignore",
+    "notification.marginRight": 5,
     "notification.statusLineProgress": false,
     "notification.timeout": 5000,
     "list.nextKeymap": "<C-n>",
