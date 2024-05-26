@@ -1404,6 +1404,8 @@ nmap <silent> <C-J> ]c
 nmap <silent> <C-K> [c
 inoremap <silent> <C-J> <esc>o
 inoremap <silent> <C-K> <esc>O
+inoremap <silent> <C-H> <esc>I
+inoremap <silent> <C-L> <esc>A
 
 " recurse do or dp in vimdiff
 nmap <silent> <leader>do do]c<leader>do
