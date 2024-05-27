@@ -617,7 +617,7 @@ if has("nvim")
             },
             diagnostics = "coc",
             diagnostics_indicator = function(count, level, diagnostics_dict, context)
-                local s = " "
+                local s = ""
                 for e, n in pairs(diagnostics_dict) do
                     local icon = e == "error" and " " or (
                         e == "warning" and " " or (
