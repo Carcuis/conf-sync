@@ -335,4 +335,22 @@ ZLE_RPROMPT_INDENT=0
 POWERLEVEL9K_TIME_FORMAT=%D{%H:%M}
 
 # === fzf ===
-command -v fzf > /dev/null && source <(fzf --zsh)
+if [[ $SYSTEM == "Darwin" ]]; then
+    command -v fzf > /dev/null && source <(fzf --zsh)
+else
+    if [[ ! "$PATH" == *$HOME/.fzf/bin* ]]; then
+      PATH="${PATH:+${PATH}:}$HOME/.fzf/bin"
+    fi
+    source <(fzf --zsh)
+fi
+if command -v fzf > /dev/null; then
+    export FZF_DEFAULT_OPTS=$FZF_DEFAULT_OPTS'
+        --color=fg:-1,fg+:#d0d0d0,bg:-1,bg+:#2b2b2b
+        --color=hl:#5f87af,hl+:#5fd7ff,info:#afaf87,marker:#87ff00
+        --color=prompt:#d7005f,spinner:#af5fff,pointer:#af5fff,header:#87afaf
+        --color=border:#262626,label:#aeaeae,query:#d9d9d9
+        --bind=ctrl-b:preview-page-up,ctrl-f:preview-page-down
+        --preview="bat --color=always --style=header {}"
+        --preview-window="border-rounded" --prompt=" " --marker="◆" --pointer=" "
+        --separator="─" --scrollbar="│" --layout="reverse"'
+fi
