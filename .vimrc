@@ -407,7 +407,7 @@ endfunction
 function PostSaveSession()
     if has("nvim")
         if (winwidth(0) >= 130) && argc() < 2
-            call OpenNvimTreeOnStartup()
+            call OpenUnfocusedNvimTreeInNewWindow()
         endif
         TSContextEnable
     else
@@ -635,22 +635,40 @@ endif
 if has("nvim")
     noremap <leader>ee :NvimTreeToggle<CR>
 
-    func OpenNvimTreeOnStartup()
-        NvimTreeToggle
-        call timer_start(1, { tid -> execute('wincmd p')})
+    func OpenUnfocusedNvimTreeInNewWindow()
+        lua << EOF
+            local data = {
+                file = vim.fn.expand('%:p'),
+                buf = vim.api.nvim_get_current_buf(),
+            }
+            -- buffer is a real file on the disk
+            local real_file = vim.fn.filereadable(data.file) == 1
+
+            -- buffer is a [No Name]
+            local no_name = data.file == "" and vim.bo[data.buf].buftype == ""
+
+            local excluded_filetypes = {}
+
+            if ( real_file or no_name ) and not vim.tbl_contains(excluded_filetypes, vim.bo[data.buf].filetype) then
+                require("nvim-tree.api").tree.toggle({ focus = false })
+            end
+EOF
     endfunc
 
-    if (winwidth(0) < 130)
-        let g:s_nvim_tree_quit_on_open = v:true
-    endif
+    " Auto open un-focused NvimTree in new window if the window width is enough
     if (winwidth(0) >= 130) && argc() < 2
-        au VimEnter * call OpenNvimTreeOnStartup()
+        autocmd VimEnter,TabNewEntered * call OpenUnfocusedNvimTreeInNewWindow()
     endif
 
-    autocmd BufEnter NvimTree_* ++nested
+    " Auto close NvimTree when it is the last buffer in the session or tab
+    autocmd BufEnter NvimTree_*
             \ let layout = winlayout() |
             \ if len(layout) == 2 && layout[0] == 'leaf' && getbufvar(winbufnr(layout[1]), '&filetype') == 'NvimTree' |
             \ quit | endif
+
+    " Close NvimTree after :DiffviewOpen
+    autocmd BufEnter diffview:///*
+            \ lua if require("nvim-tree.api").tree.is_visible() then vim.cmd("NvimTreeClose") end
 
     lua << EOF
     local function on_attach(bufnr)
@@ -692,7 +710,7 @@ if has("nvim")
         },
         actions = {
             open_file = {
-                quit_on_open = vim.g.s_nvim_tree_quit_on_open,
+                quit_on_open = vim.fn.winwidth(0) < 130,
             },
         },
         renderer = {
