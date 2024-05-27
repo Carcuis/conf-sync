@@ -728,11 +728,11 @@ EOF
                 },
             },
         },
-        -- modified = {
-        --     enable = true,
-        --     show_on_dirs = true,
-        --     show_on_open_dirs = false,
-        -- },
+        modified = {
+            enable = vim.fn.has("linux") == 1,
+            show_on_dirs = vim.fn.has("linux") == 1,
+            show_on_open_dirs = false,
+        },
         filters = {
             git_ignored = false,
         },
