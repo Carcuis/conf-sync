@@ -505,6 +505,10 @@ if has("nvim")
     omap ic <Plug>(coc-classobj-i)
     xmap ac <Plug>(coc-classobj-a)
     omap ac <Plug>(coc-classobj-a)
+
+    " Disable error bracket highlight in coc-sumneko-lua hover message
+    highlight link LuaParenError Normal
+    highlight link LuaError Normal
 endif
 
 " === vim-which-key ===
