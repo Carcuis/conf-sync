@@ -1405,8 +1405,9 @@ tnoremap <silent> <M-l> <C-\><C-N><C-w>l
 nnoremap <silent> <leader>sp <C-w>s
 nnoremap <silent> <leader>vs <C-w>v
 
-nnoremap <silent> <leader>tp :tabp<CR>
-nnoremap <silent> <leader>tn :tabn<CR>
+nnoremap <silent> <leader>tu :tabp<CR>
+nnoremap <silent> <leader>tp :tabn<CR>
+nnoremap <silent> <leader>tn :tabnew<CR>
 nnoremap <silent> <leader>tq :tabc<CR>
 if ! has("nvim")
     nnoremap <leader>c :bd<CR>
