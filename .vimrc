@@ -399,7 +399,7 @@ endfunction
 function PreSaveSession()
     if has("nvim")
         NvimTreeClose
-        TSContextToggle
+        TSContextDisable
     else
         NERDTreeClose
     endif
@@ -409,7 +409,7 @@ function PostSaveSession()
         if (winwidth(0) >= 130) && argc() < 2
             call OpenNvimTreeOnStartup()
         endif
-        call timer_start(1, { tid -> execute('TSContextToggle')})
+        TSContextEnable
     else
         if (winwidth(0) > 140 || has("gui_running")) && argc() < 2
             NERDTree | set signcolumn=auto | wincmd p
