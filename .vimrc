@@ -85,6 +85,7 @@ if has("nvim")
     Plug 'fannheyward/telescope-coc.nvim'
     Plug 'NeogitOrg/neogit'
     Plug 'Bekaboo/dropbar.nvim'
+    Plug 'tiagovla/scope.nvim'
 else
     Plug 'carcuis/darcula'
     Plug 'joshdick/onedark.vim'
@@ -1325,6 +1326,15 @@ endif
 if has("nvim")
     lua << EOF
     require("nvim-surround").setup {}
+EOF
+endif
+
+" === scope.nvim ===
+if has("nvim")
+    lua << EOF
+    require("scope").setup({
+    })
+    require("telescope").load_extension("scope")
 EOF
 endif
 
