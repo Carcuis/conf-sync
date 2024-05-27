@@ -643,9 +643,10 @@ if has("nvim")
         au VimEnter * call OpenNvimTreeOnStartup()
     endif
 
-    autocmd BufEnter * ++nested
-            \ if len(filter(nvim_list_wins(), {k,v->nvim_win_get_config(v).relative==""})) == 1
-            \ && bufname() == 'NvimTree_' . tabpagenr() | quit | endif
+    autocmd BufEnter NvimTree_* ++nested
+            \ let layout = winlayout() |
+            \ if len(layout) == 2 && layout[0] == 'leaf' && getbufvar(winbufnr(layout[1]), '&filetype') == 'NvimTree' |
+            \ quit | endif
 
     lua << EOF
     local function on_attach(bufnr)
