@@ -1392,6 +1392,7 @@ nnoremap <leader>ewq :wqa<CR>
 nnoremap <leader>gq :call SaveSession("")<CR>:qa<CR>
 nnoremap <leader>du :diffupdate<CR>
 nnoremap <leader><leader>r :redraw!<CR>
+nnoremap <leader>i :Inspect<CR>
 
 nnoremap <silent> <M-h> <C-w>h
 nnoremap <silent> <M-j> <C-w>j
