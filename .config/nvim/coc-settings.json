@@ -59,10 +59,10 @@
     "diagnostic.virtualText": true,
     "diagnostic.virtualTextPrefix": " 󱓻 ",
     "diagnostic.virtualTextCurrentLineOnly": false,
-    "diagnostic.warningSign": "",
-    "diagnostic.infoSign": "",
+    "diagnostic.warningSign": "",
+    "diagnostic.infoSign": "",
     "diagnostic.hintSign": "",
-    "diagnostic.errorSign": "",
+    "diagnostic.errorSign": "",
     "diagnostic.floatConfig": {
         "border": true,
         "winblend": 10,

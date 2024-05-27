@@ -275,8 +275,8 @@ if ! has("nvim")
                 \ 'V'      : 'V-L',
                 \ ''     : 'V-B',
                 \ }
-    let airline#extensions#coc#error_symbol = ':'
-    let airline#extensions#coc#warning_symbol = ':'
+    let airline#extensions#coc#error_symbol = ':'
+    let airline#extensions#coc#warning_symbol = ':'
 endif
 
 " === nerdtree ===
@@ -613,9 +613,15 @@ if has("nvim")
             },
             diagnostics = "coc",
             diagnostics_indicator = function(count, level, diagnostics_dict, context)
-                local icon = level:match("error") and " " or " "
-                    return " " .. icon .. count
-            end
+                local s = " "
+                for e, n in pairs(diagnostics_dict) do
+                    local icon = e == "error" and " " or (
+                        e == "warning" and " " or (
+                        e == "info" and " " or " " ))
+                    s = s .. " " .. icon .. n
+                end
+                return s
+            end,
         }
     }
 EOF
@@ -670,7 +676,7 @@ if has("nvim")
             show_on_dirs = true,
             show_on_open_dirs = false,
             icons = {
-                hint = "",
+                hint = "",
                 info = "",
                 warning = "",
                 error = "",
@@ -951,6 +957,7 @@ if has("nvim")
                         info  = 'CocInfoSign',
                         hint  = 'CocHintSign',
                     },
+                    symbols = { error = ' ', warn = ' ', info = ' ', hint = ' ' },
                     padding = { left = 1, right = 0 },
                 },
                 {
