@@ -766,7 +766,7 @@ if has("nvim")
     lua << EOF
     require("project_nvim").setup {
         exclude_dirs = {
-            "c:", "d:", "e:", "~", "/", "*//*"
+            "c:", "d:", "e:", "~", "/", "*//*", "build", ".deps"
         },
     }
     require('telescope').load_extension('projects')
