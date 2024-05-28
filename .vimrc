@@ -459,7 +459,7 @@ if has("nvim")
     " nmap <silent> ge <Plug>(coc-implementation)
     " nmap <silent> gr <Plug>(coc-references)
 
-    " see fannheyward/telescope-coc.nvim
+    " See fannheyward/telescope-coc.nvim
     nmap <silent> gd :Telescope coc definitions<CR>
     nmap <silent> gh :Telescope coc declarations<CR>
     nmap <silent> gt :Telescope coc type-definitions<CR>
@@ -469,17 +469,18 @@ if has("nvim")
     nmap <silent> gp :call CocActionAsync('jumpDefinition', v:false)<CR>
     autocmd CursorHold * silent call CocActionAsync('highlight')
     autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
-    nmap <leader>rn <Plug>(coc-rename)
-    nmap <silent><leader>Rn :CocCommand document.renameCurrentWord<CR>
-    nmap <S-F5> <Plug>(coc-rename)
-    nmap <leader>rf <Plug>(coc-refactor)
-    nmap <leader>lo <Plug>(coc-openlink)
-    xmap <leader>a  <Plug>(coc-codeaction-selected)
-    nmap <leader>a  <Plug>(coc-codeaction-selected)w
-    nmap <M-f>  <Plug>(coc-fix-current)
-    map <silent> <M-e> :call CocActionAsync('doHover')<CR>
-    nmap <Leader>tr <Plug>(coc-translator-p)
-    vmap <Leader>tr <Plug>(coc-translator-pv)
+    nmap <silent> <leader>rn <Plug>(coc-rename)
+    nmap <silent> <leader>Rn :CocCommand document.renameCurrentWord<CR>
+    nmap <silent> <S-F5> <Plug>(coc-rename)
+    nmap <silent> <leader>rf <Plug>(coc-refactor)
+    nmap <silent> <leader>lo <Plug>(coc-openlink)
+    xmap <silent> <leader>a  <Plug>(coc-codeaction-selected)
+    nmap <silent> <leader>a  <Plug>(coc-codeaction-selected)w
+    nmap <silent> <M-f>  <Plug>(coc-fix-current)
+    nmap <silent> <M-e> :call CocActionAsync('doHover')<CR>
+    nmap <silent> <M-d> :CocCommand semanticTokens.inspect<CR>
+    nmap <silent> <leader>tr <Plug>(coc-translator-p)
+    vmap <silent> <leader>tr <Plug>(coc-translator-pv)
     nmap <silent> <C-s> <Plug>(coc-range-select)
     xmap <silent> <C-s> <Plug>(coc-range-select)
 
@@ -494,12 +495,12 @@ if has("nvim")
     command! -nargs=? Fold :call CocAction('fold', <f-args>)
     command! -nargs=0 OR :call CocActionAsync('runCommand', 'editor.action.organizeImport')
 
-    nnoremap <silent> <M-d> :CocCommand semanticTokens.inspect<CR>
     let g:coc_borderchars = ['─', '│', '─', '│', '╭', '╮', '╯', '╰']
     let g:coc_notify_error_icon = ''
     let g:coc_notify_warning_icon = ''
     let g:coc_notify_info_icon = ''
 
+    " Visual mode quick select in function/class
     xmap if <Plug>(coc-funcobj-i)
     omap if <Plug>(coc-funcobj-i)
     xmap af <Plug>(coc-funcobj-a)
