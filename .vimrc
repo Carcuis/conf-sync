@@ -1316,6 +1316,8 @@ endif
 " === copilot.vim ===
 if has("nvim")
     imap <silent><script><expr> <M-a> copilot#Accept("\<CR>")
+    imap <M-p> <Plug>(copilot-previous)
+    imap <M-n> <Plug>(copilot-next)
     let g:copilot_no_tab_map = v:true
 endif
 
