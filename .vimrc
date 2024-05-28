@@ -496,6 +496,9 @@ if has("nvim")
 
     nnoremap <silent> <M-d> :CocCommand semanticTokens.inspect<CR>
     let g:coc_borderchars = ['─', '│', '─', '│', '╭', '╮', '╯', '╰']
+    let g:coc_notify_error_icon = ''
+    let g:coc_notify_warning_icon = ''
+    let g:coc_notify_info_icon = ''
 
     xmap if <Plug>(coc-funcobj-i)
     omap if <Plug>(coc-funcobj-i)
