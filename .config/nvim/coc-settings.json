@@ -73,7 +73,7 @@
         "winblend": 10,
         "borderhighlight": "FloatBorder"
     },
-    "dialog.floatBorderHighlight": "FloatBorder",
+    "dialog.floatBorderHighlight": "CocInfoFloat",
     "[json]": {
         "coc.preferences.formatOnSave": true
     },
