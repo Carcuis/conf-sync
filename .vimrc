@@ -637,7 +637,7 @@ endif
 
 " === nvim-tree.lua ===
 if has("nvim")
-    noremap <leader>ee :NvimTreeToggle<CR>
+    nnoremap <silent> <leader>ee :NvimTreeToggle<CR>
 
     func OpenUnfocusedNvimTreeInNewWindow()
         lua << EOF
@@ -802,8 +802,8 @@ endif
 
 " === code_runner.nvim ===
 if has("nvim")
-    nnoremap <leader>ru :RunFile<CR>
-    nnoremap <leader>rp :RunProject<CR>
+    nnoremap <silent> <leader>ru :RunFile<CR>
+    nnoremap <silent> <leader>rp :RunProject<CR>
     lua << EOF
     require('code_runner').setup {
         mode = "toggleterm",
@@ -1383,9 +1383,9 @@ vmap <C-n> *
 nmap <C-p> g#
 vmap <C-p> #
 
-nnoremap <M-s> :w<CR>
-nnoremap <M-w> :q<CR>
-nnoremap <M-q> :q!<CR>
+nnoremap <silent> <M-s> :w<CR>
+nnoremap <silent> <M-w> :q<CR>
+nnoremap <silent> <M-q> :q!<CR>
 
 function EditVimrc(way)
     if has("win32")
@@ -1403,35 +1403,35 @@ function EditVimrc(way)
     endif
 endfunction
 
-nnoremap <leader>sf :w<CR>:source $MYVIMRC<CR>
+nnoremap <silent> <leader>sf :w<CR>:source $MYVIMRC<CR>
 if has("nvim")
-    nnoremap <leader>ev :e $MYVIMRC<CR>
+    nnoremap <silent> <leader>ev :e $MYVIMRC<CR>
 endif
-nnoremap <leader>ef :call EditVimrc("normal")<CR>
-nnoremap <leader>er :call EditVimrc("vs")<CR>
+nnoremap <silent> <leader>ef :call EditVimrc("normal")<CR>
+nnoremap <silent> <leader>er :call EditVimrc("vs")<CR>
 
-nnoremap <leader>ww :w<CR>
-nnoremap <leader>q :q<CR>
-nnoremap <leader>wq :wq<CR>
-nnoremap <leader>fq :q!<CR>
-nnoremap <leader>rq :qa<CR>
-nnoremap <leader>ewq :wqa<CR>
-nnoremap <leader>gq :call SaveSession("")<CR>:qa<CR>
-nnoremap <leader>du :diffupdate<CR>
-nnoremap <leader><leader>r :redraw!<CR>
-nnoremap <leader>i :Inspect<CR>
+nnoremap <silent> <leader>ww :w<CR>
+nnoremap <silent> <leader>q :q<CR>
+nnoremap <silent> <leader>wq :wq<CR>
+nnoremap <silent> <leader>fq :q!<CR>
+nnoremap <silent> <leader>rq :qa<CR>
+nnoremap <silent> <leader>ewq :wqa<CR>
+nnoremap <silent> <leader>gq :call SaveSession("")<CR>:qa<CR>
+nnoremap <silent> <leader>du :diffupdate<CR>
+nnoremap <silent> <leader><leader>r :redraw!<CR>
+nnoremap <silent> <leader>i :Inspect<CR>
 
-nnoremap <silent> <M-h> <C-w>h
-nnoremap <silent> <M-j> <C-w>j
-nnoremap <silent> <M-k> <C-w>k
-nnoremap <silent> <M-l> <C-w>l
-nnoremap <silent> <M--> <C-w>_
-tnoremap <silent> <M-h> <C-\><C-N><C-w>h
-tnoremap <silent> <M-j> <C-\><C-N><C-w>j
-tnoremap <silent> <M-k> <C-\><C-N><C-w>k
-tnoremap <silent> <M-l> <C-\><C-N><C-w>l
-nnoremap <silent> <leader>sp <C-w>s
-nnoremap <silent> <leader>vs <C-w>v
+nnoremap <M-h> <C-w>h
+nnoremap <M-j> <C-w>j
+nnoremap <M-k> <C-w>k
+nnoremap <M-l> <C-w>l
+nnoremap <M--> <C-w>_
+tnoremap <M-h> <C-\><C-N><C-w>h
+tnoremap <M-j> <C-\><C-N><C-w>j
+tnoremap <M-k> <C-\><C-N><C-w>k
+tnoremap <M-l> <C-\><C-N><C-w>l
+nnoremap <leader>sp <C-w>s
+nnoremap <leader>vs <C-w>v
 
 nnoremap <silent> <leader>tu :tabp<CR>
 nnoremap <silent> <leader>tp :tabn<CR>
@@ -1446,16 +1446,16 @@ nnoremap <silent> L :bn<CR>
 noremap <leader>y "+y
 noremap <leader>p "+p
 
-nmap <silent> <C-J> ]c
-nmap <silent> <C-K> [c
-inoremap <silent> <C-J> <esc>o
-inoremap <silent> <C-K> <esc>O
-inoremap <silent> <C-H> <esc>I
-inoremap <silent> <C-L> <esc>A
+nmap <C-J> ]c
+nmap <C-K> [c
+inoremap <C-J> <esc>o
+inoremap <C-K> <esc>O
+inoremap <C-H> <esc>I
+inoremap <C-L> <esc>A
 
 " recurse do or dp in vimdiff
-nmap <silent> <leader>do do]c<leader>do
-nmap <silent> <leader>dp dp]c<leader>dp
+nmap <leader>do do]c<leader>do
+nmap <leader>dp dp]c<leader>dp
 
 for mapping in ['jj', 'jk', 'kj', 'kk', 'jl', 'jh']
     execute 'inoremap '.mapping.' <esc>'
@@ -1472,8 +1472,8 @@ nnoremap <silent> <C-Down> :resize +2<CR>
 nnoremap <silent> <C-Left> :vertical resize -2<CR>
 nnoremap <silent> <C-Right> :vertical resize +2<CR>
 
-nnoremap <silent> <C-H> 10zh
-nnoremap <silent> <C-L> 10zl
+nnoremap <C-H> 10zh
+nnoremap <C-L> 10zl
 
 let g:load_doxygen_syntax=1
 
