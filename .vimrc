@@ -661,7 +661,7 @@ EOF
     endif
 
     " Auto close NvimTree when it is the last buffer in the session or tab
-    autocmd BufEnter NvimTree_*
+    autocmd BufEnter NvimTree_* ++nested
             \ let layout = winlayout() |
             \ if len(layout) == 2 && layout[0] == 'leaf' && getbufvar(winbufnr(layout[1]), '&filetype') == 'NvimTree' |
             \ quit | endif
