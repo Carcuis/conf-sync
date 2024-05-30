@@ -1240,6 +1240,12 @@ if has("nvim")
         indent = {
             python = 1,
         },
+        mapping = {
+            jump_left_in_any   = '<m-h>',
+            jump_right_out_any = '<m-l>',
+            jump_left_out_any  = '<m-[>',
+            jump_right_in_any  = '<m-]>',
+        },
     }
 EOF
 endif
