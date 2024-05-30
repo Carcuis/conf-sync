@@ -82,7 +82,7 @@
     },
     "coc.preferences.enableMessageDialog": true,
     "notification.border": false,
-    "notification.highlightGroup": "Ignore",
+    "notification.highlightGroup": "CocNotification",
     "notification.marginRight": 5,
     "notification.statusLineProgress": false,
     "notification.timeout": 5000,
