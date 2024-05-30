@@ -768,13 +768,14 @@ if has("nvim")
             border = 'curved',
             winblend = 10,
             highlights = {
-                border = "FloatBorder",
+                border = "ToggleTermFloatBorder",
+                background = "ToggleTermNormal",
             }
         },
     }
 
     local Terminal  = require('toggleterm.terminal').Terminal
-    local lazygit = Terminal:new({ cmd = "lazygit", hidden = true })
+    local lazygit = Terminal:new({ cmd = "lazygit", hidden = false })
 
     function _lazygit_toggle()
       lazygit:toggle()
