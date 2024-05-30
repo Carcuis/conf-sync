@@ -1152,6 +1152,7 @@ if has("nvim")
         excluded_filetypes = {
             "dropbar_menu",
             "NvimTree",
+            "TelescopePrompt",
         },
         marks = {
             Cursor = {
