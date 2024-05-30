@@ -1345,7 +1345,8 @@ endif
 if has("nvim")
     lua << EOF
     require("virt-column").setup {
-        char = "│"
+        char = "│",
+        highlight = "VirtColumn",
     }
 EOF
 endif
