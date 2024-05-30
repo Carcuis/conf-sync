@@ -604,6 +604,7 @@ if has("nvim")
             close_command = function(bufnum)
                 require('bufdelete').bufdelete(bufnum)
             end,
+            show_buffer_close_icons = false,
             separator_style = (vim.g.transparent_background == 1 and {"thin"} or {"slant"})[1],
             offsets = {
                 {
@@ -616,9 +617,7 @@ if has("nvim")
                 },
             },
             hover = {
-                enabled = true,
-                delay = 50,
-                reveal = {'close'}
+                enabled = false,
             },
             diagnostics = "coc",
             diagnostics_indicator = function(count, level, diagnostics_dict, context)
