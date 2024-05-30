@@ -763,13 +763,20 @@ if has("nvim")
         open_mapping = [[<c-t>]],
         direction = 'float',
         shade_terminals = true,
-        shading_factor = 1,
+        shading_factor = -20,
         float_opts = {
             border = 'curved',
             winblend = 10,
-            highlights = {
-                border = "ToggleTermFloatBorder",
-                background = "ToggleTermNormal",
+        },
+        highlights = {
+            -- Normal = {
+            --     link = "ToggleTermNormal",
+            -- },
+            NormalFloat = {
+                link = "ToggleTermNormalFloat",
+            },
+            FloatBorder = {
+                link = "ToggleTermFloatBorder",
             }
         },
     }
