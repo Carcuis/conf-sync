@@ -1152,6 +1152,7 @@ endif
 if has("nvim")
     lua << EOF
     require("scrollbar").setup {
+        hide_if_all_visible = true,
         excluded_buftypes = {
             "nofile",
         },
