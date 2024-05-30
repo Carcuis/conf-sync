@@ -1290,7 +1290,7 @@ if has("nvim")
             map('n', '<leader>gR', '<cmd>Gitsigns reset_buffer<CR>')
             map('n', '<leader>gp', '<cmd>Gitsigns preview_hunk<CR>')
             map('n', '<leader>gb', '<cmd>lua require"gitsigns".blame_line{full=true}<CR>')
-            map('n', '<leader>gd', '<cmd>lua require"gitsigns".diffthis("~")<CR>')
+            map('n', '<leader>gD', '<cmd>lua require"gitsigns".diffthis("~")<CR>')
             map('n', '<leader>gtb', '<cmd>Gitsigns toggle_current_line_blame<CR>')
             map('n', '<leader>gtd', '<cmd>Gitsigns toggle_deleted<CR>')
             map('n', '<leader>gtl', '<cmd>Gitsigns toggle_linehl<CR>')
@@ -1308,14 +1308,27 @@ endif
 
 " === diffview.nvim ===
 if has("nvim")
-    nnoremap <silent> <leader>gD :DiffviewOpen<CR>
-    lua <<EOF
+    nnoremap <silent> <leader>gd :DiffviewOpen<CR>
+    nnoremap <silent> <leader>gh :DiffviewFileHistory<CR>
+    nnoremap <silent> <leader>gf :DiffviewFileHistory %<CR>
+    lua << EOF
     -- local cb = require'diffview.config'.diffview_callback
     require('diffview').setup {
         enhanced_diff_hl = true, -- See ':h diffview-config-enhanced_diff_hl'
         file_panel = {
             win_config = {
                 width = 30,
+            },
+        },
+        keymaps = {
+            view = {
+                { "n", "q", "<Cmd>DiffviewClose<CR>", { desc = "Quit diffview" } },
+            },
+            file_panel = {
+                { "n", "q", "<Cmd>DiffviewClose<CR>", { desc = "Quit diffview" } },
+            },
+            file_history_panel = {
+                { "n", "q", "<Cmd>DiffviewClose<CR>", { desc = "Quit diffview" } },
             },
         },
     }
