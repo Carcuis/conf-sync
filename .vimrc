@@ -1153,6 +1153,11 @@ if has("nvim")
             "dropbar_menu",
             "NvimTree",
         },
+        marks = {
+            Cursor = {
+                text = "",
+            },
+        },
         handlers = {
             cursor = true,
             diagnostic = true,
