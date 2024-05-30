@@ -981,10 +981,10 @@ if has("nvim")
                 {
                     'diagnostics',
                     diagnostics_color = {
-                        error = 'CocErrorSign',
-                        warn  = 'CocWarningSign',
-                        info  = 'CocInfoSign',
-                        hint  = 'CocHintSign',
+                        error = 'CocErrorLualine',
+                        warn  = 'CocWarningLualine',
+                        info  = 'CocInfoLualine',
+                        hint  = 'CocHintLualine',
                     },
                     symbols = { error = ' ', warn = ' ', info = ' ', hint = ' ' },
                     padding = { left = 1, right = 0 },
