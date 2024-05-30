@@ -186,6 +186,7 @@ if has("nvim")
         set guifont=UbuntuMono\ Nerd\ Font\ Mono:h20
     endif
     set mousemoveevent
+    set winblend=10
 elseif has("gui_running") "gvim
     " set guioptions-=m  "remove menu bar
     " set guioptions-=T  "remove toolbar
