@@ -30,7 +30,6 @@ Plug 'ryanoasis/vim-devicons' " required by vim-startify
 Plug 'mhinz/vim-startify'
 Plug 'vifm/vifm.vim'
 Plug 'dstein64/vim-startuptime'
-Plug 'gcmt/wildfire.vim'    " <cr> select in brackets
 Plug 'lambdalisue/suda.vim' " save file by sudo
 Plug 'fladson/vim-kitty' " syntax highlight for kitty.conf
 
@@ -86,6 +85,7 @@ if has("nvim")
     Plug 'NeogitOrg/neogit'
     Plug 'Bekaboo/dropbar.nvim'
     Plug 'tiagovla/scope.nvim'
+    Plug 'sustech-data/wildfire.nvim'
 else
     Plug 'carcuis/darcula'
     Plug 'joshdick/onedark.vim'
@@ -108,6 +108,7 @@ else
     Plug 'liuchengxu/vista.vim'
     Plug 'tpope/vim-markdown'   " highlight for code blocks in markdown
     Plug 'luochen1990/rainbow'
+    Plug 'gcmt/wildfire.vim'    " <cr> select in brackets
 endif
 
 call plug#end()
@@ -1406,6 +1407,13 @@ if has("nvim")
     require("scope").setup({
     })
     require("telescope").load_extension("scope")
+EOF
+endif
+
+" === wildfire.nvim ===
+if has("nvim")
+    lua << EOF
+    require("wildfire").setup()
 EOF
 endif
 
