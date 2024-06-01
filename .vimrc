@@ -556,7 +556,8 @@ if has("nvim")
     nnoremap <leader>fgc <cmd>Telescope git_commits<cr>
     nnoremap <leader>fgf <cmd>Telescope git_files<cr>
     nnoremap <leader>fgs <cmd>Telescope git_status<cr>
-    nnoremap <leader>fs :lua require'telescope.builtin'.symbols{ sources = {'emoji', 'kaomoji', 'gitmoji', 'math', 'latex'} }<CR>
+    nnoremap <leader>fs <cmd>lua require'telescope.builtin'.symbols{ sources = {'emoji', 'kaomoji', 'gitmoji', 'math', 'latex'} }<CR>
+    nnoremap <leader>fd <cmd>Telescope coc diagnostics<CR>
     lua << EOF
     require('telescope').setup{
         defaults = {
