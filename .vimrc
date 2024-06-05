@@ -515,6 +515,15 @@ if has("nvim")
     " Disable error bracket highlight in coc-sumneko-lua hover message
     highlight link LuaParenError Normal
     highlight link LuaError Normal
+
+    " Auto close coc-tree
+    autocmd BufEnter CocTree* ++nested
+        \ let layout = winlayout() |
+        \ if len(layout) == 2 && layout[0] == 'leaf' && getbufvar(winbufnr(layout[1]), '&filetype') == 'coctree' ||
+        \     len(layout[1]) == 2 && layout[0] == 'row' && layout[1][0][0] == 'leaf' && layout[1][1][0] == 'leaf' &&
+        \     getbufvar(winbufnr(layout[1][0][1]), '&filetype') == 'NvimTree' &&
+        \     getbufvar(winbufnr(layout[1][1][1]), '&filetype') == 'coctree' |
+        \ quit | endif
 endif
 
 " === vim-which-key ===
@@ -905,6 +914,14 @@ if has("nvim")
                     separator = { left = '', right = '' },
                 }}, },
                 filetypes = {'DiffviewFiles'},
+            },
+            {
+                sections = { lualine_y = {{
+                    'filetype',
+                    padding = { left = 0, right = 0 },
+                    separator = { left = '', right = '' },
+                }}, },
+                filetypes = {'coctree'},
             },
         },
         options = {
