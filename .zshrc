@@ -76,6 +76,7 @@ if ! [[ "$OSTYPE" =~ android ]]; then
     CMD_NOT_FOUND="command-not-found"
 fi
 plugins=(
+    autoupdate
     colored-man-pages
     git
     z
