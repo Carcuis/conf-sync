@@ -899,7 +899,11 @@ if has("nvim")
                 filetypes = {'NvimTree'},
             },
             {
-                sections = { lualine_b = {'filetype'} },
+                sections = { lualine_b = {{
+                    'filetype',
+                    padding = { left = 0, right = 0 },
+                    separator = { left = '', right = '' },
+                }}, },
                 filetypes = {'DiffviewFiles'},
             },
         },
