@@ -13,6 +13,10 @@
             "url": "https://google.com/search?q=\"%s\""
         },
         {
+            "name": "Github",
+            "url": "https://github.com/search?q=%s&type=repositories"
+        },
+        {
             "name": "_separator_"
         },
         {
