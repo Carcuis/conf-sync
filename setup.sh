@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # oh-my-zsh
 if [[ ! -e "$HOME/.oh-my-zsh" ]]; then
