@@ -171,23 +171,24 @@ function unset_proxy() {
 
 # web connection detection
 function web_detection() {
-    local WEB_LIST=(
+    local web_list=(
         "https://www.baidu.com"
         "https://www.google.com"
         "https://github.com"
     )
 
-    for i in $WEB_LIST
+    for i in $web_list
     do
         echo -n "[TEST] $i ... "
-        timeout 10 curl -vv $i 2>&1 | grep "HTTP/1.1 200" -q
-        local EXIT_NUM=$?
-        if [[ $EXIT_NUM == 0 ]]; then
-            echo "\033[1;32mOK\033[0m"
-        # elif [[ $EXIT_NUM == 124 ]]; then
-        #     echo "\033[1;33mTIMEOUT\033[0m"
+        local status_code=0
+        status_code="$(curl -I --max-time 5 $i 2>/dev/null | grep "HTTP" | sed -n '$p' | cut -d ' ' -f 2; exit ${pipestatus[1]})"
+        local exit_code=$?
+        if [[ $exit_code == 0 && $status_code == 200 ]]; then
+            echo -e "\033[1;32mOK\033[0m"
+        elif [[ $exit_code == 28 ]]; then
+            echo -e "\033[1;33mTIMEOUT\033[0m"
         else
-            echo "\033[1;31mFAIL\033[0m"
+            echo -e "\033[1;31mFAIL($exit_code)\033[0m"
         fi
     done
 }
