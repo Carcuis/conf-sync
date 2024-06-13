@@ -650,6 +650,7 @@ endif
 " === nvim-tree.lua ===
 if has("nvim")
     nnoremap <silent> <leader>ee :NvimTreeToggle<CR>
+    nnoremap <silent> <leader>E :NvimTreeFindFile!<CR>
 
     func OpenUnfocusedNvimTreeInNewWindow()
         lua << EOF
