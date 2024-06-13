@@ -294,8 +294,8 @@ if ! has("nvim")
     " Exit Vim if NERDTree is the only window left.
     autocmd BufEnter * if tabpagenr('$') == 1 && winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() |
                 \quit | endif
-    let g:NERDTreeDirArrowExpandable = ''
-    let g:NERDTreeDirArrowCollapsible = ''
+    let g:NERDTreeDirArrowExpandable = ''
+    let g:NERDTreeDirArrowCollapsible = ''
 
     " vim-nerdtree-syntax-highlight
     let g:NERDTreeFileExtensionHighlightFullName = 1
@@ -354,7 +354,7 @@ if ! has("nvim")
     "   " autocmd BufEnter * nested :call tagbar#autoopen(0)
     "   autocmd FileType * nested :call tagbar#autoopen(0)
     " endif
-    let g:tagbar_iconchars = ['', '']
+    let g:tagbar_iconchars = ['', '']
 endif
 
 " === vim-startify ===
@@ -374,22 +374,22 @@ let g:startify_commands = [
     \ {'c': ['  Configuration', 'call EditVimrc("normal")']},
     \ {'P': ['  Plugin Install', 'PlugInstall']},
     \ {'U': ['  Plugin Update', 'PlugUpdate']},
-    \ {'l': ['  Load Session', 'call LoadSession("")']},
+    \ {'l': ['󰈢  Load Session', 'call LoadSession("")']},
     \ ]
 if ! has("nvim")
     let g:startify_commands += [
-    \ {'f': ['  Find File', 'Leaderf file']},
-    \ {'r': ['  Recently Used Files', 'Leaderf mru']},
-    \ {'w': ['  Find Word', 'Leaderf rg']},
-    \ {'e': ['  Nerd-Tree', 'NERDTree']},
+    \ {'f': ['󰈞  Find File', 'Leaderf file']},
+    \ {'r': ['󰄉  Recently Used Files', 'Leaderf mru']},
+    \ {'w': ['󰉿  Find Word', 'Leaderf rg']},
+    \ {'e': ['󰉋  Nerd-Tree', 'NERDTree']},
     \ ]
 else
     let g:startify_commands += [
-    \ {'f': ['  Find File', 'Telescope find_files']},
+    \ {'f': ['󰈞  Find File', 'Telescope find_files']},
     \ {'p': ['  Recent Projects', 'Telescope projects']},
-    \ {'r': ['  Recently Used Files', 'Telescope oldfiles']},
-    \ {'w': ['  Find Word', 'Telescope live_grep']},
-    \ {'e': ['  Nvim-Tree', 'NvimTreeOpen']},
+    \ {'r': ['󰄉  Recently Used Files', 'Telescope oldfiles']},
+    \ {'w': ['󰉿  Find Word', 'Telescope live_grep']},
+    \ {'e': ['󰉋  Nvim-Tree', 'NvimTreeOpen']},
     \ {'C': ['  Configure CoC', 'CocConfig']},
     \ ]
 endif
@@ -637,7 +637,7 @@ if has("nvim")
                 for e, n in pairs(diagnostics_dict) do
                     local icon = e == "error" and " " or (
                         e == "warning" and " " or (
-                        e == "info" and " " or " " ))
+                        e == "info" and " " or "󰌶 " ))
                     s = s .. " " .. icon .. n
                 end
                 return s
@@ -715,7 +715,7 @@ EOF
             show_on_dirs = true,
             show_on_open_dirs = false,
             icons = {
-                hint = "",
+                hint = "󰌶",
                 info = "",
                 warning = "",
                 error = "",
@@ -737,9 +737,20 @@ EOF
             icons = {
                 git_placement = "after",
                 glyphs = {
+                    folder = {
+                        arrow_closed = "",
+                        arrow_open = "",
+                        default = "󰉋",
+                        open = "",
+                        empty = "󰉖",
+                        empty_open = "󰷏",
+                        symlink = "",
+                        symlink_open = "",
+                    },
                     git = {
-                        unstaged = "",
+                        unstaged = "󰤌",
                         staged = "",
+                        untracked = "",
                     },
                 },
             },
@@ -967,7 +978,7 @@ if has("nvim")
                 {
                     function()
                         if vim.bo.readonly then
-                            return ''
+                            return ''
                         end
                         return ''
                     end,
@@ -981,7 +992,7 @@ if has("nvim")
                         modified = 'LualineGitChange',
                         removed = 'LualineGitDelete',
                     },
-                    symbols = { added = ' ', modified = ' ', removed = ' ' },
+                    symbols = { added = ' ', modified = '󰤌 ', removed = ' ' },
                     padding = { left = 0, right = 1 },
                 },
                 {
@@ -1016,7 +1027,7 @@ if has("nvim")
                         info  = 'CocInfoLualine',
                         hint  = 'CocHintLualine',
                     },
-                    symbols = { error = ' ', warn = ' ', info = ' ', hint = ' ' },
+                    symbols = { error = ' ', warn = ' ', info = ' ', hint = '󰌶 ' },
                     padding = { left = 1, right = 0 },
                 },
                 {
@@ -1095,7 +1106,7 @@ if has("nvim")
             c = { "j", "k" },
         },
         icons = {
-            group = "",
+            group = "",
         },
     }
 EOF

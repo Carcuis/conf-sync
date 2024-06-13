@@ -9,11 +9,11 @@
         {
           "type": "python",
           "style": "powerline",
-          "powerline_symbol": "\ue0b2",
+          "powerline_symbol": "",
           "invert_powerline": true,
           "foreground": "#100e23",
           "background": "#3776ab",
-          "template": " <#ffbc03>\ue235</> {{ if .Error }}{{ .Error }}{{ else }}{{ if .Venv }}{{ .Venv }} {{ end }}{{ .Full }}{{ end }} ",
+          "template": " <#ffbc03></> {{ if .Error }}{{ .Error }}{{ else }}{{ if .Venv }}{{ .Venv }} {{ end }}{{ .Full }}{{ end }} ",
           "properties": {
             "display_mode": "environment",
             "fetch_virtual_env": true,
@@ -23,40 +23,40 @@
         {
           "type": "git",
           "style": "powerline",
-          "powerline_symbol": "\ue0b2",
+          "powerline_symbol": "",
           "invert_powerline": true,
           "foreground": "#00ff22",
           "background": "#1A2429",
-          "template": " {{ .UpstreamIcon }}{{ .HEAD }}{{if .BranchStatus }} {{ .BranchStatus }}{{ end }}{{ if .Working.Changed }} \uf044 {{ .Working.String }}{{ end }}{{ if and (.Staging.Changed) (.Working.Changed) }} |{{ end }}{{ if .Staging.Changed }} \uf046 {{ .Staging.String }}{{ end }} ",
+          "template": " {{ .UpstreamIcon }}{{ .HEAD }}{{if .BranchStatus }} {{ .BranchStatus }}{{ end }}{{ if .Working.Changed }} 󰤌 {{ .Working.String }}{{ end }}{{ if and (.Working.Changed) (.Staging.Changed) }} |{{ end }}{{ if .Staging.Changed }}  {{ .Staging.String }}{{ end }}{{ if gt .StashCount 0 }}  {{ .StashCount }}{{ end }} ",
           "properties": {
             "fetch_stash_count": true,
             "fetch_status": true,
             "fetch_upstream_icon": true,
             "branch_icon": " ",
-            "branch_gone_icon": "❎",
-            "branch_identical_icon": "\uf14a"
+            "branch_gone_icon": "",
+            "branch_identical_icon": ""
           }
         },
         {
           "type": "text",
           "style": "powerline",
-          "powerline_symbol": "\ue0b2",
+          "powerline_symbol": "",
           "invert_powerline": true,
           "foreground": "#0097de",
           "background": "#19323e",
           "template": "{{if .Env.ALL_PROXY}}  {{ .Env.ALL_PROXY }} {{ end }}"
         },
         {
-          "type": "exit",
+          "type": "status",
           "style": "powerline",
-          "powerline_symbol": "\ue0b2",
+          "powerline_symbol": "",
           "invert_powerline": true,
           "foreground": "#d6d6d6",
           "background": "#000000",
           "background_templates": [
             "{{ if gt .Code 0 }}#6e1111{{ end }}"
           ],
-          "template": " {{ if gt .Code 0 }}\uf00d {{ .Meaning }}{{ else }}\uf00c{{ end }} ",
+          "template": " {{ if gt .Code 0 }} {{ .Meaning }}{{ else }}󰸞{{ end }} ",
           "properties": {
             "always_enabled": true,
             "display_exit_code": true
@@ -65,7 +65,7 @@
         {
           "type": "executiontime",
           "style": "powerline",
-          "powerline_symbol": "\ue0b2",
+          "powerline_symbol": "",
           "invert_powerline": true,
           "foreground": "#5391f0",
           "background": "#1A2429",
@@ -77,7 +77,7 @@
         {
           "type": "battery",
           "style": "powerline",
-          "powerline_symbol": "\ue0b2",
+          "powerline_symbol": "",
           "invert_powerline": true,
           "foreground": "#193549",
           "background": "#ffeb3b",
@@ -86,11 +86,11 @@
             "{{ if eq \"Charging\" .State.String }}#40c4ff{{ end }}",
             "{{ if eq \"Discharging\" .State.String }}#5391f0{{ end }}"
           ],
-          "template": " {{ if not .Error }}{{ .Icon }}{{ .Percentage }}{{ end }}{{ .Error }}\uf295 ",
+          "template": " {{ if not .Error }}{{ .Icon }}{{ .Percentage }}{{ end }}{{ .Error }}󱉸 ",
           "properties": {
-            "charged_icon": "\uf583 ",
-            "charging_icon": "\uf588 ",
-            "discharging_icon": "\uf57f "
+            "charged_icon": "󰁹 ",
+            "charging_icon": "󰂄 ",
+            "discharging_icon": "󰂀 "
           }
         },
         {
@@ -99,7 +99,7 @@
           "invert_powerline": true,
           "foreground": "#5391f0",
           "background": "#1A2429",
-          "template": " {{ .CurrentDate | date .Format }} \uf017 ",
+          "template": " {{ .CurrentDate | date .Format }}  ",
           "properties": {
             "time_format": "15:04"
           }
@@ -115,9 +115,9 @@
           "style": "plain",
           "foreground": "#0099FF",
           "background": "#1A2429",
-          "template": " {{ if .WSL }}WSL at {{ end }}{{.Icon}}<#888888> \ue0b1</>",
+          "template": " {{ if .WSL }}WSL at {{ end }}{{.Icon}}<#888888> </>",
           "properties": {
-            "windows": "<#d6d6d6></>"
+            "windows": "<#d6d6d6></>"
           }
         },
         {
@@ -125,7 +125,7 @@
           "style": "plain",
           "foreground": "#0099FF",
           "background": "#1A2429",
-          "template": " \uf0e7 "
+          "template": "  "
         },
         {
           "type": "path",
@@ -134,8 +134,8 @@
           "background": "#1A2429",
           "template": " {{ .Path }} ",
           "properties": {
-            "folder_icon": "\uf115",
-            "home_icon": "\uf7db",
+            "folder_icon": "",
+            "home_icon": " ~",
             "style": "full"
           }
         },
@@ -144,7 +144,7 @@
           "style": "plain",
           "foreground": "#1A2429",
           "background": "transparent",
-          "template": "\ue0b0 "
+          "template": " "
         }
       ]
     }
