@@ -43,6 +43,11 @@ $git_config = @{
     remote = "$PSScriptRoot\dot_files\.gitconfig"
     local = "$home\.gitconfig"
 }
+$vifmrc = @{
+    name = "vifmrc"
+    remote = "$PSScriptRoot\.config\vifm\vifmrc"
+    local = "$home\AppData\Roaming\Vifm\vifmrc"
+}
 $file_list = @(
     $psprofile
     $vimrc
@@ -55,6 +60,7 @@ $extra_file_list = @(
     $ideavimrc
     $lazygit
     $git_config
+    $vifmrc
 )
 
 function CmdParser {
