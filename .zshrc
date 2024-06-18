@@ -167,6 +167,9 @@ function unset_proxy() {
     unset http_proxy
     unset https_proxy
     unset all_proxy
+    unset HTTP_PROXY
+    unset HTTPS_PROXY
+    unset ALL_PROXY
 }
 
 # web connection detection
@@ -246,7 +249,8 @@ if [[ $SYSTEM == "WSL1" || $SYSTEM == "WSL2" ]]; then
     }
 
     if [[ $SYSTEM == "WSL2" ]]; then
-        alias px="set_proxy http://$(cat /etc/resolv.conf |grep "nameserver" |cut -f 2 -d " "):10809"
+        # alias px="set_proxy http://$(cat /etc/resolv.conf |grep "nameserver" |cut -f 2 -d " "):10809"
+        alias px="set_proxy http://$(ip route show | grep -i default | awk '{ print $3}'):10809"
     else
         alias px='set_proxy http://127.0.0.1:10809'
         alias x='export DISPLAY=:0.0'
