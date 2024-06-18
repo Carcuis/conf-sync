@@ -308,11 +308,11 @@ if [[ $SYSTEM == "WSL1" || $SYSTEM == "WSL2" ]]; then
         export DISPLAY=127.0.0.1:0.0
     fi
 
-    # autostart ssh-agent
-    if [ -z "$SSH_AUTH_SOCK" ] ; then
-        eval `ssh-agent -s` > /dev/null
-        ssh-add ~/.ssh/github > /dev/null 2>&1
-    fi
+    # autostart ssh-agent - deprecated, use Github CLI instead
+    # if [ -z "$SSH_AUTH_SOCK" ] ; then
+    #     eval `ssh-agent -s` > /dev/null
+    #     ssh-add ~/.ssh/github > /dev/null 2>&1
+    # fi
 elif [[ $SYSTEM == "Android" ]]; then
     ## sshd start-up
     # if [ `ps -ef |grep -w sshd|grep -v grep|wc -l` -le 0 ];then
