@@ -98,15 +98,16 @@
     "outline.autoPreview": true,
     "outline.expandLevel": 0,
     "outline.sortBy": "position",
-    "translator.window.enableBorder": false,
     "snippets.ultisnips.enable": true,
     "powershell.powerShellExePath": "pwsh",
     "powershell.powerShellDefaultVersion": "Powershell Core 7 (x64)",
     "powershell.integratedConsole.showOnStartup": false,
     "codeLens.enable": true,
     "markdownlint.onOpen": false,
+    "translator.window.enableBorder": false,
     "translator.engines": [
         "bing",
+        "google",
         "youdao",
         "haici"
     ],
