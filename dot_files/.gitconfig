@@ -18,3 +18,5 @@
     colorMoved = default
 # end
 
+[credential "https://github.com"]
+	username = Carcuis
