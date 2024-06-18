@@ -26,8 +26,8 @@ file_list=(
 )
 extra_file_list=(
     coc_settings
-    ptpython
-    lazygit
+    ptpython_config
+    lazygit_config
     git_config
 )
 
@@ -37,14 +37,14 @@ vimrc_remote=$dir/.vimrc
 vimrc_local=~/.vimrc
 coc_settings_remote=$dir/.config/nvim/coc-settings.json
 coc_settings_local=~/.config/nvim/coc-settings.json
-ptpython_remote=$dir/.config/ptpython/config.py
-lazygit_remote=$dir/.config/lazygit/config.yml
+ptpython_config_remote=$dir/.config/ptpython/config.py
+lazygit_config_remote=$dir/.config/lazygit/config.yml
 if [ "$SYSTEM" == "Darwin" ]; then
-    ptpython_local="$HOME/Library/Application Support/ptpython/config.py"
-    lazygit_local="$HOME/Library/Application Support/lazygit/config.yml"
+    ptpython_config_local="$HOME/Library/Application Support/ptpython/config.py"
+    lazygit_config_local="$HOME/Library/Application Support/lazygit/config.yml"
 else
-    ptpython_local=~/.config/ptpython/config.py
-    lazygit_local=~/.config/lazygit/config.yml
+    ptpython_config_local=~/.config/ptpython/config.py
+    lazygit_config_local=~/.config/lazygit/config.yml
 fi
 ideavimrc_remote=$dir/dot_files/.ideavimrc
 ideavimrc_local=~/.ideavimrc
