@@ -29,6 +29,7 @@ extra_file_list=(
     ptpython_config
     lazygit_config
     git_config
+    vifmrc
 )
 
 zshrc_remote=$dir/.zshrc
@@ -52,6 +53,8 @@ git_config_remote=$dir/dot_files/.gitconfig
 git_config_local=~/.gitconfig
 kitty_config_remote=$dir/.config/kitty/kitty.conf
 kitty_config_local=~/.config/kitty/kitty.conf
+vifmrc_remote=$dir/.config/vifm/vifmrc
+vifmrc_local=~/.config/vifm/vifmrc
 
 function cmd_parser
 {
