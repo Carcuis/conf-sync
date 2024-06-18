@@ -1,5 +1,5 @@
 " vim: filetype=vifm :
-" Sample configuration file for vifm on OSX (last updated: 2 June, 2019)
+" Sample configuration file for vifm (last updated: 31 August, 2021)
 " You can edit this file by hand.
 " The " character at the beginning of a line comments out the line.
 " Blank lines are ignored.
@@ -39,11 +39,6 @@ set history=100
 
 set nofollowlinks
 
-" With this option turned on you can run partially entered commands with
-" unambiguous beginning using :! (e.g. :!Te instead of :!Terminal or :!Te<tab>).
-
-" set fastrun
-
 " Natural sort of (version) numbers within text.
 
 set sortnumbers
@@ -58,13 +53,13 @@ set undolevels=100
 set vimhelp
 
 " If you would like to run an executable file when you
-" press return on the file name set this.
+" press Enter, l or Right Arrow, set this.
 
 set norunexec
 
-" Selected color scheme
+" List of color schemes to try (picks the first one supported by the terminal)
 
-colorscheme Default
+colorscheme Default-256 Default
 
 " Format for displaying time in file list. For example:
 " TIME_STAMP_FORMAT=%m/%d-%H:%M
@@ -104,7 +99,9 @@ set scrolloff=4
 
 " Don't do too many requests to slow file systems
 
-set slowfs=curlftpfs
+if !has('win')
+    set slowfs=curlftpfs
+endif
 
 " Set custom status line look
 
@@ -133,11 +130,12 @@ mark h ~/
 
 command! df df -h %m 2> /dev/null
 command! diff vim -d %f %F
-command! zip zip -r %f.zip %f
+command! zip zip -r %c.zip %f
 command! run !! ./%f
 command! make !!make %a
 command! mkcd :mkdir %a | cd %a
-command! reload :write | restart
+command! vgrep vim "+grep %a"
+command! reload :write | restart full
 
 " ------------------------------------------------------------------------------
 
@@ -146,8 +144,7 @@ command! reload :write | restart
 " :filetype pattern1,pattern2 defaultprogram,program2
 " :fileviewer pattern1,pattern2 consoleviewer
 " The other programs for the file type can be accessed with the :file command
-" The command macros %f, %F, %d, %F may be used in the commands.
-" Spaces in an app name will have to be escaped e.g. QuickTime\ Player.app
+" The command macros like %f, %F, %d, %D may be used in the commands.
 " The %a macro is ignored.  To use a % you must put %%.
 
 " For automated FUSE mounts, you must register an extension with :file[x]type
@@ -169,69 +166,87 @@ command! reload :write | restart
 " program.
 
 " Pdf
-filetype *.pdf
-       \ {Open in Preview}
-       \ open -a Preview.app,
-       \ {Open in Skim}
-       \ open -a Skim.app,
-fileviewer *.pdf pdftotext -nopgbrk %c -
+filextype {*.pdf},<application/pdf> zathura %c %i &, apvlv %c, xpdf %c
+fileviewer {*.pdf},<application/pdf> pdftotext -nopgbrk %c -
 
 " PostScript
-filetype *.ps,*.eps open -a Preview.app
+filextype {*.ps,*.eps,*.ps.gz},<application/postscript>
+        \ {View in zathura}
+        \ zathura %f,
+        \ {View in gv}
+        \ gv %c %i &,
 
 " Djvu
-filetype *.djvu open -a MacDjView.app
+filextype {*.djvu},<image/vnd.djvu>
+        \ {View in zathura}
+        \ zathura %f,
+        \ {View in apvlv}
+        \ apvlv %f,
 
 " Audio
-filetype *.wav,*.mp3,*.flac,*.m4a,*.wma,*.ape,*.ac3,*.og[agx],*.spx,*.opus
-       \ {Play using MPlayerX}
-       \ open -a MPlayerX.app,
-       \ {Open in iTunes}
-       \ open -a iTunes.app,
-       \ {Open in QuickTime Player}
-       \ open -a QuickTime\ Player.app,
-fileviewer *.mp3 mp3info
-fileviewer *.flac soxi
+filetype {*.wav,*.mp3,*.flac,*.m4a,*.wma,*.ape,*.ac3,*.og[agx],*.spx,*.opus},
+        \<audio/*>
+       \ {Play using ffplay}
+       \ ffplay -nodisp -autoexit %c,
+       \ {Play using MPlayer}
+       \ mplayer %f,
+fileviewer {*.mp3},<audio/mpeg> mp3info
+fileviewer {*.flac},<audio/flac> soxi
 
 " Video
-filetype *.avi,*.mp4,*.wmv,*.dat,*.3gp,*.ogv,*.mkv,*.mpg,*.mpeg,*.vob,
-        \*.fl[icv],*.m2v,*.mov,*.webm,*.ts,*.mts,*.m4v,*.r[am],*.qt,*.divx,
-        \*.as[fx]
-       \ {Open in VLC}
-       \ open -a VLC.app,
-       \ {Open in QuickTime Player}
-       \ open -a QuickTime\ Player.app,
-       \ {Open in MPlayerX}
-       \ open -a MPlayerX.app,
-fileviewer *.avi,*.mp4,*.wmv,*.dat,*.3gp,*.ogv,*.mkv,*.mpg,*.mpeg,*.vob,
+filextype {*.avi,*.mp4,*.wmv,*.dat,*.3gp,*.ogv,*.mkv,*.mpg,*.mpeg,*.vob,
           \*.fl[icv],*.m2v,*.mov,*.webm,*.ts,*.mts,*.m4v,*.r[am],*.qt,*.divx,
-          \*.as[fx]
+          \*.as[fx]},
+         \<video/*>
+        \ {View using ffplay}
+        \ ffplay -fs -autoexit %f,
+        \ {View using Dragon}
+        \ dragon %f:p,
+        \ {View using mplayer}
+        \ mplayer %f,
+fileviewer {*.avi,*.mp4,*.wmv,*.dat,*.3gp,*.ogv,*.mkv,*.mpg,*.mpeg,*.vob,
+           \*.fl[icv],*.m2v,*.mov,*.webm,*.ts,*.mts,*.m4v,*.r[am],*.qt,*.divx,
+           \*.as[fx]},
+          \<video/*>
          \ ffprobe -pretty %c 2>&1
 
 " Web
-filetype *.html,*.htm
-       \ {Open in Safari}
-       \ open -a Safari.app,
-       \ {Open in Firefox}
-       \ open -a Firefox.app,
-       \ {Open in Chrome}
-       \ open -a Google\ Chrome.app,
-       \ {Open in vim}
-       \ vim,
-fileviewer *.html,*.htm w3m -dump -T text/html
+filextype {*.html,*.htm},<text/html>
+        \ {Open with dwb}
+        \ dwb %f %i &,
+        \ {Open with firefox}
+        \ firefox %f &,
+        \ {Open with uzbl}
+        \ uzbl-browser %f %i &,
+filetype {*.html,*.htm},<text/html> links, lynx
 
 " Object
-filetype *.o nm %f | less
+filetype {*.o},<application/x-object> nm %f | less
 
 " Man page
-filetype *.[1-8] man ./%c
-fileviewer *.[1-8] man ./%c | col -b
+filetype {*.[1-8]},<text/troff> man ./%c
+fileviewer {*.[1-8]},<text/troff> man ./%c | col -b
 
-" Image
-filetype *.bmp,*.jpg,*.jpeg,*.png,*.gif,*.xpm,
-       \ open -a Preview.app,
-fileviewer *.bmp,*.jpg,*.jpeg,*.png,*.gif,*.xpm
+" Images
+filextype {*.bmp,*.jpg,*.jpeg,*.png,*.gif,*.xpm},<image/*>
+        \ {View in sxiv}
+        \ sxiv %f,
+        \ {View in gpicview}
+        \ gpicview %c,
+        \ {View in shotwell}
+        \ shotwell,
+fileviewer {*.bmp,*.jpg,*.jpeg,*.png,*.gif,*.xpm},<image/*>
          \ identify %f
+
+" OpenRaster
+filextype *.ora
+        \ {Edit in MyPaint}
+        \ mypaint %f,
+
+" Mindmap
+filextype *.vym
+        \ {Open with VYM}
+        \ vym %f &,
 
 " MD5
 filetype *.md5
@@ -253,37 +268,86 @@ filetype *.sha512
        \ {Check SHA512 hash sum}
        \ sha512sum -c %f %S,
 
+" GPG signature
+filetype {*.asc},<application/pgp-signature>
+       \ {Check signature}
+       \ !!gpg --verify %c,
+
 " Torrent
-filetype *.torrent open -a Transmission.app
-fileviewer *.torrent dumptorrent -v %c
+filetype {*.torrent},<application/x-bittorrent> ktorrent %f &
+fileviewer {*.torrent},<application/x-bittorrent> dumptorrent -v %c
 
-" Extract zip files
-filetype *.zip unzip %f
-fileviewer *.zip,*.jar,*.war,*.ear zip -sf %c
+" FuseZipMount
+filetype {*.zip,*.jar,*.war,*.ear,*.oxt,*.apkg},
+        \<application/zip,application/java-archive>
+       \ {Mount with fuse-zip}
+       \ FUSE_MOUNT|fuse-zip %SOURCE_FILE %DESTINATION_DIR,
+       \ {View contents}
+       \ zip -sf %c | less,
+       \ {Extract here}
+       \ tar -xf %c,
+fileviewer *.zip,*.jar,*.war,*.ear,*.oxt zip -sf %c
 
-" Extract tar archives
-filetype *.tar,*.tar.bz2,*.tbz2,*.tgz,*.tar.gz tar -xf %f
-fileviewer *.tar,*.tar.bz2,*.tbz2,*.tgz,*.tar.gz tar -tf %f
+" ArchiveMount
+filetype {*.tar,*.tar.bz2,*.tbz2,*.tgz,*.tar.gz,*.tar.xz,*.txz,*.tar.zst,*.tzst},
+        \<application/x-tar>
+       \ {Mount with archivemount}
+       \ FUSE_MOUNT|archivemount %SOURCE_FILE %DESTINATION_DIR,
+fileviewer *.tgz,*.tar.gz tar -tzf %c
+fileviewer *.tar.bz2,*.tbz2 tar -tjf %c
+fileviewer *.tar.xz,*.txz tar -tJf %c
+fileviewer *.tar.zst,*.tzst tar -t --zstd -f %c
+fileviewer {*.tar},<application/x-tar> tar -tf %c
 
-" Extract .bz2 archives
-filetype *.bz2 bzip2 -d %f
+" Rar2FsMount and rar archives
+filetype {*.rar},<application/x-rar>
+       \ {Mount with rar2fs}
+       \ FUSE_MOUNT|rar2fs %SOURCE_FILE %DESTINATION_DIR,
+fileviewer {*.rar},<application/x-rar> unrar v %c
 
-" Extract .gz files
-filetype *.gz gunzip %f
+" IsoMount
+filetype {*.iso},<application/x-iso9660-image>
+       \ {Mount with fuseiso}
+       \ FUSE_MOUNT|fuseiso %SOURCE_FILE %DESTINATION_DIR,
 
-" Mount .dmg archives
-filetype *.dmg open
+" SshMount
+filetype *.ssh
+       \ {Mount with sshfs}
+       \ FUSE_MOUNT2|sshfs %PARAM %DESTINATION_DIR %FOREGROUND,
 
-" Mount disk .img
-filetype *.img open
+" FtpMount
+filetype *.ftp
+       \ {Mount with curlftpfs}
+       \ FUSE_MOUNT2|curlftpfs -o ftp_port=-,,disable_eprt %PARAM %DESTINATION_DIR %FOREGROUND,
 
-" Open .pkg binaries
-filetype *.pkg open
+" Fuse7z and 7z archives
+filetype {*.7z},<application/x-7z-compressed>
+       \ {Mount with fuse-7z}
+       \ FUSE_MOUNT|fuse-7z %SOURCE_FILE %DESTINATION_DIR,
+fileviewer {*.7z},<application/x-7z-compressed> 7z l %c
 
 " Office files
-filetype *.odt,*.doc,*.docx,*.xls,*.xlsx,*.odp,*.pptx,*.ppt open -a LibreOffice.app
-fileviewer *.doc antiword -
-fileviewer *.docx docx2txt.pl %f -
+filextype {*.odt,*.doc,*.docx,*.xls,*.xlsx,*.odp,*.pptx,*.ppt},
+         \<application/vnd.openxmlformats-officedocument.*,
+          \application/msword,
+          \application/vnd.ms-excel>
+        \ libreoffice %f &
+fileviewer {*.doc},<application/msword> catdoc %c
+fileviewer {*.docx},
+          \<application/
+           \vnd.openxmlformats-officedocument.wordprocessingml.document>
+         \ docx2txt.pl %f -
+
+" TuDu files
+filetype *.tudu tudu -f %c
+
+" Qt projects
+filextype *.pro qtcreator %f &
+
+" Directories
+filextype */
+        \ {View in thunar}
+        \ Thunar %f &,
 
 " Syntax highlighting in preview
 "
@@ -309,8 +373,12 @@ fileviewer *.docx docx2txt.pl %f -
 " settings).  By default all unknown files are opened with 'vi[x]cmd'
 " uncommenting one of lines below will result in ignoring 'vi[x]cmd' option
 " for unknown file types.
+" For *nix:
+" filetype * xdg-open
 " For OS X:
 " filetype * open
+" For Windows:
+" filetype * start, explorer %"f &
 
 " ------------------------------------------------------------------------------
 
@@ -329,7 +397,7 @@ set vifminfo=dhistory,savedirs,chistory,state,tui,shistory,
 
 " Filter-out build and temporary files
 "
-" filter! /^.*\.(lo|o|d|class|py[co])$|.*~$/
+" filter! {*.lo,*.o,*.d,*.class,*.pyc,*.pyo,.*~}
 
 " ------------------------------------------------------------------------------
 
@@ -345,37 +413,46 @@ nnoremap S :sort<cr>
 nnoremap w :view<cr>
 vnoremap w :view<cr>gv
 
-" Open file in new MacVim tab
-nnoremap o :!mvim --remote-tab-silent %f<cr>
-" Open file in new MacVim window
-nnoremap O :!mvim %f<cr>
+" Open file in existing instance of gvim
+nnoremap o :!gvim --remote-tab-silent %f<cr>
+" Open file in new instance of gvim
+nnoremap O :!gvim %f<cr>
 
 " Open file in the background using its default program
-nnoremap gb :!open -g %f<cr>
+nnoremap gb :file &<cr>l
 
-" Yank current directory path into the clipboard
-nnoremap yd :!printf %d | pbcopy<cr>
-
-" Yank current file path into the clipboard
-nnoremap yf :!printf %c:p | pbcopy<cr>
-
-" View preview in Quick Look
-nnoremap q :!qlmanage -p %f > /dev/null 2>&1<cr>
-" Unhide builtin q* keymaps
-nnoremap q: q:
-nnoremap q/ q/
-nnoremap q? q?
-nnoremap q= q=
+" Interaction with system clipboard
+if has('win')
+    " Yank current directory path to Windows clipboard with forward slashes
+    nnoremap yp :!echo %"d:gs!\!/! %i | clip<cr>
+    " Yank path to current file to Windows clipboard with forward slashes
+    nnoremap yf :!echo %"c:gs!\!/! %i | clip<cr>
+elseif executable('xclip')
+    " Yank current directory path into the clipboard
+    nnoremap yd :!echo %d | xclip %i<cr>
+    " Yank current file path into the clipboard
+    nnoremap yf :!echo %c:p | xclip %i<cr>
+elseif executable('xsel')
+    " Yank current directory path into primary and selection clipboards
+    nnoremap yd :!echo -n %d | xsel --input --primary %i &&
+                \ echo -n %d | xsel --clipboard --input %i<cr>
+    " Yank current file path into into primary and selection clipboards
+    nnoremap yf :!echo -n %c:p | xsel --input --primary %i &&
+                \ echo -n %c:p | xsel --clipboard --input %i<cr>
+endif
 
 " Mappings for faster renaming
 nnoremap I cw<c-a>
 nnoremap cc cw<c-u>
 nnoremap A cw
 
+" Open console in current directory
+nnoremap ,t :!xterm &<cr>
+
 " Open editor to edit vifmrc and apply settings after returning to vifm
-nnoremap ,c :write | edit $MYVIFMRC | restart<cr>
-" Open MacVim to edit vifmrc
-nnoremap ,C :!mvim --remote-tab-silent $MYVIFMRC &<cr>
+nnoremap ,c :write | edit $MYVIFMRC | restart full<cr>
+" Open gvim to edit vifmrc
+nnoremap ,C :!gvim --remote-tab-silent $MYVIFMRC &<cr>
 
 " Toggle wrap setting on ,w key
 nnoremap ,w :set wrap!<cr>
@@ -387,6 +464,14 @@ nnoremap <f5> :copy<cr>
 nnoremap <f6> :move<cr>
 nnoremap <f7> :mkdir<space>
 nnoremap <f8> :delete<cr>
+
+" Midnight commander alike mappings
+" Open current directory in the other pane
+nnoremap <a-i> :sync<cr>
+" Open directory under cursor in the other pane
+nnoremap <a-o> :sync %c<cr>
+" Swap panes
+nnoremap <c-u> <c-w>x
 
 " ------------------------------------------------------------------------------
 
@@ -414,7 +499,7 @@ nnoremap <f8> :delete<cr>
 " let $VIFM_SERVER_NAME = v:servername
 
 " the bellow is cui_pref
-map <space>q :q<cr>
+map q :q<cr>
 colorscheme ph
 source ~/.config/vifm/plugged/favicons.vifm
 set vicmd=$EDITOR
