@@ -199,6 +199,11 @@ function web_detection() {
     done
 }
 
+# weather forecast
+function weather_forecast() {
+    curl wttr.in/$1\?lang=zh
+}
+
 # ================================
 # ============ alias =============
 # ================================
@@ -219,8 +224,6 @@ else
     alias la='ls -AF'
     alias l='ls -CF'
 fi
-alias wtrsy='curl wttr.in/Songyuan\?lang=zh'
-alias wtrgz='curl wttr.in/Guangzhou\?lang=zh'
 alias zshc="$EDITOR ~/.zshrc"
 alias vimc="$EDITOR ~/.vimrc"
 alias src='source ~/.zshrc'
@@ -233,6 +236,7 @@ alias al='la'
 alias lg='lazygit'
 alias pp='ptpython'
 alias wd=web_detection
+alias wtr=weather_forecast
 alias ktc='nvi ~/.config/kitty/kitty.conf'
 
 if [[ $SYSTEM == "WSL1" || $SYSTEM == "WSL2" ]]; then
