@@ -500,6 +500,11 @@ nnoremap <c-u> <c-w>x
 
 " the bellow is cui_pref
 map q :q<cr>
-colorscheme ph
-source ~/.config/vifm/plugged/favicons.vifm
-set vicmd=$EDITOR
+colorscheme solarized-dark
+if has('win')
+    source $APPDATA/Vifm/plugged/favicons.vifm
+    set vicmd=nvim
+else
+    source $HOME/.config/vifm/plugged/favicons.vifm
+    set vicmd=$EDITOR
+endif
