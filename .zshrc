@@ -237,7 +237,8 @@ alias lg='lazygit'
 alias pp='ptpython'
 alias wd=web_detection
 alias wtr=weather_forecast
-alias ktc='nvi ~/.config/kitty/kitty.conf'
+alias histc="$EDITOR ~/.zsh_history"
+alias ktc="$EDITOR ~/.config/kitty/kitty.conf"
 
 if [[ $SYSTEM == "WSL1" || $SYSTEM == "WSL2" ]]; then
     alias sshon='sudo service ssh start'
