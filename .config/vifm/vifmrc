@@ -566,6 +566,7 @@ nnoremap <c-u> <c-w>x
 " https://github.com/cirala/vifm_devicons
 
 " the bellow is cui_pref
+set dotfiles
 map q :q<cr>
 colorscheme solarized-dark
 if has('win')
