@@ -3,7 +3,9 @@ Configuration example for ``ptpython``.
 
 Copy this file to $XDG_CONFIG_HOME/ptpython/config.py
 On Linux, this is: ~/.config/ptpython/config.py
+On macOS, this is: ~/Library/Application Support/ptpython/config.py
 """
+
 from prompt_toolkit.filters import ViInsertMode
 from prompt_toolkit.key_binding.key_processor import KeyPress
 from prompt_toolkit.keys import Keys
@@ -49,7 +51,7 @@ def configure(repl):
     # Swap light/dark colors on or off
     repl.swap_light_and_dark = False
 
-    # Highlight matching parethesis.
+    # Highlight matching parentheses.
     repl.highlight_matching_parenthesis = True
 
     # Line wrapping. (Instead of horizontal scrolling.)
@@ -68,6 +70,10 @@ def configure(repl):
 
     # Vi mode.
     repl.vi_mode = False
+
+    # Enable the modal cursor (when using Vi mode). Other options are 'Block', 'Underline',  'Beam',  'Blink under', 'Blink block', and 'Blink beam'
+    # repl.cursor_shape_config = "Modal (vi)"
+    repl.cursor_shape_config = "Blink block"
 
     # Paste mode. (When True, don't insert whitespace after new line.)
     repl.paste_mode = False
@@ -112,6 +118,7 @@ def configure(repl):
     # https://pygments.org/demo/
     # repl.use_code_colorscheme("default")
     # A colorscheme that looks good on dark backgrounds is 'native':
+    # repl.use_code_colorscheme("native")
     repl.use_code_colorscheme("material")
 
     # Set color depth (keep in mind that not all terminals support true color).
