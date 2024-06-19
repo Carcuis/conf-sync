@@ -571,6 +571,7 @@ map q :q<cr>
 colorscheme solarized-dark
 if has('win')
     source $APPDATA/Vifm/plugged/favicons.vifm
+    set vicmd=nvim
 else
     source $HOME/.config/vifm/plugged/favicons.vifm
     set vicmd=$EDITOR
