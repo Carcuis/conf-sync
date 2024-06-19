@@ -103,6 +103,7 @@
     "powershell.powerShellDefaultVersion": "Powershell Core 7 (x64)",
     "powershell.integratedConsole.showOnStartup": false,
     "codeLens.enable": true,
+    "codeLens.position": "eol",
     "markdownlint.onOpen": false,
     "translator.window.enableBorder": false,
     "translator.engines": [
