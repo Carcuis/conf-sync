@@ -1299,11 +1299,12 @@ if has("nvim")
     lua << EOF
     require('gitsigns').setup {
         signs = {
-            add          = {hl = 'GitSignsAdd'   , text = '█', numhl='GitSignsAddNr'   , linehl='GitSignsAddLn'},
-            change       = {hl = 'GitSignsChange', text = '█', numhl='GitSignsChangeNr', linehl='GitSignsChangeLn'},
-            delete       = {hl = 'GitSignsDelete', text = '▶', numhl='GitSignsDeleteNr', linehl='GitSignsDeleteLn'},
-            topdelete    = {hl = 'GitSignsDelete', text = '▶', numhl='GitSignsDeleteNr', linehl='GitSignsDeleteLn'},
-            changedelete = {hl = 'GitSignsChange', text = '█', numhl='GitSignsChangeNr', linehl='GitSignsChangeLn'},
+            add          = { text = '█' },
+            change       = { text = '█' },
+            delete       = { text = '▶' },
+            topdelete    = { text = '▶' },
+            changedelete = { text = '█' },
+            untracked    = { text = '┆' },
         },
         current_line_blame_opts = {
             virt_text_pos = 'right_align',
@@ -1324,10 +1325,10 @@ if has("nvim")
             map('n', '[c', "&diff ? '[c' : '<cmd>Gitsigns prev_hunk<CR>'", {expr=true})
 
             -- Actions
-            map('n', '<leader>gs', ':Gitsigns stage_hunk<CR>')
-            map('v', '<leader>gs', ':Gitsigns stage_hunk<CR>')
-            map('n', '<leader>gr', ':Gitsigns reset_hunk<CR>')
-            map('v', '<leader>gr', ':Gitsigns reset_hunk<CR>')
+            map('n', '<leader>gs', '<cmd>Gitsigns stage_hunk<CR>')
+            map('v', '<leader>gs', '<cmd>Gitsigns stage_hunk<CR>')
+            map('n', '<leader>gr', '<cmd>Gitsigns reset_hunk<CR>')
+            map('v', '<leader>gr', '<cmd>Gitsigns reset_hunk<CR>')
             map('n', '<leader>gS', '<cmd>Gitsigns stage_buffer<CR>')
             map('n', '<leader>gu', '<cmd>Gitsigns undo_stage_hunk<CR>')
             map('n', '<leader>gR', '<cmd>Gitsigns reset_buffer<CR>')
@@ -1342,8 +1343,8 @@ if has("nvim")
             map('n', '<leader>gts', '<cmd>Gitsigns toggle_signs<CR>')
 
             -- Text object
-            map('o', 'ih', ':<C-U>Gitsigns select_hunk<CR>')
-            map('x', 'ih', ':<C-U>Gitsigns select_hunk<CR>')
+            map('o', 'ih', '<cmd><C-U>Gitsigns select_hunk<CR>')
+            map('x', 'ih', '<cmd><C-U>Gitsigns select_hunk<CR>')
         end
     }
 EOF
