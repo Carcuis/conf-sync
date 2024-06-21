@@ -67,84 +67,112 @@ function test_web_connection() {
         elif [[ $exit_code == 28 ]]; then
             warning "TIMEOUT"
         else
-            error "FAIL($exit_code)"
+            error "FAIL($([[ $exit_code != 0 ]] && echo $exit_code || echo $status_code))"
         fi
     done
 }
 
-function install_deps() {
-	# oh-my-zsh
-	if [[ ! -e "$HOME/.oh-my-zsh" ]]; then
-	    sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
-	else
-	    info "Oh-My-Zsh has already installed."
-	fi
+function has_command() { command -v "$1" > /dev/null ; }
+function has_dir() { [[ -d "$1" ]] ; }
+function has_file() { [[ -f "$1" ]] ; }
 
-	# zsh-autosuggestions
-	if [[ ! -e "$ZSH_CUSTOM/plugins/zsh-autosuggestions" ]]; then
-	    git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
-	else
-	    info "zsh-autosuggestions has already installed."
-	fi
+function install_mesg() { mesg "${BLUE}Installing ${BOLD}$1${BLUE} ..." ; }
+function already_installed_mesg() { info "$1 has already installed." ; }
 
-	# zsh-syntax-highlighting
-	if [[ ! -e "$ZSH_CUSTOM/plugins/zsh-syntax-highlighting" ]]; then
-	    git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM}/plugins/zsh-syntax-highlighting
-	else
-	    info "zsh-syntax-highlighting has already installed."
-	fi
+function check_commands() {
+    local commands=(curl wget git zsh vim nvim vifm)
+    local command_not_found=0
+    for cmd in ${commands[@]}; do
+        if ! has_command $cmd; then
+            error "Error: $cmd is not installed"
+            command_not_found=1
+        fi
+    done
+    if [[ $command_not_found == 1 ]]; then
+        warning "Please install the required commands first."
+        exit 1
+    fi
+}
 
-	# zsh-completions
-	if [[ ! -e "$ZSH_CUSTOM/plugins/zsh-completions" ]]; then
-	    git clone https://github.com/zsh-users/zsh-completions ${ZSH_CUSTOM}/plugins/zsh-completions
-	else
-	    info "zsh-completions has already installed."
-	fi
+function install_ohmyzsh() {
+    if has_dir "$HOME/.oh-my-zsh"; then
+        already_installed_mesg "Oh-My-Zsh"
+    else
+        install_mesg "Oh-My-Zsh"
+        sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+    fi
+}
+
+function install_ohmyzsh_plugins() {
+    # zsh-users plugins
+    for plugin in zsh-autosuggestions zsh-syntax-highlighting zsh-completions; do
+        if has_dir "$ZSH_CUSTOM/plugins/$plugin"; then
+            already_installed_mesg "$plugin"
+        else
+            install_mesg "$plugin"
+            git clone https://github.com/zsh-users/$plugin ${ZSH_CUSTOM}/plugins/$plugin
+        fi
+    done
 
 	# powerlevel10k
-	if [[ ! -e "$ZSH_CUSTOM/themes/powerlevel10k" ]]; then
-	    git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM}/themes/powerlevel10k
+	if has_dir "$ZSH_CUSTOM/themes/powerlevel10k"; then
+	    already_installed_mesg "powerlevel10k"
 	else
-	    info "powerlevel10k has already installed."
+	    git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM}/themes/powerlevel10k
 	fi
 
 	# autoupdate-zsh-plugin
-	if [[ ! -e "$ZSH_CUSTOM/plugins/autoupdate" ]]; then
+	if has_dir "$ZSH_CUSTOM/plugins/autoupdate"; then
+	    already_installed_mesg "autoupdate-zsh-plugin"
+	else
 	    git clone https://github.com/TamCore/autoupdate-oh-my-zsh-plugins ${ZSH_CUSTOM}/plugins/autoupdate
-	else
-	    info "autoupdate-zsh-plugin has already installed."
 	fi
+}
 
-	# vim-plug
-	if [[ ! -e "$HOME/.vim/autoload/plug.vim" ]]; then
-	    curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-	else
-	    info "Vim-Plug for Vim has already installed."
-	fi
-	if command -v nvim > /dev/null; then
-	    if [[ ! -e "$HOME/.local/share/nvim/site/autoload/plug.vim" ]]; then
-	        curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs \
-	           https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-	    else
-	        info "Vim-Plug for NeoVim has already installed."
-	    fi
-	fi
+function install_vim_plug() {
+    if has_file "$HOME/.vim/autoload/plug.vim"; then
+        already_installed_mesg "Vim-Plug"
+    else
+        install_mesg "Vim-Plug"
+        curl -fLo "$HOME/.vim/autoload/plug.vim" --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+    fi
+    if has_file "$HOME/.local/share/nvim/site/autoload/plug.vim"; then
+        already_installed_mesg "Vim-Plug for Neovim"
+    else
+        install_mesg "Vim-Plug for Neovim"
+        curl -fLo "$HOME/.local/share/nvim/site/autoload/plug.vim" --create-dirs \
+           https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+    fi
+}
+
+function install_vifm_custom() {
+    local vifm_config_home="$HOME/.config/vifm"
+    if ! has_dir $vifm_config_home; then
+        info "Generating original vifm configuration..."
+	    vifm +q
+    fi
 
 	# vifm-colors
-	if [[ ! -e "$HOME/.config/vifm/colors/ph.vifm" ]]; then
-	    vifm +q
-	    mv ~/.config/vifm/colors ~/.config/vifm/colors.bak
-	    git clone https://github.com/vifm/vifm-colors ~/.config/vifm/colors
+	if has_file "$vifm_config_home/colors/solarized-dark.vifm"; then
+	    already_installed_mesg "Vifm colorshemes"
 	else
-	    info "Vifm colorshemes has already installed."
+	    mv $vifm_config_home/colors $vifm_config_home/colors.bak
+	    git clone https://github.com/vifm/vifm-colors $vifm_config_home/colors
 	fi
 
 	# vifm-favicons
-	if [[ ! -e "$HOME/.config/vifm/plugged/favicons.vifm" ]]; then
-	    wget https://raw.githubusercontent.com/cirala/vifm_devicons/master/favicons.vifm -P ~/.config/vifm/plugged/
+	if has_file "$vifm_config_home/plugged/favicons.vifm"; then
+	    already_installed_mesg "Vifm favicons"
 	else
-	    info "Vifm favicons has already installed."
+	    wget https://raw.githubusercontent.com/cirala/vifm_devicons/master/favicons.vifm -P $vifm_config_home/plugged/
 	fi
+}
+
+function install_deps() {
+    install_ohmyzsh
+    install_ohmyzsh_plugins
+    install_vim_plug
+    install_vifm_custom
 
     success "All dependencies have been installed."
 }
@@ -153,4 +181,5 @@ function install_deps() {
 # main
 cmd_parser "$@"
 detect_system
+check_commands
 install_deps
