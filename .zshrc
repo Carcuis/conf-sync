@@ -194,7 +194,7 @@ function web_detection() {
         elif [[ $exit_code == 28 ]]; then
             echo -e "\033[1;33mTIMEOUT\033[0m"
         else
-            echo -e "\033[1;31mFAIL($exit_code)\033[0m"
+            echo -e "\033[1;31mFAIL($([[ $exit_code != 0 ]] && echo $exit_code || echo $status_code))\033[0m"
         fi
     done
 }
