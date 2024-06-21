@@ -77,6 +77,7 @@ if has("nvim")
     Plug 'lewis6991/gitsigns.nvim'
     Plug 'sindrets/diffview.nvim'
     Plug 'github/copilot.vim'
+    Plug 'ofseed/copilot-status.nvim'
     Plug 'kevinhwang91/nvim-hlslens'
     Plug 'NMAC427/guess-indent.nvim'    " indentation-detection
     Plug 'lukas-reineke/virt-column.nvim'
@@ -1029,6 +1030,18 @@ if has("nvim")
                         hint  = 'CocHintLualine',
                     },
                     symbols = { error = ' ', warn = ' ', info = ' ', hint = '󰌶 ' },
+                    padding = { left = 1, right = 0 },
+                },
+                {
+                    'copilot',
+                    show_running = true,
+                    symbols = {
+                        status = {
+                            enabled = "",
+                            disabled = "",
+                        },
+                        spinners = require("copilot-status.spinners").dots,
+                    },
                     padding = { left = 1, right = 0 },
                 },
                 {
