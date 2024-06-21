@@ -118,13 +118,15 @@ function install_ohmyzsh_plugins() {
 	if has_dir "$ZSH_CUSTOM/themes/powerlevel10k"; then
 	    already_installed_mesg "powerlevel10k"
 	else
+        install_mesg "powerlevel10k"
 	    git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM}/themes/powerlevel10k
 	fi
 
 	# autoupdate-zsh-plugin
 	if has_dir "$ZSH_CUSTOM/plugins/autoupdate"; then
-	    already_installed_mesg "autoupdate-zsh-plugin"
+	    already_installed_mesg "autoupdate-oh-my-zsh-plugin"
 	else
+        install_mesg "autoupdate-oh-my-zsh-plugin"
 	    git clone https://github.com/TamCore/autoupdate-oh-my-zsh-plugins ${ZSH_CUSTOM}/plugins/autoupdate
 	fi
 }
@@ -156,6 +158,7 @@ function install_vifm_custom() {
 	if has_file "$vifm_config_home/colors/solarized-dark.vifm"; then
 	    already_installed_mesg "Vifm colorshemes"
 	else
+        install_mesg "Vifm colorshemes"
 	    mv $vifm_config_home/colors $vifm_config_home/colors.bak
 	    git clone https://github.com/vifm/vifm-colors $vifm_config_home/colors
 	fi
@@ -164,6 +167,7 @@ function install_vifm_custom() {
 	if has_file "$vifm_config_home/plugged/favicons.vifm"; then
 	    already_installed_mesg "Vifm favicons"
 	else
+        install_mesg "Vifm favicons"
 	    wget https://raw.githubusercontent.com/cirala/vifm_devicons/master/favicons.vifm -P $vifm_config_home/plugged/
 	fi
 }
