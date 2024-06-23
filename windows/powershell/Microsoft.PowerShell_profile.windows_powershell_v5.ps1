@@ -119,6 +119,14 @@ function Move-And-Create-Link($target, $link) {
         }
     }
 }
+function Sum-MD5($file) {
+    $md5 = Get-FileHash -Algorithm MD5 -Path $file
+    Write-Host "MD5 ($file) = $($md5.Hash)"
+}
+function Sum-SHA256($file) {
+    $sha256 = Get-FileHash -Algorithm SHA256 -Path $file
+    Write-Host "SHA256 ($file) = $($sha256.Hash)"
+}
 
 Set-Alias .. GoUpOne
 Set-Alias ... GoUpTwo
@@ -154,6 +162,8 @@ Set-Alias pp ptpython
 Set-Alias cdhk conda-hook
 Set-Alias ln Create-Link
 Set-Alias mvx Move-And-Create-Link
+Set-Alias md5sum Sum-MD5
+Set-Alias sha256sum Sum-SHA256
 
 # Import the Chocolatey Profile that contains the necessary code to enable
 # tab-completions to function for `choco`.
