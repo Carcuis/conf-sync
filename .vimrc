@@ -32,6 +32,7 @@ Plug 'vifm/vifm.vim'
 Plug 'dstein64/vim-startuptime'
 Plug 'lambdalisue/suda.vim' " save file by sudo
 Plug 'fladson/vim-kitty' " syntax highlight for kitty.conf
+Plug 'a5ob7r/shellcheckrc.vim' " syntax highlight for shellcheckrc
 
 if has("nvim")
     Plug 'carcuis/darcula.nvim'
