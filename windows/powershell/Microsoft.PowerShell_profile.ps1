@@ -2,7 +2,8 @@ oh-my-posh init pwsh --config "$env:POSH_THEMES_PATH/cui_theme.omp.json" | Invok
 
 $env:POSH_GIT_ENABLED = $true
 
-Import-Module Terminal-Icons
+Import-Module -Name Terminal-Icons
+Import-Module -Name CompletionPredictor
 
 Set-PSReadLineOption -EditMode Emacs
 Set-PSReadLineOption -HistorySearchCursorMovesToEnd:$true
