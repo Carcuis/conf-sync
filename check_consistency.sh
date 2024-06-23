@@ -1,11 +1,97 @@
 #!/usr/bin/env bash
 
-dir=$(dirname $(realpath $0))
-params=$@
+DIR=$(dirname $(realpath $0))
+verbose=0
 
-TAIL="$(printf '\033[0m')"
-RED="$(printf '\033[31m')"; GREEN="$(printf '\033[32m')"; YELLOW="$(printf '\033[33m')"
-CYAN="$(printf '\033[36m')"; BLUE="$(printf '\033[34m')"; WHITE="$(printf '\033[37m')"
+BOLD="$(printf '\033[1m')"; TAIL="$(printf '\033[0m')"; WHITE="$(printf '\033[37m')"
+RED="$(printf '\033[31m')"; GREEN="$(printf '\033[32m')"; YELLOW="$(printf '\033[33m')"; CYAN="$(printf '\033[36m')"
+
+function mesg()     { echo -e "${WHITE}$1${TAIL}" ; }
+function info()     { if [[ $verbose == 1 ]]; then mesg "${CYAN}$1"; fi ; }
+function bold()     { mesg "${BOLD}$1" ; }
+function success()  { bold "${GREEN}$1 ✔" ; }
+function warning()  { bold "${YELLOW}$1" ; }
+function error()    { bold "${RED}$1" 1>&2 ; }
+
+declare -a file_list=(
+    zshrc
+    vimrc
+)
+declare -a extra_file_list=(
+    coc_settings
+    ptpython_config
+    lazygit_config
+    ideavimrc
+    git_config
+    kitty_config
+    vifmrc
+)
+
+# shellcheck disable=SC2034
+function declare_dirs() {
+    zshrc_remote=$DIR/.zshrc
+    zshrc_local=$HOME/.zshrc
+    vimrc_remote=$DIR/.vimrc
+    vimrc_local=$HOME/.vimrc
+    coc_settings_remote=$DIR/.config/nvim/coc-settings.json
+    coc_settings_local=$HOME/.config/nvim/coc-settings.json
+    ptpython_config_remote=$DIR/.config/ptpython/config.py
+    ptpython_config_local=$HOME/.config/ptpython/config.py
+    lazygit_config_remote=$DIR/.config/lazygit/config.yml
+    lazygit_config_local=$HOME/.config/lazygit/config.yml
+    ideavimrc_remote=$DIR/dot_files/.ideavimrc
+    ideavimrc_local=$HOME/.ideavimrc
+    git_config_remote=$DIR/dot_files/.gitconfig
+    git_config_local=$HOME/.gitconfig
+    kitty_config_remote=$DIR/.config/kitty/kitty.conf
+    kitty_config_local=$HOME/.config/kitty/kitty.conf
+    vifmrc_remote=$DIR/.config/vifm/vifmrc
+    vifmrc_local=$HOME/.config/vifm/vifmrc
+
+    case $SYSTEM in
+        Darwin)
+            ptpython_config_local="$HOME/Library/Application Support/ptpython/config.py"
+            lazygit_config_local="$HOME/Library/Application Support/lazygit/config.yml"
+            ;;
+    esac
+
+    local -a exclude_file_list
+
+    case $SYSTEM in
+        Android) exclude_file_list+=( ideavimrc kitty_config ) ;;
+        WSL*) exclude_file_list+=( ideavimrc ) ;;
+    esac
+
+    if [[ ${#exclude_file_list[@]} != 0 ]]; then
+        for exclude_file in ${exclude_file_list[@]}; do
+            file_list=( ${file_list[@]/$exclude_file} )
+        done
+        info "Skipped ${exclude_file_list[*]} on current system: ${GREEN}$SYSTEM ✔"
+    fi
+}
+
+function usage() {
+   bold "Usage:"
+   mesg "  check_consistency.sh [options]"
+   mesg
+   bold "Options:"
+   mesg "  -a, --all        Check all files"
+   mesg "  -h, --help       Display help"
+   mesg "  -v, --verbose    Show detailed information"
+}
+
+function cmd_parser
+{
+    while [ "$#" -gt 0 ]; do
+        case "$1" in
+            a|-a|--all) file_list+=( ${extra_file_list[@]} ) ;;
+            h|-h|--help) usage; exit 0 ;;
+            v|-v|--verbose) verbose=1 ;;
+            *) error "Error: Invalid option '$1'"; usage; exit 1 ;;
+        esac
+        shift
+    done
+}
 
 function detect_system() {
     local _uname_a=$(uname -a)
@@ -18,68 +104,20 @@ function detect_system() {
     else SYSTEM="Unknown"
     fi
 }
-detect_system
 
-file_list=(
-    zshrc
-    vimrc
-)
-extra_file_list=(
-    coc_settings
-    ptpython_config
-    lazygit_config
-    git_config
-    vifmrc
-)
-
-zshrc_remote=$dir/.zshrc
-zshrc_local=~/.zshrc
-vimrc_remote=$dir/.vimrc
-vimrc_local=~/.vimrc
-coc_settings_remote=$dir/.config/nvim/coc-settings.json
-coc_settings_local=~/.config/nvim/coc-settings.json
-ptpython_config_remote=$dir/.config/ptpython/config.py
-lazygit_config_remote=$dir/.config/lazygit/config.yml
-if [ "$SYSTEM" == "Darwin" ]; then
-    ptpython_config_local="$HOME/Library/Application Support/ptpython/config.py"
-    lazygit_config_local="$HOME/Library/Application Support/lazygit/config.yml"
-else
-    ptpython_config_local=~/.config/ptpython/config.py
-    lazygit_config_local=~/.config/lazygit/config.yml
-fi
-ideavimrc_remote=$dir/dot_files/.ideavimrc
-ideavimrc_local=~/.ideavimrc
-git_config_remote=$dir/dot_files/.gitconfig
-git_config_local=~/.gitconfig
-kitty_config_remote=$dir/.config/kitty/kitty.conf
-kitty_config_local=~/.config/kitty/kitty.conf
-vifmrc_remote=$dir/.config/vifm/vifmrc
-vifmrc_local=~/.config/vifm/vifmrc
-
-function cmd_parser
-{
-    case ${params[0]} in
-        a|-a)
-            case $SYSTEM in
-                WSL*|Android) ideavimrc=""; echo "${CYAN}Skipped ideavimrc on current system: $SYSTEM ✔${TAIL}" ;;
-                *) ideavimrc=ideavimrc ;;
-            esac
-            case $SYSTEM in
-                Android) kitty_config=""; echo "${CYAN}Skipped kitty config on current system: $SYSTEM ✔${TAIL}" ;;
-                *) kitty_config=kitty_config ;;
-            esac
-            file_list=(${file_list[@]} ${extra_file_list[@]} $ideavimrc $kitty_config) ;;
-    esac
-}
+function has_command() { command -v "$1" > /dev/null ; }
+function has_dir() { [[ -d "$1" ]] ; }
+function has_file() { [[ -f "$1" ]] ; }
+function file_same() { diff "$1" "$2" > /dev/null ; }
 
 function check_editor
 {
-    if command -v nvim > /dev/null; then
+    if has_command nvim; then
         diff_command="nvim -d"
-    elif command -v vim > /dev/null; then
+    elif has_command vim; then
         diff_command="vimdiff"
     else
-        echo -e "${RED}No vim or neovim found on your device.\nAborting...${TAIL}"
+        error "Error: vim or nvim not found."
         exit 1
     fi
 }
@@ -90,11 +128,11 @@ function run_diff_all
         local file_remote=$(eval echo \$${file}_remote)
         local file_local=$(eval echo \$${file}_local)
 
-        if [ ! -f "$file_local" ]; then
+        if ! has_file "$file_local"; then
             return 1
         fi
 
-        if ! diff "$file_remote" "$file_local" > /dev/null; then
+        if ! file_same "$file_remote" "$file_local"; then
             return 1
         fi
     done
@@ -104,7 +142,7 @@ function run_diff_all
 function run_edit
 {
     if run_diff_all; then
-        echo -e "${GREEN}All files are the same.✔\nNothing to do.${TAIL}"
+        success "All files are the same. Nothing to do."
         return
     fi
 
@@ -112,46 +150,44 @@ function run_edit
         local file_remote=$(eval echo \$${file}_remote)
         local file_local=$(eval echo \$${file}_local)
 
-        if [ ! -f "$file_local" ]; then
+        if ! has_file $file_local; then
             local file_local_dir=$(dirname "$file_local")
             read -n1 -p "$file not found, create a copy to \`$file_local\` ? [Y/n] " user_input </dev/tty
-            if [ "$user_input" == "" ]; then user_input=y; else echo; fi
-            if [ "$user_input" == "y" ]; then
-                [ ! -d "$file_local_dir" ] && mkdir -p "$file_local_dir"
+            if [[ "$user_input" == "" ]]; then user_input=y; else echo; fi
+            if [[ "$user_input" == "y" ]]; then
+                has_dir $file_local_dir || mkdir -p "$file_local_dir"
                 cp "$file_remote" "$file_local"
-                echo "${GREEN}Copied \`$file_remote\` to \`$file_local\`.✔${TAIL}"
-            else
-                echo "${YELLOW}Abort.${TAIL}"
+                success "Copied \`$file_remote\` to \`$file_local\`."
             fi
             continue
         fi
 
-        if ! diff "$file_remote" "$file_local" > /dev/null; then
-            read -n1 -p "$file unsynchronized. Edit with $diff_command ? [Y/n] " user_input </dev/tty
-            if [ "$user_input" == "" ]; then user_input=y; else echo; fi
-            if [ "$user_input" == "y" ]; then
-                $diff_command "$file_remote" "$file_local"
-                if diff "$file_remote" "$file_local" > /dev/null; then
-                    echo "${GREEN}$file is now synced.✔${TAIL}"
-                else
-                    echo "${CYAN}$file is still unsynchronized."
-                    echo "-- Use \`$diff_command \"$file_remote\" \"$file_local\"\` later,"
-                    echo "-- or try to rerun this script.${TAIL}"
-                fi
-            else
-                echo "${YELLOW}$file is still unsynchronized. Aborting.${TAIL}"
-            fi
+        if file_same "$file_remote" "$file_local"; then
+            [[ $verbose == 1 ]] && success "$file is already synced."
         else
-            echo "${GREEN}$file is already synced.✔${TAIL}"
+            read -n1 -p "$file unsynchronized. Edit with $diff_command ? [Y/n] " user_input </dev/tty
+            if [[ "$user_input" == "" ]]; then user_input=y; else echo; fi
+            if [[ "$user_input" == "y" ]]; then
+                $diff_command "$file_remote" "$file_local"
+                if file_same "$file_remote" "$file_local"; then
+                    success "$file is now synced."
+                else
+                    info "$file is still unsynchronized."
+                    info "-- Use \`$diff_command \"$file_remote\" \"$file_local\"\` later,"
+                    info "-- or try to rerun this script."
+                fi
+            fi
         fi
     done
 
     if run_diff_all; then
-        echo "${GREEN}All files are same now.✔${TAIL}"
+        success "All files are same now."
     fi
 }
 
 #main
-cmd_parser
+cmd_parser "$@"
+detect_system
+declare_dirs
 check_editor
 run_edit
