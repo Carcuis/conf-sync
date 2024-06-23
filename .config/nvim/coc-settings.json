@@ -104,6 +104,7 @@
     "powershell.integratedConsole.showOnStartup": false,
     "codeLens.enable": true,
     "codeLens.position": "eol",
+    "bashIde.backgroundAnalysisMaxFiles": 0,
     "markdownlint.onOpen": false,
     "translator.window.enableBorder": false,
     "translator.engines": [
