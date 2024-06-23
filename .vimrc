@@ -608,7 +608,11 @@ let g:extra_whitespace_ignored_filetypes = [
 
 " === bufferline.nvim ===
 if has("nvim")
-    nnoremap <silent> gb :BufferLinePick<CR>
+    nnoremap <silent> gb <cmd>BufferLinePick<CR>
+    nnoremap <silent> H <cmd>BufferLineCyclePrev<CR>
+    nnoremap <silent> L <cmd>BufferLineCycleNext<CR>
+    nnoremap <silent> <M-S-H> <cmd>BufferLineMovePrev<CR>
+    nnoremap <silent> <M-S-L> <cmd>BufferLineMoveNext<CR>
     lua << EOF
     require("bufferline").setup{
         options = {
@@ -1535,8 +1539,6 @@ nnoremap <silent> <M-S-c> :tabc<CR>
 if ! has("nvim")
     nnoremap <leader>c :bd<CR>
 endif
-nnoremap <silent> H :bp<CR>
-nnoremap <silent> L :bn<CR>
 
 noremap <leader>y "+y
 noremap <leader>p "+p
