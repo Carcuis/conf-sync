@@ -1011,7 +1011,7 @@ if has("nvim")
                             local name = v.name or ''
                             local has_label = type(v.label) ~= 'nil'
                             if has_label then
-                                t[#t+1] = '%#' .. highlight .. '#' .. v.label .. ' %#Normal#'.. name
+                                t[#t+1] = '%#' .. highlight .. '# ' .. v.label .. ' %#Normal#'.. name
                             else
                                 t[#t+1] = '%#' .. highlight .. '#  %#Normal#' .. name
                             end
