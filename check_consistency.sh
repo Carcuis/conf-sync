@@ -154,7 +154,7 @@ function run_edit
             local file_local_dir=$(dirname "$file_local")
             read -n1 -p "$file not found, create a copy to \`$file_local\` ? [Y/n] " user_input </dev/tty
             if [[ "$user_input" == "" ]]; then user_input=y; else echo; fi
-            if [[ "$user_input" == "y" ]]; then
+            if [[ "$user_input" =~ [yY] ]]; then
                 has_dir $file_local_dir || mkdir -p "$file_local_dir"
                 cp "$file_remote" "$file_local"
                 success "Copied \`$file_remote\` to \`$file_local\`."
@@ -167,7 +167,7 @@ function run_edit
         else
             read -n1 -p "$file unsynchronized. Edit with $diff_command ? [Y/n] " user_input </dev/tty
             if [[ "$user_input" == "" ]]; then user_input=y; else echo; fi
-            if [[ "$user_input" == "y" ]]; then
+            if [[ "$user_input" =~ [yY] ]]; then
                 $diff_command "$file_remote" "$file_local"
                 if file_same "$file_remote" "$file_local"; then
                     success "$file is now synced."
