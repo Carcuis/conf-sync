@@ -1,3 +1,9 @@
+$verbose = $false
+$diff_command = ""
+
+$BOLD = "`e[1m" ; $TAIL  = "`e[0m" ; $WHITE  = "`e[37m"
+$RED  = "`e[31m"; $GREEN = "`e[32m"; $YELLOW = "`e[33m"; $CYAN = "`e[36m"
+
 $psprofile = @{
     name = "PSProfile"
     remote = "$PSScriptRoot\windows\powershell\Microsoft.PowerShell_profile.ps1"
@@ -63,43 +69,64 @@ $extra_file_list = @(
     $vifmrc
 )
 
+function Mesg    { param($msg) Write-Host "$WHITE$msg$TAIL"       }
+function Info    { param($msg) if ($verbose) { Mesg "$CYAN$msg" } }
+function Bold    { param($msg) Mesg "$BOLD$msg"                   }
+function Success { param($msg) Bold "$GREEN$msg ✔"                }
+function Warning { param($msg) Bold "$YELLOW$msg"                 }
+function Error   { param($msg) Bold "$RED$msg"                    }
+
+function Usage {
+    Bold "Usage:"
+    Mesg "  check_consistency.ps1 [options]"
+    Mesg
+    Bold "Options:"
+    Mesg "  -a, --all        Check all files"
+    Mesg "  -h, --help       Display help"
+    Mesg "  -v, --verbose    Show detailed information"
+}
+
 function CmdParser {
-    if ($args -match "^-?a$") {
-        $script:file_list = $file_list + $extra_file_list
+    foreach ($arg in $args) {
+        switch -Regex ($arg) {
+            "^(-?a)?(--all)?$"      { $script:file_list += $extra_file_list }
+            "^(-?h)?(--help)?$"     { Usage; exit 0 }
+            "^(-?v)?(--verbose)?$"  { $script:verbose = $true }
+            default { Error "Error: Invalid option '$arg'"; Usage; exit 1 }
+        }
     }
 }
 
+function HasCommand { param($cmd)           return (Get-Command $cmd).length -gt 0                           }
+function HasDir     { param($dir)           return [System.IO.Path]::Exists($dir)                            }
+function HasFile    { param($file)          return [System.IO.File]::Exists($file)                           }
+function FileSame   { param($file1, $file2) return (Get-FileHash $file1).hash -eq (Get-FileHash $file2).hash }
+
 function RunDiffAll {
     foreach ($file in $file_list) {
-        if (! [System.IO.File]::Exists($file.local)) {
-            return $false
-        }
-
-        if ((Get-FileHash $file.remote).hash -ne (Get-FileHash $file.local).hash) {
-            return $false
-        }
+        if (! (HasFile $file.local)) { return $false }
+        if (! (FileSame $file.remote $file.local)) { return $false }
     }
     return $true
 }
 
 function CheckEditor {
-    if ((Get-Command nvim).length -gt 0) {
-        $_cmd = "nvim -d"
+    if (HasCommand nvim) {
+        $script:diff_command = "nvim -d"
     } elseif ((Get-Command vim).length -gt 0) {
-        $_cmd = "vimdiff"
+        $script:diff_command = "vimdiff"
     } else {
-        Write-Error "No vim or neovim found on your device.`nAborting..."
+        Error "Error: vim or nvim not found."
         exit 1
     }
-    return $_cmd
 }
 
 function DiffFunc {
     param($file1, $file2)
-    if ($edit_cmd -eq "nvim -d")
+    if ($diff_command -eq "nvim -d")
     {
         nvim -d $file1 $file2
-    } elseif ($edit_cmd -eq "vimdiff")
+    } elseif ($diff_command -eq "vimdiff")
     {
         vimdiff $file1 $file2
     }
@@ -107,54 +134,52 @@ function DiffFunc {
 
 function RunEdit {
     if (RunDiffAll) {
-        Write-Host "All files are the same.✔ `nNothing to do." -ForegroundColor Green
+        Success "All files are the same. Nothing to do."
         exit
     }
 
     foreach ($file in $file_list) {
-        if (! [System.IO.File]::Exists($file.local)) {
+        if (! (HasFile $file.local)) {
             $file_local_dir = Split-Path $file.local
-            Write-Host "$($file.name) not found, create a copy to $($file.local) ? [Y/n] "
-            $user_input = [Console]::ReadKey('?')
+            Write-Host -NoNewline "$($file.name) not found, create a copy to $($file.local) ? [Y/n] "
+            $user_input = [Console]::ReadKey()
+            Mesg
             if ($user_input.Key -eq "Y" -or $user_input.Key -eq "Enter") {
-                if (! [System.IO.Path]::Exists($file_local_dir)) {
-                    Write-Host "$file_local_dir not found, creating..."
+                if (! (HasDir $file_local_dir)) {
+                    Info "$file_local_dir not found, creating..."
                     New-Item -ItemType "directory" -Path $file_local_dir
                 }
                 Copy-Item -Path $file.remote -Destination $file.local
-                Write-Host "Copied ``$($file.remote)`` to ``$($file.local)``.✔" -ForegroundColor Green
-            } else {
-                Write-Host "Abort." -ForegroundColor Yellow
+                Success "Copied ``$($file.remote)`` to ``$($file.local)``."
             }
             continue
         }
 
-        if ((Get-FileHash $file.remote).hash -ne (Get-FileHash $file.local).hash) {
-            Write-Host "$($file.name) unsynchronized. Edit with $edit_cmd ? [Y/n]"
-            $user_input = [Console]::ReadKey('?')
+        if (FileSame $file.remote $file.local) {
+            if ($verbose) { Success "$($file.name) has already been synchronized." }
+        } else {
+            Write-Host -NoNewline "$($file.name) unsynchronized. Edit with $diff_command ? [Y/n] "
+            $user_input = [Console]::ReadKey()
+            Mesg
             if ($user_input.Key -eq "Y" -or $user_input.Key -eq "Enter") {
                 DiffFunc -file1 $file.remote -file2 $file.local
-                if ((Get-FileHash $file.remote).hash -eq (Get-FileHash $file.local).hash) {
-                    Write-Host "$($file.name) is now synced.✔" -ForegroundColor Green
+                if (FileSame $file.remote $file.local) {
+                    Success "$($file.name) is now synchronized."
                 } else {
-                    Write-Host "$($file.name) is still unsynchronized." -ForegroundColor Cyan
-                    Write-Host "-- Use ``$edit_cmd $($file.remote) $($file.local)`` later," -ForegroundColor Cyan
-                    Write-Host "-- or try to rerun this wizard." -ForegroundColor Cyan
+                    Info "$($file.name) is still unsynchronized."
+                    Info "-- Use ``$diff_command $($file.remote) $($file.local)`` later,"
+                    Info "-- or try to rerun this wizard."
                 }
-            } else {
-                Write-Host "$($file.name) is still unsynchronized. Aborting." -ForegroundColor Yellow
             }
-        } else {
-            Write-Host "$($file.name) is already synced.✔" -ForegroundColor Green
         }
     }
 
     if (RunDiffAll) {
-        Write-Host "All files are synchronized now.✔ " -ForegroundColor Green
+        Success "All files are synchronized now."
     }
 }
 
 # main
-CmdParser $args[0]
-$edit_cmd = CheckEditor
+CmdParser $args
+CheckEditor
 RunEdit
