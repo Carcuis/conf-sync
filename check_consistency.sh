@@ -163,14 +163,14 @@ function run_edit
         fi
 
         if file_same "$file_remote" "$file_local"; then
-            [[ $verbose == 1 ]] && success "$file is already synced."
+            [[ $verbose == 1 ]] && success "$file has already been synchronized."
         else
             read -N1 -p "$file unsynchronized. Edit with $diff_command ? [Y/n] " user_input </dev/tty
             if [[ "$user_input" == $'\n' ]]; then user_input=y; else echo; fi
             if [[ "$user_input" =~ [yY] ]]; then
                 $diff_command "$file_remote" "$file_local"
                 if file_same "$file_remote" "$file_local"; then
-                    success "$file is now synced."
+                    success "$file is now synchronized."
                 else
                     info "$file is still unsynchronized."
                     info "-- Use \`$diff_command \"$file_remote\" \"$file_local\"\` later,"
@@ -185,7 +185,7 @@ function run_edit
     fi
 }
 
-#main
+# main
 cmd_parser "$@"
 detect_system
 declare_dirs
