@@ -989,7 +989,7 @@ if has("nvim")
                         end
                         return ''
                     end,
-                    color = { fg = "Red" },
+                    color = { fg = "Brown" },
                     padding = { left = 0, right = 1 },
                 },
                 {
