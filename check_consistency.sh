@@ -3,15 +3,15 @@
 DIR=$(dirname $(realpath $0))
 verbose=0
 
-BOLD="$(printf '\033[1m')"; TAIL="$(printf '\033[0m')"; WHITE="$(printf '\033[37m')"
+BOLD="$(printf '\033[1m')"; TAIL="$(printf '\033[0m')";   WHITE="$(printf '\033[37m')"
 RED="$(printf '\033[31m')"; GREEN="$(printf '\033[32m')"; YELLOW="$(printf '\033[33m')"; CYAN="$(printf '\033[36m')"
 
-function mesg()     { echo -e "${WHITE}$1${TAIL}" ; }
+function mesg()     { echo -e "${WHITE}$1${TAIL}" ;                       }
 function info()     { if [[ $verbose == 1 ]]; then mesg "${CYAN}$1"; fi ; }
-function bold()     { mesg "${BOLD}$1" ; }
-function success()  { bold "${GREEN}$1 ✔" ; }
-function warning()  { bold "${YELLOW}$1" ; }
-function error()    { bold "${RED}$1" 1>&2 ; }
+function bold()     { mesg "${BOLD}$1" ;                                  }
+function success()  { bold "${GREEN}$1 ✔" ;                               }
+function warning()  { bold "${YELLOW}$1" ;                                }
+function error()    { bold "${RED}$1" 1>&2 ;                              }
 
 declare -a file_list=(
     zshrc
@@ -59,7 +59,7 @@ function declare_dirs() {
 
     case $SYSTEM in
         Android) exclude_file_list+=( ideavimrc kitty_config ) ;;
-        WSL*) exclude_file_list+=( ideavimrc ) ;;
+        WSL*)    exclude_file_list+=( ideavimrc ) ;;
     esac
 
     if [[ ${#exclude_file_list[@]} != 0 ]]; then
@@ -106,9 +106,9 @@ function detect_system() {
 }
 
 function has_command() { command -v "$1" > /dev/null ; }
-function has_dir() { [[ -d "$1" ]] ; }
-function has_file() { [[ -f "$1" ]] ; }
-function file_same() { diff "$1" "$2" > /dev/null ; }
+function has_dir()     { [[ -d "$1" ]] ;               }
+function has_file()    { [[ -f "$1" ]] ;               }
+function file_same()   { diff "$1" "$2" > /dev/null ;  }
 
 function check_editor
 {
@@ -122,7 +122,7 @@ function check_editor
     fi
 }
 
-function run_diff_all
+function check_all_files
 {
     for file in ${file_list[@]}; do
         local file_remote=$(eval echo \$${file}_remote)
@@ -141,7 +141,7 @@ function run_diff_all
 
 function run_edit
 {
-    if run_diff_all; then
+    if check_all_files; then
         success "All files are the same. Nothing to do."
         return
     fi
@@ -180,7 +180,7 @@ function run_edit
         fi
     done
 
-    if run_diff_all; then
+    if check_all_files; then
         success "All files are same now."
     fi
 }
