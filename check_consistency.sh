@@ -23,6 +23,7 @@ declare -a extra_file_list=(
     lazygit_config
     ideavimrc
     git_config
+    shellcheckrc
     kitty_config
     vifmrc
 )
@@ -43,6 +44,8 @@ function declare_dirs() {
     ideavimrc_local=$HOME/.ideavimrc
     git_config_remote=$DIR/dot_files/.gitconfig
     git_config_local=$HOME/.gitconfig
+    shellcheckrc_remote=$DIR/dot_files/.shellcheckrc
+    shellcheckrc_local=$HOME/.shellcheckrc
     kitty_config_remote=$DIR/.config/kitty/kitty.conf
     kitty_config_local=$HOME/.config/kitty/kitty.conf
     vifmrc_remote=$DIR/.config/vifm/vifmrc

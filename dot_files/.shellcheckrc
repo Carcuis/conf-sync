@@ -1,0 +1,91 @@
+# @see: https://www.shellcheck.net/wiki/SC2046
+#
+# Quote this to prevent word splitting.
+#
+# problem code:
+#     ls -l $(getfilename)
+# correct code:
+#     ls -l "$(getfilename)"
+disable=SC2046
+
+# @see: https://www.shellcheck.net/wiki/SC2068
+#
+# Double quote array expansions to avoid re-splitting elements.
+#
+# problem code:
+#     cp $@ ~/dir
+# correct code:
+#     cp "$@" ~/dir
+disable=SC2068
+
+# @see: https://www.shellcheck.net/wiki/SC2086
+#
+# Double quote to prevent globbing and word splitting.
+#
+# problem code:
+#     echo $1
+#     for i in $*; do :; done # this one and the next one also apply to expanding arrays.
+#     for i in $@; do :; done
+# correct code:
+#     echo "$1"
+#     for i in "$@"; do :; done # or, 'for i; do'
+disable=SC2086
+
+# @see: https://www.shellcheck.net/wiki/SC2155
+#
+# Declare and assign separately to avoid masking return values.
+#
+# problem code:
+#     export foo="$(mycmd)"
+# correct code:
+#     foo="$(mycmd)"
+#     export foo
+disable=SC2155
+
+# @see: https://www.shellcheck.net/wiki/SC2162
+#
+# read without -r will mangle backslashes.
+#
+# problem code:
+#     echo "Enter name:"
+#     read name
+# correct code:
+#     echo "Enter name:"
+#     read -r name
+disable=SC2162
+
+# @see: https://www.shellcheck.net/wiki/SC2164
+#
+# Use cd ... || exit in case cd fails.
+#
+# problem code:
+#     cd generated_files
+#     rm -r *.c
+#     func(){
+#       cd foo
+#       do_something
+#     }
+# correct code:
+#     cd generated_files || exit
+#     rm -r *.c
+#     # For functions, you may want to use return:
+#     func(){
+#       cd foo || return
+#       do_something
+#     }
+disable=SC2164
+
+# @see: https://www.shellcheck.net/wiki/SC2206
+#
+# Quote to prevent word splitting/globbing, or split robustly with mapfile or read -a.
+#
+# problem code:
+#     array=( $var )
+# correct code:
+#     array=( "$var" )
+disable=SC2206
+
+# @see: https://www.shellcheck.net/wiki/Optional
+enable=check-unassigned-uppercase
+enable=deprecate-which
+
