@@ -69,59 +69,67 @@ $extra_file_list = @(
     $vifmrc
 )
 
-function Mesg    { param($msg) Write-Host "$WHITE$msg$TAIL"       }
-function Info    { param($msg) if ($verbose) { Mesg "$CYAN$msg" } }
-function Bold    { param($msg) Mesg "$BOLD$msg"                   }
-function Success { param($msg) Bold "$GREEN$msg ✔"                }
-function Warning { param($msg) Bold "$YELLOW$msg"                 }
-function Error   { param($msg) Bold "$RED$msg"                    }
+function Print-Line    { param($msg) Write-Host "$WHITE$msg$TAIL"             }
+function Print-Info    { param($msg) if ($verbose) { Print-Line "$CYAN$msg" } }
+function Print-Bold    { param($msg) Print-Line "$BOLD$msg"                   }
+function Print-Success { param($msg) Print-Bold "$GREEN$msg ✔"                }
+function Print-Warning { param($msg) Print-Bold "$YELLOW$msg"                 }
+function Print-Error   { param($msg) Print-Bold "$RED$msg"                    }
 
-function Usage {
-    Bold "Usage:"
-    Mesg "  check_consistency.ps1 [options]"
-    Mesg
-    Bold "Options:"
-    Mesg "  -a, --all        Check all files"
-    Mesg "  -h, --help       Display help"
-    Mesg "  -v, --verbose    Show detailed information"
+function Show-Usage {
+    Print-Bold "Usage:"
+    Print-Line "  check_consistency.ps1 [options]"
+    Print-Line
+    Print-Bold "Options:"
+    Print-Line "  -a, --all        Check all files"
+    Print-Line "  -h, --help       Display help"
+    Print-Line "  -v, --verbose    Show detailed information"
 }
 
-function CmdParser {
+function Command-Parser {
     foreach ($arg in $args) {
         switch -Regex ($arg) {
             "^(-?a)?(--all)?$"      { $script:file_list += $extra_file_list }
-            "^(-?h)?(--help)?$"     { Usage; exit 0 }
+            "^(-?h)?(--help)?$"     { Show-Usage; exit 0 }
             "^(-?v)?(--verbose)?$"  { $script:verbose = $true }
-            default { Error "Error: Invalid option '$arg'"; Usage; exit 1 }
+            default { Print-Error "Error: Invalid option '$arg'"; Show-Usage; exit 1 }
         }
     }
 }
 
-function HasCommand { param($cmd)           return (Get-Command $cmd).length -gt 0                           }
-function HasDir     { param($dir)           return [System.IO.Path]::Exists($dir)                            }
-function HasFile    { param($file)          return [System.IO.File]::Exists($file)                           }
-function FileSame   { param($file1, $file2) return (Get-FileHash $file1).hash -eq (Get-FileHash $file2).hash }
+function Has-Command { param($cmd)           return (Get-Command $cmd).length -gt 0                           }
+function Has-Dir     { param($dir)           return [System.IO.Path]::Exists($dir)                            }
+function Has-File    { param($file)          return [System.IO.File]::Exists($file)                           }
+function File-Same   { param($file1, $file2) return (Get-FileHash $file1).hash -eq (Get-FileHash $file2).hash }
 
-function RunDiffAll {
+function Check-All-Files {
     foreach ($file in $file_list) {
-        if (! (HasFile $file.local)) { return $false }
-        if (! (FileSame $file.remote $file.local)) { return $false }
+        if (! (Has-File $file.local)) { return $false }
+        if (! (File-Same $file.remote $file.local)) { return $false }
     }
     return $true
 }
 
-function CheckEditor {
-    if (HasCommand nvim) {
+function Check-Editor {
+    if (Has-Command nvim) {
         $script:diff_command = "nvim -d"
-    } elseif ((Get-Command vim).length -gt 0) {
+    } elseif (Has-Command vim) {
         $script:diff_command = "vimdiff"
     } else {
-        Error "Error: vim or nvim not found."
+        Print-Error "Error: vim or nvim not found."
         exit 1
     }
 }
 
-function DiffFunc {
+function Read-Input-Key {
+    param($message)
+    Write-Host -NoNewline "$message"
+    $user_input = [Console]::ReadKey()
+    Print-Line
+    return $user_input.Key
+}
+
+function Run-Diff {
     param($file1, $file2)
     if ($diff_command -eq "nvim -d")
     {
@@ -132,54 +140,50 @@ function DiffFunc {
     }
 }
 
-function RunEdit {
-    if (RunDiffAll) {
-        Success "All files are the same. Nothing to do."
+function Run-Edit {
+    if (Check-All-Files) {
+        Print-Success "All files are the same. Nothing to do."
         exit
     }
 
     foreach ($file in $file_list) {
-        if (! (HasFile $file.local)) {
+        if (! (Has-File $file.local)) {
             $file_local_dir = Split-Path $file.local
-            Write-Host -NoNewline "$($file.name) not found, create a copy to $($file.local) ? [Y/n] "
-            $user_input = [Console]::ReadKey()
-            Mesg
-            if ($user_input.Key -eq "Y" -or $user_input.Key -eq "Enter") {
-                if (! (HasDir $file_local_dir)) {
-                    Info "$file_local_dir not found, creating..."
+            $input_key = Read-Input-Key "$($file.name) not found, create a copy to $($file.local) ? [Y/n] "
+            if ($input_key -eq "Y" -or $input_key -eq "Enter") {
+                if (! (Has-Dir $file_local_dir)) {
+                    Print-Info "$file_local_dir not found, creating..."
                     New-Item -ItemType "directory" -Path $file_local_dir
                 }
                 Copy-Item -Path $file.remote -Destination $file.local
-                Success "Copied ``$($file.remote)`` to ``$($file.local)``."
+                Print-Success "Copied ``$($file.remote)`` to ``$($file.local)``."
             }
             continue
         }
 
-        if (FileSame $file.remote $file.local) {
-            if ($verbose) { Success "$($file.name) has already been synchronized." }
+        if (File-Same $file.remote $file.local) {
+            if ($verbose) { Print-Success "$($file.name) has already been synchronized." }
         } else {
-            Write-Host -NoNewline "$($file.name) unsynchronized. Edit with $diff_command ? [Y/n] "
-            $user_input = [Console]::ReadKey()
-            Mesg
-            if ($user_input.Key -eq "Y" -or $user_input.Key -eq "Enter") {
-                DiffFunc -file1 $file.remote -file2 $file.local
-                if (FileSame $file.remote $file.local) {
-                    Success "$($file.name) is now synchronized."
+            $input_key = Read-Input-Key "$($file.name) unsynchronized. Edit with $diff_command ? [Y/n] "
+            if ($input_key -eq "Y" -or $input_key -eq "Enter") {
+                Run-Diff -file1 $file.remote -file2 $file.local
+                if (File-Same $file.remote $file.local) {
+                    Print-Success "$($file.name) is now synchronized."
                 } else {
-                    Info "$($file.name) is still unsynchronized."
-                    Info "-- Use ``$diff_command $($file.remote) $($file.local)`` later,"
-                    Info "-- or try to rerun this wizard."
+                    Print-Info "$($file.name) is still unsynchronized."
+                    Print-Info "-- Use ``$diff_command $($file.remote) $($file.local)`` later,"
+                    Print-Info "-- or try to rerun this wizard."
                 }
             }
         }
     }
 
-    if (RunDiffAll) {
-        Success "All files are synchronized now."
+    if (Check-All-Files) {
+        Print-Success "All files are synchronized now."
     }
 }
 
 # main
-CmdParser $args
-CheckEditor
-RunEdit
+Command-Parser $args
+Check-Editor
+Run-Edit
