@@ -474,7 +474,7 @@ if has("nvim")
     autocmd CursorHold * silent call CocActionAsync('highlight')
     autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
     nmap <silent> <leader>rn <Plug>(coc-rename)
-    nmap <silent> <leader>Rn :CocCommand document.renameCurrentWord<CR>
+    nmap <silent> <leader>RN :CocCommand document.renameCurrentWord<CR>
     nmap <silent> <S-F5> <Plug>(coc-rename)
     nmap <silent> <leader>rf <Plug>(coc-refactor)
     nmap <silent> <leader>lo <Plug>(coc-openlink)
