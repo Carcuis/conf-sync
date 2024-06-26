@@ -2,6 +2,7 @@ oh-my-posh init pwsh --config "$env:POSH_THEMES_PATH/cui_theme.omp.json" | Invok
 
 Import-Module -Name Terminal-Icons
 Import-Module -Name CompletionPredictor
+Import-Module -Name scoop-completion
 
 Set-PSReadLineOption -EditMode Emacs
 Set-PSReadLineOption -HistorySearchCursorMovesToEnd:$true
