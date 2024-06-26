@@ -131,7 +131,7 @@
         },
         {
           "type": "path",
-          "style": "powerline",
+          "style": "plain",
           "foreground": "#0099FF",
           "background": "#1A2429",
           "template": " {{ .Path }} ",
