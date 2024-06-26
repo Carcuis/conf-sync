@@ -1,7 +1,5 @@
 oh-my-posh init pwsh --config "$env:POSH_THEMES_PATH/cui_theme.omp.json" | Invoke-Expression
 
-$env:POSH_GIT_ENABLED = $true
-
 Import-Module -Name Terminal-Icons
 Import-Module -Name CompletionPredictor
 
