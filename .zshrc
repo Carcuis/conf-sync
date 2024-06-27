@@ -240,7 +240,7 @@ alias wtr=weather_forecast
 alias histc="$EDITOR ~/.zsh_history"
 alias ktc="$EDITOR ~/.config/kitty/kitty.conf"
 
-if [[ $SYSTEM == "WSL1" || $SYSTEM == "WSL2" ]]; then
+if [[ $SYSTEM =~ "WSL[12]" ]]; then
     alias sshon='sudo service ssh start'
     alias sshoff='sudo service ssh stop'
     # alias cman='man -M /usr/local/share/man/zh_CN'
@@ -299,7 +299,7 @@ fi
 # PKG_CONFIG_PATH=$PKG_CONFIG_PATH:/usr/local/lib/pkgconfig
 # export PKG_CONFIG_PATH
 
-if [[ $SYSTEM == "WSL1" || $SYSTEM == "WSL2" ]]; then
+if [[ $SYSTEM =~ "WSL[12]" ]]; then
     if [[ $SYSTEM == "WSL1" ]]; then
         # adjust login path
         if [ "$PWD" = "/mnt/c/Users/cui" ]; then
