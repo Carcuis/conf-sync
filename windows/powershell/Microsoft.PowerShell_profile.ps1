@@ -3,6 +3,7 @@ oh-my-posh init pwsh --config "$env:POSH_THEMES_PATH/cui_theme.omp.json" | Invok
 Import-Module -Name Terminal-Icons
 Import-Module -Name CompletionPredictor
 Import-Module -Name git-aliases-plus -DisableNameChecking
+Import-Module -Name posh-git -arg 0,0,1
 Import-Module -Name scoop-completion
 
 Set-PSReadLineOption -EditMode Emacs
