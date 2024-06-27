@@ -241,6 +241,43 @@ alias histc="$EDITOR ~/.zsh_history"
 alias ktc="$EDITOR ~/.config/kitty/kitty.conf"
 
 if [[ $SYSTEM =~ "WSL[12]" ]]; then
+    function wtw() {
+        sed -e "s/\(.:\)/\/mnt\/\L\0/g" -e 's/\\/\//g' -e 's/://' <<< $1
+    }
+
+    function wsl_get_proxy_server() {
+        local server
+        if [[ $SYSTEM == "WSL1" ]]; then
+            server="127.0.0.1"
+        else
+            server=$(ip route show | grep -i default | awk '{print $3}')
+        fi
+        echo $server
+    }
+
+    function wsl_get_proxy_port() {
+        local port=$(reg.exe query "HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Internet Settings" \
+            /v ProxyServer | sed -n 3p | awk -F: 'BEGIN{RS="\r\n"}{print $2}')
+        echo $port
+    }
+
+    function wsl_has_windows_ie_proxy() {
+        local has_ie_proxy=$(reg.exe query "HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Internet Settings" \
+            /v ProxyEnable | sed -n 3p | awk 'BEGIN{RS="\r\n"}{print $3}')
+        if [[ $has_ie_proxy == 0x1 ]]; then
+            return 0
+        else
+            return 1
+        fi
+    }
+
+    function detect_and_set_proxy() {
+        if wsl_has_windows_ie_proxy; then
+            set_proxy http://$(wsl_get_proxy_server):$(wsl_get_proxy_port)
+        fi
+    }
+    detect_and_set_proxy
+
     alias sshon='sudo service ssh start'
     alias sshoff='sudo service ssh stop'
     # alias cman='man -M /usr/local/share/man/zh_CN'
@@ -250,17 +287,10 @@ if [[ $SYSTEM =~ "WSL[12]" ]]; then
     alias o='explorer.exe'
     alias o.='explorer.exe .'
     alias no.='nautilus .'
+    alias px="set_proxy http://$(wsl_get_proxy_server):$(wsl_get_proxy_port)"
     alias upx=unset_proxy
 
-    function wtw() {
-        sed -e "s/\(.:\)/\/mnt\/\L\0/g" -e 's/\\/\//g' -e 's/://' <<< $1
-    }
-
-    if [[ $SYSTEM == "WSL2" ]]; then
-        # alias px="set_proxy http://$(cat /etc/resolv.conf |grep "nameserver" |cut -f 2 -d " "):10809"
-        alias px="set_proxy http://$(ip route show | grep -i default | awk '{ print $3}'):10809"
-    else
-        alias px='set_proxy http://127.0.0.1:10809'
+    if [[ $SYSTEM == "WSL1" ]]; then
         alias x='export DISPLAY=:0.0'
     fi
 elif [[ $SYSTEM == "Android" ]]; then
