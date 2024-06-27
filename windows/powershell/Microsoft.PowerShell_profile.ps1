@@ -16,7 +16,7 @@ Set-PSReadlineKeyHandler -Key DownArrow -Function HistorySearchForward
 Set-PSReadlineKeyHandler -Key "Ctrl+d" -Function DeleteCharOrExit
 Set-PsFzfOption -PSReadlineChordProvider 'Ctrl+f' -PSReadlineChordReverseHistory 'Ctrl+r'
 
-Get-quote|lolcat
+(Get-quote).TrimEnd() | cowsay -f moose -W 80 | lolcat
 
 function EditFile
 {
