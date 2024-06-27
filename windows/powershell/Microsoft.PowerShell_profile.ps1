@@ -2,6 +2,7 @@ oh-my-posh init pwsh --config "$env:POSH_THEMES_PATH/cui_theme.omp.json" | Invok
 
 Import-Module -Name Terminal-Icons
 Import-Module -Name CompletionPredictor
+Import-Module -Name git-aliases-plus -DisableNameChecking
 Import-Module -Name scoop-completion
 
 Set-PSReadLineOption -EditMode Emacs
@@ -137,9 +138,6 @@ function Sum-SHA256($file) {
     $sha256 = Get-FileHash -Algorithm SHA256 -Path $file
     Write-Host "SHA256 ($file) = $($sha256.Hash)"
 }
-
-if (Get-Alias gl -ErrorAction SilentlyContinue) { Remove-Item alias:\gl -Force }
-if (Get-Alias gp -ErrorAction SilentlyContinue) { Remove-Item alias:\gp -Force }
 
 Set-Alias .. GoUpOne
 Set-Alias ... GoUpTwo
