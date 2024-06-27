@@ -128,7 +128,7 @@ autoload -U compinit && compinit
 
 # if [[ ! $TMUX && ! $VIFM ]]; then
 if [[ ! $VIFM ]]; then
-    fortune | cowsay | lolcat
+    fortune | cowsay -f moose -W 80 | lolcat
 fi
 
 # set editor
