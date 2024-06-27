@@ -51,9 +51,10 @@ function StartSshServiceInWsl { wsl -- sudo service ssh start }
 function StopSshServiceInWsl { wsl -- sudo service ssh stop }
 function UpdateOhMyPosh { winget upgrade JanDeDobbeleer.OhMyPosh -s winget }
 function SetProxyOn {
-    $env:ALL_PROXY = "http://127.0.0.1:10809"
-    $env:HTTP_PROXY = "http://127.0.0.1:10809"
-    $env:HTTPS_PROXY = "http://127.0.0.1:10809"
+    $proxy_server = (Get-ItemProperty -Path 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Internet Settings').ProxyServer
+    $env:ALL_PROXY = "http://$proxy_server"
+    $env:HTTP_PROXY = "http://$proxy_server"
+    $env:HTTPS_PROXY = "http://$proxy_server"
 }
 function SetProxyOff {
     $env:ALL_PROXY = ""
@@ -139,6 +140,13 @@ function Sum-SHA256($file) {
     $sha256 = Get-FileHash -Algorithm SHA256 -Path $file
     Write-Host "SHA256 ($file) = $($sha256.Hash)"
 }
+function Detect-And-Set-Proxy {
+    $has_ie_proxy = (Get-ItemProperty -Path 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Internet Settings').ProxyEnable
+    if ($has_ie_proxy -eq 1) {
+        SetProxyOn
+    }
+}
+Detect-And-Set-Proxy
 
 Set-Alias .. GoUpOne
 Set-Alias ... GoUpTwo
