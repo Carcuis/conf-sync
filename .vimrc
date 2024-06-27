@@ -178,6 +178,7 @@ set signcolumn=yes
 set timeoutlen=500
 set conceallevel=2
 set colorcolumn=120
+set jumpoptions=stack
 
 if has("nvim")
     set fillchars=eob:\ ,diff:\ 
@@ -1597,3 +1598,7 @@ autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "norm
 
 " disable auto insert comment leader
 autocmd FileType * set formatoptions-=cro
+
+" clear jump list when open editor
+autocmd VimEnter * :clearjumps
+
