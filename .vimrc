@@ -33,6 +33,7 @@ Plug 'dstein64/vim-startuptime'
 Plug 'lambdalisue/suda.vim' " save file by sudo
 Plug 'fladson/vim-kitty' " syntax highlight for kitty.conf
 Plug 'a5ob7r/shellcheckrc.vim' " syntax highlight for shellcheckrc
+Plug 'machakann/vim-highlightedyank' " highlight on yank
 
 if has("nvim")
     Plug 'carcuis/darcula.nvim'
@@ -441,6 +442,9 @@ function LoadSession(session_name)
 endfunction
 nnoremap <silent> <leader>ss :call SaveSession("")<CR>
 nnoremap <silent> <leader>sl :call LoadSession("")<CR>
+
+" === vim-highlightedyank ===
+let g:highlightedyank_highlight_duration = 200
 
 " === coc.nvim ===
 if has("nvim")
