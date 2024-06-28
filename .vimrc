@@ -1547,9 +1547,12 @@ endif
 
 noremap <leader>y "+y
 noremap <leader>p "+p
+noremap <leader>P "+P
 
 nmap <C-J> ]c
 nmap <C-K> [c
+nnoremap <C-H> 10zh
+nnoremap <C-L> 10zl
 inoremap <C-J> <esc>o
 inoremap <C-K> <esc>O
 inoremap <C-H> <esc>I
@@ -1574,9 +1577,6 @@ nnoremap <silent> <C-Down> :resize +2<CR>
 nnoremap <silent> <C-Left> :vertical resize -2<CR>
 nnoremap <silent> <C-Right> :vertical resize +2<CR>
 
-nnoremap <C-H> 10zh
-nnoremap <C-L> 10zl
-
 let g:load_doxygen_syntax=1
 
 if has("win32")
@@ -1589,6 +1589,7 @@ endif
 
 " comment before duplicate a line
 nmap <leader>dc gccyypgcc
+nmap <leader>dr ddkgcc
 
 " ===============
 
