@@ -1,5 +1,7 @@
-Plugin 'vim-commentary'
-Plugin 'vim-surround'
+Plug 'vim-commentary'
+Plug 'vim-surround'
+Plug 'vim-highlightedyank'
+let g:highlightedyank_highlight_color = "rgba(41, 68, 54, 255)"
 
 set nu
 set rnu
@@ -21,7 +23,8 @@ for mapping in ['jj', 'jk', 'kj', 'kk', 'jl', 'jh']
 endfor
 
 " code navigation
-map gd <Action>(GotoDeclarationOnly)
+" map gd <Action>(GotoDeclarationOnly)
+map gd <Action>(GotoDeclaration)
 map ge <Action>(GotoImplementation)
 map gs <Action>(GotoSuperMethod)
 map gr <Action>(ShowUsages)
@@ -31,8 +34,12 @@ map <C-o> <Action>(Back)
 map <C-i> <Action>(Forward)
 map <C-k> <Action>(VcsShowPrevChangeMarker)
 map <C-j> <Action>(VcsShowNextChangeMarker)
+nmap <C-n> g*
+vmap <C-n> *<esc>
+nmap <C-p> g#
+vmap <C-p> #<esc>
 
-" ide actions
+" IDE actions
 map ru <Action>(Run)
 map rd <Action>(Debug)
 map rn <Action>(RenameElement)
@@ -41,10 +48,15 @@ map <Leader>fr <Action>(RecentFiles)
 map <Leader>ff <Action>(GotoFile)
 map <Leader>fw <Action>(FindInPath)
 imap <C-e> <Action>(CodeCompletion)
-map <C-n> <Action>(GotoNextElementUnderCaretUsage)
-map <C-p> <Action>(GotoPrevElementUnderCaretUsage)
-map <M-e> <Action>(ShowErrorDescription)
+" map <C-n> <Action>(GotoNextElementUnderCaretUsage)
+" map <C-p> <Action>(GotoPrevElementUnderCaretUsage)
+map <M-e> <Action>(ShowHoverInfo)
 vmap <leader>tr <Action>($EditorTranslateAction)
+imap <M-a> <Action>(copilot.applyInlays)
+imap <M-n> <Action>(copilot.cycleNextInlays)
+imap <M-p> <Action>(copilot.cyclePrevInlays)
+imap <M-Right> <Action>(copilot.applyInlaysNextWord)
+imap <M-C-Right> <Action>(copilot.applyInlaysNextLine)
 
 " navigate windows
 map <M-h> <C-w>h
@@ -63,12 +75,24 @@ map <Leader>d "+d
 map <leader>p "+p
 map <leader>P "+P
 
+" cursor movement
 map <c-h> 10zh
 map <c-l> 10zl
-imap <c-h> 10zh
-imap <c-l> 10zl
 imap <c-j> <esc>o
+imap <c-k> <esc>O
+imap <c-h> <esc>I
+imap <c-l> <esc>A
+
+" misc
 map <M-s> :w<CR>
 map <leader>q :q<CR>
 map <leader>wq :wq<CR>
 map <leader>sf <Action>(IdeaVim.ReloadVimRc.reload)
+map <leader>dc :action CommentByLineComment<CR>yypk:action CommentByLineComment<CR>
+map <leader>dr ddk:action CommentByLineComment<CR>
+
+" IDE keymap (File -> Settings)
+" Editor Actions :
+"     [Escape] -> Add Keyboard Shortcut -> Ctrl+C
+"     [Up] -> Add Keyboard Shortcut -> Ctrl+K, Ctrl+P
+"     [Down] -> Add Keyboard Shortcut -> Ctrl+J, Ctrl+N
