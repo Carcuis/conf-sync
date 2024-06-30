@@ -1,5 +1,7 @@
 oh-my-posh init pwsh --config "$env:POSH_THEMES_PATH/cui_theme.omp.json" | Invoke-Expression
 
+$env:VIRTUAL_ENV_DISABLE_PROMPT = 1
+
 Import-Module -Name Terminal-Icons
 Import-Module -Name CompletionPredictor
 Import-Module -Name git-aliases-plus -DisableNameChecking
@@ -145,8 +147,32 @@ function Detect-And-Set-Proxy {
     if ($has_ie_proxy -eq 1) {
         SetProxyOn
     }
+} Detect-And-Set-Proxy
+function Activate-Python-Venv {
+    $venv_path = Get-ChildItem -Path $PWD -Filter "venv" -Directory -ErrorAction SilentlyContinue
+    if ($venv_path) {
+        $venv_path = $venv_path.FullName
+        $venv_activate = Join-Path $venv_path "Scripts\Activate.ps1"
+        if (Test-Path $venv_activate) {
+            . $venv_activate
+        } else {
+            Write-Error "Error: Cannot find 'Scripts\Activate.ps1' in $venv_path"
+        }
+    } else {
+        Write-Error "Error: Cannot find 'venv' directory in $PWD"
+    }
 }
-Detect-And-Set-Proxy
+function Deactivate-Python-Venv {
+    if ($env:VIRTUAL_ENV) {
+        if ((Get-Command deactivate).length -gt 0) {
+            deactivate
+        } else {
+            Write-Error "Error: Cannot find 'deactivate' command."
+        }
+    } else {
+        Write-Error "Error: No virtual environment is activated."
+    }
+}
 
 Set-Alias .. GoUpOne
 Set-Alias ... GoUpTwo
@@ -186,4 +212,6 @@ Set-Alias ln Create-Link
 Set-Alias mvx Move-And-Create-Link
 Set-Alias md5sum Sum-MD5
 Set-Alias sha256sum Sum-SHA256
+Set-Alias acp Activate-Python-Venv
+Set-Alias dap Deactivate-Python-Venv
 
