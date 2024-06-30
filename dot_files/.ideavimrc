@@ -22,9 +22,17 @@ for mapping in ['jj', 'jk', 'kj', 'kk', 'jl', 'jh']
     execute 'cnoremap '.mapping.' <C-c>'
 endfor
 
+" -- see: https://blog.jetbrains.com/zh-hans/clion/2023/11/clion-nova/
+if &ide == 'clion'
+    let g:nova = 1
+endif
+
 " code navigation
-" map gd <Action>(GotoDeclarationOnly)
-map gd <Action>(GotoDeclaration)
+if g:nova
+    map gd <Action>(GotoDeclaration)
+else
+    map gd <Action>(GotoDeclarationOnly)
+endif
 map ge <Action>(GotoImplementation)
 map gs <Action>(GotoSuperMethod)
 map gr <Action>(ShowUsages)
@@ -34,8 +42,10 @@ map <C-o> <Action>(Back)
 map <C-i> <Action>(Forward)
 map <C-k> <Action>(VcsShowPrevChangeMarker)
 map <C-j> <Action>(VcsShowNextChangeMarker)
-nmap <C-n> g*
-vmap <C-n> *<esc>
+if g:nova
+    nmap <C-n> g*
+    vmap <C-n> *<esc>
+endif
 nmap <C-p> g#
 vmap <C-p> #<esc>
 
@@ -48,10 +58,12 @@ map <Leader>fr <Action>(RecentFiles)
 map <Leader>ff <Action>(GotoFile)
 map <Leader>fw <Action>(FindInPath)
 imap <C-e> <Action>(CodeCompletion)
-" map <C-n> <Action>(GotoNextElementUnderCaretUsage)
-" map <C-p> <Action>(GotoPrevElementUnderCaretUsage)
+if ! g:nova
+    map <C-n> <Action>(GotoNextElementUnderCaretUsage)
+    map <C-p> <Action>(GotoPrevElementUnderCaretUsage)
+endif
 map <M-e> <Action>(ShowHoverInfo)
-vmap <leader>tr <Action>($EditorTranslateAction)
+vmap <leader>tr <Action>($EditorTranslateAction)<esc>
 imap <M-a> <Action>(copilot.applyInlays)
 imap <M-n> <Action>(copilot.cycleNextInlays)
 imap <M-p> <Action>(copilot.cyclePrevInlays)
@@ -91,7 +103,7 @@ map <leader>sf <Action>(IdeaVim.ReloadVimRc.reload)
 map <leader>dc :action CommentByLineComment<CR>yypk:action CommentByLineComment<CR>
 map <leader>dr ddk:action CommentByLineComment<CR>
 
-" IDE keymap (File -> Settings)
+" IDE keymap (File -> Settings) manually setup
 " Editor Actions :
 "     [Escape] -> Add Keyboard Shortcut -> Ctrl+C
 "     [Up] -> Add Keyboard Shortcut -> Ctrl+K, Ctrl+P
