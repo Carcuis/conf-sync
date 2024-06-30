@@ -69,6 +69,8 @@ imap <M-n> <Action>(copilot.cycleNextInlays)
 imap <M-p> <Action>(copilot.cyclePrevInlays)
 imap <M-Right> <Action>(copilot.applyInlaysNextWord)
 imap <M-C-Right> <Action>(copilot.applyInlaysNextLine)
+map f <Action>(KJumpAction.Char2)
+map F <Action>(KJumpAction.Char2)
 
 " navigate windows
 map <M-h> <C-w>h
