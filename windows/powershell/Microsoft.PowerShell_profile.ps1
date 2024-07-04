@@ -7,6 +7,7 @@ Import-Module -Name CompletionPredictor
 Import-Module -Name git-aliases-plus -DisableNameChecking
 Import-Module -Name posh-git -arg 0,0,1
 Import-Module -Name scoop-completion
+Import-Module -Name WSLTabCompletion
 
 Set-PSReadLineOption -EditMode Emacs
 Set-PSReadLineOption -HistorySearchCursorMovesToEnd:$true
