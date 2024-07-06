@@ -89,6 +89,8 @@ if has("nvim")
     Plug 'Bekaboo/dropbar.nvim'
     Plug 'tiagovla/scope.nvim'
     Plug 'sustech-data/wildfire.nvim'
+    Plug 'stevearc/resession.nvim'
+    Plug 'scottmckendry/telescope-resession.nvim'
 else
     Plug 'carcuis/darcula'
     Plug 'joshdick/onedark.vim'
@@ -378,10 +380,10 @@ let g:startify_commands = [
     \ {'c': ['  Configuration', 'call EditVimrc("normal")']},
     \ {'P': ['  Plugin Install', 'PlugInstall']},
     \ {'U': ['  Plugin Update', 'PlugUpdate']},
-    \ {'l': ['󰈢  Load Session', 'call LoadSession("")']},
     \ ]
 if ! has("nvim")
     let g:startify_commands += [
+    \ {'l': ['󰈢  Load Session', 'call LoadSession("")']},
     \ {'f': ['󰈞  Find File', 'Leaderf file']},
     \ {'r': ['󰄉  Recently Used Files', 'Leaderf mru']},
     \ {'w': ['󰉿  Find Word', 'Leaderf rg']},
@@ -389,6 +391,7 @@ if ! has("nvim")
     \ ]
 else
     let g:startify_commands += [
+    \ {'l': ['󰈢  Load Session', 'lua require("telescope").extensions.resession.resession()']},
     \ {'f': ['󰈞  Find File', 'Telescope find_files']},
     \ {'p': ['  Recent Projects', 'Telescope projects']},
     \ {'r': ['󰄉  Recently Used Files', 'Telescope oldfiles']},
@@ -440,8 +443,10 @@ function LoadSession(session_name)
     endif
     call PostSaveSession()
 endfunction
-nnoremap <silent> <leader>ss :call SaveSession("")<CR>
-nnoremap <silent> <leader>sl :call LoadSession("")<CR>
+if ! has("nvim")
+    nnoremap <silent> <leader>ss :call SaveSession("")<CR>
+    nnoremap <silent> <leader>sl :call LoadSession("")<CR>
+endif
 
 " === vim-highlightedyank ===
 let g:highlightedyank_highlight_duration = 200
@@ -1475,6 +1480,23 @@ endif
 if has("nvim")
     lua << EOF
     require("wildfire").setup()
+EOF
+endif
+
+" === resession.nvim ===
+if has("nvim")
+    lua << EOF
+    local resession = require("resession")
+    resession.setup({
+        load_order = "filename",
+    })
+    vim.keymap.set("n", "<leader>ss", resession.save)
+    vim.keymap.set("n", "<leader>sl", require("telescope").extensions.resession.resession)
+    resession.add_hook("post_load", function()
+        if vim.fn.winwidth(0) >= 130 then
+            vim.fn.OpenUnfocusedNvimTreeInNewWindow()
+        end
+    end)
 EOF
 endif
 
