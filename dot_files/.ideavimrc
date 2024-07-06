@@ -24,7 +24,7 @@ endfor
 
 " -- see: https://blog.jetbrains.com/zh-hans/clion/2023/11/clion-nova/
 if &ide == 'clion'
-    let g:nova = 1
+    let g:nova = 0
 endif
 
 " code navigation
