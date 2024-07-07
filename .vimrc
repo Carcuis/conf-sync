@@ -89,8 +89,8 @@ if has("nvim")
     Plug 'Bekaboo/dropbar.nvim'
     Plug 'tiagovla/scope.nvim'
     Plug 'sustech-data/wildfire.nvim'
+    Plug 'stevearc/dressing.nvim'
     Plug 'stevearc/resession.nvim'
-    Plug 'scottmckendry/telescope-resession.nvim'
 else
     Plug 'carcuis/darcula'
     Plug 'joshdick/onedark.vim'
@@ -391,7 +391,7 @@ if ! has("nvim")
     \ ]
 else
     let g:startify_commands += [
-    \ {'l': ['󰈢  Load Session', 'lua require("telescope").extensions.resession.resession()']},
+    \ {'l': ['󰈢  Load Session', 'lua require("resession").load()']},
     \ {'f': ['󰈞  Find File', 'Telescope find_files']},
     \ {'p': ['  Recent Projects', 'Telescope projects']},
     \ {'r': ['󰄉  Recently Used Files', 'Telescope oldfiles']},
@@ -1491,7 +1491,7 @@ if has("nvim")
         load_order = "filename",
     })
     vim.keymap.set("n", "<leader>ss", resession.save)
-    vim.keymap.set("n", "<leader>sl", require("telescope").extensions.resession.resession)
+    vim.keymap.set("n", "<leader>sl", resession.load)
     resession.add_hook("post_load", function()
         if vim.fn.winwidth(0) >= 130 then
             vim.fn.OpenUnfocusedNvimTreeInNewWindow()
