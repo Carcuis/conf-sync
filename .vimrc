@@ -184,6 +184,11 @@ set colorcolumn=120
 set jumpoptions=stack
 
 if has("nvim")
+    if has("win32")
+        let g:python3_host_prog = stdpath('data') . '/pynvim/venv/Scripts/python.exe'
+    else
+        let g:python3_host_prog = stdpath('data') . '/pynvim/venv/bin/python3'
+    endif
     set fillchars=eob:\ ,diff:\ 
     if has("win32") || has("wsl")
         set guifont=CaskaydiaCove\ NFM:h13
