@@ -1,3 +1,14 @@
+if [[ ! $VIFM ]]; then
+    fortune | cowsay -f moose -W 80 | lolcat
+fi
+
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+# Initialization code that may require console input (password prompts, [y/n]
+# confirmations, etc.) must go above this block; everything else may go below.
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
+
 # If you come from bash you might have to change your $PATH.
 export PATH=$HOME/.local/bin:/usr/local/bin:$PATH
 
@@ -125,11 +136,6 @@ source $ZSH/oh-my-zsh.sh
 
 # zsh-completions
 autoload -U compinit && compinit
-
-# if [[ ! $TMUX && ! $VIFM ]]; then
-if [[ ! $VIFM ]]; then
-    fortune | cowsay -f moose -W 80 | lolcat
-fi
 
 # set editor
 if command -v nvim > /dev/null; then
@@ -377,6 +383,14 @@ fi
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 ZLE_RPROMPT_INDENT=0
 POWERLEVEL9K_TIME_FORMAT=%D{%H:%M}
+POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS+=(
+    node_version          # node.js version
+    go_version            # go version (https://golang.org)
+    rust_version          # rustc version (https://www.rust-lang.org)
+    package               # name@version from package.json (https://docs.npmjs.com/files/package.json)
+    proxy                 # system-wide http/https/ftp proxy
+    battery               # internal battery
+)
 
 # === fzf ===
 if [[ $SYSTEM == "Darwin" ]]; then
