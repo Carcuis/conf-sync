@@ -90,6 +90,7 @@ plugins=(
     autoupdate
     colored-man-pages
     git
+    python
     z
     zsh-syntax-highlighting
     zsh-autosuggestions
@@ -98,6 +99,7 @@ plugins=(
 )
 
 export ZSH_COMPDUMP=$ZSH/cache/.zcompdump-$HOST
+export PYTHON_AUTO_VRUN=true
 
 source $ZSH/oh-my-zsh.sh
 
