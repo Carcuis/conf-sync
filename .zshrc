@@ -101,6 +101,9 @@ export ZSH_COMPDUMP=$ZSH/cache/.zcompdump-$HOST
 
 source $ZSH/oh-my-zsh.sh
 
+# zsh-completion @ref: https://github.com/zsh-users/zsh-completions/issues/603#issuecomment-967116106
+autoload -U compinit && compinit
+
 # User configuration
 
 # export MANPATH="/usr/local/man:$MANPATH"
@@ -133,9 +136,6 @@ source $ZSH/oh-my-zsh.sh
 # ================================
 # ==== the bellow is cui_pref ====
 # ================================
-
-# zsh-completions
-autoload -U compinit && compinit
 
 # set editor
 if command -v nvim > /dev/null; then
