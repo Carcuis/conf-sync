@@ -397,6 +397,7 @@ if ! has("nvim")
 else
     let g:startify_commands += [
     \ {'l': ['󰈢  Load Session', 'lua require("resession").load()']},
+    \ {'L': ['󰬲  Load Current Session', 'call LoadSessionInCurrentCwd()']},
     \ {'f': ['󰈞  Find File', 'Telescope find_files']},
     \ {'p': ['  Recent Projects', 'Telescope projects']},
     \ {'r': ['󰄉  Recently Used Files', 'Telescope oldfiles']},
@@ -1503,6 +1504,23 @@ if has("nvim")
         end
     end)
 EOF
+    function LoadSessionInCurrentCwd()
+        lua << EOF
+        local cwd = vim.fn.getcwd()
+        local session_dir = vim.fn.expand(vim.fn.stdpath("data") .. "/session/")
+        local session_files = vim.fn.globpath(session_dir, "*.json", 0, 1)
+
+        for _, session_file in ipairs(session_files) do
+            local session = vim.fn.json_decode(vim.fn.readfile(session_file))
+            if session.global and session.global.cwd == cwd then
+                require("resession").load(vim.fn.fnamemodify(session_file, ":t:r"))
+                return
+            end
+        end
+
+        print("No session file found for current working directory.")
+EOF
+    endfunction
 endif
 
 " ===============
