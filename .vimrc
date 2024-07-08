@@ -1621,6 +1621,7 @@ EOF
     nnoremap <silent> <leader>dl <cmd>lua require'dap'.continue()<CR>
     nnoremap <silent> <leader>db <cmd>lua require'dap'.toggle_breakpoint()<CR>
     nnoremap <silent> <leader>du <cmd>call ToggleDapUI()<CR>
+    vnoremap <M-k> <Cmd>lua require("dapui").eval()<CR>
 endif
 
 
