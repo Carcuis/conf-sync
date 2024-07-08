@@ -94,6 +94,12 @@ if has("nvim")
     Plug 'stevearc/overseer.nvim'
     Plug 'Zeioth/compiler.nvim'
     Plug 'CopilotC-Nvim/CopilotChat.nvim'
+    Plug 'mfussenegger/nvim-dap'
+    Plug 'mfussenegger/nvim-dap-python'
+    Plug 'nvim-neotest/nvim-nio'
+    Plug 'rcarriga/nvim-dap-ui'
+    Plug 'nvim-telescope/telescope-dap.nvim'
+    Plug 'theHamsta/nvim-dap-virtual-text'
 else
     Plug 'carcuis/darcula'
     Plug 'joshdick/onedark.vim'
@@ -612,6 +618,7 @@ if has("nvim")
     }
     require('telescope').load_extension('fzf')
     require('telescope').load_extension('coc')
+    require('telescope').load_extension('dap')
 EOF
 endif
 
@@ -651,6 +658,10 @@ if has("nvim")
                 {
                     filetype = "DiffviewFiles",
                     text = "Source Control",
+                },
+                {
+                    filetype = "dapui_watches",
+                    text = "Debug",
                 },
             },
             hover = {
@@ -1540,6 +1551,78 @@ if has("nvim")
     require("CopilotChat").setup {}
 EOF
 endif
+
+" === nvim-dap ===
+if has("nvim")
+    lua << EOF
+    require("dapui").setup()
+    require("dap-python").setup(vim.g.python3_host_prog)
+    require("nvim-dap-virtual-text").setup()
+    local dap, dapui = require("dap"), require("dapui")
+    dap.listeners.before.launch.dapui_config = function()
+        if require("nvim-tree.api").tree.is_visible() then
+            require("nvim-tree.api").tree.close()
+        end
+        dapui.open()
+    end
+    dap.adapters.gdb = {
+        type = "executable",
+        command = "gdb",
+        args = { "-i", "dap" }
+    }
+    dap.configurations.c = {
+        {
+            name = "Launch",
+            type = "gdb",
+            request = "launch",
+            program = function()
+                return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
+            end,
+            cwd = "${workspaceFolder}",
+            stopAtBeginningOfMainSubprogram = false,
+        },
+    }
+    dap.configurations.cpp = {
+        {
+            name = "Launch",
+            type = "gdb",
+            request = "launch",
+            program = function()
+                return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
+            end,
+            cwd = "${workspaceFolder}",
+            stopAtBeginningOfMainSubprogram = false,
+        },
+    }
+    vim.fn.sign_define('DapBreakpoint', {text='', texthl='DapBreakpoint', linehl='DapBreakpointLine', numhl=''})
+    vim.fn.sign_define('DapBreakpointCondition', {text='󰻂', texthl='DapBreakpoint', linehl='DapBreakpointLine', numhl=''})
+    vim.fn.sign_define('DapBreakpointRejected', {text='󰰠', texthl='DapBreakpoint', linehl='DapBreakpointLine', numhl=''})
+    vim.fn.sign_define('DapLogPoint', {text='', texthl='SignColumn', linehl='', numhl=''})
+    vim.fn.sign_define('DapStopped', {text='', texthl='DapStopped', linehl='DapStoppedLine', numhl=''})
+EOF
+
+    function ToggleDapUI()
+        lua << EOF
+        local dapui_exists = vim.fn.bufwinnr('DAP Breakpoints') > 0
+        local nvim_tree_exists = require("nvim-tree.api").tree.is_visible()
+
+        require("dapui").toggle()
+
+        if dapui_exists then
+            if not nvim_tree_exists and vim.fn.winwidth(0) >= 130 then
+                require("nvim-tree.api").tree.toggle({ focus = false })
+            end
+        elseif nvim_tree_exists then
+            require("nvim-tree.api").tree.close()
+        end
+EOF
+    endfunction
+
+    nnoremap <silent> <leader>dl <cmd>lua require'dap'.continue()<CR>
+    nnoremap <silent> <leader>db <cmd>lua require'dap'.toggle_breakpoint()<CR>
+    nnoremap <silent> <leader>du <cmd>call ToggleDapUI()<CR>
+endif
+
 
 " ===============
 
