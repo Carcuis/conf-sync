@@ -975,7 +975,14 @@ if has("nvim")
         options = {
             section_separators = { left = '', right = '' },
             -- component_separators = { left = '❘', right = '❘' }
-            component_separators = { left = '', right = '' }
+            component_separators = { left = '', right = '' },
+            disabled_filetypes = {
+                "dapui_watches", "dapui_breakpoints", "dapui_scopes", "dapui_console", "dapui_stacks", "dap-repl",
+            },
+            ignore_focus = {
+                "dapui_watches", "dapui_breakpoints", "dapui_scopes", "dapui_console", "dapui_stacks", "dap-repl",
+                "NvimTree", "coctree",
+            },
         },
         sections = {
             lualine_a = {
