@@ -93,6 +93,7 @@ if has("nvim")
     Plug 'stevearc/resession.nvim'
     Plug 'stevearc/overseer.nvim'
     Plug 'Zeioth/compiler.nvim'
+    Plug 'CopilotC-Nvim/CopilotChat.nvim'
 else
     Plug 'carcuis/darcula'
     Plug 'joshdick/onedark.vim'
@@ -1530,6 +1531,13 @@ if has("nvim")
     lua << EOF
     require('overseer').setup()
     require("compiler").setup()
+EOF
+endif
+
+" === CopilotChat.nvim ===
+if has("nvim")
+    lua << EOF
+    require("CopilotChat").setup {}
 EOF
 endif
 
