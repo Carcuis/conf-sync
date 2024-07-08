@@ -91,6 +91,8 @@ if has("nvim")
     Plug 'sustech-data/wildfire.nvim'
     Plug 'stevearc/dressing.nvim'
     Plug 'stevearc/resession.nvim'
+    Plug 'stevearc/overseer.nvim'
+    Plug 'Zeioth/compiler.nvim'
 else
     Plug 'carcuis/darcula'
     Plug 'joshdick/onedark.vim'
@@ -1521,6 +1523,14 @@ EOF
         print("No session file found for current working directory.")
 EOF
     endfunction
+endif
+
+" === Compiler.nvim ===
+if has("nvim")
+    lua << EOF
+    require('overseer').setup()
+    require("compiler").setup()
+EOF
 endif
 
 " ===============
