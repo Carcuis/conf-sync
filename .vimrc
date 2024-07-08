@@ -1503,6 +1503,13 @@ if has("nvim")
 EOF
 endif
 
+" === dressing.nvim ===
+if has("nvim")
+    lua << EOF
+    require("dressing").setup()
+EOF
+endif
+
 " === resession.nvim ===
 if has("nvim")
     lua << EOF
