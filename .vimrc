@@ -1568,7 +1568,6 @@ nnoremap <silent> <leader>fq :q!<CR>
 nnoremap <silent> <leader>rq :qa<CR>
 nnoremap <silent> <leader>ewq :wqa<CR>
 nnoremap <silent> <leader>gq :call SaveSession("")<CR>:qa<CR>
-nnoremap <silent> <leader>du :diffupdate<CR>
 nnoremap <silent> <leader><leader>r :redraw!<CR>
 nnoremap <silent> <leader>i :Inspect<CR>
 
@@ -1605,9 +1604,9 @@ inoremap <C-K> <esc>O
 inoremap <C-H> <esc>I
 inoremap <C-L> <esc>A
 
-" recurse do or dp in vimdiff
-nmap <leader>do do]c<leader>do
-nmap <leader>dp dp]c<leader>dp
+nnoremap <silent> DO :%diffget<CR>
+nnoremap <silent> DP :%diffput<CR>
+nnoremap <silent> DU :diffupdate<CR>
 
 for mapping in ['jj', 'jk', 'kj', 'kk', 'jl', 'jh']
     execute 'inoremap '.mapping.' <esc>'
@@ -1635,8 +1634,8 @@ else
 endif
 
 " comment before duplicate a line
-nmap <leader>dc gccyypgcc
-nmap <leader>dr ddkgcc
+nmap DC gccyypgcc
+nmap DR ddkgcc
 
 " ===============
 
