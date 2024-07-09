@@ -971,16 +971,51 @@ if has("nvim")
                 }}, },
                 filetypes = {'coctree'},
             },
+            {
+                sections = { lualine_b = {{
+                    function() return 'Tasks' end,
+                    icon = "",
+                    padding = { left = 0, right = 0 },
+                    separator = { left = '', right = '' },
+                }}, },
+                filetypes = {'OverseerList'},
+            },
+            {
+                sections = { lualine_a = {{
+                    function() return 'Scope' end,
+                    icon = "",
+                    padding = { left = 0, right = 0 },
+                    separator = { left = '', right = '' },
+                }}, },
+                filetypes = {'dapui_scopes'},
+            },
+            {
+                sections = { lualine_a = {{
+                    function() return 'Console' end,
+                    icon = "",
+                    padding = { left = 0, right = 0 },
+                    separator = { left = '', right = '' },
+                }}, },
+                filetypes = {'dapui_console'},
+            },
+            {
+                sections = { lualine_a = {{
+                    function() return 'Repl' end,
+                    icon = "",
+                    padding = { left = 0, right = 0 },
+                    separator = { left = '', right = '' },
+                }}, },
+                filetypes = {'dap-repl'},
+            },
         },
         options = {
             section_separators = { left = '', right = '' },
-            -- component_separators = { left = '❘', right = '❘' }
             component_separators = { left = '', right = '' },
             disabled_filetypes = {
-                "dapui_watches", "dapui_breakpoints", "dapui_scopes", "dapui_console", "dapui_stacks", "dap-repl",
+                "dapui_watches", "dapui_stacks", "dapui_breakpoints",
             },
             ignore_focus = {
-                "dapui_watches", "dapui_breakpoints", "dapui_scopes", "dapui_console", "dapui_stacks", "dap-repl",
+                "dapui_watches", "dapui_stacks", "dapui_breakpoints", "dapui_scopes", "dapui_console", "dap-repl",
                 "NvimTree", "coctree",
             },
         },
