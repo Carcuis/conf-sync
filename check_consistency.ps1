@@ -112,7 +112,7 @@ function Check-All-Files {
 
 function Check-Editor {
     if (Has-Command nvim) {
-        $script:diff_command = "nvim -d"
+        $script:diff_command = "nvim -i NONE -d"
     } elseif (Has-Command vim) {
         $script:diff_command = "vimdiff"
     } else {
@@ -131,9 +131,9 @@ function Read-Input-Key {
 
 function Run-Diff {
     param($file1, $file2)
-    if ($diff_command -eq "nvim -d")
+    if ($diff_command -eq "nvim -i NONE -d")
     {
-        nvim -d $file1 $file2
+        nvim -i NONE -d $file1 $file2
     } elseif ($diff_command -eq "vimdiff")
     {
         vimdiff $file1 $file2

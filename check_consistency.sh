@@ -116,7 +116,7 @@ function file_same()   { diff "$1" "$2" > /dev/null ;  }
 function check_editor
 {
     if has_command nvim; then
-        diff_command="nvim -d"
+        diff_command="nvim -i NONE -d"
     elif has_command vim; then
         diff_command="vimdiff"
     else
