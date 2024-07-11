@@ -1015,7 +1015,7 @@ if has("nvim")
                 "dapui_watches", "dapui_stacks", "dapui_breakpoints",
             },
             ignore_focus = {
-                "dapui_watches", "dapui_stacks", "dapui_breakpoints", "dapui_scopes", "dapui_console", "dap-repl",
+                "dapui_watches", "dapui_stacks", "dapui_breakpoints", "dapui_scopes", "dapui_console",
                 "NvimTree", "coctree",
             },
         },
