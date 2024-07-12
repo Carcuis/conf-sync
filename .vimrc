@@ -1583,12 +1583,79 @@ EOF
     endfunction
 endif
 
-" === Compiler.nvim ===
+" === Overseer.nvim ===
 if has("nvim")
     lua << EOF
-    require('overseer').setup()
+    overseer = require("overseer")
+    overseer.register_template({
+        name = "run project",
+        strategy = "toggleterm",
+        builder = function(params)
+            return {
+                cmd = { "python", "main.py" },
+            }
+        end,
+        condition = {
+            callback = function()
+                return vim.fn.filereadable("main.py") == 1
+            end,
+        },
+    })
+    overseer.register_template({
+        name = "run this file",
+        builder = function(params)
+            local cmds = {
+                go = "go run",
+                python = "python",
+                sh = "bash",
+                zsh = "zsh",
+                ps1 = "pwsh -NoProfile -File",
+            }
+            return {
+                cmd = { cmds[vim.bo.filetype], vim.api.nvim_buf_get_name(0) },
+            }
+        end,
+        condition = {
+            filetype = { "python", "sh", "zsh", "go", "ps1" },
+        },
+    })
+    overseer.setup({
+        strategy = "terminal",
+        task_list = {
+            default_detail = 1,
+            min_height = 10,
+        },
+        component_aliases = {
+            default = {
+                "open_output",
+                { "display_duration", detail_level = 2 },
+                "on_output_summarize",
+                "on_exit_set_status",
+                { "on_complete_notify", statuses = { "FAILURE" } },
+                { "on_complete_dispose", require_view = { "SUCCESS", "FAILURE" } },
+                "unique",
+            },
+        },
+        bundles = {
+            autostart_on_load = false,
+        },
+    })
     require("compiler").setup()
+    vim.api.nvim_create_user_command("OverseerRestartLast", function()
+        local tasks = overseer.list_tasks({ recent_first = true })
+        if vim.tbl_isempty(tasks) then
+            vim.notify("No tasks found", vim.log.levels.WARN)
+        else
+            overseer.run_action(tasks[1], "restart")
+        end
+    end, {})
 EOF
+    nnoremap <silent> <C-c> <cmd>OverseerToggle!<CR>
+    nnoremap <silent> <leader>rc <cmd>CompilerOpen<CR>
+    nnoremap <silent> <leader>ro <cmd>OverseerRun<CR>
+    nnoremap <silent> <leader>rr <cmd>OverseerRestartLast<CR>
+    nnoremap <silent> <leader>rp <cmd>lua require("overseer").run_template({name = "run project"})<CR>
+    nnoremap <silent> <leader>ru <cmd>lua require("overseer").run_template({name = "run this file"})<CR>
 endif
 
 " === CopilotChat.nvim ===
