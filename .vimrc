@@ -58,7 +58,6 @@ if has("nvim")
     Plug 'alec-gibson/nvim-tetris'
     Plug 'nvim-lua/popup.nvim'
     Plug 'norcalli/nvim-colorizer.lua'
-    Plug 'CRAG666/code_runner.nvim'
     Plug 'nvim-treesitter/nvim-treesitter'
     Plug 'nvim-treesitter/playground'
     Plug 'nvim-lualine/lualine.nvim'
@@ -866,33 +865,6 @@ endif
 " === nvim-colorizer.lua ===
 if has("nvim")
     lua require'colorizer'.setup()
-endif
-
-" === code_runner.nvim ===
-if has("nvim")
-    nnoremap <silent> <leader>ru :RunFile<CR>
-    nnoremap <silent> <leader>rp :RunProject<CR>
-    lua << EOF
-    require('code_runner').setup {
-        mode = "toggleterm",
-        before_run_filetype = function()
-            vim.cmd(":wa")
-        end,
-        filetype = {
-            java = "cd $dir && javac $fileName && java $fileNameWithoutExt",
-            python = "python",
-            typescript = "deno run",
-            rust = "cd $dir && rustc $fileName && $dir/$fileNameWithoutExt",
-            cpp = "cd $dir && g++ $fileName -o $fileNameWithoutExt.exe && $dir/$fileNameWithoutExt.exe",
-            c = "cd $dir && gcc $fileName -o $fileNameWithoutExt.exe && $dir/$fileNameWithoutExt.exe",
-            sh = "bash",
-            zsh = "zsh",
-            go = "go run $fileName",
-            ps1 = "pwsh -NoProfile -File $fileName",
-        },
-        project_path = vim.fn.stdpath("config") .. "/project_manager.json"
-    }
-EOF
 endif
 
 " === nvim-treesitter ===
