@@ -1748,14 +1748,6 @@ nnoremap <silent> <C-Right> :vertical resize +2<CR>
 
 let g:load_doxygen_syntax=1
 
-if has("win32")
-    au FileType cpp nnoremap <buffer> <leader>fj :w<CR>:!echo --------debugging--------
-              \ && g++ % -o %:h\debug_%:t:r.exe && %:h\debug_%:t:r.exe<CR>
-else
-    au FileType cpp nnoremap <buffer> <leader>fj :w<CR>:!echo -e "\n--------debugging--------"
-              \ && g++ % -o %:h/debug_%:t:r.out && %:h/debug_%:t:r.out &&<CR>
-endif
-
 " comment before duplicate a line
 nmap DC gccyypgcc
 nmap DR ddkgcc
