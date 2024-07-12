@@ -1658,6 +1658,7 @@ nmap <C-p> g#
 vmap <C-p> #
 
 nnoremap <silent> <M-s> :w<CR>
+nnoremap <silent> <M-S-s> :wall<CR>
 nnoremap <silent> <M-w> :q<CR>
 nnoremap <silent> <M-q> :q!<CR>
 
