@@ -1934,3 +1934,8 @@ autocmd FileType * set formatoptions-=cro
 " clear jump list when open editor
 autocmd VimEnter * :clearjumps
 
+" auto switch mode for terminal
+autocmd TermOpen term://* let g:terminal_running = v:true
+autocmd WinEnter term://* if g:terminal_running | startinsert
+autocmd TermClose term://* let g:terminal_running = v:false | stopinsert
+
