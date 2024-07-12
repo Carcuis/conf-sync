@@ -1671,7 +1671,9 @@ if has("nvim")
     require("telescope").load_extension("dap")
     require("nvim-dap-virtual-text").setup()
     require("mason").setup()
-    require("mason-nvim-dap").setup()
+    require("mason-nvim-dap").setup({
+        ensure_installed = {'bash', 'codelldb', 'python'},
+    })
     require("dap-python").setup(vim.fn.stdpath("data") .. "/mason/packages/debugpy/venv/bin/python")
     local python_debug_project_configuration = {
         type = "python",
