@@ -1540,6 +1540,21 @@ if has("nvim")
     local resession = require("resession")
     resession.setup({
         load_order = "filename",
+        options = {
+            "binary",
+            "bufhidden",
+            "buflisted",
+            "buftype",
+            "cmdheight",
+            "diff",
+            "filetype",
+            "modifiable",
+            "previewwindow",
+            "readonly",
+            "scrollbind",
+            "winfixheight",
+            "winfixwidth",
+        },
     })
     vim.keymap.set("n", "<leader>ss", resession.save)
     vim.keymap.set("n", "<leader>sl", resession.load)
