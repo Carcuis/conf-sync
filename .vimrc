@@ -1665,12 +1665,26 @@ if has("nvim")
 EOF
 endif
 
+" === mason.nvim ===
+if has("nvim")
+    lua << EOF
+    require("mason").setup({
+        ui = {
+            icons = {
+                package_installed = "󰏗",
+                package_pending = "󱧕",
+                package_uninstalled = "󰏗",
+            },
+        },
+    })
+EOF
+endif
+
 " === nvim-dap ===
 if has("nvim")
     lua << EOF
     require("telescope").load_extension("dap")
     require("nvim-dap-virtual-text").setup()
-    require("mason").setup()
     require("mason-nvim-dap").setup({
         ensure_installed = {'bash', 'codelldb', 'python'},
     })
