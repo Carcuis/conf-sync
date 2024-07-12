@@ -99,6 +99,8 @@ if has("nvim")
     Plug 'rcarriga/nvim-dap-ui'
     Plug 'nvim-telescope/telescope-dap.nvim'
     Plug 'theHamsta/nvim-dap-virtual-text'
+    Plug 'williamboman/mason.nvim'
+    Plug 'jay-babu/mason-nvim-dap.nvim'
 else
     Plug 'carcuis/darcula'
     Plug 'joshdick/onedark.vim'
@@ -617,7 +619,6 @@ if has("nvim")
     }
     require('telescope').load_extension('fzf')
     require('telescope').load_extension('coc')
-    require('telescope').load_extension('dap')
 EOF
 endif
 
@@ -1585,49 +1586,114 @@ endif
 " === nvim-dap ===
 if has("nvim")
     lua << EOF
-    require("dapui").setup()
-    require("dap-python").setup(vim.g.python3_host_prog)
+    require("telescope").load_extension("dap")
     require("nvim-dap-virtual-text").setup()
+    require("mason").setup()
+    require("mason-nvim-dap").setup()
+    require("dap-python").setup(vim.fn.stdpath("data") .. "/mason/packages/debugpy/venv/bin/python")
+    local python_debug_project_configuration = {
+        type = "python",
+        request = "launch",
+        name = "Launch project",
+        program = "main.py",
+        console = "integratedTerminal",
+    }
+    if vim.fn.filereadable("main.py") == 1 then
+        table.insert(require("dap").configurations.python, 1, python_debug_project_configuration)
+        vim.keymap.set("n", "<leader>dp", function() require("dap").run(python_debug_project_configuration) end)
+    end
     local dap, dapui = require("dap"), require("dapui")
+    dapui.setup({
+        mappings = {
+            expand = { "o", "<2-LeftMouse>" },
+            open = "<CR>",
+        },
+    })
     dap.listeners.before.launch.dapui_config = function()
         if require("nvim-tree.api").tree.is_visible() then
             require("nvim-tree.api").tree.close()
         end
         dapui.open()
     end
+    dap.adapters.codelldb = {
+        -- see: https://github.com/mfussenegger/nvim-dap/wiki/C-C---Rust-(via--codelldb)
+        type = "server",
+        port = "${port}",
+        executable = {
+            command = vim.fn.stdpath("data") .. "/mason/packages/codelldb/extension/adapter/codelldb",
+            args = {
+                "--settings", "{ \"showDisassembly\": \"never\" }",
+                "--port", "${port}"
+            },
+            -- On windows you may have to uncomment this:
+            -- detached = false,
+        }
+    }
     dap.adapters.gdb = {
+        -- see: https://github.com/mfussenegger/nvim-dap/wiki/Debug-Adapter-installation#ccrust-via-gdb
         type = "executable",
         command = "gdb",
         args = { "-i", "dap" }
     }
-    dap.configurations.c = {
+    dap.adapters.bashdb = {
+        -- see: https://github.com/mfussenegger/nvim-dap/wiki/Debug-Adapter-installation#bash
+        type = "executable",
+        command = vim.fn.stdpath("data") .. "/mason/packages/bash-debug-adapter/bash-debug-adapter",
+        name = "bashdb",
+    }
+    dap.configurations.cpp = {
         {
-            name = "Launch",
+            name = "Launch using codelldb",
+            type = "codelldb",
+            request = "launch",
+            program = function()
+              return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
+            end,
+            -- program = "${fileDirname}/${fileBasenameNoExtension}",
+            cwd = "${workspaceFolder}",
+            stopOnEntry = false,
+            args = {},
+        },
+        {
+            name = "Launch using native gdb",
             type = "gdb",
             request = "launch",
             program = function()
                 return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
             end,
+            -- program = "${fileDirname}/${fileBasenameNoExtension}",
             cwd = "${workspaceFolder}",
             stopAtBeginningOfMainSubprogram = false,
         },
     }
-    dap.configurations.cpp = {
+    dap.configurations.c = dap.configurations.cpp
+    dap.configurations.sh = {
         {
-            name = "Launch",
-            type = "gdb",
+            name = "Launch file",
+            type = "bashdb",
             request = "launch",
-            program = function()
-                return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
-            end,
+            showDebugOutput = true,
+            pathBashdb = vim.fn.stdpath("data") .. "/mason/packages/bash-debug-adapter/extension/bashdb_dir/bashdb",
+            pathBashdbLib = vim.fn.stdpath("data") .. "/mason/packages/bash-debug-adapter/extension/bashdb_dir",
+            trace = false,
+            file = "${file}",
+            program = "${file}",
             cwd = "${workspaceFolder}",
-            stopAtBeginningOfMainSubprogram = false,
-        },
+            pathCat = "cat",
+            pathBash = "bash",
+            pathMkfifo = "mkfifo",
+            pathPkill = "pkill",
+            args = {},
+            argsString = "",
+            env = {},
+            terminalKind = "integrated",
+            stopOnEntry = false,
+        }
     }
     vim.fn.sign_define('DapBreakpoint', {text='', texthl='DapBreakpoint', linehl='DapBreakpointLine', numhl=''})
     vim.fn.sign_define('DapBreakpointCondition', {text='󰻂', texthl='DapBreakpoint', linehl='DapBreakpointLine', numhl=''})
     vim.fn.sign_define('DapBreakpointRejected', {text='󰰠', texthl='DapBreakpoint', linehl='DapBreakpointLine', numhl=''})
-    vim.fn.sign_define('DapLogPoint', {text='', texthl='SignColumn', linehl='', numhl=''})
+    vim.fn.sign_define('DapLogPoint', {text='', texthl='DapLogPoint', linehl='DapLogPointLine', numhl=''})
     vim.fn.sign_define('DapStopped', {text='', texthl='DapStopped', linehl='DapStoppedLine', numhl=''})
 EOF
 
@@ -1648,9 +1714,17 @@ EOF
 EOF
     endfunction
 
-    nnoremap <silent> <leader>dl <cmd>lua require'dap'.continue()<CR>
-    nnoremap <silent> <leader>db <cmd>lua require'dap'.toggle_breakpoint()<CR>
-    nnoremap <silent> <leader>du <cmd>call ToggleDapUI()<CR>
+    nnoremap <silent> <C-a> <cmd>call ToggleDapUI()<CR>
+    nnoremap <silent> <F3> <cmd>lua require'dap'.pause()<CR>
+    nnoremap <silent> <F4> <cmd>lua require'dap'.continue()<CR>
+    nnoremap <silent> <F5> <cmd>lua require'dap'.step_into()<CR>
+    nnoremap <silent> <F6> <cmd>lua require'dap'.step_over()<CR>
+    nnoremap <silent> <F7> <cmd>lua require'dap'.step_out()<CR>
+    nnoremap <silent> <F8> <cmd>lua require'dap'.terminate()<CR>
+    nnoremap <silent> <leader>do <cmd>lua require'dap'.continue()<CR>
+    nnoremap <silent> <leader>dl <cmd>lua require'dap'.run_last()<CR>
+    nnoremap <silent> <leader>b <cmd>lua require'dap'.toggle_breakpoint()<CR>
+    nnoremap <silent> <leader>B <cmd>lua require'dap'.set_breakpoint(nil, nil, vim.fn.input('Log point message: '))<CR>
     vnoremap <M-k> <Cmd>lua require("dapui").eval()<CR>
 endif
 
