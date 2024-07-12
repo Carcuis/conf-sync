@@ -979,6 +979,15 @@ if has("nvim")
                 }}, },
                 filetypes = {'dap-repl'},
             },
+            {
+                sections = { lualine_b = {{
+                    function() return 'Terminal' end,
+                    icon = "",
+                    padding = { left = 0, right = 0 },
+                    separator = { left = '', right = '' },
+                }}, },
+                filetypes = {'toggleterm'},
+            }
         },
         options = {
             section_separators = { left = '', right = '' },
