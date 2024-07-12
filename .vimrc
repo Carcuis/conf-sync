@@ -1611,8 +1611,9 @@ if has("nvim")
                 zsh = "zsh",
                 ps1 = "pwsh -NoProfile -File",
             }
+            local cmd = cmds[vim.bo.filetype] .. " " .. vim.api.nvim_buf_get_name(0)
             return {
-                cmd = { cmds[vim.bo.filetype], vim.api.nvim_buf_get_name(0) },
+                cmd = vim.split(cmd, " "),
             }
         end,
         condition = {
