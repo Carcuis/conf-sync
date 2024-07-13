@@ -54,6 +54,11 @@ $vifmrc = @{
     remote = "$PSScriptRoot\.config\vifm\vifmrc"
     local = "$home\AppData\Roaming\Vifm\vifmrc"
 }
+$clangd = @{
+    name = "clangd config.yaml"
+    remote = "$PSScriptRoot\windows\clangd\config.yaml"
+    local = "$home\AppData\Local\clangd\config.yaml"
+}
 $file_list = @(
     $psprofile
     $vimrc
@@ -67,6 +72,7 @@ $extra_file_list = @(
     $lazygit
     $git_config
     $vifmrc
+    $clangd
 )
 
 function Print-Line    { param($msg) Write-Host "$WHITE$msg$TAIL"             }

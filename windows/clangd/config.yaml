@@ -1,0 +1,5 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/SchemaStore/schemastore/master/src/schemas/json/clangd.json
+CompileFlags:
+  Add:
+    - --target=x86_64-pc-windows-gnu
+
