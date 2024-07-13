@@ -36,7 +36,7 @@ Plug 'a5ob7r/shellcheckrc.vim' " syntax highlight for shellcheckrc
 Plug 'machakann/vim-highlightedyank' " highlight on yank
 
 if has("nvim")
-    Plug 'carcuis/darcula.nvim'
+    Plug 'Carcuis/darcula.nvim'
     Plug 'rafamadriz/neon'
     Plug 'Mofiqul/vscode.nvim'
     Plug 'folke/tokyonight.nvim'
@@ -102,7 +102,7 @@ if has("nvim")
     Plug 'williamboman/mason.nvim'
     Plug 'jay-babu/mason-nvim-dap.nvim'
 else
-    Plug 'carcuis/darcula'
+    Plug 'Carcuis/darcula'
     Plug 'joshdick/onedark.vim'
     Plug 'romainl/vim-cool'
     Plug 'pprovost/vim-ps1'
