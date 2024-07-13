@@ -630,6 +630,7 @@ let g:extra_whitespace_ignored_filetypes = [
             \'NvimTree',
             \'help',
             \'toggleterm',
+            \'mason',
             \]
 
 " === bufferline.nvim ===
