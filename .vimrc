@@ -1688,7 +1688,7 @@ if has("nvim")
     require("telescope").load_extension("dap")
     require("nvim-dap-virtual-text").setup()
     require("mason-nvim-dap").setup({
-        ensure_installed = {'bash', 'codelldb', 'python'},
+        ensure_installed = {'bash', 'cppdbg', 'codelldb', 'python'},
     })
     require("dap-python").setup(vim.fn.stdpath("data") .. "/mason/packages/debugpy/venv/bin/python")
     local python_debug_project_configuration = {
@@ -1729,6 +1729,21 @@ if has("nvim")
             -- detached = false,
         }
     }
+    local adapter_cppdbg = {
+        -- see: https://github.com/mfussenegger/nvim-dap/wiki/C-C---Rust-(gdb-via--vscode-cpptools)
+        id = 'cppdbg',
+        type = 'executable',
+        command = vim.fn.stdpath("data") .. "/mason/packages/cpptools/extension/debugAdapters/bin/OpenDebugAD7",
+    }
+    if vim.fn.has("win32") == 1 then
+        adapter_cppdbg = vim.tbl_extend("force", adapter_cppdbg, {
+            command = vim.fn.stdpath("data") .. "\\mason\\packages\\cpptools\\extension\\debugAdapters\\bin\\OpenDebugAD7.exe",
+            options = {
+                detached = false
+            }
+        })
+    end
+    dap.adapters.cppdbg = adapter_cppdbg
     dap.adapters.gdb = {
         -- see: https://github.com/mfussenegger/nvim-dap/wiki/Debug-Adapter-installation#ccrust-via-gdb
         type = "executable",
@@ -1743,28 +1758,48 @@ if has("nvim")
     }
     dap.configurations.cpp = {
         {
-            name = "Launch using codelldb",
+            name = "Launch using cppdbg (gcc)",
+            type = "cppdbg",
+            request = "launch",
+            program = function()
+                return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
+            end,
+            cwd = '${workspaceFolder}',
+            stopAtEntry = false,
+        },
+        {
+            name = "Launch using codelldb (clang)",
             type = "codelldb",
             request = "launch",
             program = function()
-              return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
+                return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
             end,
-            -- program = "${fileDirname}/${fileBasenameNoExtension}",
             cwd = "${workspaceFolder}",
             stopOnEntry = false,
             args = {},
         },
         {
-            name = "Launch using native gdb",
+            name = "Launch using native gdb (gcc)",
             type = "gdb",
             request = "launch",
             program = function()
                 return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
             end,
-            -- program = "${fileDirname}/${fileBasenameNoExtension}",
             cwd = "${workspaceFolder}",
             stopAtBeginningOfMainSubprogram = false,
         },
+        {
+            name = "Attach to gdbserver :1234 (gcc)",
+            type = "cppdbg",
+            request = "launch",
+            MIMode = "gdb",
+            miDebuggerServerAddress = "localhost:1234",
+            -- miDebuggerPath = "/usr/bin/gdb",
+            cwd = "${workspaceFolder}",
+            program = function()
+                return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
+            end,
+        }
     }
     dap.configurations.c = dap.configurations.cpp
     dap.configurations.sh = {
