@@ -1848,6 +1848,14 @@ EOF
 EOF
     endfunction
 
+    function SetLogPoint()
+        lua << EOF
+        vim.ui.input({ prompt = 'Log point message: ' }, function(input)
+            require('dap').set_breakpoint(nil, nil, input)
+        end)
+EOF
+    endfunction
+
     nnoremap <silent> <C-a> <cmd>call ToggleDapUI()<CR>
     nnoremap <silent> <F3> <cmd>lua require'dap'.pause()<CR>
     nnoremap <silent> <F4> <cmd>lua require'dap'.continue()<CR>
@@ -1858,7 +1866,7 @@ EOF
     nnoremap <silent> <leader>do <cmd>lua require'dap'.continue()<CR>
     nnoremap <silent> <leader>dl <cmd>lua require'dap'.run_last()<CR>
     nnoremap <silent> <leader>b <cmd>lua require'dap'.toggle_breakpoint()<CR>
-    nnoremap <silent> <leader>B <cmd>lua require'dap'.set_breakpoint(nil, nil, vim.fn.input('Log point message: '))<CR>
+    nnoremap <silent> <leader>B <cmd>call SetLogPoint()<CR>
     vnoremap <M-k> <Cmd>lua require("dapui").eval()<CR>
 endif
 
