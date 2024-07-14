@@ -101,6 +101,7 @@ if has("nvim")
     Plug 'theHamsta/nvim-dap-virtual-text'
     Plug 'williamboman/mason.nvim'
     Plug 'jay-babu/mason-nvim-dap.nvim'
+    Plug 'LiadOz/nvim-dap-repl-highlights'
 else
     Plug 'Carcuis/darcula'
     Plug 'joshdick/onedark.vim'
@@ -872,10 +873,11 @@ endif
 " === nvim-treesitter ===
 if has("nvim")
     lua << EOF
+    require('nvim-dap-repl-highlights').setup()
     require('nvim-treesitter.configs').setup {
         ensure_installed = {
             "python", "c", "cpp", "lua", "bash", "vim", "vimdoc", "go", "javascript", "typescript", "make",
-            "markdown", "markdown_inline", "toml", "yaml", "xml", "git_config", "json", "json5", "jsonc"
+            "markdown", "markdown_inline", "toml", "yaml", "xml", "git_config", "json", "json5", "jsonc", "dap_repl"
         },
         highlight = {
             enable = true,
