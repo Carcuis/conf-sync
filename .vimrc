@@ -1689,7 +1689,11 @@ if has("nvim")
     require("mason-nvim-dap").setup({
         ensure_installed = {'bash', 'cppdbg', 'codelldb', 'python'},
     })
-    require("dap-python").setup(vim.fn.stdpath("data") .. "/mason/packages/debugpy/venv/bin/python")
+    local dap_python_path = vim.fn.stdpath("data") .. "/mason/packages/debugpy/venv/bin/python"
+    if vim.fn.has("win32") == 1 then
+        dap_python_path = vim.fn.stdpath("data") .. "\\mason\\packages\\debugpy\\venv\\Scripts\\python.exe"
+    end
+    require("dap-python").setup(dap_python_path)
     local python_debug_project_configuration = {
         type = "python",
         request = "launch",
