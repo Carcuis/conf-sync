@@ -1975,7 +1975,7 @@ nnoremap <silent> <C-Right> :vertical resize +2<CR>
 let g:load_doxygen_syntax=1
 
 " comment before duplicate a line
-nmap DC gccyypgcc
+nmap DC yypkgccj
 nmap DR ddkgcc
 
 " ===============
