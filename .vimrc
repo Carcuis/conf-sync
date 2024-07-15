@@ -1650,6 +1650,7 @@ if has("nvim")
         },
     })
     require("compiler").setup()
+
     vim.api.nvim_create_user_command("OverseerRestartLast", function()
         local tasks = overseer.list_tasks({ recent_first = true })
         if vim.tbl_isempty(tasks) then
@@ -1658,8 +1659,19 @@ if has("nvim")
             overseer.run_action(tasks[1], "restart")
         end
     end, {})
+
+    vim.api.nvim_create_user_command("ToggleOverseer", function()
+        local layouts = require("dapui.windows").layouts
+        if layouts[1]:is_open() then
+            vim.cmd.ToggleDapUI(1)
+        end
+        if layouts[2]:is_open() then
+            vim.cmd.ToggleDapUI(2)
+        end
+        overseer.toggle({ enter = false })
+    end, {})
 EOF
-    nnoremap <silent> <C-c> <cmd>OverseerToggle!<CR>
+    nnoremap <silent> <C-c> <cmd>ToggleOverseer<CR>
     nnoremap <silent> <leader>rc <cmd>CompilerOpen<CR>
     nnoremap <silent> <leader>ro <cmd>OverseerRun<CR>
     nnoremap <silent> <leader>rr <cmd>OverseerRestartLast<CR>
@@ -1841,24 +1853,33 @@ if has("nvim")
     vim.fn.sign_define('DapBreakpointRejected', {text='', texthl='DapBreakpointRejected', linehl='DapBreakpointRejectedLine', numhl=''})
     vim.fn.sign_define('DapLogPoint', {text='', texthl='DapLogPoint', linehl='DapLogPointLine', numhl=''})
     vim.fn.sign_define('DapStopped', {text='➜', texthl='DapStopped', linehl='DapStoppedLine', numhl=''})
-EOF
 
-    function ToggleDapUI()
-        lua << EOF
-        local dapui_exists = vim.fn.bufwinnr('DAP Breakpoints') > 0
-        local nvim_tree_exists = require("nvim-tree.api").tree.is_visible()
+    vim.api.nvim_create_user_command("ToggleDapUI", function(layout_num)
+        local overseer = require("overseer")
+        local nvim_tree = require("nvim-tree.api").tree
+        local dapui_windows = require("dapui.windows")
 
-        require("dapui").toggle()
-
-        if dapui_exists then
-            if not nvim_tree_exists and vim.fn.winwidth(0) >= 130 then
-                require("nvim-tree.api").tree.toggle({ focus = false })
-            end
-        elseif nvim_tree_exists then
-            require("nvim-tree.api").tree.close()
+        if overseer.window.is_open() then
+            overseer.close()
         end
+        dapui.toggle({ layout = tonumber(layout_num.fargs[1]), reset = true })
+
+        local dapui_side_layout = dapui_windows.layouts[1]
+        local dapui_bottom_layout = dapui_windows.layouts[2]
+        local nvim_tree_exists = nvim_tree.is_visible()
+
+        if dapui_side_layout:is_open() then
+            if nvim_tree_exists then
+                nvim_tree.close()
+            end
+        elseif not nvim_tree_exists and vim.fn.winwidth(0) >= 130 then
+            nvim_tree.toggle({ focus = false })
+            if dapui_bottom_layout:is_open() then
+                dapui_bottom_layout:resize()
+            end
+        end
+    end, { nargs = '?' })
 EOF
-    endfunction
 
     function SetLogPoint()
         lua << EOF
@@ -1868,7 +1889,7 @@ EOF
 EOF
     endfunction
 
-    nnoremap <silent> <C-a> <cmd>call ToggleDapUI()<CR>
+    nnoremap <silent> <C-q> <cmd>ToggleDapUI<CR>
     nnoremap <silent> <F3> <cmd>lua require'dap'.pause()<CR>
     nnoremap <silent> <F4> <cmd>lua require'dap'.continue()<CR>
     nnoremap <silent> <F5> <cmd>lua require'dap'.step_into()<CR>
