@@ -356,6 +356,11 @@ if [[ $SYSTEM =~ "WSL[12]" ]]; then
     #     eval `ssh-agent -s` > /dev/null
     #     ssh-add ~/.ssh/github > /dev/null 2>&1
     # fi
+
+    export BROWSER="$HOME/.local/bin/msedge"
+    [[ -d "$HOME/.local/bin/" ]] || mkdir -p "$HOME/.local/bin/"
+    [[ -f "$BROWSER" ]] || ln -s "/mnt/c/Program Files (x86)/Microsoft/Edge/Application/msedge.exe" "$BROWSER"
+
 elif [[ $SYSTEM == "Android" ]]; then
     ## sshd start-up
     # if [ `ps -ef |grep -w sshd|grep -v grep|wc -l` -le 0 ];then
