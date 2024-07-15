@@ -106,6 +106,10 @@
     "codeLens.position": "eol",
     "bashIde.backgroundAnalysisMaxFiles": 0,
     "markdownlint.onOpen": false,
+    "markdownlint.config": {
+        "default": true,
+        "line_length": false
+    },
     "translator.window.enableBorder": false,
     "translator.engines": [
         "bing",
