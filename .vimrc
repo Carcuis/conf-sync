@@ -1171,21 +1171,13 @@ endif
 if has("nvim")
     lua << EOF
     require("which-key").setup {
+        preset = "classic",
         plugins = {
             registers = true,
             spelling = {
                 enabled = true,
                 suggestions = 40,
             }
-        },
-        window = {
-            winblend = 10,
-        },
-        layout = {
-            align = 'center',
-        },
-        triggers_blacklist = {
-            c = { "j", "k" },
         },
         icons = {
             group = "",
