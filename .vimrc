@@ -1624,6 +1624,9 @@ if has("nvim")
             filetype = { "python", "sh", "zsh", "go", "ps1" },
         },
     })
+    overseer.add_template_hook(nil, function()
+        vim.cmd.CloseDapUI()
+    end)
     overseer.setup({
         strategy = "terminal",
         task_list = {
@@ -1656,13 +1659,7 @@ if has("nvim")
     end, {})
 
     vim.api.nvim_create_user_command("ToggleOverseer", function()
-        local layouts = require("dapui.windows").layouts
-        if layouts[1]:is_open() then
-            vim.cmd.ToggleDapUI(1)
-        end
-        if layouts[2]:is_open() then
-            vim.cmd.ToggleDapUI(2)
-        end
+        vim.cmd.CloseDapUI()
         overseer.toggle({ enter = false })
     end, {})
 EOF
@@ -1728,9 +1725,8 @@ if has("nvim")
         },
     })
     dap.listeners.before.launch.dapui_config = function()
-        if require("nvim-tree.api").tree.is_visible() then
-            require("nvim-tree.api").tree.close()
-        end
+        vim.cmd.NvimTreeClose()
+        vim.cmd.OverseerClose()
         dapui.open()
     end
     dap.adapters.codelldb = {
@@ -1849,14 +1845,21 @@ if has("nvim")
     vim.fn.sign_define('DapLogPoint', {text='', texthl='DapLogPoint', linehl='DapLogPointLine', numhl=''})
     vim.fn.sign_define('DapStopped', {text='➜', texthl='DapStopped', linehl='DapStoppedLine', numhl=''})
 
+    vim.api.nvim_create_user_command("CloseDapUI", function()
+        local layouts = require("dapui.windows").layouts
+        if layouts[1]:is_open() then
+            vim.cmd.ToggleDapUI(1)
+        end
+        if layouts[2]:is_open() then
+            vim.cmd.ToggleDapUI(2)
+        end
+    end, {})
+
     vim.api.nvim_create_user_command("ToggleDapUI", function(layout_num)
-        local overseer = require("overseer")
         local nvim_tree = require("nvim-tree.api").tree
         local dapui_windows = require("dapui.windows")
 
-        if overseer.window.is_open() then
-            overseer.close()
-        end
+        vim.cmd.OverseerClose()
         dapui.toggle({ layout = tonumber(layout_num.fargs[1]), reset = true })
 
         local dapui_side_layout = dapui_windows.layouts[1]
