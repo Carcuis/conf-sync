@@ -71,6 +71,9 @@ imap <M-Right> <Action>(copilot.applyInlaysNextWord)
 imap <M-C-Right> <Action>(copilot.applyInlaysNextLine)
 map f <Action>(KJumpAction.Char2)
 map F <Action>(KJumpAction.Char2)
+nmap <C-c> <Action>(HideActiveWindow)
+map <CR> <Action>(EditorSelectWord)
+map <leader>b <Action>(ToggleLineBreakpoint)
 
 " navigate windows
 map <M-h> <C-w>h
@@ -102,8 +105,8 @@ map <M-s> :w<CR>
 map <leader>q :q<CR>
 map <leader>wq :wq<CR>
 map <leader>sf <Action>(IdeaVim.ReloadVimRc.reload)
-map <leader>dc :action CommentByLineComment<CR>yypk:action CommentByLineComment<CR>
-map <leader>dr ddk:action CommentByLineComment<CR>
+map DC yypk:action CommentByLineComment<CR>
+map DR ddk:action CommentByLineComment<CR>k
 
 " IDE keymap (File -> Settings) manually setup
 " Editor Actions :
