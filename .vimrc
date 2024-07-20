@@ -728,8 +728,7 @@ EOF
             \ quit | endif
 
     " Close NvimTree after :DiffviewOpen
-    autocmd BufEnter diffview:///*
-            \ lua if require("nvim-tree.api").tree.is_visible() then vim.cmd("NvimTreeClose") end
+    autocmd BufEnter diffview:///* NvimTreeClose
 
     lua << EOF
     local function on_attach(bufnr)
