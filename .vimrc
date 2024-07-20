@@ -1438,6 +1438,15 @@ if has("nvim")
                 width = 30,
             },
         },
+        icons = {                 -- Only applies when use_icons is true.
+            folder_closed = "󰉋",
+            folder_open = "",
+        },
+        signs = {
+            fold_closed = "",
+            fold_open = "",
+            done = "",
+        },
         keymaps = {
             view = {
                 { "n", "q", "<Cmd>DiffviewClose<CR>", { desc = "Quit diffview" } },
