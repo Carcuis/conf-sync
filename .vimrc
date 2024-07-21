@@ -727,9 +727,6 @@ EOF
             \ if len(layout) == 2 && layout[0] == 'leaf' && getbufvar(winbufnr(layout[1]), '&filetype') == 'NvimTree' |
             \ quit | endif
 
-    " Close NvimTree after :DiffviewOpen
-    autocmd BufEnter diffview:///* NvimTreeClose
-
     lua << EOF
     local function on_attach(bufnr)
         -- @see: https://github.com/nvim-tree/nvim-tree.lua/wiki/Migrating-To-on_attach
@@ -1459,6 +1456,14 @@ if has("nvim")
             },
         },
     }
+
+    vim.api.nvim_create_autocmd("User", {
+        pattern = "DiffviewViewOpened",
+        callback = function()
+            vim.cmd.NvimTreeClose()
+            vim.cmd.wincmd("p")
+        end
+    })
 EOF
 endif
 
