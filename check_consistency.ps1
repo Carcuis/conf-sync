@@ -14,6 +14,11 @@ $windows_psprofile_v5 = @{
     remote = "$PSScriptRoot\windows\powershell\Microsoft.PowerShell_profile.windows_powershell_v5.ps1"
     local = "$home\Documents\WindowsPowerShell\Microsoft.PowerShell_profile.ps1"
 }
+$wsl_config = @{
+    name = "WSL Configuration"
+    remote = "$PSScriptRoot\windows\.wslconfig"
+    local = "$home\.wslconfig"
+}
 $ohmyposh_theme = @{
     name = "oh-my-posh theme"
     remote = "$PSScriptRoot\windows\powershell\cui_theme.omp.json"
@@ -65,6 +70,7 @@ $file_list = @(
 )
 $extra_file_list = @(
     $windows_psprofile_v5
+    $wsl_config
     $ohmyposh_theme
     $coc_settings
     $ptpython
