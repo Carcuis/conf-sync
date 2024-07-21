@@ -194,6 +194,7 @@ Set-Alias pwshc EditProfile
 Set-Alias vimc EditVimrc
 Set-Alias histc EditHistory
 Set-Alias nvi nvim
+Set-Alias nvid neovide
 Set-Alias gnvi nvim-qt
 Set-Alias vif OpenVifmInPwd
 Set-Alias vifm OpenVifmInPwd
