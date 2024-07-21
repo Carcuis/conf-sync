@@ -297,6 +297,7 @@ if [[ $SYSTEM =~ "WSL[12]" ]]; then
     alias no.='nautilus .'
     alias px="set_proxy http://$(wsl_get_proxy_server):$(wsl_get_proxy_port)"
     alias upx=unset_proxy
+    alias nvid='neovide.exe --wsl'
 
     if [[ $SYSTEM == "WSL1" ]]; then
         alias x='export DISPLAY=:0.0'
