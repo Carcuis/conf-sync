@@ -479,8 +479,11 @@ if has("nvim")
     inoremap <silent><expr> <TAB>
           \ coc#pum#visible() ? coc#_select_confirm() :
           \ coc#expandableOrJumpable() ? "\<C-r>=coc#rpc#request('doKeymap', ['snippets-expand-jump',''])\<CR>" : "\<TAB>"
-    inoremap <expr><S-TAB> "\<C-h>"
-    inoremap <silent><expr> <c-e> coc#refresh()
+    inoremap <silent><expr> <C-n> coc#pum#visible() ? coc#pum#next(0) : "\<C-n>"
+    inoremap <silent><expr> <C-p> coc#pum#visible() ? coc#pum#prev(0) : "\<C-p>"
+    inoremap <silent><expr> <down> coc#pum#visible() ? coc#pum#next(1) : "\<down>"
+    inoremap <silent><expr> <up> coc#pum#visible() ? coc#pum#prev(1) : "\<up>"
+    inoremap <silent><expr> <c-e> coc#pum#visible() ? coc#pum#cancel() : coc#refresh()
     nmap <silent> [g <Plug>(coc-diagnostic-prev)
     nmap <silent> ]g <Plug>(coc-diagnostic-next)
 
@@ -530,6 +533,8 @@ if has("nvim")
     let g:coc_notify_error_icon = ''
     let g:coc_notify_warning_icon = ''
     let g:coc_notify_info_icon = ''
+    let g:coc_snippet_next = '<tab>'
+    let g:coc_snippet_prev = '<s-tab>'
 
     " Visual mode quick select in function/class
     xmap if <Plug>(coc-funcobj-i)
