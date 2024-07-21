@@ -1,0 +1,5 @@
+[wsl2]
+autoProxy = false
+
+# vim: ft=toml
+
