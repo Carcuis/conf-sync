@@ -1724,23 +1724,15 @@ if has("nvim")
     require("mason-nvim-dap").setup({
         ensure_installed = {'bash', 'cppdbg', 'codelldb', 'python'},
     })
+
     local dap_python_path = vim.fn.stdpath("data") .. "/mason/packages/debugpy/venv/bin/python"
     if vim.fn.has("win32") == 1 then
         dap_python_path = vim.fn.stdpath("data") .. "\\mason\\packages\\debugpy\\venv\\Scripts\\python.exe"
     end
     require("dap-python").setup(dap_python_path)
-    local python_debug_project_configuration = {
-        type = "python",
-        request = "launch",
-        name = "Launch project",
-        program = "main.py",
-        console = "integratedTerminal",
-    }
-    if vim.fn.filereadable("main.py") == 1 then
-        table.insert(require("dap").configurations.python, 1, python_debug_project_configuration)
-        vim.keymap.set("n", "<leader>dp", function() require("dap").run(python_debug_project_configuration) end)
-    end
+
     local dap, dapui = require("dap"), require("dapui")
+
     dapui.setup({
         mappings = {
             expand = { "o", "<2-LeftMouse>" },
@@ -1752,6 +1744,19 @@ if has("nvim")
         vim.cmd.OverseerClose()
         dapui.open()
     end
+
+    local python_debug_project_configuration = {
+        type = "python",
+        request = "launch",
+        name = "Launch project",
+        program = "main.py",
+        console = "integratedTerminal",
+    }
+    if vim.fn.filereadable("main.py") == 1 then
+        table.insert(dap.configurations.python, 1, python_debug_project_configuration)
+        vim.keymap.set("n", "<leader>dp", function() dap.run(python_debug_project_configuration) end, { desc = "Debug python project" })
+    end
+
     dap.adapters.codelldb = {
         -- see: https://github.com/mfussenegger/nvim-dap/wiki/C-C---Rust-(via--codelldb)
         type = "server",
@@ -1766,6 +1771,7 @@ if has("nvim")
             -- detached = false,
         }
     }
+
     local adapter_cppdbg = {
         -- see: https://github.com/mfussenegger/nvim-dap/wiki/C-C---Rust-(gdb-via--vscode-cpptools)
         id = 'cppdbg',
@@ -1781,18 +1787,21 @@ if has("nvim")
         })
     end
     dap.adapters.cppdbg = adapter_cppdbg
+
     dap.adapters.gdb = {
         -- see: https://github.com/mfussenegger/nvim-dap/wiki/Debug-Adapter-installation#ccrust-via-gdb
         type = "executable",
         command = "gdb",
         args = { "-i", "dap" }
     }
+
     dap.adapters.bashdb = {
         -- see: https://github.com/mfussenegger/nvim-dap/wiki/Debug-Adapter-installation#bash
         type = "executable",
         command = vim.fn.stdpath("data") .. "/mason/packages/bash-debug-adapter/bash-debug-adapter",
         name = "bashdb",
     }
+
     dap.configurations.cpp = {
         {
             name = "Launch using cppdbg (gcc)",
@@ -1839,6 +1848,7 @@ if has("nvim")
         }
     }
     dap.configurations.c = dap.configurations.cpp
+
     dap.configurations.sh = {
         {
             name = "Launch file",
@@ -1862,6 +1872,7 @@ if has("nvim")
             stopOnEntry = false,
         }
     }
+
     vim.fn.sign_define('DapBreakpoint', {text='', texthl='DapBreakpoint', linehl='DapBreakpointLine', numhl=''})
     vim.fn.sign_define('DapBreakpointCondition', {text='󰻂', texthl='DapBreakpoint', linehl='DapBreakpointLine', numhl=''})
     vim.fn.sign_define('DapBreakpointRejected', {text='', texthl='DapBreakpointRejected', linehl='DapBreakpointRejectedLine', numhl=''})
