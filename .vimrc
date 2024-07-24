@@ -1582,9 +1582,9 @@ if has("nvim")
             "winfixwidth",
         },
     })
-    vim.keymap.set("n", "<leader>ss", resession.save)
-    vim.keymap.set("n", "<leader>sl", resession.load)
-    vim.keymap.set("n", "<leader>sd", resession.delete)
+    vim.keymap.set("n", "<leader>ss", resession.save, { desc = "Save Session" })
+    vim.keymap.set("n", "<leader>sl", resession.load, { desc = "Load Session" })
+    vim.keymap.set("n", "<leader>sd", resession.delete, { desc = "Delete Session" })
     resession.add_hook("post_load", function()
         if vim.fn.winwidth(0) >= 130 then
             vim.fn.OpenUnfocusedNvimTreeInNewWindow()
