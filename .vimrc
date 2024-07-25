@@ -1468,10 +1468,22 @@ if has("nvim")
     }
 
     vim.api.nvim_create_autocmd("User", {
-        pattern = "DiffviewViewOpened",
+        pattern = "DiffviewViewEnter",
         callback = function()
             vim.cmd.NvimTreeClose()
-            vim.cmd.wincmd("p")
+            vim.cmd.wincmd("l")
+        end
+    })
+    vim.api.nvim_create_autocmd("User", {
+        pattern = "DiffviewDiffBufWinEnter",
+        callback = function()
+            vim.cmd('goto 1')
+        end
+    })
+    vim.api.nvim_create_autocmd("BufEnter", {
+        pattern = "diffview://null",
+        callback = function()
+            vim.keymap.set("n", "q", "<Cmd>DiffviewClose<CR>", { desc = "Quit Diffview", buffer = true })
         end
     })
 EOF
