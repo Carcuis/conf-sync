@@ -1354,7 +1354,10 @@ if has("nvim")
     lua << EOF
     require('telescope').load_extension('notify')
     vim.notify = require("notify")
-    require("notify").setup()
+    require("notify").setup({
+        stages = "fade",
+        timeout = 10,
+    })
 EOF
 endif
 
