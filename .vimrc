@@ -1696,6 +1696,7 @@ if has("nvim")
     require("compiler").setup()
 
     vim.api.nvim_create_user_command("OverseerRestartLast", function()
+        vim.cmd.CloseDapUI()
         local tasks = overseer.list_tasks({ recent_first = true })
         if vim.tbl_isempty(tasks) then
             vim.notify("No tasks found", vim.log.levels.WARN, { title = "Overseer Restart Last" })
