@@ -1489,6 +1489,7 @@ if has("nvim")
         pattern = "DiffviewDiffBufWinEnter",
         callback = function()
             vim.cmd('goto 1')
+            vim.cmd('norm ]c')
         end
     })
     vim.api.nvim_create_autocmd("BufEnter", {
