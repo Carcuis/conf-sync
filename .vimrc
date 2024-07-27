@@ -1720,7 +1720,18 @@ endif
 " === CopilotChat.nvim ===
 if has("nvim")
     lua << EOF
-    require("CopilotChat").setup {}
+    require("CopilotChat").setup({
+        model = 'gpt-4o-2024-05-13',
+        show_folds = false,
+        context = 'buffers',
+        window = {
+            layout = 'float',
+            width = 0.7,
+            height = 0.8,
+            border = 'rounded',
+        },
+    })
+    vim.keymap.set("n", "<leader>C", require('CopilotChat').open, { desc = "Open Copilot Chat" })
 EOF
 endif
 
