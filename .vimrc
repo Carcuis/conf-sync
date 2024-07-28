@@ -102,6 +102,7 @@ if has("nvim")
     Plug 'williamboman/mason.nvim'
     Plug 'jay-babu/mason-nvim-dap.nvim'
     Plug 'LiadOz/nvim-dap-repl-highlights'
+    Plug 'MeanderingProgrammer/markdown.nvim'
 else
     Plug 'Carcuis/darcula'
     Plug 'joshdick/onedark.vim'
