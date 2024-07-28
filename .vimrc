@@ -103,6 +103,7 @@ if has("nvim")
     Plug 'jay-babu/mason-nvim-dap.nvim'
     Plug 'LiadOz/nvim-dap-repl-highlights'
     Plug 'MeanderingProgrammer/markdown.nvim'
+    Plug 'chrisgrieser/nvim-rip-substitute'
 else
     Plug 'Carcuis/darcula'
     Plug 'joshdick/onedark.vim'
@@ -1970,6 +1971,32 @@ EOF
     nnoremap <silent> <leader>b <cmd>lua require'dap'.toggle_breakpoint()<CR>
     nnoremap <silent> <leader>B <cmd>call SetLogPoint()<CR>
     vnoremap <M-k> <Cmd>lua require("dapui").eval()<CR>
+endif
+
+" === nvim-rip-substitute ===
+if has("nvim")
+    lua << EOF
+    require("rip-substitute").setup({
+        keymaps = {
+            insertModeConfirm = "<C-s>",
+        },
+    })
+    local function quit_rip_substitute()
+        vim.cmd.quit()
+        if vim.api.nvim_get_mode().mode == "i" then
+            vim.cmd.stopinsert()
+            vim.cmd.normal("l")
+        end
+    end
+    vim.keymap.set({ "n", "v" }, "<leader>S", require("rip-substitute").sub, { desc = " Rip Substitute" })
+    vim.api.nvim_create_autocmd("FileType", {
+        pattern = "rip-substitute",
+        callback = function()
+            vim.keymap.set({ "n", "i" }, "<C-c>", quit_rip_substitute, { buffer = true, desc = "Close Rip Substitute" })
+            vim.keymap.set({ "n", "i" }, "<esc>", quit_rip_substitute, { buffer = true, desc = "Close Rip Substitute" })
+        end
+    })
+EOF
 endif
 
 
