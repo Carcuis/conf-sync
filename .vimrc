@@ -1489,8 +1489,8 @@ if has("nvim")
     vim.api.nvim_create_autocmd("User", {
         pattern = "DiffviewDiffBufWinEnter",
         callback = function()
-            vim.cmd('goto 1')
-            vim.cmd('norm ]c')
+            vim.cmd.goto()
+            vim.cmd.normal(']c')
         end
     })
     vim.api.nvim_create_autocmd("BufEnter", {
