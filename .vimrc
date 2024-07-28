@@ -1733,7 +1733,7 @@ if has("nvim")
             border = 'rounded',
         },
     })
-    vim.keymap.set("n", "<leader>C", require('CopilotChat').open, { desc = "Open Copilot Chat" })
+    vim.keymap.set({ "n", "v" }, "<leader>C", require('CopilotChat').open, { desc = "Open Copilot Chat" })
 EOF
 endif
 
