@@ -110,6 +110,7 @@
     "codeLens.position": "eol",
     "bashIde.backgroundAnalysisMaxFiles": 0,
     "markdownlint.onOpen": false,
+    "markdownlint.onChange": false,
     "markdownlint.config": {
         "default": true,
         "line_length": false
