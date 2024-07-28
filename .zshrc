@@ -10,7 +10,13 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
 fi
 
 # If you come from bash you might have to change your $PATH.
-export PATH=$HOME/.local/bin:/usr/local/bin:$PATH
+for user_path in \
+    $HOME/.local/bin \
+    $HOME/.cargo/bin \
+    /usr/local/bin
+do
+    [[ -d $user_path ]] && [[ ! $PATH == *$user_path* ]] && export PATH=$user_path:$PATH
+done
 
 # Path to your Oh My Zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
