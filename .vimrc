@@ -1989,7 +1989,7 @@ if has("nvim")
             vim.cmd.normal("l")
         end
     end
-    vim.keymap.set({ "n", "v" }, "<leader>S", require("rip-substitute").sub, { desc = " Rip Substitute" })
+    vim.keymap.set({ "n", "v" }, "R", require("rip-substitute").sub, { desc = " Rip Substitute" })
     vim.api.nvim_create_autocmd("FileType", {
         pattern = "rip-substitute",
         callback = function()
