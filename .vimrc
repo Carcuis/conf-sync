@@ -195,6 +195,7 @@ set timeoutlen=500
 set conceallevel=2
 set colorcolumn=120
 set jumpoptions=stack
+set pumheight=15
 
 if has("nvim")
     if has("win32")
