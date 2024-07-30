@@ -102,6 +102,8 @@ if has("nvim")
     Plug 'williamboman/mason.nvim'
     Plug 'jay-babu/mason-nvim-dap.nvim'
     Plug 'LiadOz/nvim-dap-repl-highlights'
+    Plug 'Weissle/persistent-breakpoints.nvim'
+    Plug 'Carcuis/dap-breakpoints.nvim'
     Plug 'MeanderingProgrammer/markdown.nvim'
     Plug 'chrisgrieser/nvim-rip-substitute'
 else
@@ -1955,28 +1957,52 @@ if has("nvim")
             end
         end
     end, { nargs = '?' })
-EOF
 
-    function SetLogPoint()
-        lua << EOF
-        vim.ui.input({ prompt = 'Log point message: ' }, function(input)
-            require('dap').set_breakpoint(nil, nil, input)
-        end)
-EOF
-    endfunction
+    local keymaps = {
+        { mode = "n", key = "<C-q>", func = vim.cmd.ToggleDapUI, desc = "Toggle DAP UI" },
+        { mode = "n", key = "<F3>", func = dap.pause, desc = "DAP Pause" },
+        { mode = "n", key = "<F4>", func = dap.continue, desc = "DAP Continue" },
+        { mode = "n", key = "<F5>", func = dap.step_into, desc = "DAP Step Into" },
+        { mode = "n", key = "<F6>", func = dap.step_over, desc = "DAP Step Over" },
+        { mode = "n", key = "<F7>", func = dap.step_out, desc = "DAP Step Out" },
+        { mode = "n", key = "<F8>", func = dap.terminate, desc = "DAP Terminate" },
+        { mode = "n", key = "<leader>do", func = dap.continue, desc = "DAP Start" },
+        { mode = "n", key = "<leader>dl", func = dap.run_last, desc = "DAP Run Last" },
+        { mode = "v", key = "<M-k>", func = dapui.eval, desc = "DAP Eval" },
+    }
+    for _, keymap in ipairs(keymaps) do
+        vim.keymap.set(keymap.mode, keymap.key, keymap.func, { desc = keymap.desc })
+    end
 
-    nnoremap <silent> <C-q> <cmd>ToggleDapUI<CR>
-    nnoremap <silent> <F3> <cmd>lua require'dap'.pause()<CR>
-    nnoremap <silent> <F4> <cmd>lua require'dap'.continue()<CR>
-    nnoremap <silent> <F5> <cmd>lua require'dap'.step_into()<CR>
-    nnoremap <silent> <F6> <cmd>lua require'dap'.step_over()<CR>
-    nnoremap <silent> <F7> <cmd>lua require'dap'.step_out()<CR>
-    nnoremap <silent> <F8> <cmd>lua require'dap'.terminate()<CR>
-    nnoremap <silent> <leader>do <cmd>lua require'dap'.continue()<CR>
-    nnoremap <silent> <leader>dl <cmd>lua require'dap'.run_last()<CR>
-    nnoremap <silent> <leader>b <cmd>lua require'dap'.toggle_breakpoint()<CR>
-    nnoremap <silent> <leader>B <cmd>call SetLogPoint()<CR>
-    vnoremap <M-k> <Cmd>lua require("dapui").eval()<CR>
+    require("persistent-breakpoints").setup()
+    require("dap-breakpoints").setup({
+        breakpoint = {
+            auto_load = true,
+            auto_save = true,
+        },
+    })
+
+    local dapbp_api = require("dap-breakpoints.api")
+    local dapbp_keymaps = {
+        { key = "<leader>b", api = dapbp_api.toggle_breakpoint, desc = "Toggle Breakpoint" },
+        { key = "<leader>dtc", api = dapbp_api.set_conditional_breakpoint, desc = "Set Conditional Breakpoint" },
+        { key = "<leader>dth", api = dapbp_api.set_hit_condition_breakpoint, desc = "Set Hit Condition Breakpoint" },
+        { key = "<leader>dtl", api = dapbp_api.set_log_point, desc = "Set Log Point" },
+        { key = "<leader>dtL", api = dapbp_api.load_breakpoints, desc = "Load Breakpoints" },
+        { key = "<leader>dts", api = dapbp_api.save_breakpoints, desc = "Save Breakpoints" },
+        { key = "<leader>dte", api = dapbp_api.edit_property, desc = "Edit Breakpoint Property" },
+        { key = "<leader>dtv", api = dapbp_api.toggle_virtual_text, desc = "Toggle Breakpoint Virtual Text" },
+        { key = "<leader>dtC", api = dapbp_api.clear_all_breakpoints, desc = "Clear All Breakpoints" },
+        { key = "[b", api = dapbp_api.go_to_previous, desc = "Go to Previous Breakpoint" },
+        { key = "]b", api = dapbp_api.go_to_next, desc = "Go to Next Breakpoint" },
+        { key = "<F9>", api = dapbp_api.go_to_previous, desc = "Go to Previous Breakpoint" },
+        { key = "<F10>", api = dapbp_api.go_to_next, desc = "Go to Next Breakpoint" },
+        { key = "<M-b>", api = dapbp_api.popup_reveal, desc = "Reveal Breakpoint" },
+    }
+    for _, keymap in ipairs(dapbp_keymaps) do
+        vim.keymap.set("n", keymap.key, keymap.api, { desc = keymap.desc })
+    end
+EOF
 endif
 
 " === nvim-rip-substitute ===
