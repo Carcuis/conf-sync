@@ -1675,9 +1675,13 @@ if has("nvim")
             filetype = { "python", "sh", "zsh", "go", "ps1" },
         },
     })
-    overseer.add_template_hook(nil, function()
+
+    local function pre_overseer_run()
+        vim.cmd.wall()
         vim.cmd.CloseDapUI()
-    end)
+    end
+    overseer.add_template_hook(nil, pre_overseer_run)
+
     overseer.setup({
         strategy = "terminal",
         task_list = {
@@ -1701,7 +1705,7 @@ if has("nvim")
     require("compiler").setup()
 
     vim.api.nvim_create_user_command("OverseerRestartLast", function()
-        vim.cmd.CloseDapUI()
+        pre_overseer_run()
         local tasks = overseer.list_tasks({ recent_first = true })
         if vim.tbl_isempty(tasks) then
             vim.notify("No tasks found", vim.log.levels.WARN, { title = "Overseer Restart Last" })
