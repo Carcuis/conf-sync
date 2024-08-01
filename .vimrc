@@ -394,7 +394,7 @@ endif
 if argc() == 0
     au VimEnter * :Startify
 endif
-nnoremap <silent> <leader>; :Startify<CR>
+nnoremap <leader>; <cmd>Startify<CR>
 let g:startify_enable_special = 0
 let g:startify_lists = [
     \ { 'type': 'commands',  'header': ['   Commands']       },
@@ -472,8 +472,9 @@ function LoadSession(session_name)
     call PostSaveSession()
 endfunction
 if ! has("nvim")
-    nnoremap <silent> <leader>ss :call SaveSession("")<CR>
-    nnoremap <silent> <leader>sl :call LoadSession("")<CR>
+    nnoremap <leader>ss <cmd>call SaveSession("")<CR>
+    nnoremap <leader>sl <cmd>call LoadSession("")<CR>
+    nnoremap <leader>gq <cmd>call SaveSession("")<CR><cmd>qa<CR>
 endif
 
 " === vim-highlightedyank ===
@@ -505,25 +506,25 @@ if has("nvim")
     " nmap <silent> gr <Plug>(coc-references)
 
     " See fannheyward/telescope-coc.nvim
-    nmap <silent> gd :Telescope coc definitions<CR>
-    nmap <silent> gh :Telescope coc declarations<CR>
-    nmap <silent> gt :Telescope coc type-definitions<CR>
-    nmap <silent> ge :Telescope coc implementations<CR>
-    nmap <silent> gr :Telescope coc references<CR>
+    nmap gd <cmd>Telescope coc definitions<CR>
+    nmap gh <cmd>Telescope coc declarations<CR>
+    nmap gt <cmd>Telescope coc type-definitions<CR>
+    nmap ge <cmd>Telescope coc implementations<CR>
+    nmap gr <cmd>Telescope coc references<CR>
 
-    nmap <silent> gp :call CocActionAsync('jumpDefinition', v:false)<CR>
+    nmap gp <cmd>call CocActionAsync('jumpDefinition', v:false)<CR>
     autocmd CursorHold * silent call CocActionAsync('highlight')
     autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
     nmap <silent> <leader>rn <Plug>(coc-rename)
-    nmap <silent> <leader>RN :CocCommand document.renameCurrentWord<CR>
+    nmap <leader>RN <cmd>CocCommand document.renameCurrentWord<CR>
     nmap <silent> <S-F5> <Plug>(coc-rename)
     nmap <silent> <leader>rf <Plug>(coc-refactor)
     nmap <silent> <leader>lo <Plug>(coc-openlink)
     xmap <silent> <leader>a  <Plug>(coc-codeaction-selected)
     nmap <silent> <leader>a  <Plug>(coc-codeaction-selected)w
     nmap <silent> <M-f>  <Plug>(coc-fix-current)
-    nmap <silent> <M-e> :call CocActionAsync('doHover')<CR>
-    nmap <silent> <M-d> :CocCommand semanticTokens.inspect<CR>
+    nmap <M-e> <cmd>call CocActionAsync('doHover')<CR>
+    nmap <M-d> <cmd>CocCommand semanticTokens.inspect<CR>
     nmap <silent> <leader>tr <Plug>(coc-translator-p)
     vmap <silent> <leader>tr <Plug>(coc-translator-pv)
     nmap <silent> <C-s> <Plug>(coc-range-select)
@@ -721,8 +722,8 @@ endif
 
 " === nvim-tree.lua ===
 if has("nvim")
-    nnoremap <silent> <leader>ee :NvimTreeToggle<CR>
-    nnoremap <silent> <leader>E :NvimTreeFindFile!<CR>
+    nnoremap <leader>ee <cmd>NvimTreeToggle<CR>
+    nnoremap <leader>E <cmd>NvimTreeFindFile!<CR>
 
     func OpenUnfocusedNvimTreeInNewWindow()
         lua << EOF
@@ -922,7 +923,7 @@ if has("nvim")
         },
     }
 EOF
-    nnoremap <silent> <M-c> :TSHighlightCapturesUnderCursor<CR>
+    nnoremap <M-c> <cmd>TSHighlightCapturesUnderCursor<CR>
 endif
 
 " === nvim-treesitter-context ===
@@ -1365,7 +1366,7 @@ endif
 
 " === bufdelete.nvim ===
 if has("nvim")
-    nnoremap <silent> <leader>c :lua require('bufdelete').bufdelete(0)<CR>
+    nnoremap <leader>c <cmd>lua require('bufdelete').bufdelete(0)<CR>
 endif
 
 " === nvim-notify ===
@@ -1463,9 +1464,9 @@ endif
 
 " === diffview.nvim ===
 if has("nvim")
-    nnoremap <silent> <leader>gd :DiffviewOpen<CR>
-    nnoremap <silent> <leader>gh :DiffviewFileHistory<CR>
-    nnoremap <silent> <leader>gf :DiffviewFileHistory %<CR>
+    nnoremap <leader>gd <cmd>DiffviewOpen<CR>
+    nnoremap <leader>gh <cmd>DiffviewFileHistory<CR>
+    nnoremap <leader>gf <cmd>DiffviewFileHistory %<CR>
     lua << EOF
     -- local cb = require'diffview.config'.diffview_callback
     require('diffview').setup {
@@ -1562,7 +1563,7 @@ endif
 
 " === neogit ===
 if has("nvim")
-    nnoremap <silent> <leader>gn :Neogit<CR>
+    nnoremap <leader>gn <cmd>Neogit<CR>
     lua << EOF
     require("neogit").setup()
 EOF
@@ -1570,7 +1571,7 @@ endif
 
 " === dropbar.nvim ===
 if has("nvim")
-    nnoremap <silent> <leader>ds :lua require('dropbar.api').pick()<CR>
+    nnoremap <leader>ds <cmd>lua require('dropbar.api').pick()<CR>
 endif
 
 " === nvim-surround ===
@@ -2056,10 +2057,10 @@ vmap <C-n> *
 nmap <C-p> g#
 vmap <C-p> #
 
-nnoremap <silent> <M-s> :w<CR>
-nnoremap <silent> <M-S-s> :wall<CR>
-nnoremap <silent> <M-w> :q<CR>
-nnoremap <silent> <M-q> :q!<CR>
+nnoremap <M-s> <cmd>w<CR>
+nnoremap <M-S-s> <cmd>wall<CR>
+nnoremap <M-w> <cmd>q<CR>
+nnoremap <M-q> <cmd>q!<CR>
 
 function EditVimrc(way)
     if has("win32")
@@ -2077,22 +2078,21 @@ function EditVimrc(way)
     endif
 endfunction
 
-nnoremap <silent> <leader>sf :w<CR>:source $MYVIMRC<CR>
+nnoremap <leader>sf <cmd>w<CR><cmd>source $MYVIMRC<CR>
 if has("nvim")
-    nnoremap <silent> <leader>ev :e $MYVIMRC<CR>
+    nnoremap <leader>ev <cmd>e $MYVIMRC<CR>
 endif
-nnoremap <silent> <leader>ef :call EditVimrc("normal")<CR>
-nnoremap <silent> <leader>er :call EditVimrc("vs")<CR>
+nnoremap <leader>ef <cmd>call EditVimrc("normal")<CR>
+nnoremap <leader>er <cmd>call EditVimrc("vs")<CR>
 
-nnoremap <silent> <leader>ww :w<CR>
-nnoremap <silent> <leader>q :q<CR>
-nnoremap <silent> <leader>wq :wq<CR>
-nnoremap <silent> <leader>fq :q!<CR>
-nnoremap <silent> <leader>rq :qa<CR>
-nnoremap <silent> <leader>ewq :wqa<CR>
-nnoremap <silent> <leader>gq :call SaveSession("")<CR>:qa<CR>
-nnoremap <silent> <leader><leader>r :redraw!<CR>
-nnoremap <silent> <leader>i :Inspect<CR>
+nnoremap <leader>ww <cmd>w<CR>
+nnoremap <leader>q <cmd>q<CR>
+nnoremap <leader>wq <cmd>wq<CR>
+nnoremap <leader>fq <cmd>q!<CR>
+nnoremap <leader>rq <cmd>qa<CR>
+nnoremap <leader>ewq <cmd>wqa<CR>
+nnoremap <leader><leader>r <cmd>redraw!<CR>
+nnoremap <leader>i <cmd>Inspect<CR>
 
 nnoremap <M-h> <C-w>h
 nnoremap <M-j> <C-w>j
@@ -2106,10 +2106,10 @@ tnoremap <M-l> <C-\><C-N><C-w>l
 nnoremap <leader>sp <C-w>s
 nnoremap <leader>vs <C-w>v
 
-nnoremap <silent> <M-[> :tabp<CR>
-nnoremap <silent> <M-]> :tabn<CR>
-nnoremap <silent> <M-n> :tabnew<CR>
-nnoremap <silent> <M-S-c> :tabc<CR>
+nnoremap <M-[> <cmd>tabp<CR>
+nnoremap <M-]> <cmd>tabn<CR>
+nnoremap <M-n> <cmd>tabnew<CR>
+nnoremap <M-S-c> <cmd>tabc<CR>
 if ! has("nvim")
     nnoremap <leader>c :bd<CR>
 endif
@@ -2127,9 +2127,9 @@ inoremap <C-K> <esc>O
 inoremap <C-H> <esc>I
 inoremap <C-L> <esc>A
 
-nnoremap <silent> DO :%diffget<CR>
-nnoremap <silent> DP :%diffput<CR>
-nnoremap <silent> DU :diffupdate<CR>
+nnoremap DO <cmd>%diffget<CR>
+nnoremap DP <cmd>%diffput<CR>
+nnoremap DU <cmd>diffupdate<CR>
 
 for mapping in ['jj', 'jk', 'kj', 'kk', 'jl', 'jh']
     execute 'inoremap '.mapping.' <esc>'
@@ -2141,10 +2141,10 @@ if has("unix") && (system('uname -a') =~ "Android")
     vnoremap `` <esc>
 endif
 
-nnoremap <silent> <C-Up> :resize -2<CR>
-nnoremap <silent> <C-Down> :resize +2<CR>
-nnoremap <silent> <C-Left> :vertical resize -2<CR>
-nnoremap <silent> <C-Right> :vertical resize +2<CR>
+nnoremap <C-Up> <cmd>resize -2<CR>
+nnoremap <C-Down> <cmd>resize +2<CR>
+nnoremap <C-Left> <cmd>vertical resize -2<CR>
+nnoremap <C-Right> <cmd>vertical resize +2<CR>
 
 let g:load_doxygen_syntax=1
 
