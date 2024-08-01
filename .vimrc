@@ -2065,15 +2065,15 @@ nnoremap <M-q> <cmd>q!<CR>
 function EditVimrc(way)
     if has("win32")
         if a:way == "normal"
-            execute ":e ~\\_vimrc"
+            edit ~\\_vimrc
         elseif a:way == "vs"
-            execute ":vs ~\\_vimrc"
+            vsplit ~\\_vimrc
         endif
     else
         if a:way == "normal"
-            execute ":e ~/.vimrc"
+            edit ~/.vimrc
         elseif a:way == "vs"
-            execute ":vs ~/.vimrc"
+            vsplit ~/.vimrc
         endif
     endif
 endfunction
