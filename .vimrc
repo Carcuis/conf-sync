@@ -595,6 +595,7 @@ if has("nvim")
     nnoremap <leader>ff <cmd>Telescope find_files<cr>
     nnoremap <leader>fF <cmd>Telescope find_files hidden=true<cr>
     nnoremap <leader>fw <cmd>Telescope live_grep<cr>
+    nnoremap <leader>fe <cmd>Telescope grep_string<cr>
     nnoremap <leader>f/ <cmd>Telescope current_buffer_fuzzy_find<cr>
     nnoremap <leader>fb <cmd>Telescope buffers<cr>
     nnoremap <leader>fh <cmd>Telescope help_tags<cr>
@@ -604,6 +605,7 @@ if has("nvim")
     nnoremap <leader>fR <cmd>Telescope registers<cr>
     nnoremap <leader>fc <cmd>Telescope command_history<cr>
     nnoremap <leader>fn <cmd>Telescope notify<cr>
+    nnoremap <leader>fu <cmd>Telescope resume<cr>
     nnoremap <leader>fgC <cmd>Telescope git_bcommits<cr>
     nnoremap <leader>fgb <cmd>Telescope git_branches<cr>
     nnoremap <leader>fgc <cmd>Telescope git_commits<cr>
@@ -624,6 +626,16 @@ if has("nvim")
             prompt_prefix = " ",
             selection_caret = " ",
             winblend = 10,
+            vimgrep_arguments = {
+                "rg",
+                "--pcre2",
+                "--color=never",
+                "--no-heading",
+                "--with-filename",
+                "--line-number",
+                "--column",
+                "--smart-case",
+            },
         },
         extensions = {
             fzf = {
