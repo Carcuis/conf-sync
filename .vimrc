@@ -2152,6 +2152,10 @@ let g:load_doxygen_syntax=1
 nmap DC yypkgccj
 nmap DR ddkgcc
 
+" navigate in quickfix list
+nnoremap <M-S-n> <cmd>cnext<CR>
+nnoremap <M-S-p> <cmd>cprev<CR>
+
 " ===============
 
 " ==============
