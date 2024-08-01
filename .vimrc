@@ -198,6 +198,7 @@ set conceallevel=2
 set colorcolumn=120
 set jumpoptions=stack
 set pumheight=15
+set confirm
 
 if has("nvim")
     if has("win32")
