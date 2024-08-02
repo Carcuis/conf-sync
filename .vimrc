@@ -2023,6 +2023,18 @@ if has("nvim")
 EOF
 endif
 
+" === markdown.nvim ===
+if has("nvim")
+    lua << EOF
+    require("render-markdown").setup({
+        code = {
+            position = "right",
+            width = "block",
+        },
+    })
+EOF
+endif
+
 " === nvim-rip-substitute ===
 if has("nvim")
     lua << EOF
