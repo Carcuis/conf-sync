@@ -2,7 +2,7 @@
 
 verbose=0
 
-BOLD="$(printf '\033[1m')" TAIL="$(printf '\033[0m')"
+BOLD="$(printf '\033[1m')"; TAIL="$(printf '\033[0m')"
 RED="$(printf '\033[31m')"; GREEN="$(printf '\033[32m')"; YELLOW="$(printf '\033[33m')"
 CYAN="$(printf '\033[36m')"; BLUE="$(printf '\033[34m')"; WHITE="$(printf '\033[37m')"
 
