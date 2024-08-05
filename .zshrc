@@ -1,5 +1,5 @@
 if [[ ! $VIFM ]]; then
-    fortune | cowsay -f moose -W 80 | lolcat
+    fortune | cowsay -f moose -W $(($(tput cols)-3<80?$(tput cols)-3:80)) | lolcat
 fi
 
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
