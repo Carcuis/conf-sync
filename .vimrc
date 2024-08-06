@@ -361,8 +361,8 @@ if ! has("nvim")
 endif
 
 " === vim-commentary ===
-autocmd FileType java,c,cpp set commentstring=//\ %s
-autocmd FileType ps1 set commentstring=#\ %s
+autocmd FileType java,c,cpp,json set commentstring=//\ %s
+autocmd FileType ps1,sshdconfig set commentstring=#\ %s
 
 " === indentline ===
 if ! has("nvim")
