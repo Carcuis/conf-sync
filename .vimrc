@@ -1785,9 +1785,27 @@ if has("nvim")
     lua << EOF
     require("telescope").load_extension("dap")
     require("nvim-dap-virtual-text").setup()
-    require("mason-nvim-dap").setup({
-        ensure_installed = {'bash', 'cppdbg', 'codelldb', 'python'},
-    })
+
+    local mason_dap_ensure_installed = { "bash", "codelldb", "cppdbg", "python" }
+    local packages_to_remove = {}
+    if vim.fn.has("unix") then
+        local uname = vim.fn.system("uname -a")
+        if string.find(uname, "Android") then
+            if string.find(uname, "aarch64") then
+                packages_to_remove = { "codelldb" }
+            elseif string.find(uname, "armv7") then
+                packages_to_remove = { "codelldb", "cppdbg" }
+            end
+        end
+    end
+    if #packages_to_remove > 0 then
+        for i = #mason_dap_ensure_installed, 1, -1 do
+            if vim.tbl_contains(packages_to_remove, mason_dap_ensure_installed[i]) then
+                table.remove(mason_dap_ensure_installed, i)
+            end
+        end
+    end
+    require("mason-nvim-dap").setup({ ensure_installed = mason_dap_ensure_installed })
 
     local dap_python_path = vim.fn.stdpath("data") .. "/mason/packages/debugpy/venv/bin/python"
     if vim.fn.has("win32") == 1 then
