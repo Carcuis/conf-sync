@@ -99,7 +99,7 @@ function install_ohmyzsh() {
         already_installed_mesg "Oh-My-Zsh"
     else
         install_mesg "Oh-My-Zsh"
-        sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+        sh -c "RUNZSH=no $(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
     fi
 }
 
