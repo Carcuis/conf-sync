@@ -13,6 +13,7 @@ fi
 for user_path in \
     $HOME/.local/bin \
     $HOME/.cargo/bin \
+    $HOME/.fzf/bin \
     /usr/local/bin
 do
     [[ -d $user_path ]] && [[ ! $PATH == *$user_path* ]] && export PATH=$user_path:$PATH
@@ -407,15 +408,8 @@ POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS+=(
 )
 
 # === fzf ===
-if [[ $SYSTEM == "Darwin" ]]; then
-    command -v fzf > /dev/null && source <(fzf --zsh)
-else
-    if [[ ! "$PATH" == *$HOME/.fzf/bin* ]]; then
-      PATH="${PATH:+${PATH}:}$HOME/.fzf/bin"
-    fi
-    source <(fzf --zsh)
-fi
 if command -v fzf > /dev/null; then
+    source <(fzf --zsh)
     export FZF_DEFAULT_OPTS=$FZF_DEFAULT_OPTS'
         --color=fg:-1,fg+:#d0d0d0,bg:-1,bg+:#2b2b2b
         --color=hl:#5f87af,hl+:#5fd7ff,info:#afaf87,marker:#87ff00
