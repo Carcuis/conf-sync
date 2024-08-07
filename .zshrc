@@ -374,6 +374,9 @@ elif [[ $SYSTEM == "Android" ]]; then
     # if [ `ps -ef |grep -w sshd|grep -v grep|wc -l` -le 0 ];then
     #     sshd
     # fi
+    if [ ! $XDG_RUNTIME_DIR ]; then
+        export XDG_RUNTIME_DIR=/data/data/com.termux/files/usr/tmp/runtime/
+    fi
 elif [[ $SYSTEM == "Linux" ]]; then
     # === ROS ===
     # alias src-ros-env='source /opt/ros/melodic/setup.zsh'
