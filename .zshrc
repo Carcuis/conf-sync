@@ -371,7 +371,7 @@ if [[ $SYSTEM =~ "WSL[12]" ]]; then
 
 elif [[ $SYSTEM == "Android" ]]; then
     ## sshd start-up
-    # if [ `ps -ef |grep -w sshd|grep -v grep|wc -l` -le 0 ];then
+    # if [ $(pgrep sshd | wc -l) -le 0 ];then
     #     sshd
     # fi
     if [ ! $XDG_RUNTIME_DIR ]; then
