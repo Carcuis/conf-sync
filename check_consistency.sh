@@ -1,13 +1,13 @@
 #!/usr/bin/env bash
 
 DIR=$(dirname $(realpath $0))
-verbose=0
+verbose=false
 
 BOLD="$(printf '\033[1m')"; TAIL="$(printf '\033[0m')";   WHITE="$(printf '\033[37m')"
 RED="$(printf '\033[31m')"; GREEN="$(printf '\033[32m')"; YELLOW="$(printf '\033[33m')"; CYAN="$(printf '\033[36m')"
 
 function mesg()     { echo -e "${WHITE}$1${TAIL}" ;                       }
-function info()     { if [[ $verbose == 1 ]]; then mesg "${CYAN}$1"; fi ; }
+function info()     { if [[ $verbose == true ]]; then mesg "${CYAN}$1"; fi ; }
 function bold()     { mesg "${BOLD}$1" ;                                  }
 function success()  { bold "${GREEN}$1 ✔" ;                               }
 function warning()  { bold "${YELLOW}$1" ;                                }
@@ -89,7 +89,7 @@ function cmd_parser
         case "$1" in
             a|-a|--all) file_list+=( ${extra_file_list[@]} ) ;;
             h|-h|--help) usage; exit 0 ;;
-            v|-v|--verbose) verbose=1 ;;
+            v|-v|--verbose) verbose=true ;;
             *) error "Error: Invalid option '$1'"; usage; exit 1 ;;
         esac
         shift
@@ -166,7 +166,7 @@ function run_edit
         fi
 
         if file_same "$file_remote" "$file_local"; then
-            [[ $verbose == 1 ]] && success "$file has already been synchronized."
+            [[ $verbose == true ]] && success "$file has already been synchronized."
         else
             read -N1 -p "$file unsynchronized. Edit with $diff_command ? [Y/n] " user_input </dev/tty
             if [[ "$user_input" == $'\n' ]]; then user_input=y; else echo; fi
