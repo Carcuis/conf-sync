@@ -1,0 +1,52 @@
+#!/data/data/com.termux/files/usr/bin/sh
+
+termux-wake-lock
+
+CYAN="$(printf '\033[36m')"; GREEN="$(printf '\033[32m')"; TAIL="$(printf '\033[0m')";
+
+check_command() {
+    if ! command -v sshd > /dev/null; then
+        echo "${CYAN}[WARN] \`sshd\` is not installed."
+        echo
+        echo "[WARN] Run 'pkg install -y openssh'.${TAIL}"
+        return 1
+    fi
+}
+
+start_sshd() {
+    if [ $(pgrep sshd | wc -l) -le 0 ]; then
+        if sshd; then cat <<EOF
+${GREEN}
+███████╗████████╗ █████╗ ██████╗ ████████╗
+██╔════╝╚══██╔══╝██╔══██╗██╔══██╗╚══██╔══╝
+███████╗   ██║   ███████║██████╔╝   ██║
+╚════██║   ██║   ██╔══██║██╔══██╗   ██║
+███████║   ██║   ██║  ██║██║  ██║   ██║
+╚══════╝   ╚═╝   ╚═╝  ╚═╝╚═╝  ╚═╝   ╚═╝
+
+ ██████╗ ██╗  ██╗
+██╔═══██╗██║ ██╔╝
+██║   ██║█████╔╝
+██║   ██║██╔═██╗
+╚██████╔╝██║  ██╗
+ ╚═════╝ ╚═╝  ╚═╝
+${TAIL}
+The server is running on port 8022.
+Connect with the following command:
+
+${GREEN}ssh${TAIL} -p 8022 $(ifconfig -a 2>&1 | awk '/wlan0/{flag=1} flag && /inet /{print $2; exit}')
+
+${GREEN}[OK] Started \`sshd\`.${TAIL}
+EOF
+        fi
+    else
+        echo "${CYAN}[WARN] \`sshd\` has already been started.${TAIL}"
+    fi
+}
+
+if check_command; then
+    start_sshd
+fi
+
+sleep 2
+

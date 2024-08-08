@@ -56,13 +56,23 @@ function declare_dirs() {
             ptpython_config_local="$HOME/Library/Application Support/ptpython/config.py"
             lazygit_config_local="$HOME/Library/Application Support/lazygit/config.yml"
             ;;
+        Android)
+            shortcut_sshd_remote=$DIR/android/.shortcuts/sshd
+            shortcut_sshd_local=$HOME/.shortcuts/sshd
+            ;;
     esac
 
     local -a exclude_file_list
+    local -a addon_file_list
 
     case $SYSTEM in
-        Android) exclude_file_list+=( ideavimrc kitty_config ) ;;
-        WSL*)    exclude_file_list+=( ideavimrc ) ;;
+        Android)
+            exclude_file_list+=( ideavimrc kitty_config );
+            addon_file_list+=( shortcut_sshd )
+            ;;
+        WSL*)
+            exclude_file_list+=( ideavimrc )
+            ;;
     esac
 
     if [[ ${#exclude_file_list[@]} != 0 ]]; then
@@ -70,6 +80,13 @@ function declare_dirs() {
             file_list=( ${file_list[@]/$exclude_file} )
         done
         info "Skipped ${exclude_file_list[*]} on current system: ${GREEN}$SYSTEM ✔"
+    fi
+
+    if [[ ${#addon_file_list[@]} != 0 ]]; then
+        for addon_file in ${addon_file_list[@]}; do
+            file_list+=( $addon_file )
+        done
+        info "Added ${addon_file_list[*]} on current system: ${GREEN}$SYSTEM ✔"
     fi
 }
 
