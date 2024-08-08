@@ -3,15 +3,15 @@
 DIR=$(dirname $(realpath $0))
 verbose=false
 
-BOLD="$(printf '\033[1m')"; TAIL="$(printf '\033[0m')";   WHITE="$(printf '\033[37m')"
+BOLD="$(printf '\033[1m')"; TAIL="$(printf '\033[0m')"; WHITE="$(printf '\033[37m')"
 RED="$(printf '\033[31m')"; GREEN="$(printf '\033[32m')"; YELLOW="$(printf '\033[33m')"; CYAN="$(printf '\033[36m')"
 
-function mesg()     { echo -e "${WHITE}$1${TAIL}" ;                       }
+function mesg()     { echo -e "${WHITE}$1${TAIL}" ; }
 function info()     { if [[ $verbose == true ]]; then mesg "${CYAN}$1"; fi ; }
-function bold()     { mesg "${BOLD}$1" ;                                  }
-function success()  { bold "${GREEN}$1 ✔" ;                               }
-function warning()  { bold "${YELLOW}$1" ;                                }
-function error()    { bold "${RED}$1" 1>&2 ;                              }
+function bold()     { mesg "${BOLD}$1" ; }
+function success()  { bold "${GREEN}$1 ✔" ; }
+function warning()  { bold "${YELLOW}$1" ; }
+function error()    { bold "${RED}$1" 1>&2 ; }
 
 declare -a file_list=(
     zshrc
@@ -109,9 +109,9 @@ function detect_system() {
 }
 
 function has_command() { command -v "$1" > /dev/null ; }
-function has_dir()     { [[ -d "$1" ]] ;               }
-function has_file()    { [[ -f "$1" ]] ;               }
-function file_same()   { diff "$1" "$2" > /dev/null ;  }
+function has_dir()     { [[ -d "$1" ]] ; }
+function has_file()    { [[ -f "$1" ]] ; }
+function file_same()   { diff "$1" "$2" > /dev/null ; }
 
 function check_editor
 {
