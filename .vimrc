@@ -1685,14 +1685,39 @@ if has("nvim")
                 sh = "bash",
                 zsh = "zsh",
                 ps1 = "pwsh -NoProfile -File",
+                c = function()
+                    local filename = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(0), ':~:.')
+                    local output = filename:gsub("%.c$", "")
+                    if vim.fn.has("win32") == 1 then
+                        return "gcc " .. filename .. " -o " .. output .. ".exe && .\\" .. output .. ".exe"
+                    else
+                        return "gcc " .. filename .. " -o " .. output .. ".out && ./" .. output .. ".out"
+                    end
+                end,
+                cpp = function()
+                    local filename = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(0), ':~:.')
+                    local output = filename:gsub("%.cpp$", "")
+                    if vim.fn.has("win32") == 1 then
+                        return "g++ " .. filename .. " -o " .. output .. ".exe && .\\" .. output .. ".exe"
+                    else
+                        return "g++ " .. filename .. " -o " .. output .. ".out && ./" .. output .. ".out"
+                    end
+                end,
             }
-            local cmd = cmds[vim.bo.filetype] .. " " .. vim.api.nvim_buf_get_name(0)
-            return {
-                cmd = vim.split(cmd, " "),
-            }
+            local cmd = cmds[vim.bo.filetype]
+            if type(cmd) == "function" then
+                return {
+                    cmd = cmd(),
+                }
+            else
+                cmd = cmd .. " " .. vim.api.nvim_buf_get_name(0)
+                return {
+                    cmd = vim.split(cmd, " "),
+                }
+            end
         end,
         condition = {
-            filetype = { "python", "sh", "zsh", "go", "ps1" },
+            filetype = { "python", "sh", "zsh", "go", "ps1", "c", "cpp" },
         },
     })
 
