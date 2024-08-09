@@ -1749,27 +1749,41 @@ if has("nvim")
     })
     require("compiler").setup()
 
-    vim.api.nvim_create_user_command("OverseerRestartLast", function()
-        pre_overseer_run()
-        local tasks = overseer.list_tasks({ recent_first = true })
-        if vim.tbl_isempty(tasks) then
-            vim.notify("No tasks found", vim.log.levels.WARN, { title = "Overseer Restart Last" })
-        else
-            overseer.run_action(tasks[1], "restart")
-        end
-    end, {})
-
-    vim.api.nvim_create_user_command("ToggleOverseer", function()
-        vim.cmd.CloseDapUI()
-        overseer.toggle({ enter = false })
-    end, {})
+    local keymaps = {
+        {
+            mode = "n", key = "<C-c>", desc = "Toggle Overseer", func = function()
+                vim.cmd.CloseDapUI()
+                overseer.toggle({ enter = false })
+            end,
+        },
+        {
+            mode = "n", key = "<leader>rr", desc = "Restart Last Task", func = function()
+                pre_overseer_run()
+                local tasks = overseer.list_tasks({ recent_first = true })
+                if vim.tbl_isempty(tasks) then
+                    vim.notify("No tasks found", vim.log.levels.WARN, { title = "Overseer Restart Last" })
+                else
+                    overseer.run_action(tasks[1], "restart")
+                end
+            end
+        },
+        {
+            mode = "n", key = "<leader>rp", desc = "Run Project", func = function()
+                require('overseer').run_template({name = 'run project'})
+            end
+        },
+        {
+            mode = "n", key = "<leader>ru", desc = "Run This File", func = function()
+                require('overseer').run_template({name = 'run this file'})
+            end
+        },
+        { mode = "n", key = "<leader>ro", func = vim.cmd.OverseerRun, desc = "Run Task" },
+        { mode = "n", key = "<leader>rc", func = vim.cmd.CompilerOpen, desc = "Open Compiler" },
+    }
+    for _, keymap in ipairs(keymaps) do
+        vim.keymap.set(keymap.mode, keymap.key, keymap.func, { desc = keymap.desc })
+    end
 EOF
-    nnoremap <silent> <C-c> <cmd>ToggleOverseer<CR>
-    nnoremap <silent> <leader>rc <cmd>CompilerOpen<CR>
-    nnoremap <silent> <leader>ro <cmd>OverseerRun<CR>
-    nnoremap <silent> <leader>rr <cmd>OverseerRestartLast<CR>
-    nnoremap <silent> <leader>rp <cmd>lua require("overseer").run_template({name = "run project"})<CR>
-    nnoremap <silent> <leader>ru <cmd>lua require("overseer").run_template({name = "run this file"})<CR>
 endif
 
 " === CopilotChat.nvim ===
