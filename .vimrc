@@ -952,15 +952,13 @@ if has("nvim")
     require('lualine').setup {
         extensions = {
             {
-                sections = {
-                    lualine_a = {{
+                sections = { lualine_a = {{
                         function()
                             return vim.fn.fnamemodify(vim.fn.getcwd(), ':~')
                         end,
                         padding = { left = 0, right = 0 },
                         separator = { left = '', right = '' },
-                    }},
-                },
+                }}, },
                 filetypes = {'NvimTree'},
             },
             {
@@ -1023,7 +1021,39 @@ if has("nvim")
                     separator = { left = '', right = '' },
                 }}, },
                 filetypes = {'toggleterm'},
-            }
+            },
+            {
+                sections = {
+                    lualine_b = {{
+                        function()
+                            return 'Terminal'
+                        end,
+                        icon = "",
+                        padding = { left = 0, right = 0 },
+                        separator = { left = '', right = '' },
+                    }},
+                    lualine_c = {
+                        {
+                            function()
+                                if vim.g.terminal_running then
+                                    return ""
+                                end
+                                return ""
+                            end,
+                            color = { fg = "Green" },
+                            padding = { left = 1, right = 0 },
+                        },
+                        {
+                            function()
+                                local bufname = vim.api.nvim_buf_get_name(0)
+                                local parts = vim.split(bufname, ':')
+                                return parts[#parts]
+                            end,
+                        }
+                    },
+                },
+                filetypes = {'terminal'},
+            },
         },
         options = {
             section_separators = { left = '', right = '' },
@@ -1033,7 +1063,7 @@ if has("nvim")
             },
             ignore_focus = {
                 "dapui_watches", "dapui_stacks", "dapui_breakpoints", "dapui_scopes", "dapui_console",
-                "NvimTree", "coctree",
+                "NvimTree", "coctree", "OverseerList", "terminal"
             },
         },
         sections = {
@@ -2255,7 +2285,7 @@ autocmd VimEnter * :clearjumps
 
 " auto switch mode for terminal
 if has("nvim")
-    autocmd TermOpen term://* let g:terminal_running = v:true
+    autocmd TermOpen term://* let g:terminal_running = v:true | set filetype=terminal
     autocmd WinEnter term://* if g:terminal_running | startinsert
     autocmd TermClose term://* let g:terminal_running = v:false | stopinsert
 endif
