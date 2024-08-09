@@ -1688,20 +1688,28 @@ if has("nvim")
                 c = function()
                     local filename = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(0), ':~:.')
                     local output = filename:gsub("%.c$", "")
+                    local run_prefix = ""
                     if vim.fn.has("win32") == 1 then
-                        return "gcc " .. filename .. " -o " .. output .. ".exe && .\\" .. output .. ".exe"
+                        if not output:find("\\") then run_prefix = ".\\" end
+                        output = output .. ".exe"
                     else
-                        return "gcc " .. filename .. " -o " .. output .. ".out && ./" .. output .. ".out"
+                        if not output:find("/") then run_prefix = "./" end
+                        output = output .. ".out"
                     end
+                    return "gcc " .. filename .. " -o " .. output .. " && " .. run_prefix .. output
                 end,
                 cpp = function()
                     local filename = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(0), ':~:.')
                     local output = filename:gsub("%.cpp$", "")
+                    local run_prefix = ""
                     if vim.fn.has("win32") == 1 then
-                        return "g++ " .. filename .. " -o " .. output .. ".exe && .\\" .. output .. ".exe"
+                        if not output:find("\\") then run_prefix = ".\\" end
+                        output = output .. ".exe"
                     else
-                        return "g++ " .. filename .. " -o " .. output .. ".out && ./" .. output .. ".out"
+                        if not output:find("/") then run_prefix = "./" end
+                        output = output .. ".out"
                     end
+                    return "g++ " .. filename .. " -o " .. output .. " && " .. run_prefix .. output
                 end,
             }
             local cmd = cmds[vim.bo.filetype]
