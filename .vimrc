@@ -1047,7 +1047,7 @@ if has("nvim")
                             function()
                                 local bufname = vim.api.nvim_buf_get_name(0)
                                 local parts = vim.split(bufname, ':')
-                                return parts[#parts]
+                                return table.concat(parts, ':', 3)
                             end,
                         }
                     },
