@@ -671,11 +671,11 @@ let g:extra_whitespace_ignored_filetypes = [
 
 " === bufferline.nvim ===
 if has("nvim")
-    nnoremap <silent> gb <cmd>BufferLinePick<CR>
-    nnoremap <silent> H <cmd>BufferLineCyclePrev<CR>
-    nnoremap <silent> L <cmd>BufferLineCycleNext<CR>
-    nnoremap <silent> <M-S-H> <cmd>BufferLineMovePrev<CR>
-    nnoremap <silent> <M-S-L> <cmd>BufferLineMoveNext<CR>
+    nnoremap gb <cmd>BufferLinePick<CR>
+    nnoremap H <cmd>BufferLineCyclePrev<CR>
+    nnoremap L <cmd>BufferLineCycleNext<CR>
+    nnoremap <M-S-H> <cmd>BufferLineMovePrev<CR>
+    nnoremap <M-S-L> <cmd>BufferLineMoveNext<CR>
     lua << EOF
     require("bufferline").setup{
         options = {
@@ -686,7 +686,7 @@ if has("nvim")
                 require('bufdelete').bufdelete(bufnum)
             end,
             show_buffer_close_icons = false,
-            separator_style = (vim.g.transparent_background == 1 and {"thin"} or {"slant"})[1],
+            separator_style = vim.g.transparent_background == 1 and "thin" or "slant",
             offsets = {
                 {
                     filetype = "NvimTree",
