@@ -74,6 +74,7 @@ map F <Action>(KJumpAction.Char2)
 nmap <C-c> <Action>(HideActiveWindow)
 map <CR> <Action>(EditorSelectWord)
 map <leader>b <Action>(ToggleLineBreakpoint)
+map R <Action>(Replace)
 
 " navigate windows
 map <M-h> <C-w>h
