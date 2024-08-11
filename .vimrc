@@ -104,7 +104,7 @@ if has("nvim")
     Plug 'LiadOz/nvim-dap-repl-highlights'
     Plug 'Weissle/persistent-breakpoints.nvim'
     Plug 'Carcuis/dap-breakpoints.nvim'
-    Plug 'MeanderingProgrammer/markdown.nvim'
+    Plug 'MeanderingProgrammer/render-markdown.nvim'
     Plug 'chrisgrieser/nvim-rip-substitute'
 else
     Plug 'Carcuis/darcula'
