@@ -2242,11 +2242,6 @@ for mapping in ['jj', 'jk', 'kj', 'kk', 'jl', 'jh']
     execute 'inoremap '.mapping.' <esc>'
     execute 'cnoremap '.mapping.' <C-c>'
 endfor
-if has("unix") && (system('uname -a') =~ "Android")
-    inoremap `` <esc>
-    cnoremap `` <C-c>
-    vnoremap `` <esc>
-endif
 
 nnoremap <C-Up> <cmd>resize -2<CR>
 nnoremap <C-Down> <cmd>resize +2<CR>
