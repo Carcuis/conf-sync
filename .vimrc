@@ -1865,15 +1865,11 @@ if has("nvim")
 
     local mason_dap_ensure_installed = { "bash", "codelldb", "cppdbg", "python" }
     local packages_to_remove = {}
-    if vim.fn.has("unix") then
-        local uname = vim.fn.system("uname -a")
-        if string.find(uname, "Android") then
-            if string.find(uname, "aarch64") then
-                packages_to_remove = { "codelldb" }
-            elseif string.find(uname, "armv7") then
-                packages_to_remove = { "codelldb", "cppdbg" }
-            end
-        end
+    local machine = vim.uv.os_uname().machine
+    if string.find(machine, "aarch64") then
+        packages_to_remove = { "codelldb" }
+    elseif string.find(machine, "armv7") then
+        packages_to_remove = { "codelldb", "cppdbg" }
     end
     if #packages_to_remove > 0 then
         for i = #mason_dap_ensure_installed, 1, -1 do
