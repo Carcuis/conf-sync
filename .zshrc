@@ -113,6 +113,8 @@ source $ZSH/oh-my-zsh.sh
 # zsh-completion @ref: https://github.com/zsh-users/zsh-completions/issues/603#issuecomment-967116106
 autoload -U compinit && compinit
 
+eval "$(register-python-argcomplete pipx)"
+
 # User configuration
 
 # export MANPATH="/usr/local/man:$MANPATH"
