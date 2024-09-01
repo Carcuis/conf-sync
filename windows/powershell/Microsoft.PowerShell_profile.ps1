@@ -174,6 +174,12 @@ function Deactivate-Python-Venv {
         Write-Error "Error: No virtual environment is activated."
     }
 }
+function Delete-Old-PSModules {
+    Get-InstalledModule | ForEach-Object {
+        $CurrentVersion = $PSItem.Version
+        Get-InstalledModule -Name $PSItem.Name -AllVersions | Where-Object -Property Version -LT -Value $CurrentVersion
+    } | Uninstall-Module -Verbose
+}
 
 Set-Alias .. GoUpOne
 Set-Alias ... GoUpTwo
@@ -216,4 +222,5 @@ Set-Alias md5sum Sum-MD5
 Set-Alias sha256sum Sum-SHA256
 Set-Alias acp Activate-Python-Venv
 Set-Alias dap Deactivate-Python-Venv
+Set-Alias psmclo Delete-Old-PSModules
 
