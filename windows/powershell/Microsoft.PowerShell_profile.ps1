@@ -149,18 +149,28 @@ function Detect-And-Set-Proxy {
         SetProxyOn
     }
 } Detect-And-Set-Proxy
+function Make-Python-Venv {
+    param($venv_name = "venv")
+    if ((Get-Command python).length -eq 0) {
+        Write-Error "Error: Cannot find 'python' command."
+        return 1
+    }
+    python -m venv $venv_name
+    Activate-Python-Venv $venv_name
+}
 function Activate-Python-Venv {
-    $venv_path = Get-ChildItem -Path $PWD -Filter "venv" -Directory -ErrorAction SilentlyContinue
+    param($venv_name = "venv")
+    $venv_path = Get-ChildItem -Path $PWD -Filter $venv_name -Directory -ErrorAction SilentlyContinue
     if ($venv_path) {
         $venv_path = $venv_path.FullName
-        $venv_activate = Join-Path $venv_path "Scripts\Activate.ps1"
-        if (Test-Path $venv_activate) {
-            . $venv_activate
+        $venv_activate_ps1 = Join-Path $venv_path "Scripts\Activate.ps1"
+        if (Test-Path $venv_activate_ps1) {
+            . $venv_activate_ps1
         } else {
             Write-Error "Error: Cannot find 'Scripts\Activate.ps1' in $venv_path"
         }
     } else {
-        Write-Error "Error: Cannot find 'venv' directory in $PWD"
+        Write-Error "Error: Cannot find '$venv_name' directory in $PWD"
     }
 }
 function Deactivate-Python-Venv {
@@ -220,7 +230,8 @@ Set-Alias ln Create-Link
 Set-Alias mvx Move-And-Create-Link
 Set-Alias md5sum Sum-MD5
 Set-Alias sha256sum Sum-SHA256
-Set-Alias acp Activate-Python-Venv
-Set-Alias dap Deactivate-Python-Venv
+Set-Alias mkv Make-Python-Venv
+Set-Alias vrun Activate-Python-Venv
+Set-Alias dac Deactivate-Python-Venv
 Set-Alias psmclo Delete-Old-PSModules
 
