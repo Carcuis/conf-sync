@@ -84,6 +84,9 @@ function WebDetection {
         }
     }
 }
+function Conda-Hook {
+    conda shell.powershell hook | Out-String | Where-Object {$_} | Invoke-Expression
+}
 function Create-Link($target, $link) {
     New-Item -ItemType SymbolicLink -Path $link -Value $target
 }
@@ -230,7 +233,7 @@ Set-Alias wd WebDetection
 Set-Alias lg lazygit
 Set-Alias ipy ipython
 Set-Alias pp ptpython
-Set-Alias cdhk conda-hook
+Set-Alias cdhk Conda-Hook
 Set-Alias ln Create-Link
 Set-Alias mvx Move-And-Create-Link
 Set-Alias md5sum Sum-MD5
