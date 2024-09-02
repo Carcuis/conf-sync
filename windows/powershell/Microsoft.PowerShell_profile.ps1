@@ -190,6 +190,11 @@ function Delete-Old-PSModules {
         Get-InstalledModule -Name $PSItem.Name -AllVersions | Where-Object -Property Version -LT -Value $CurrentVersion
     } | Uninstall-Module -Verbose
 }
+function Convert-To-MP4 {
+    param($input_file)
+    $output_file = [System.IO.Path]::ChangeExtension($input_file, ".mp4")
+    ffmpeg -i $input_file $output_file
+}
 
 Set-Alias .. GoUpOne
 Set-Alias ... GoUpTwo
@@ -234,4 +239,5 @@ Set-Alias mkv Make-Python-Venv
 Set-Alias vrun Activate-Python-Venv
 Set-Alias dac Deactivate-Python-Venv
 Set-Alias psmclo Delete-Old-PSModules
+Set-Alias ctmp4 Convert-To-MP4
 
