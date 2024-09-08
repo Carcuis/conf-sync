@@ -1,0 +1,325 @@
+{
+    "audioFx": {
+        "delay": 0,
+        "eq": {
+            "enabled": false,
+            "factor": 1,
+            "values": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+            ]
+        },
+        "pitch": 0,
+        "volume": 1
+    },
+    "circleWidget": false,
+    "darkTheme": true,
+    "enabled": true,
+    "firstUse": 1718380558626,
+    "freshKeybinds": false,
+    "keybinds": [
+        {
+            "command": "pin",
+            "enabled": true,
+            "greedy": true,
+            "id": "6813763623",
+            "key": "KeyQ",
+            "valueState": "toggle"
+        },
+        {
+            "command": "state",
+            "enabled": true,
+            "greedy": true,
+            "id": "2509399279",
+            "key": {
+                "code": "KeyQ",
+                "shiftKey": true
+            },
+            "spacing": 2,
+            "valueState": "toggle"
+        },
+        {
+            "adjustMode": 2,
+            "command": "seek",
+            "enabled": true,
+            "greedy": true,
+            "id": "9900202841",
+            "key": "KeyZ",
+            "valueNumber": -5,
+            "wraparound": true
+        },
+        {
+            "adjustMode": 2,
+            "command": "seek",
+            "enabled": true,
+            "greedy": true,
+            "id": "3773679575",
+            "key": "KeyX",
+            "spacing": 1,
+            "valueNumber": 10,
+            "wraparound": true
+        },
+        {
+            "adjustMode": 2,
+            "command": "seek",
+            "duration": 2,
+            "enabled": true,
+            "greedy": true,
+            "id": "9390225921",
+            "key": {
+                "code": "KeyZ",
+                "shiftKey": true
+            },
+            "valueNumber": -1,
+            "wraparound": true
+        },
+        {
+            "adjustMode": 2,
+            "command": "seek",
+            "duration": 2,
+            "enabled": true,
+            "greedy": true,
+            "id": "4196758250",
+            "key": {
+                "code": "KeyX",
+                "shiftKey": true
+            },
+            "spacing": 1,
+            "valueNumber": 1,
+            "wraparound": true
+        },
+        {
+            "command": "fullscreen",
+            "direct": true,
+            "enabled": true,
+            "greedy": true,
+            "id": "6069514754",
+            "key": {
+                "code": "KeyF",
+                "shiftKey": true
+            }
+        },
+        {
+            "adjustMode": 4,
+            "command": "seek",
+            "duration": 3,
+            "enabled": true,
+            "greedy": true,
+            "id": "1480234666",
+            "key": {
+                "code": "Backquote"
+            },
+            "valueNumber": 10,
+            "wraparound": true
+        },
+        {
+            "command": "cinema",
+            "enabled": true,
+            "greedy": true,
+            "id": "4013470227",
+            "key": {
+                "code": "Backquote",
+                "shiftKey": true
+            },
+            "spacing": 2,
+            "valueState": "toggle"
+        },
+        {
+            "command": "setMark",
+            "enabled": true,
+            "greedy": true,
+            "id": "2412220830",
+            "key": {
+                "code": "KeyW",
+                "shiftKey": true
+            },
+            "valueString": "mark1"
+        },
+        {
+            "command": "seekMark",
+            "enabled": true,
+            "greedy": true,
+            "id": "1817814662",
+            "key": "KeyW",
+            "valueString": "mark1"
+        },
+        {
+            "command": "loop",
+            "enabled": true,
+            "greedy": true,
+            "id": "9566829092",
+            "key": "KeyR",
+            "spacing": 2,
+            "valueString": "mark1"
+        },
+        {
+            "adjustMode": 3,
+            "command": "fxFilter",
+            "enabled": false,
+            "filterOption": "invert",
+            "filterTarget": "both",
+            "greedy": true,
+            "id": "4657736632",
+            "key": {
+                "code": "KeyE"
+            },
+            "valueCycle": [
+                0,
+                1
+            ]
+        },
+        {
+            "adjustMode": 3,
+            "command": "fxFilter",
+            "enabled": false,
+            "filterOption": "grayscale",
+            "filterTarget": "both",
+            "greedy": true,
+            "id": "9792205661",
+            "key": {
+                "code": "KeyE",
+                "shiftKey": true
+            },
+            "spacing": 1,
+            "valueCycle": [
+                0,
+                1
+            ]
+        },
+        {
+            "adjustMode": 4,
+            "command": "fxFilter",
+            "enabled": false,
+            "filterOption": "brightness",
+            "filterTarget": "element",
+            "greedy": true,
+            "id": "5314474133",
+            "key": {
+                "code": "KeyT"
+            },
+            "valueItcMax": 3,
+            "valueItcMin": 0.5
+        },
+        {
+            "adjustMode": 4,
+            "command": "fxFilter",
+            "enabled": false,
+            "filterOption": "contrast",
+            "filterTarget": "element",
+            "greedy": true,
+            "id": "5142915180",
+            "key": {
+                "code": "KeyT",
+                "shiftKey": true
+            },
+            "spacing": 1,
+            "valueItcMax": 1.25,
+            "valueItcMin": 0.75
+        },
+        {
+            "command": "drawPage",
+            "contextLabel": "在页面上画",
+            "enabled": true,
+            "greedy": true,
+            "id": "3467206152",
+            "trigger": 2
+        },
+        {
+            "command": "fxReset",
+            "contextLabel": "FX重置",
+            "enabled": true,
+            "filterTarget": "both",
+            "greedy": true,
+            "id": "8148777541",
+            "trigger": 2
+        },
+        {
+            "adjustMode": 4,
+            "command": "afxPitch",
+            "contextLabel": "音高",
+            "enabled": true,
+            "greedy": true,
+            "id": "5371800670",
+            "trigger": 2
+        },
+        {
+            "adjustMode": 4,
+            "command": "afxGain",
+            "contextLabel": "增益",
+            "enabled": true,
+            "greedy": true,
+            "id": "2280455099",
+            "trigger": 2
+        },
+        {
+            "command": "afxReset",
+            "contextLabel": "音频重置",
+            "enabled": true,
+            "greedy": true,
+            "id": "4333928661",
+            "spacing": 2,
+            "trigger": 2
+        }
+    ],
+    "lastSpeed": 2.1,
+    "latestViaShortcut": false,
+    "rules": [
+        {
+            "condition": {
+                "parts": [
+                    {
+                        "id": "7728909975",
+                        "type": "CONTAINS",
+                        "valueContains": "live.bilibili.com",
+                        "valueRegex": "example\\.com",
+                        "valueStartsWith": "https://example.com"
+                    },
+                    {
+                        "id": "7115865240",
+                        "type": "CONTAINS",
+                        "valueContains": "www.disneyplus.com",
+                        "valueRegex": "example\\.com",
+                        "valueStartsWith": "https://example.com"
+                    }
+                ]
+            },
+            "enabled": true,
+            "id": "4226903471",
+            "overrideJs": "// code here\n",
+            "overrideSpeed": 1,
+            "spacing": 2,
+            "type": "SPEED"
+        }
+    ],
+    "speed": 2,
+    "speedBigStep": 1,
+    "speedPresetPadding": 5.8,
+    "speedPresets": [
+        0.25,
+        0.5,
+        0.75,
+        1,
+        1.25,
+        1.5,
+        1.75,
+        2,
+        2.5,
+        3,
+        4,
+        16
+    ],
+    "speedSlider": {
+        "max": 5,
+        "min": 0.1
+    },
+    "speedSmallStep": 0.1,
+    "version": 12
+}
