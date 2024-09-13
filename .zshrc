@@ -106,8 +106,8 @@ plugins=(
 )
 
 export ZSH_COMPDUMP=$ZSH/cache/.zcompdump-$HOST
-export ZSH_CUSTOM_AUTOUPDATE_QUIET=true
 export PYTHON_AUTO_VRUN=true
+ZSH_CUSTOM_AUTOUPDATE_QUIET=true
 
 source $ZSH/oh-my-zsh.sh
 
