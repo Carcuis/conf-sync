@@ -487,7 +487,7 @@ if has("nvim")
                 \ 'coc-pyright', 'coc-powershell', 'coc-sh', 'coc-clangd',
                 \ 'coc-cmake', 'coc-actions', 'coc-translator', 'coc-snippets',
                 \ 'coc-sumneko-lua', 'coc-tsserver', 'coc-eslint', 'https://github.com/Carcuis/coc-nav',
-                \ 'coc-xml', 'coc-yaml', 'coc-toml']
+                \ 'coc-xml', 'coc-yaml', 'coc-toml', 'coc-java-dev']
     inoremap <silent><expr> <TAB>
           \ coc#pum#visible() ? coc#_select_confirm() :
           \ coc#expandableOrJumpable() ? "\<C-r>=coc#rpc#request('doKeymap', ['snippets-expand-jump',''])\<CR>" : "\<TAB>"
@@ -909,7 +909,7 @@ if has("nvim")
         ensure_installed = {
             "python", "c", "cpp", "lua", "bash", "vim", "vimdoc", "go", "javascript", "typescript", "make",
             "markdown", "markdown_inline", "toml", "yaml", "xml", "git_config", "json", "json5", "jsonc",
-            "dap_repl", "latex", "regex", "powershell"
+            "dap_repl", "latex", "regex", "powershell", "java"
         },
         highlight = {
             enable = true,
@@ -1741,6 +1741,11 @@ if has("nvim")
                     end
                     return "g++ " .. filename .. " -o " .. output .. " && " .. run_prefix .. output
                 end,
+                java = function()
+                    local filename = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(0), ':~:.')
+                    local output = filename:gsub("%.java$", "")
+                    return "javac -d class " .. filename .. " && java -cp class " .. output
+                end,
             }
             local cmd = cmds[vim.bo.filetype]
             if type(cmd) == "function" then
@@ -1755,7 +1760,7 @@ if has("nvim")
             end
         end,
         condition = {
-            filetype = { "python", "sh", "zsh", "go", "ps1", "c", "cpp" },
+            filetype = { "python", "sh", "zsh", "go", "ps1", "c", "cpp", "java" },
         },
     })
 
