@@ -2281,3 +2281,6 @@ if has("nvim")
     autocmd TermClose term://* let g:terminal_running = v:false | stopinsert
 endif
 
+" remove trailing ^M
+command -nargs=0 FixEOL :%s/\r$//
+
