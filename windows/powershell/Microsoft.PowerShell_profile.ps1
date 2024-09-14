@@ -152,27 +152,33 @@ function Detect-And-Set-Proxy {
     }
 } Detect-And-Set-Proxy
 function Make-Python-Venv {
-    param($venv_name = "venv")
+    param(
+        [string] $name = "venv"
+    )
     if ((Get-Command python).length -eq 0) {
         Write-Error "Error: Cannot find 'python' command."
         return 1
     }
-    python -m venv $venv_name
-    Activate-Python-Venv $venv_name
+    python -m venv $name
+    Write-Output "Created venv in '$name'"
+    Activate-Python-Venv -name $name
 }
 function Activate-Python-Venv {
-    param($venv_name = "venv")
-    $venv_path = Get-ChildItem -Path $PWD -Filter $venv_name -Directory -ErrorAction SilentlyContinue
-    if ($venv_path) {
-        $venv_path = $venv_path.FullName
-        $venv_activate_ps1 = Join-Path $venv_path "Scripts\Activate.ps1"
-        if (Test-Path $venv_activate_ps1) {
-            . $venv_activate_ps1
-        } else {
+    param(
+        [string] $dir = $PWD,
+        [string] $name = "venv",
+        [switch] $silent
+    )
+    $venv_path = Join-Path -Path $dir -ChildPath $name
+    if (Test-Path -Path $venv_path) {
+        $activate_script = Join-Path -Path $venv_path -ChildPath "Scripts\Activate.ps1"
+        if (Test-Path -Path $activate_script) {
+            . $activate_script
+        } elseif (! $silent) {
             Write-Error "Error: Cannot find 'Scripts\Activate.ps1' in $venv_path"
         }
-    } else {
-        Write-Error "Error: Cannot find '$venv_name' directory in $PWD"
+    } elseif (! $silent) {
+        Write-Error "Error: Cannot find '$name' directory in $dir"
     }
 }
 function Deactivate-Python-Venv {
@@ -186,6 +192,25 @@ function Deactivate-Python-Venv {
         Write-Error "Error: No virtual environment is activated."
     }
 }
+function Auto-Change-Venv {
+<#
+.SYNOPSIS
+    Automatically activate/deactivate virtual environment when changing directory.
+#>
+    param(
+        [string] $dir
+    )
+    if ($env:VIRTUAL_ENV) {
+        if ($dir -like "$(Split-Path -Path $env:VIRTUAL_ENV -Parent)*") {
+            return
+        } else {
+            Deactivate-Python-Venv
+        }
+    }
+
+    Activate-Python-Venv -dir $dir -name "venv" -silent
+}
+(Get-Variable PWD).Attributes.Add($(New-Object ValidateScript { Auto-Change-Venv $_; return $true }))
 function Delete-Old-PSModules {
     Get-InstalledModule | ForEach-Object {
         $CurrentVersion = $PSItem.Version
