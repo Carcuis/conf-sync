@@ -1,4 +1,4 @@
-oh-my-posh init pwsh --config "$env:POSH_THEMES_PATH/cui_theme.omp.json" | Invoke-Expression
+oh-my-posh init pwsh --config "$env:POSH_THEMES_PATH\cui_theme.omp.json" | Invoke-Expression
 
 $env:VIRTUAL_ENV_DISABLE_PROMPT = 1
 
@@ -40,9 +40,9 @@ function ListAll { Get-ChildItem -Force | Format-Wide -AutoSize }
 function LLDir { Get-ChildItem }
 function LLAll { Get-ChildItem -Force }
 function GoUpOne { Set-Location .. }
-function GoUpTwo { Set-Location ../.. }
-function GoUpThree { Set-Location ../../.. }
-function GoUpFour { Set-Location ../../../.. }
+function GoUpTwo { Set-Location ..\.. }
+function GoUpThree { Set-Location ..\..\.. }
+function GoUpFour { Set-Location ..\..\..\.. }
 function OpenCwd { explorer.exe . }
 function EditProfile { EditFile $profile }
 function EditVimrc { EditFile $HOME\_vimrc }
