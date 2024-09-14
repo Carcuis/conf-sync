@@ -52,7 +52,6 @@ function ReloadProfile { . $profile }
 function GetAdminPriv { Start-Process pwsh -Verb runAs }
 function StartSshServiceInWsl { wsl -- sudo service ssh start }
 function StopSshServiceInWsl { wsl -- sudo service ssh stop }
-function UpdateOhMyPosh { winget upgrade JanDeDobbeleer.OhMyPosh -s winget }
 function SetProxyOn {
     $proxy_server = (Get-ItemProperty -Path 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Internet Settings').ProxyServer
     $env:ALL_PROXY = "http://$proxy_server"
@@ -226,7 +225,6 @@ Set-Alias src ReloadProfile
 Set-Alias su GetAdminPriv
 Set-Alias sshon StartSshServiceInWSl
 Set-Alias sshoff StopSshServiceInWSl
-Set-Alias omp_update UpdateOhMyPosh
 Set-Alias px SetProxyOn
 Set-Alias upx SetProxyOff
 Set-Alias wd WebDetection

@@ -4,6 +4,12 @@ $diff_command = ""
 $BOLD = "`e[1m" ; $TAIL  = "`e[0m" ; $WHITE  = "`e[37m"
 $RED  = "`e[31m"; $GREEN = "`e[32m"; $YELLOW = "`e[33m"; $CYAN = "`e[36m"
 
+# exit if scoop command not found
+if (-not (Get-Command scoop -ErrorAction SilentlyContinue)) {
+    Write-Host "${BOLD}${RED}Error: scoop not found.${TAIL}"
+    exit 1
+}
+
 $psprofile = @{
     name = "PSProfile"
     remote = "$PSScriptRoot\windows\powershell\Microsoft.PowerShell_profile.ps1"
@@ -22,7 +28,7 @@ $wsl_config = @{
 $ohmyposh_theme = @{
     name = "oh-my-posh theme"
     remote = "$PSScriptRoot\windows\powershell\cui_theme.omp.json"
-    local = "$home\AppData\Local\Programs\oh-my-posh\themes\cui_theme.omp.json"
+    local = Join-Path -Path $(scoop config root_path) -ChildPath "apps\oh-my-posh\current\themes\cui_theme.omp.json"
 }
 $vimrc = @{
     name = "vimrc"
