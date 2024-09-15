@@ -1843,7 +1843,7 @@ if has("nvim")
             border = 'rounded',
         },
     })
-    vim.keymap.set({ "n", "v" }, "<leader>C", require('CopilotChat').open, { desc = "Open Copilot Chat" })
+    vim.keymap.set({ "n", "v" }, "<M-i>", require('CopilotChat').toggle, { desc = "Toggle Copilot Chat" })
 EOF
 endif
 
