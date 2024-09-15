@@ -288,6 +288,13 @@
                         "valueContains": "www.disneyplus.com",
                         "valueRegex": "example\\.com",
                         "valueStartsWith": "https://example.com"
+                    },
+                    {
+                        "id": "2953636465",
+                        "type": "CONTAINS",
+                        "valueContains": "music.163.com",
+                        "valueRegex": "example\\.com",
+                        "valueStartsWith": "https://example.com"
                     }
                 ]
             },
