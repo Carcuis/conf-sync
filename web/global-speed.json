@@ -317,7 +317,7 @@
         16
     ],
     "speedSlider": {
-        "max": 5,
+        "max": 10,
         "min": 0.1
     },
     "speedSmallStep": 0.1,
