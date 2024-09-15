@@ -909,7 +909,7 @@ if has("nvim")
         ensure_installed = {
             "python", "c", "cpp", "lua", "bash", "vim", "vimdoc", "go", "javascript", "typescript", "make",
             "markdown", "markdown_inline", "toml", "yaml", "xml", "git_config", "json", "json5", "jsonc",
-            "dap_repl", "latex", "regex", "powershell", "java"
+            "dap_repl", "latex", "regex", "powershell", "java", "gitattributes"
         },
         highlight = {
             enable = true,
