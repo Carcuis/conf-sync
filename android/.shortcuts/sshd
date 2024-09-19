@@ -48,5 +48,5 @@ if check_command; then
     start_sshd
 fi
 
-sleep 2
+sleep 5
 
