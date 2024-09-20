@@ -1,4 +1,4 @@
-oh-my-posh init pwsh --config "$env:POSH_THEMES_PATH\cui_theme.omp.json" | Invoke-Expression
+oh-my-posh init pwsh --config "$HOME\.config\ohmyposh\themes\cui_theme.omp.json" | Invoke-Expression
 
 $env:VIRTUAL_ENV_DISABLE_PROMPT = 1
 

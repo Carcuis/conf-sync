@@ -28,7 +28,7 @@ $wsl_config = @{
 $ohmyposh_theme = @{
     name = "oh-my-posh theme"
     remote = "$PSScriptRoot\windows\powershell\cui_theme.omp.json"
-    local = Join-Path -Path $(scoop config root_path) -ChildPath "apps\oh-my-posh\current\themes\cui_theme.omp.json"
+    local = "$HOME\.config\ohmyposh\themes\cui_theme.omp.json"
 }
 $vimrc = @{
     name = "vimrc"
