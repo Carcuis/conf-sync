@@ -222,6 +222,13 @@ function Convert-To-MP4 {
     $output_file = [System.IO.Path]::ChangeExtension($input_file, ".mp4")
     ffmpeg -i $input_file $output_file
 }
+function Remove-ItemRecurseForce {
+    param (
+        [Parameter(Mandatory=$true)]
+        [string]$Path
+    )
+    Remove-Item -Path $Path -Recurse -Force
+}
 
 Set-Alias .. GoUpOne
 Set-Alias ... GoUpTwo
@@ -266,4 +273,5 @@ Set-Alias vrun Activate-Python-Venv
 Set-Alias dac Deactivate-Python-Venv
 Set-Alias psmclo Delete-Old-PSModules
 Set-Alias ctmp4 Convert-To-MP4
+Set-Alias rm-rf Remove-ItemRecurseForce
 
