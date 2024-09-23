@@ -275,13 +275,15 @@ if [[ $SYSTEM =~ "WSL[12]" ]]; then
     }
 
     function wsl_get_proxy_port() {
-        local port=$(reg.exe query "HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Internet Settings" \
+        local port=$(/mnt/c/Windows/system32/reg.exe query \
+            "HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Internet Settings" \
             /v ProxyServer | sed -n 3p | awk -F: 'BEGIN{RS="\r\n"}{print $2}')
         echo $port
     }
 
     function wsl_has_windows_ie_proxy() {
-        local has_ie_proxy=$(reg.exe query "HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Internet Settings" \
+        local has_ie_proxy=$(/mnt/c/Windows/system32/reg.exe query \
+            "HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Internet Settings" \
             /v ProxyEnable | sed -n 3p | awk 'BEGIN{RS="\r\n"}{print $3}')
         if [[ $has_ie_proxy == 0x1 ]]; then
             return 0
