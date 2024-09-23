@@ -391,9 +391,6 @@ if ! has("nvim")
 endif
 
 " === vim-startify ===
-if argc() == 0
-    au VimEnter * :Startify
-endif
 nnoremap <leader>; <cmd>Startify<CR>
 let g:startify_enable_special = 0
 let g:startify_lists = [
