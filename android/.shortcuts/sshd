@@ -48,5 +48,10 @@ if check_command; then
     start_sshd
 fi
 
-sleep 5
+printf "\n"
+for i in $(seq 5 -1 1); do
+    printf "Closing in %d seconds...\r" "$i"
+    sleep 1
+done
+printf "\n"
 
