@@ -373,9 +373,17 @@ if [[ $SYSTEM =~ "WSL[12]" ]]; then
     #     ssh-add ~/.ssh/github > /dev/null 2>&1
     # fi
 
-    export BROWSER="$HOME/.local/bin/msedge"
     [[ -d "$HOME/.local/bin/" ]] || mkdir -p "$HOME/.local/bin/"
+
+    export BROWSER="$HOME/.local/bin/msedge"
     [[ -f "$BROWSER" ]] || ln -s "/mnt/c/Program Files (x86)/Microsoft/Edge/Application/msedge.exe" "$BROWSER"
+
+    local win32yank_wsl=$HOME/.local/bin/win32yank.exe
+    if [[ ! -f $win32yank_wsl ]]; then
+        local win32yank_windows=$(wtw $(/mnt/c/Windows/System32/cmd.exe /c "where win32yank" 2>&1 | tail -n 1 | tr -d '\r'))
+        [[ -f $win32yank_windows ]] && ln -s $win32yank_windows $win32yank_wsl
+    fi
+    unset win32yank_wsl win32yank_windows
 
 elif [[ $SYSTEM == "Android" ]]; then
     ## sshd start-up
