@@ -2292,7 +2292,7 @@ autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "norm
 autocmd FileType * set formatoptions-=cro
 
 " clear jump list when open editor
-autocmd VimEnter * :clearjumps
+autocmd VimEnter * clearjumps
 
 " auto switch mode for terminal
 if has("nvim")
@@ -2302,5 +2302,5 @@ if has("nvim")
 endif
 
 " remove trailing ^M
-command -nargs=0 FixEOL :%s/\r$//
+command -nargs=0 FixEOL %s/\r$//
 
