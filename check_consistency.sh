@@ -193,7 +193,12 @@ function run_edit
             read -N1 -p "$file unsynchronized. Edit with $diff_command ? [Y/n] " user_input </dev/tty
             if [[ "$user_input" == $'\n' ]]; then user_input=y; else echo; fi
             if [[ "$user_input" =~ [yY] ]]; then
+                if [[ $(stat -c %U "$file_local") == "root" ]];
+                    then diff_command="sudo -E env PATH=$PATH $diff_command"
+                fi
+
                 $diff_command "$file_remote" "$file_local"
+
                 if file_same "$file_remote" "$file_local"; then
                     success "$file is now synchronized."
                 else
