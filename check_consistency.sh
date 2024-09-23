@@ -60,6 +60,10 @@ function declare_dirs() {
             shortcut_sshd_remote=$DIR/android/.shortcuts/sshd
             shortcut_sshd_local=$HOME/.shortcuts/sshd
             ;;
+        WSL*)
+            wsl_conf_remote=$DIR/windows/wsl/wsl.conf
+            wsl_conf_local=/etc/wsl.conf
+            ;;
     esac
 
     local -a exclude_file_list
@@ -72,6 +76,7 @@ function declare_dirs() {
             ;;
         WSL*)
             exclude_file_list+=( ideavimrc )
+            addon_file_list+=( wsl_conf )
             ;;
     esac
 
