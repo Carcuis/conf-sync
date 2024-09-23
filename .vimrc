@@ -196,7 +196,9 @@ set signcolumn=yes
 set timeoutlen=500
 set conceallevel=2
 set colorcolumn=120
-set jumpoptions=stack
+if exists("+jumpoptions")
+    set jumpoptions=stack
+endif
 set pumheight=15
 set confirm
 
@@ -316,13 +318,13 @@ endif
 
 " === nerdtree ===
 if ! has("nvim")
-    nnoremap <leader>tt :NERDTreeToggle<CR>
-    map <F2> :NERDTree<CR>
+    nnoremap <leader>tt <cmd>NERDTreeToggle<CR>
+    map <F2> <cmd>NERDTree<CR>
     let NERDTreeShowHidden = 1
     " let NERDTreeShowBookmarks = 1
     let NERDTreeWinSize = min([max([25, winwidth(0) / 5]), 30])
     if (winwidth(0) > 140 || has("gui_running")) && argc() < 2
-        au VimEnter * :NERDTree | set signcolumn=auto | wincmd p
+        au VimEnter * NERDTree | set signcolumn=auto | wincmd p
     endif
     " Exit Vim if NERDTree is the only window left.
     autocmd BufEnter * if tabpagenr('$') == 1 && winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() |
@@ -357,7 +359,7 @@ if ! has("nvim")
     let g:Lf_ShortcutF = '<leader>ff'
     let g:Lf_ShortcutB = '<leader>bf'
     let g:Lf_StlSeparator = { 'left': "", 'right': "" }
-    nnoremap <leader>fr :LeaderfMru<CR>
+    nnoremap <leader>fr <cmd>LeaderfMru<CR>
 endif
 
 " === vim-commentary ===
@@ -367,7 +369,7 @@ autocmd FileType ps1,sshdconfig set commentstring=#\ %s
 " === indentline ===
 if ! has("nvim")
     let g:indentLine_char = '│'
-    au FileType startify,which_key :IndentLinesDisable
+    au FileType startify,which_key IndentLinesDisable
     if has("nvim")
         au TermOpen * IndentLinesDisable
     endif
@@ -380,7 +382,7 @@ endif
 
 " === tagbar ===
 if ! has("nvim")
-    nnoremap <leader>tb :TagbarToggle<CR>
+    nnoremap <leader>tb <cmd>TagbarToggle<CR>
     let g:tagbar_width = min([max([25, winwidth(0) / 5]), 30])
     " if (winwidth(0) > 100 || has("gui_running")) && argc() < 2
     "   " autocmd VimEnter * nested :TagbarOpen
@@ -572,10 +574,10 @@ endif
 " === vim-which-key ===
 if ! has("nvim")
     let g:which_key_fallback_to_native_key=1
-    nnoremap <silent> <leader> :WhichKey '<Space>'<CR>
-    nnoremap <silent> g :WhichKey 'g'<CR>
-    nnoremap <silent> [ :WhichKey '['<CR>
-    nnoremap <silent> ] :WhichKey ']'<CR>
+    nnoremap <leader> <cmd>WhichKey '<Space>'<CR>
+    nnoremap g <cmd>WhichKey 'g'<CR>
+    nnoremap [ <cmd>WhichKey '['<CR>
+    nnoremap ] <cmd>WhichKey ']'<CR>
     let g:which_key_sep = '➜'
 endif
 
@@ -2219,9 +2221,6 @@ nnoremap <M-[> <cmd>tabp<CR>
 nnoremap <M-]> <cmd>tabn<CR>
 nnoremap <M-n> <cmd>tabnew<CR>
 nnoremap <M-S-c> <cmd>tabc<CR>
-if ! has("nvim")
-    nnoremap <leader>c :bd<CR>
-endif
 
 noremap <leader>y "+y
 noremap <leader>p "+p
@@ -2259,6 +2258,25 @@ nmap DR ddkgcc
 " navigate in quickfix list
 nnoremap <M-S-n> <cmd>cnext<CR>
 nnoremap <M-S-p> <cmd>cprev<CR>
+
+if ! has("nvim")
+    nnoremap <leader>c <cmd>bd<CR>
+    nnoremap H <cmd>bp<CR>
+    nnoremap L <cmd>bn<CR>
+    nmap s <M-s>
+    nmap S <M-S-s>
+    nmap w <M-w>
+    nmap q <M-q>
+    nmap h <M-h>
+    nmap j <M-j>
+    nmap k <M-k>
+    nmap l <M-l>
+    nmap - <M-->
+    nmap n <M-n>
+    nmap C <M-S-c>
+    nmap N <M-S-n>
+    nmap P <M-S-p>
+endif
 
 " ===============
 
