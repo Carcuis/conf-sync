@@ -257,6 +257,8 @@ else "vim in tui
         " let &t_TI=""
         " let &t_TE=""
     endif
+
+    set belloff=all
 endif
 
 if exists("g:neovide")
