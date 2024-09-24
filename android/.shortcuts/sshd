@@ -3,6 +3,14 @@
 termux-wake-lock
 
 CYAN="$(printf '\033[36m')"; GREEN="$(printf '\033[32m')"; TAIL="$(printf '\033[0m')";
+IP_ADDR=$(ifconfig -a 2>&1 | awk '/wlan0/{flag=1} flag && /inet /{print $2; exit}')
+CONNECT_COMMAND=$(cat <<EOF
+The server is running on port 8022.
+Connect with the following command:
+
+${GREEN}ssh${TAIL} -p 8022 ${IP_ADDR}
+EOF
+)
 
 check_command() {
     if ! command -v sshd > /dev/null; then
@@ -31,16 +39,14 @@ ${GREEN}
 ╚██████╔╝██║  ██╗
  ╚═════╝ ╚═╝  ╚═╝
 ${TAIL}
-The server is running on port 8022.
-Connect with the following command:
-
-${GREEN}ssh${TAIL} -p 8022 $(ifconfig -a 2>&1 | awk '/wlan0/{flag=1} flag && /inet /{print $2; exit}')
+${CONNECT_COMMAND}
 
 ${GREEN}[OK] Started \`sshd\`.${TAIL}
 EOF
         fi
     else
         echo "${CYAN}[WARN] \`sshd\` has already been started.${TAIL}"
+        echo "${CONNECT_COMMAND}"
     fi
 }
 
