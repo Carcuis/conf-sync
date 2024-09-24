@@ -82,14 +82,13 @@ map <M-j> <C-w>j
 map <M-k> <C-w>k
 map <M-l> <C-w>l
 map <leader>sp :split<CR>
-map <leader>v :vsplit<CR>
+map <leader>vs :vsplit<CR>
 map H :tabp<cr>
 map L :tabn<cr>
 map <leader>c :bd<cr>
 
 " copy and paste
 map <leader>y "+y
-map <Leader>d "+d
 map <leader>p "+p
 map <leader>P "+P
 
