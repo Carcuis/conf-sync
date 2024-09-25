@@ -1,3 +1,14 @@
+# If you come from bash you might have to change your $PATH.
+for user_path in \
+    $HOME/.local/bin \
+    $HOME/.cargo/bin \
+    $HOME/.fzf/bin \
+    /usr/games \
+    /usr/local/bin
+do
+    [[ -d $user_path ]] && [[ ! $PATH == *$user_path* ]] && export PATH=$user_path:$PATH
+done
+
 if [[ ! $VIFM ]]; then
     fortune | cowsay -f moose -W $(($(tput cols)-3<80?$(tput cols)-3:80)) | lolcat
 fi
@@ -8,16 +19,6 @@ fi
 if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
-
-# If you come from bash you might have to change your $PATH.
-for user_path in \
-    $HOME/.local/bin \
-    $HOME/.cargo/bin \
-    $HOME/.fzf/bin \
-    /usr/local/bin
-do
-    [[ -d $user_path ]] && [[ ! $PATH == *$user_path* ]] && export PATH=$user_path:$PATH
-done
 
 # Path to your Oh My Zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
