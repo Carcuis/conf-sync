@@ -42,6 +42,7 @@ function detect_system() {
     local _uname_a=$(uname -a)
     if [[ $_uname_a =~ Microsoft ]]; then SYSTEM="WSL1"
     elif [[ $_uname_a =~ WSL2 ]];    then SYSTEM="WSL2"
+    elif [[ -n $CODESPACE_NAME ]];   then SYSTEM="Codespace"
     elif [[ $OSTYPE =~ ^darwin ]];   then SYSTEM="Darwin"
     elif [[ $OSTYPE =~ android ]];   then SYSTEM="Android"
     elif [[ $OSTYPE =~ ^linux ]];    then SYSTEM="Linux"

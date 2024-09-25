@@ -78,6 +78,9 @@ function declare_dirs() {
             exclude_file_list+=( ideavimrc )
             addon_file_list+=( wsl_conf )
             ;;
+        Codespace)
+            exclude_file_list+=( ideavimrc git_config kitty_config )
+            ;;
     esac
 
     if [[ ${#exclude_file_list[@]} != 0 ]]; then
@@ -123,6 +126,7 @@ function detect_system() {
 
     if [[ $_uname_a =~ Microsoft ]]; then SYSTEM="WSL1"
     elif [[ $_uname_a =~ WSL2 ]];    then SYSTEM="WSL2"
+    elif [[ -n $CODESPACE_NAME ]];   then SYSTEM="Codespace"
     elif [[ $OSTYPE =~ ^darwin ]];   then SYSTEM="Darwin"
     elif [[ $OSTYPE =~ android ]];   then SYSTEM="Android"
     elif [[ $OSTYPE =~ ^linux ]];    then SYSTEM="Linux"
