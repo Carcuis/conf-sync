@@ -22,7 +22,7 @@ declare -a extra_file_list=(
     ptpython_config
     lazygit_config
     ideavimrc
-    git_config
+    global_gitconfig
     shellcheckrc
     kitty_config
     vifmrc
@@ -42,8 +42,8 @@ function declare_dirs() {
     lazygit_config_local=$HOME/.config/lazygit/config.yml
     ideavimrc_remote=$DIR/dot_files/.ideavimrc
     ideavimrc_local=$HOME/.ideavimrc
-    git_config_remote=$DIR/dot_files/.gitconfig
-    git_config_local=$HOME/.gitconfig
+    global_gitconfig_remote=$DIR/dot_files/.gitconfig
+    global_gitconfig_local=$HOME/.gitconfig
     shellcheckrc_remote=$DIR/dot_files/.shellcheckrc
     shellcheckrc_local=$HOME/.shellcheckrc
     kitty_config_remote=$DIR/.config/kitty/kitty.conf
@@ -79,7 +79,7 @@ function declare_dirs() {
             addon_file_list+=( wsl_conf )
             ;;
         Codespace)
-            exclude_file_list+=( ideavimrc git_config kitty_config )
+            exclude_file_list+=( ideavimrc global_gitconfig kitty_config )
             ;;
     esac
 
