@@ -64,6 +64,9 @@ function declare_dirs() {
             wsl_conf_remote=$DIR/windows/wsl/wsl.conf
             wsl_conf_local=/etc/wsl.conf
             ;;
+        Codespace)
+            global_gitconfig_remote=$DIR/codespace/.gitconfig
+            ;;
     esac
 
     local -a exclude_file_list
@@ -79,7 +82,7 @@ function declare_dirs() {
             addon_file_list+=( wsl_conf )
             ;;
         Codespace)
-            exclude_file_list+=( ideavimrc global_gitconfig kitty_config )
+            exclude_file_list+=( ideavimrc kitty_config )
             ;;
     esac
 
