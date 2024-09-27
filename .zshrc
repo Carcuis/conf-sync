@@ -442,3 +442,9 @@ if command -v fzf > /dev/null; then
         --preview-window="border-rounded" --prompt=" " --marker="◆" --pointer=" "
         --separator="─" --scrollbar="│" --layout="reverse"'
 fi
+
+# === Java ===
+if command -v java > /dev/null; then
+    [[ -d $JAVA_HOME ]] || export JAVA_HOME=$(readlink -f $(command -v java) | sed "s|/bin/java||")
+fi
+
