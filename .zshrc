@@ -445,6 +445,6 @@ fi
 
 # === Java ===
 if command -v java > /dev/null; then
-    [[ -d $JAVA_HOME ]] || export JAVA_HOME=$(readlink -f $(command -v java) | sed "s|/bin/java||")
+    [[ -d $JAVA_HOME ]] || export JAVA_HOME=$(realpath $(command -v java) | sed "s|/bin/java||" | sed "s|/jre||")
 fi
 
