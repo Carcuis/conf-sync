@@ -65,7 +65,7 @@ function declare_dirs() {
             wsl_conf_local=/etc/wsl.conf
             ;;
         Codespace)
-            global_gitconfig_remote=$DIR/codespace/.gitconfig
+            global_gitconfig_remote=$DIR/misc/codespace/.gitconfig
             ;;
     esac
 
