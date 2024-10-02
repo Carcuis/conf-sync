@@ -263,6 +263,7 @@ alias wtr=weather_forecast
 alias histc="$EDITOR ~/.zsh_history"
 alias ktc="$EDITOR ~/.config/kitty/kitty.conf"
 alias dac=deactivate
+alias ff='fastfetch'
 
 if [[ $SYSTEM =~ "WSL[12]" ]]; then
     function wtw() {
