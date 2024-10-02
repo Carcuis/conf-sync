@@ -1539,7 +1539,7 @@ if has("nvim")
     vim.api.nvim_create_autocmd("User", {
         pattern = "DiffviewDiffBufWinEnter",
         callback = function()
-            vim.cmd.goto()
+            vim.api.nvim_input('gg')
             vim.api.nvim_input(']c')
         end
     })
