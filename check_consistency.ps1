@@ -1,14 +1,18 @@
 $verbose = $false
 $diff_command = ""
+$scoop_root = ""
 
 $BOLD = "`e[1m" ; $TAIL  = "`e[0m" ; $WHITE  = "`e[37m"
 $RED  = "`e[31m"; $GREEN = "`e[32m"; $YELLOW = "`e[33m"; $CYAN = "`e[36m"
 
-# exit if scoop command not found
-if (-not (Get-Command scoop -ErrorAction SilentlyContinue)) {
-    Write-Host "${BOLD}${RED}Error: scoop not found.${TAIL}"
-    exit 1
+function Get-Scoop-Root {
+    if (-not (Get-Command scoop -ErrorAction SilentlyContinue)) {
+        Write-Host "${BOLD}${RED}Error: scoop not found.${TAIL}"
+        exit 1
+    }
+    $script:scoop_root = scoop config root_path
 }
+Get-Scoop-Root
 
 $psprofile = @{
     name = "PSProfile"
@@ -70,6 +74,11 @@ $clangd = @{
     remote = "$PSScriptRoot\windows\clangd\config.yaml"
     local = "$home\AppData\Local\clangd\config.yaml"
 }
+$tealdeer = @{
+    name = "tealdeer config.toml"
+    remote = "$PSScriptRoot\.config\tealdeer\config.toml"
+    local = "$scoop_root\persist\tealdeer\config.toml"
+}
 $file_list = @(
     $psprofile
     $vimrc
@@ -85,6 +94,7 @@ $extra_file_list = @(
     $git_config
     $vifmrc
     $clangd
+    $tealdeer
 )
 
 function Print-Line    { param($msg) Write-Host "$WHITE$msg$TAIL"             }
