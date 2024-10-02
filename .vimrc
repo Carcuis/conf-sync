@@ -1565,6 +1565,9 @@ if has("nvim")
     imap <M-p> <Plug>(copilot-previous)
     imap <M-n> <Plug>(copilot-next)
     let g:copilot_no_tab_map = v:true
+    let g:copilot_filetypes = {
+                \ 'rip-substitute' : v:false,
+                \ }
 endif
 
 " === guess-indent.nvim ===
