@@ -26,6 +26,7 @@ declare -a extra_file_list=(
     shellcheckrc
     kitty_config
     vifmrc
+    tealdeer_config
 )
 
 # shellcheck disable=SC2034
@@ -50,6 +51,8 @@ function declare_dirs() {
     kitty_config_local=$HOME/.config/kitty/kitty.conf
     vifmrc_remote=$DIR/.config/vifm/vifmrc
     vifmrc_local=$HOME/.config/vifm/vifmrc
+    tealdeer_config_remote=$DIR/.config/tealdeer/config.toml
+    tealdeer_config_local=$HOME/.config/tealdeer/config.toml
 
     case $SYSTEM in
         Darwin)
