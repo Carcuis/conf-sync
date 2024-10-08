@@ -675,8 +675,8 @@ if has("nvim")
     nnoremap gb <cmd>BufferLinePick<CR>
     nnoremap H <cmd>BufferLineCyclePrev<CR>
     nnoremap L <cmd>BufferLineCycleNext<CR>
-    nnoremap <M-S-H> <cmd>BufferLineMovePrev<CR>
-    nnoremap <M-S-L> <cmd>BufferLineMoveNext<CR>
+    nnoremap <M-H> <cmd>BufferLineMovePrev<CR>
+    nnoremap <M-L> <cmd>BufferLineMoveNext<CR>
     lua << EOF
     require("bufferline").setup{
         options = {
@@ -2174,7 +2174,7 @@ nmap <C-p> g#
 vmap <C-p> #
 
 nnoremap <M-s> <cmd>w<CR>
-nnoremap <M-S-s> <cmd>wall<CR>
+nnoremap <M-S> <cmd>wall<CR>
 nnoremap <M-w> <cmd>q<CR>
 nnoremap <M-q> <cmd>q!<CR>
 
@@ -2225,7 +2225,7 @@ nnoremap <leader>vs <C-w>v
 nnoremap <M-[> <cmd>tabp<CR>
 nnoremap <M-]> <cmd>tabn<CR>
 nnoremap <M-n> <cmd>tabnew<CR>
-nnoremap <M-S-c> <cmd>tabc<CR>
+nnoremap <M-C> <cmd>tabc<CR>
 
 noremap <leader>y "+y
 noremap <leader>p "+p
@@ -2261,15 +2261,15 @@ nmap DC yypkgccj
 nmap DR ddkgcc
 
 " navigate in quickfix list
-nnoremap <M-S-n> <cmd>cnext<CR>
-nnoremap <M-S-p> <cmd>cprev<CR>
+nnoremap <M-N> <cmd>cnext<CR>
+nnoremap <M-P> <cmd>cprev<CR>
 
 if ! has("nvim")
     nnoremap <leader>c <cmd>bd<CR>
     nnoremap H <cmd>bp<CR>
     nnoremap L <cmd>bn<CR>
     nmap s <M-s>
-    nmap S <M-S-s>
+    nmap S <M-S>
     nmap w <M-w>
     nmap q <M-q>
     nmap h <M-h>
@@ -2278,9 +2278,9 @@ if ! has("nvim")
     nmap l <M-l>
     nmap - <M-->
     nmap n <M-n>
-    nmap C <M-S-c>
-    nmap N <M-S-n>
-    nmap P <M-S-p>
+    nmap C <M-C>
+    nmap N <M-N>
+    nmap P <M-P>
 endif
 
 " ===============
