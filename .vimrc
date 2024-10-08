@@ -1420,7 +1420,7 @@ if has("nvim")
             python = 1,
         },
         mapping = {
-            jump_left_in_any   = '<m-h>',
+            -- jump_left_in_any   = '<m-h>',
             jump_right_out_any = '<m-l>',
             jump_left_out_any  = '<m-[>',
             jump_right_in_any  = '<m-]>',
@@ -2239,6 +2239,13 @@ inoremap <C-J> <esc>o
 inoremap <C-K> <esc>O
 inoremap <C-H> <esc>I
 inoremap <C-L> <esc>A
+inoremap <M-j> <C-down>
+inoremap <M-k> <C-up>
+inoremap <M-h> <C-left>
+inoremap <M-J> <C-down>
+inoremap <M-K> <C-up>
+inoremap <M-H> <C-left>
+inoremap <M-L> <C-right>
 
 nnoremap DO <cmd>%diffget<CR>
 nnoremap DP <cmd>%diffput<CR>
