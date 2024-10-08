@@ -1777,14 +1777,14 @@ if has("nvim")
     overseer.setup({
         strategy = "terminal",
         task_list = {
-            default_detail = 1,
+            default_detail = 2,
             min_height = 10,
         },
         component_aliases = {
             default = {
                 "open_output",
-                { "display_duration", detail_level = 2 },
-                "on_output_summarize",
+                { "display_duration", detail_level = 3 },
+                { "on_output_summarize", max_lines = 2 },
                 "on_exit_set_status",
                 { "on_complete_notify", statuses = { "FAILURE" } },
                 "unique",
