@@ -2230,6 +2230,7 @@ nnoremap <M-C> <cmd>tabc<CR>
 noremap <leader>y "+y
 noremap <leader>p "+p
 noremap <leader>P "+P
+inoremap <C-S-V> <C-R>+
 
 nmap <C-J> ]c
 nmap <C-K> [c
