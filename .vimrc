@@ -210,7 +210,7 @@ if has("nvim")
     endif
     set fillchars=eob:\ ,diff:\ 
     if has("win32") || has("wsl")
-        set guifont=CaskaydiaCove\ NFM:h13
+        set guifont=CaskaydiaCove\ NFM,Microsoft\ YaHei\ UI:h13:#e-subpixelantialias
     elseif has("linux")
         set guifont=UbuntuMono\ NF:h16
     elseif has("mac")
