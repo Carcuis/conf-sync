@@ -86,6 +86,38 @@ function WebDetection {
 function Conda-Hook {
     conda shell.powershell hook | Out-String | Where-Object {$_} | Invoke-Expression
 }
+function Conda-Hooked {
+    if ($env:CONDA_EXE) {
+        return $true
+    }
+    return $false
+}
+function Has-Virtual-Env {
+    if ($env:VIRTUAL_ENV) {
+        return $true
+    }
+    return $false
+}
+function Has-Conda-Env{
+    if ($env:CONDA_DEFAULT_ENV) {
+        return $true
+    }
+    return $false
+}
+function Has-Conda-Env-Name {
+    param(
+        [string] $name
+    )
+    $env_file = "$HOME\.conda\environments.txt"
+    if (Test-Path -Path $env_file) {
+        $env_paths = Get-Content -Path $env_file
+        $env_path = $env_paths | Where-Object { $_ -like "*\$name" }
+        if ($env_path) {
+            return $true
+        }
+    }
+    return $false
+}
 function Create-Link($target, $link) {
     New-Item -ItemType SymbolicLink -Path $link -Value $target
 }
@@ -165,8 +197,8 @@ function Make-Python-Venv {
 }
 function Activate-Python-Venv {
     param(
-        [string] $dir = $PWD,
         [string] $name = "venv",
+        [string] $dir = $PWD,
         [switch] $silent
     )
     $venv_path = Join-Path -Path $dir -ChildPath $name
@@ -177,17 +209,35 @@ function Activate-Python-Venv {
         } elseif (! $silent) {
             Write-Error "Error: Cannot find 'Scripts\Activate.ps1' in $venv_path"
         }
-    } elseif (! $silent) {
-        Write-Error "Error: Cannot find '$name' directory in $dir"
+    } elseif ($name -eq "venv") {
+        if (! $silent) {
+            Write-Error "Error: Cannot find 'venv' directory in $dir"
+        }
+    } else {
+        if ((Has-Conda-Env-Name -name $name) -or ("$name" -eq "base")) {
+            if (! (Conda-Hooked)) {
+                Conda-Hook
+            }
+            if (Has-Virtual-Env) {
+                Deactivate-Python-Venv
+            }
+            conda activate $name
+            return
+        }
+        if (! $silent) {
+            Write-Error "Error: Cannot find '$name' virtual environment."
+        }
     }
 }
 function Deactivate-Python-Venv {
-    if ($env:VIRTUAL_ENV) {
+    if (Has-Virtual-Env) {
         if ((Get-Command deactivate).length -gt 0) {
             deactivate
         } else {
             Write-Error "Error: Cannot find 'deactivate' command."
         }
+    } elseif (Has-Conda-Env) {
+        conda deactivate
     } else {
         Write-Error "Error: No virtual environment is activated."
     }
@@ -200,7 +250,7 @@ function Auto-Change-Venv {
     param(
         [string] $dir
     )
-    if ($env:VIRTUAL_ENV) {
+    if (Has-Virtual-Env) {
         if ($dir -like "$(Split-Path -Path $env:VIRTUAL_ENV -Parent)*") {
             return
         } else {
