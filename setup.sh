@@ -78,7 +78,7 @@ function has_command() { command -v "$1" > /dev/null ; }
 function has_dir() { [[ -d "$1" ]] ; }
 function has_file() { [[ -f "$1" ]] ; }
 
-function install_mesg() { mesg "${BLUE}Installing ${BOLD}$1${BLUE} ..." ; }
+function installing_mesg() { mesg "${BLUE}Installing ${BOLD}$1${BLUE} ..." ; }
 function already_installed_mesg() { info "$1 has already installed." ; }
 
 function check_commands() {
@@ -96,27 +96,27 @@ function check_commands() {
     fi
 }
 
-function ensure_not_installed_dir() {
+function not_installed_in_dir() {
     if has_dir "$1"; then
         already_installed_mesg "$2"
         return 1
     else
-        install_mesg "$2"
+        installing_mesg "$2"
         return 0
     fi
 }
 
-function ensure_not_installed_file() {
+function not_installed_file() {
     if has_file "$1"; then
         already_installed_mesg "$2"
         return 1
     else
-        install_mesg "$2"
+        installing_mesg "$2"
         return 0
     fi
 }
 
-function handle_return_code() {
+function successfully_installed() {
     if [[ $1 == 0 ]]; then
         success "$2 has been installed."
         return 0
@@ -128,7 +128,11 @@ function handle_return_code() {
 }
 
 function install_ohmyzsh() {
-    if ensure_not_installed_dir "$HOME/.oh-my-zsh" "Oh-My-Zsh"; then
+    if not_installed_file "$HOME/.oh-my-zsh/oh-my-zsh.sh" "Oh-My-Zsh"; then
+        if has_dir "$HOME/.oh-my-zsh"; then
+            mv $HOME/.oh-my-zsh $HOME/.oh-my-zsh.bak
+        fi
+
         local exit_code=0
         wget https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh
         exit_code=$?
@@ -137,10 +141,11 @@ function install_ohmyzsh() {
             RUNZSH=no sh install.sh && rm install.sh
             exit_code=$?
         fi
+        successfully_installed $exit_code "Oh-My-Zsh"
+    fi
 
-        if handle_return_code $exit_code "Oh-My-Zsh"; then
-            install_ohmyzsh_plugins
-        fi
+    if has_file "$HOME/.oh-my-zsh/oh-my-zsh.sh"; then
+        install_ohmyzsh_plugins
     fi
 }
 
@@ -152,34 +157,34 @@ function install_ohmyzsh_plugins() {
 
     # zsh-users plugins
     for plugin in zsh-autosuggestions zsh-syntax-highlighting zsh-completions; do
-        if ensure_not_installed_dir "$ZSH_CUSTOM/plugins/$plugin" "$plugin"; then
+        if not_installed_in_dir "$ZSH_CUSTOM/plugins/$plugin" "$plugin"; then
             git clone https://github.com/zsh-users/$plugin ${ZSH_CUSTOM}/plugins/$plugin
-            handle_return_code $? "$plugin"
+            successfully_installed $? "$plugin"
         fi
     done
 
 	# powerlevel10k
-    if ensure_not_installed_dir "$ZSH_CUSTOM/themes/powerlevel10k" "powerlevel10k"; then
+    if not_installed_in_dir "$ZSH_CUSTOM/themes/powerlevel10k" "powerlevel10k"; then
 	    git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM}/themes/powerlevel10k
-        handle_return_code $? "powerlevel10k"
+        successfully_installed $? "powerlevel10k"
     fi
 
 	# autoupdate-zsh-plugin
-    if ensure_not_installed_dir "$ZSH_CUSTOM/plugins/autoupdate" "autoupdate-oh-my-zsh-plugin"; then
+    if not_installed_in_dir "$ZSH_CUSTOM/plugins/autoupdate" "autoupdate-oh-my-zsh-plugin"; then
 	    git clone https://github.com/TamCore/autoupdate-oh-my-zsh-plugins ${ZSH_CUSTOM}/plugins/autoupdate
-        handle_return_code $? "autoupdate-oh-my-zsh-plugin"
+        successfully_installed $? "autoupdate-oh-my-zsh-plugin"
 	fi
 }
 
 function install_vim_plug() {
-    if ensure_not_installed_file "$HOME/.vim/autoload/plug.vim" "Vim-Plug"; then
+    if not_installed_file "$HOME/.vim/autoload/plug.vim" "Vim-Plug"; then
         curl -fLo "$HOME/.vim/autoload/plug.vim" --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-        handle_return_code $? "Vim-Plug"
+        successfully_installed $? "Vim-Plug"
     fi
-    if ensure_not_installed_file "$HOME/.local/share/nvim/site/autoload/plug.vim" "Vim-Plug for Neovim"; then
+    if not_installed_file "$HOME/.local/share/nvim/site/autoload/plug.vim" "Vim-Plug for Neovim"; then
         curl -fLo "$HOME/.local/share/nvim/site/autoload/plug.vim" --create-dirs \
            https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-        handle_return_code $? "Vim-Plug for Neovim"
+        successfully_installed $? "Vim-Plug for Neovim"
     fi
 }
 
@@ -191,20 +196,20 @@ function install_vifm_custom() {
     fi
 
 	# vifm-colors
-    if ensure_not_installed_file "$vifm_config_home/colors/solarized-dark.vifm" "Vifm colorshemes"; then
+    if not_installed_file "$vifm_config_home/colors/solarized-dark.vifm" "Vifm colorshemes"; then
 	    mv $vifm_config_home/colors $vifm_config_home/colors.bak
 	    git clone https://github.com/vifm/vifm-colors $vifm_config_home/colors
-        handle_return_code $? "Vifm colorshemes"
+        successfully_installed $? "Vifm colorshemes"
 	fi
 
 	# vifm-favicons
-    if ensure_not_installed_file "$vifm_config_home/plugged/favicons.vifm" "Vifm favicons"; then
+    if not_installed_file "$vifm_config_home/plugged/favicons.vifm" "Vifm favicons"; then
 	    wget https://raw.githubusercontent.com/cirala/vifm_devicons/master/favicons.vifm -P $vifm_config_home/plugged/
-        handle_return_code $? "Vifm favicons"
+        successfully_installed $? "Vifm favicons"
 	fi
 }
 
-function install_deps() {
+function install_all() {
     install_ohmyzsh
     install_vim_plug
     install_vifm_custom
@@ -219,4 +224,4 @@ function install_deps() {
 cmd_parser "$@"
 detect_system
 check_commands
-install_deps
+install_all
