@@ -215,11 +215,11 @@ function Activate-Python-Venv {
         }
     } else {
         if ((Has-Conda-Env-Name -name $name) -or ("$name" -eq "base")) {
-            if (! (Conda-Hooked)) {
-                Conda-Hook
-            }
             if (Has-Virtual-Env) {
                 Deactivate-Python-Venv
+            }
+            if (! (Conda-Hooked)) {
+                Conda-Hook
             }
             conda activate $name
             return
