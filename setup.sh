@@ -174,6 +174,12 @@ function install_ohmyzsh_plugins() {
 	    git clone https://github.com/TamCore/autoupdate-oh-my-zsh-plugins ${ZSH_CUSTOM}/plugins/autoupdate
         successfully_installed $? "autoupdate-oh-my-zsh-plugin"
 	fi
+
+    # conda-zsh-completion
+    if not_installed_in_dir "$ZSH_CUSTOM/plugins/conda-zsh-completion" "conda-zsh-completion"; then
+        git clone https://github.com/conda-incubator/conda-zsh-completion ${ZSH_CUSTOM}/plugins/conda-zsh-completion
+        successfully_installed $? "conda-zsh-completion"
+    fi
 }
 
 function install_vim_plug() {

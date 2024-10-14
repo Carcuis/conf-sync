@@ -98,6 +98,7 @@ plugins=(
     autoupdate
     brew
     colored-man-pages
+    conda-zsh-completion
     git
     python
     z
