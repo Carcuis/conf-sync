@@ -126,4 +126,5 @@
     "sumneko-lua.locale": "zh-cn",
     "Lua.completion.callSnippet": "Replace",
     "Lua.runtime.version": "Lua 5.1",
+    "basedpyright.analysis.typeCheckingMode": "standard",
 }

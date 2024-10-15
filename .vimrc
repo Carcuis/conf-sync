@@ -485,7 +485,7 @@ let g:highlightedyank_highlight_duration = 200
 if has("nvim")
     let g:coc_global_extensions = [
                 \ 'coc-json', 'coc-vimlsp', 'coc-marketplace', 'coc-markdownlint',
-                \ 'coc-pyright', 'coc-powershell', 'coc-sh', 'coc-clangd',
+                \ 'coc-basedpyright', 'coc-powershell', 'coc-sh', 'coc-clangd',
                 \ 'coc-cmake', 'coc-actions', 'coc-translator', 'coc-snippets',
                 \ 'coc-sumneko-lua', 'coc-tsserver', 'coc-eslint', 'https://github.com/Carcuis/coc-nav',
                 \ 'coc-xml', 'coc-yaml', 'coc-toml', 'coc-java-dev', 'coc-css']
