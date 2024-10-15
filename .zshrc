@@ -13,7 +13,7 @@ _path_list=(
 for _path in ${_path_list[@]}; do
     add-path $_path
 done
-unset _path_list
+unset _path_list _path
 
 if [[ ! $VIFM ]]; then
     fortune | cowsay -f moose -W $(($(tput cols)-3<80?$(tput cols)-3:80)) | lolcat
