@@ -9,7 +9,6 @@ _path_list=(
     $HOME/.fzf/bin
     /usr/games
     /usr/local/bin
-    $HOME/dev/miniconda3/condabin
 )
 for _path in ${_path_list[@]}; do
     add-path $_path
@@ -457,14 +456,15 @@ fi
 
 # === miniconda ===
 function cdhk() {
-    if ! command -v conda > /dev/null; then
+    local conda=$HOME/dev/miniconda3/bin/conda
+    if ! command -v $conda > /dev/null; then
         echo "Error: conda not found."
         return 1
     fi
     if [ -n "$VIRTUAL_ENV" ]; then
         deactivate
     fi
-    local conda_setup="$('conda' 'shell.zsh' 'hook' 2> /dev/null)"
+    local conda_setup="$($conda 'shell.zsh' 'hook' 2> /dev/null)"
     if [ $? -eq 0 ]; then
         eval "$conda_setup"
     else
