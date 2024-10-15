@@ -319,4 +319,5 @@ Set-Alias dac Deactivate-Python-Venv
 Set-Alias psmclo Delete-Old-PSModules
 Set-Alias rm-rf Remove-ItemRecurseForce
 Set-Alias ff fastfetch
+Set-Alias yz yazi
 
