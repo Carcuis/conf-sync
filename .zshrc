@@ -354,10 +354,6 @@ fi
 # ============= env ==============
 # ================================
 
-# === pkg-config ===
-# PKG_CONFIG_PATH=$PKG_CONFIG_PATH:/usr/local/lib/pkgconfig
-# export PKG_CONFIG_PATH
-
 if [[ $SYSTEM =~ "WSL[12]" ]]; then
     if [[ $SYSTEM == "WSL1" ]]; then
         # adjust login path
