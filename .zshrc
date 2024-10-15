@@ -9,6 +9,7 @@ _path_list=(
     $HOME/.fzf/bin
     /usr/games
     /usr/local/bin
+    $HOME/dev/miniconda3/condabin
 )
 for _path in ${_path_list[@]}; do
     add-path $_path
@@ -269,7 +270,6 @@ alias wd=web_detection
 alias wtr=weather_forecast
 alias histc="$EDITOR ~/.zsh_history"
 alias ktc="$EDITOR ~/.config/kitty/kitty.conf"
-alias dac=deactivate
 alias ff='fastfetch'
 
 if [[ $SYSTEM =~ "WSL[12]" ]]; then
@@ -432,6 +432,8 @@ POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS+=(
     proxy                 # system-wide http/https/ftp proxy
     battery               # internal battery
 )
+POWERLEVEL9K_ANACONDA_CONTENT_EXPANSION='${${${${CONDA_PROMPT_MODIFIER#\(}% }%\)}:-${CONDA_PREFIX:t}} ${P9K_ANACONDA_PYTHON_VERSION} '
+POWERLEVEL9K_VIRTUALENV_VISUAL_IDENTIFIER_EXPANSION='${$(python --version):7} '
 
 # === fzf ===
 if command -v fzf > /dev/null; then
@@ -451,4 +453,50 @@ fi
 if command -v java > /dev/null; then
     [[ -d $JAVA_HOME ]] || export JAVA_HOME=$(realpath $(command -v java) | sed "s|/bin/java||" | sed "s|/jre||")
 fi
+
+# === miniconda ===
+function cdhk() {
+    if ! command -v conda > /dev/null; then
+        echo "Error: conda not found."
+        return 1
+    fi
+    if [ -n "$VIRTUAL_ENV" ]; then
+        deactivate
+    fi
+    local conda_setup="$('conda' 'shell.zsh' 'hook' 2> /dev/null)"
+    if [ $? -eq 0 ]; then
+        eval "$conda_setup"
+    else
+        echo "Error: conda setup failed."
+        return 1
+    fi
+}
+
+if typeset -f vrun > /dev/null; then
+    eval "$(typeset -f vrun | sed 's/^vrun/_vrun/')"
+fi
+function vrun() {
+    local name="${1:-$PYTHON_VENV_NAME}"
+
+    if [ "$name" != "${PYTHON_VENV_NAME}" ] && conda env list | grep -q "^${name} "; then
+        if [ -n "$VIRTUAL_ENV" ]; then
+            deactivate || return $?
+        fi
+        if [ -z "$CONDA_EXE" ]; then
+            cdhk || return $?
+        fi
+        conda activate "$name" || return $?
+    else
+        _vrun "$name"
+    fi
+}
+unset _vrun
+
+function dac() {
+    if [ -n "$CONDA_DEFAULT_ENV" ]; then
+        conda deactivate
+    else
+        deactivate
+    fi
+}
 
