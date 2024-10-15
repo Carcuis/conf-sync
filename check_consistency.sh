@@ -80,7 +80,7 @@ function declare_dirs() {
 
     case $SYSTEM in
         Android)
-            exclude_file_list+=( ideavimrc kitty_config );
+            exclude_file_list+=( ideavimrc kitty_config condarc );
             addon_file_list+=( shortcut_sshd )
             ;;
         WSL*)
