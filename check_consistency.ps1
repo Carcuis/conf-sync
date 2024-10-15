@@ -26,7 +26,7 @@ $windows_psprofile_v5 = @{
 }
 $wsl_config = @{
     name = "WSL Configuration"
-    remote = "$PSScriptRoot\windows\.wslconfig"
+    remote = "$PSScriptRoot\windows\wsl\.wslconfig"
     local = "$home\.wslconfig"
 }
 $ohmyposh_theme = @{
