@@ -1,13 +1,19 @@
 # If you come from bash you might have to change your $PATH.
-for user_path in \
-    $HOME/.local/bin \
-    $HOME/.cargo/bin \
-    $HOME/.fzf/bin \
-    /usr/games \
+function add-path() {
+    local _path=$1
+    [[ -d $_path ]] && [[ ! $PATH == *$_path* ]] && export PATH=$_path:$PATH
+}
+_path_list=(
+    $HOME/.local/bin
+    $HOME/.cargo/bin
+    $HOME/.fzf/bin
+    /usr/games
     /usr/local/bin
-do
-    [[ -d $user_path ]] && [[ ! $PATH == *$user_path* ]] && export PATH=$user_path:$PATH
+)
+for _path in ${_path_list[@]}; do
+    add-path $_path
 done
+unset _path_list
 
 if [[ ! $VIFM ]]; then
     fortune | cowsay -f moose -W $(($(tput cols)-3<80?$(tput cols)-3:80)) | lolcat
