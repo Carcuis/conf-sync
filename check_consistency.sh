@@ -27,6 +27,7 @@ declare -a extra_file_list=(
     kitty_config
     vifmrc
     tealdeer_config
+    condarc
 )
 
 # shellcheck disable=SC2034
@@ -53,6 +54,8 @@ function declare_dirs() {
     vifmrc_local=$HOME/.config/vifm/vifmrc
     tealdeer_config_remote=$DIR/.config/tealdeer/config.toml
     tealdeer_config_local=$HOME/.config/tealdeer/config.toml
+    condarc_remote=$DIR/dot_files/.condarc
+    condarc_local=$HOME/.condarc
 
     case $SYSTEM in
         Darwin)
