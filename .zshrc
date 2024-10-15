@@ -431,9 +431,23 @@ POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS+=(
     package               # name@version from package.json (https://docs.npmjs.com/files/package.json)
     proxy                 # system-wide http/https/ftp proxy
     battery               # internal battery
+    custom_host_identifier
 )
 POWERLEVEL9K_ANACONDA_CONTENT_EXPANSION='${${${${CONDA_PROMPT_MODIFIER#\(}% }%\)}:-${CONDA_PREFIX:t}} ${P9K_ANACONDA_PYTHON_VERSION} '
 POWERLEVEL9K_VIRTUALENV_VISUAL_IDENTIFIER_EXPANSION='${$(python --version):7} '
+
+if [[ $SYSTEM =~ "WSL." ]]; then
+    _HOST_IDENTIFIER="$(grep "VERSION=" /etc/os-release | awk -F'[ "]' '{print $2}') "
+    POWERLEVEL9K_CUSTOM_HOST_IDENTIFIER_FOREGROUND=172
+elif [[ $SYSTEM == "Android" ]]; then
+    _HOST_IDENTIFIER="$(getprop ro.product.vendor.name) "
+    POWERLEVEL9K_CUSTOM_HOST_IDENTIFIER_FOREGROUND=34
+fi
+function _host_identifier() {
+    echo $_HOST_IDENTIFIER
+}
+POWERLEVEL9K_CUSTOM_HOST_IDENTIFIER="_host_identifier"
+unset _host_identifier
 
 # === fzf ===
 if command -v fzf > /dev/null; then
