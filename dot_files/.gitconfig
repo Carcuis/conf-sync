@@ -1,6 +1,8 @@
 [user]
 	name = Carcuis
 	email = ctx1256@foxmail.com
+[pull]
+	ff = only
 
 # delta
 [core]
