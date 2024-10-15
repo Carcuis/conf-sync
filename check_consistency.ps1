@@ -79,6 +79,11 @@ $tealdeer = @{
     remote = "$PSScriptRoot\.config\tealdeer\config.toml"
     local = "$scoop_root\persist\tealdeer\config.toml"
 }
+$condarc = @{
+    name = "condarc"
+    remote = "$PSScriptRoot\windows\conda\.condarc"
+    local = "$home\.condarc"
+}
 $file_list = @(
     $psprofile
     $vimrc
@@ -95,6 +100,7 @@ $extra_file_list = @(
     $vifmrc
     $clangd
     $tealdeer
+    $condarc
 )
 
 function Print-Line    { param($msg) Write-Host "$WHITE$msg$TAIL"             }
