@@ -2181,9 +2181,9 @@ nnoremap <M-q> <cmd>q!<CR>
 function EditVimrc(way)
     if has("win32")
         if a:way == "normal"
-            edit ~\\_vimrc
+            edit ~\_vimrc
         elseif a:way == "vs"
-            vsplit ~\\_vimrc
+            vsplit ~\_vimrc
         endif
     else
         if a:way == "normal"
