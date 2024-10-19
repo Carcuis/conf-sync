@@ -24,8 +24,8 @@
   "customAiAssistants": [],
   "enableInputTranslation": true,
   "generalRule": {
-    "mouseHoverHoldKey": "Shift+Alt+a",
-    "mouseHoverPreferenceKey": "Shift+Alt+a",
+    "mouseHoverHoldKey": "Alt+a",
+    "mouseHoverPreferenceKey": "Alt+a",
     "subtitleRule.add": {
       "showQuickButton": false,
       "youtubeAutoEnableSubtitle": false
@@ -36,7 +36,7 @@
   "interfaceLanguage": "zh-CN",
   "isChangedAlwaysTranslatedUrls": true,
   "isShowInputTranslationConsent": false,
-  "localUpdatedAt": "2024-10-14T04:37:33.625Z",
+  "localUpdatedAt": "2024-10-19T06:27:16.977Z",
   "modifiedBySystem": true,
   "mouseHoverTranslationService": "inherit",
   "pcFloatBall": {
@@ -67,5 +67,5 @@
     "excludeMatches": [],
     "matches": []
   },
-  "updatedAt": "2024-10-14T04:37:33.625Z"
+  "updatedAt": "2024-10-19T06:27:16.977Z"
 }
