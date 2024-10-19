@@ -442,6 +442,9 @@ if [[ $SYSTEM =~ "WSL." ]]; then
 elif [[ $SYSTEM == "Android" ]]; then
     _HOST_IDENTIFIER="$(getprop ro.product.vendor.name) "
     POWERLEVEL9K_CUSTOM_HOST_IDENTIFIER_FOREGROUND=34
+elif [[ $SYSTEM == "Codespace" ]]; then
+    _HOST_IDENTIFIER=""
+    POWERLEVEL9K_CUSTOM_HOST_IDENTIFIER_FOREGROUND=75
 fi
 function _host_identifier() {
     echo $_HOST_IDENTIFIER
