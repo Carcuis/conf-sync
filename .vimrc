@@ -2131,6 +2131,7 @@ if has("nvim")
             position = "right",
             width = "block",
         },
+        render_modes = { 'n', 'c', 'i', 'v', 'V', '' },
     })
 EOF
 endif
