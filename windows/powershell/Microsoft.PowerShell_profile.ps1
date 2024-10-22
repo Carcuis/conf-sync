@@ -220,6 +220,9 @@ function Activate-Python-Venv {
             }
             if (! (Conda-Hooked)) {
                 Conda-Hook
+                if ("$name" -ne "base") {
+                    conda deactivate
+                }
             }
             conda activate $name
             return
