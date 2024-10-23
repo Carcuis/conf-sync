@@ -3,6 +3,8 @@
 	email = ctx1256@foxmail.com
 [pull]
 	ff = only
+[advice]
+	diverging = false
 
 # delta
 [core]
