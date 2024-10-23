@@ -909,7 +909,7 @@ if has("nvim")
     require('nvim-treesitter.configs').setup {
         ensure_installed = {
             "python", "c", "cpp", "lua", "bash", "vim", "vimdoc", "go", "css", "javascript", "typescript", "make",
-            "markdown", "markdown_inline", "toml", "yaml", "xml", "git_config", "json", "json5", "jsonc",
+            "markdown", "markdown_inline", "toml", "yaml", "xml", "git_config", "json", "json5", "jsonc", "sql",
             "dap_repl", "latex", "regex", "powershell", "java", "gitattributes", "gitignore"
         },
         highlight = {
