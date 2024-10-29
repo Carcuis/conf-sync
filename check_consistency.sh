@@ -234,9 +234,31 @@ function run_edit
     fi
 }
 
+function link_init_nvim() {
+    info "Linking init.vim ..."
+    if ! has_file "$HOME/.vimrc"; then
+        info "$HOME/.vimrc not found, please try to rerun this script."
+        return 1
+    fi
+    if has_file "$HOME/.config/nvim/init.vim"; then
+        if [[ $(realpath $HOME/.config/nvim/init.vim) == $(realpath $HOME/.vimrc) ]]; then
+            info "Neovim init.nvim has already linked."
+        else
+            warning "Warning: $HOME/.config/nvim/init.vim exists, but not linked to $HOME/.vimrc."
+            return 1
+        fi
+    else
+        [[ -d $HOME/.config/nvim ]] || mkdir -p $HOME/.config/nvim
+        ln -s $HOME/.vimrc $HOME/.config/nvim/init.vim
+        success "Linked $HOME/.vimrc to $HOME/.config/nvim/init.vim."
+    fi
+}
+
+
 # main
 cmd_parser "$@"
 detect_system
 declare_dirs
 check_editor
 run_edit
+link_init_nvim
