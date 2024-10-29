@@ -28,6 +28,7 @@ declare -a extra_file_list=(
     vifmrc
     tealdeer_config
     condarc
+    yazi_config
 )
 
 # shellcheck disable=SC2034
@@ -56,6 +57,8 @@ function declare_dirs() {
     tealdeer_config_local=$HOME/.config/tealdeer/config.toml
     condarc_remote=$DIR/dot_files/.condarc
     condarc_local=$HOME/.condarc
+    yazi_config_remote=$DIR/.config/yazi/yazi.toml
+    yazi_config_local=$HOME/.config/yazi/yazi.toml
 
     case $SYSTEM in
         Darwin)

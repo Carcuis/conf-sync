@@ -84,6 +84,11 @@ $condarc = @{
     remote = "$PSScriptRoot\windows\conda\.condarc"
     local = "$home\.condarc"
 }
+$yazi = @{
+    name = "yazi yazi.toml"
+    remote = "$PSScriptRoot\.config\yazi\yazi.toml"
+    local = "$home\AppData\Roaming\yazi\config\yazi.toml"
+}
 $file_list = @(
     $psprofile
     $vimrc
@@ -101,6 +106,7 @@ $extra_file_list = @(
     $clangd
     $tealdeer
     $condarc
+    $yazi
 )
 
 function Print-Line    { param($msg) Write-Host "$WHITE$msg$TAIL"             }
