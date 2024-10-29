@@ -29,6 +29,7 @@ declare -a extra_file_list=(
     tealdeer_config
     condarc
     yazi_config
+    yazi_theme
 )
 
 # shellcheck disable=SC2034
@@ -59,6 +60,8 @@ function declare_dirs() {
     condarc_local=$HOME/.condarc
     yazi_config_remote=$DIR/.config/yazi/yazi.toml
     yazi_config_local=$HOME/.config/yazi/yazi.toml
+    yazi_theme_remote=$DIR/.config/yazi/theme.toml
+    yazi_theme_local=$HOME/.config/yazi/theme.toml
 
     case $SYSTEM in
         Darwin)
