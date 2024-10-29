@@ -81,19 +81,39 @@ function has_file() { [[ -f "$1" ]] ; }
 function installing_mesg() { mesg "${BLUE}Installing ${BOLD}$1${BLUE} ..." ; }
 function already_installed_mesg() { info "$1 has already installed." ; }
 
-function check_commands() {
-    local commands=(curl wget git zsh vim nvim vifm)
-    local command_not_found=0
-    for cmd in ${commands[@]}; do
-        if ! has_command $cmd; then
-            error "Error: \`$cmd\` is not installed."
-            command_not_found=1
+function check_command() {
+    if ! has_command $1; then
+        warning "Warning: \`$1\` is not installed."
+        return 1
+    fi
+}
+
+function check_deps() {
+    local deps=(curl git)
+    local missing_deps=false
+    for cmd in ${deps[@]}; do
+        if ! check_command $cmd; then
+            missing_deps=true
         fi
     done
-    if [[ $command_not_found == 1 ]]; then
+    if [[ $missing_deps == true ]]; then
         warning "Please install the required commands first."
         exit 1
     fi
+}
+
+function download() {
+    local url=$1
+    local dest=$2
+    if [[ -z $dest ]]; then
+        dest=$(basename $url)
+    fi
+    if has_file $dest; then
+        warning "Warning: $dest already exists, move it to $dest.bak."
+        mv $dest{,.bak}
+    fi
+    curl -fLo $dest --create-dirs $url
+    return $?
 }
 
 function not_installed_in_dir() {
@@ -128,13 +148,19 @@ function successfully_installed() {
 }
 
 function install_ohmyzsh() {
+    if ! has_command zsh; then
+        warning "Warning: Zsh is not installed, skip installing Oh-My-Zsh."
+        no_error=false
+        return 1
+    fi
+
     if not_installed_file "$HOME/.oh-my-zsh/oh-my-zsh.sh" "Oh-My-Zsh"; then
         if has_dir "$HOME/.oh-my-zsh"; then
-            mv $HOME/.oh-my-zsh $HOME/.oh-my-zsh.bak
+            mv $HOME/.oh-my-zsh{,.bak}
         fi
 
         local exit_code=0
-        wget https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh
+        download https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh
         exit_code=$?
 
         if [[ $exit_code == 0 ]] && has_file "install.sh"; then
@@ -152,6 +178,7 @@ function install_ohmyzsh() {
 function install_ohmyzsh_plugins() {
     if ! has_dir "$ZSH_CUSTOM"; then
         error "Error: Oh-My-Zsh custom directory not found, please check the installation of Oh-My-Zsh."
+        no_error=false
         return 1
     fi
 
@@ -184,17 +211,23 @@ function install_ohmyzsh_plugins() {
 
 function install_vim_plug() {
     if not_installed_file "$HOME/.vim/autoload/plug.vim" "Vim-Plug"; then
-        curl -fLo "$HOME/.vim/autoload/plug.vim" --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+        download https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim "$HOME/.vim/autoload/plug.vim"
         successfully_installed $? "Vim-Plug"
     fi
     if not_installed_file "$HOME/.local/share/nvim/site/autoload/plug.vim" "Vim-Plug for Neovim"; then
-        curl -fLo "$HOME/.local/share/nvim/site/autoload/plug.vim" --create-dirs \
-           https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+        download https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim \
+           "$HOME/.local/share/nvim/site/autoload/plug.vim"
         successfully_installed $? "Vim-Plug for Neovim"
     fi
 }
 
 function install_vifm_custom() {
+    if ! has_command vifm; then
+        warning "Warning: Vifm is not installed, skip installing Vifm custom."
+        no_error=false
+        return 1
+    fi
+
     local vifm_config_home="$HOME/.config/vifm"
     if ! has_dir $vifm_config_home; then
         info "Generating original vifm configuration..."
@@ -203,14 +236,14 @@ function install_vifm_custom() {
 
 	# vifm-colors
     if not_installed_file "$vifm_config_home/colors/solarized-dark.vifm" "Vifm colorshemes"; then
-	    mv $vifm_config_home/colors $vifm_config_home/colors.bak
+	    mv $vifm_config_home/colors{,.bak}
 	    git clone https://github.com/vifm/vifm-colors $vifm_config_home/colors
         successfully_installed $? "Vifm colorshemes"
 	fi
 
 	# vifm-favicons
     if not_installed_file "$vifm_config_home/plugged/favicons.vifm" "Vifm favicons"; then
-	    wget https://raw.githubusercontent.com/cirala/vifm_devicons/master/favicons.vifm -P $vifm_config_home/plugged/
+        download https://raw.githubusercontent.com/cirala/vifm_devicons/master/favicons.vifm "$vifm_config_home/plugged/favicons.vifm"
         successfully_installed $? "Vifm favicons"
 	fi
 }
@@ -229,5 +262,5 @@ function install_all() {
 # main
 cmd_parser "$@"
 detect_system
-check_commands
+check_deps
 install_all
