@@ -248,10 +248,25 @@ function install_vifm_custom() {
 	fi
 }
 
+function install_yazi_package() {
+    if ! has_command yazi; then
+        warning "Warning: Yazi is not installed, skip installing Yazi package."
+        no_error=false
+        return 1
+    fi
+
+    # yazi theme
+    if not_installed_file "$HOME/.config/yazi/flavors/catppuccin-mocha.yazi/flavor.toml" "Yazi theme"; then
+        ya pack -a yazi-rs/flavors:catppuccin-mocha
+        successfully_installed $? "Yazi flavor catppuccin-mocha"
+    fi
+}
+
 function install_all() {
     install_ohmyzsh
     install_vim_plug
     install_vifm_custom
+    install_yazi_package
 
     if [[ $no_error == true ]]; then
         success "All dependencies have been installed."
