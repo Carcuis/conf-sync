@@ -277,6 +277,77 @@ function Remove-ItemRecurseForce {
     )
     Remove-Item -Path $Path -Recurse -Force
 }
+function Generate-Srt {
+    param (
+        [string]$file
+    )
+
+    if ($file -eq "") {
+        Write-Host "Generate SRT file from video/audio file(s).`n"
+        Write-Host "Usage: Generate-Srt [-file] <file>`n"
+        Write-Host "    -file: The video/audio file to be processed. Wildcards are supported."
+        return
+    }
+
+    $files = Get-Item $file -ErrorAction SilentlyContinue
+    if ($files -eq $null) {
+        Write-Error "Error: Cannot find '$file'."
+        return
+    }
+    Write-Host "Total files: $(($files | Measure-Object).Count)"
+    Foreach ($f in $files) {
+        Write-Host "$f"
+    }
+    Write-Host
+
+    if (-not (Get-Command whisper -ErrorAction SilentlyContinue)) {
+        Activate-Python-Venv -name "whisper"
+        if (-not (Get-Command whisper -ErrorAction SilentlyContinue)) {
+            Write-Error "Error: Cannot find 'whisper' command."
+            return
+        }
+        Write-Host "Activated 'whisper' virtual environment.`n"
+    }
+
+    $model = "small"
+    $vram = 0
+    $gpuName = "Unknown"
+
+    # Retrieve information about the active graphics card
+    try {
+        $nvidiaSmiOutput = nvidia-smi --query-gpu=memory.total --format=csv,noheader
+        if ($nvidiaSmiOutput -ne $null) {
+            # Retrieve the VRAM size of the active graphics card in megabytes (MB)
+            $vram = [math]::round($nvidiaSmiOutput.Trim() -replace " MiB", "")
+
+            # Select the appropriate model based on the VRAM size
+            switch ($vram) {
+                { $_ -lt 2048 } { $model = "base" }
+                { $_ -lt 5120 } { $model = "small" }
+                { $_ -lt 10240 } { $model = "medium" }
+                default { $model = "large-v3" }
+            }
+
+            # Retrieve the name of the active graphics card
+            $gpuName = (nvidia-smi --query-gpu=name --format=csv,noheader).Trim()
+        }
+    } catch {
+        # Set the model to "small" by default if an error occurs
+        Write-Warning "Failed to retrieve GPU information. Using default model 'small'."
+    }
+
+    Write-Host "Using model '$model' for GPU '$gpuName' with $vram MB VRAM.`n"
+
+    if ($files.Length -gt 1) {
+        foreach ($f in $files) {
+            Write-Host "`nProcessing file: $f`n"
+            whisper --language en --model $model -f srt $f.FullName
+        }
+    } else {
+        Write-Host "`nProcessing file: $file`n"
+        whisper --language en --model $model -f srt $file.FullName
+    }
+}
 
 Set-Alias .. GoUpOne
 Set-Alias ... GoUpTwo
@@ -324,4 +395,5 @@ Set-Alias rm-rf Remove-ItemRecurseForce
 Set-Alias ff fastfetch
 Set-Alias of onefetch
 Set-Alias yz yazi
+Set-Alias wisp Generate-Srt
 
