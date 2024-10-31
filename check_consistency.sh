@@ -153,6 +153,8 @@ function has_command() { command -v "$1" > /dev/null ; }
 function has_dir()     { [[ -d "$1" ]] ; }
 function has_file()    { [[ -f "$1" ]] ; }
 function file_same()   { diff "$1" "$2" > /dev/null ; }
+function ensure_dir()  { has_dir "$1" || mkdir -p "$1" ; }
+function owned_by_root() { [[ $(stat -c %U "$1") == "root" ]] ; }
 
 function check_editor
 {
@@ -183,6 +185,31 @@ function check_all_files
     return
 }
 
+function confirm() {
+    local user_input
+    read -N1 -p "$1 [Y/n] " user_input </dev/tty
+    [[ "$user_input" == $'\n' ]] && user_input=y || echo
+    [[ "$user_input" =~ [yY] ]] && return 0 || return 1
+}
+
+function copy_file() {
+    local src=$1
+    local dest=$2
+    local dest_dir=$(dirname "$dest")
+
+    ensure_dir $dest_dir
+    if owned_by_root $dest_dir; then
+        if ! sudo cp "$src" "$dest"; then
+            return 1
+        fi
+    else
+        if ! cp "$src" "$dest"; then
+            return 1
+        fi
+    fi
+    return
+}
+
 function run_edit
 {
     if check_all_files; then
@@ -195,12 +222,11 @@ function run_edit
         local file_local=$(eval echo \$${file}_local)
 
         if ! has_file $file_local; then
-            local file_local_dir=$(dirname "$file_local")
-            read -N1 -p "$file not found, create a copy to \`$file_local\` ? [Y/n] " user_input </dev/tty
-            if [[ "$user_input" == $'\n' ]]; then user_input=y; else echo; fi
-            if [[ "$user_input" =~ [yY] ]]; then
-                has_dir $file_local_dir || mkdir -p "$file_local_dir"
-                cp "$file_remote" "$file_local"
+            if confirm "$file not found, create a copy to \`$file_local\` ?"; then
+                if ! copy_file "$file_remote" "$file_local"; then
+                    error "Error: Failed to copy \`$file_remote\` to \`$file_local\`."
+                    continue
+                fi
                 success "Copied \`$file_remote\` to \`$file_local\`."
             fi
             continue
@@ -209,11 +235,9 @@ function run_edit
         if file_same "$file_remote" "$file_local"; then
             [[ $verbose == true ]] && success "$file has already been synchronized."
         else
-            read -N1 -p "$file unsynchronized. Edit with $diff_command ? [Y/n] " user_input </dev/tty
-            if [[ "$user_input" == $'\n' ]]; then user_input=y; else echo; fi
-            if [[ "$user_input" =~ [yY] ]]; then
-                if [[ $(stat -c %U "$file_local") == "root" ]];
-                    then diff_command="sudo -E env PATH=$PATH $diff_command"
+            if confirm "$file unsynchronized. Edit with $diff_command ?"; then
+                if owned_by_root $file_local; then
+                    diff_command="sudo -E env PATH=$PATH $diff_command"
                 fi
 
                 $diff_command "$file_remote" "$file_local"
@@ -248,7 +272,7 @@ function link_init_nvim() {
             return 1
         fi
     else
-        [[ -d $HOME/.config/nvim ]] || mkdir -p $HOME/.config/nvim
+        ensure_dir $HOME/.config/nvim
         ln -s $HOME/.vimrc $HOME/.config/nvim/init.vim
         success "Linked $HOME/.vimrc to $HOME/.config/nvim/init.vim."
     fi
