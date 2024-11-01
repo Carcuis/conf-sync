@@ -21,14 +21,44 @@ Set-PsFzfOption -PSReadlineChordProvider 'Ctrl+f' -PSReadlineChordReverseHistory
 
 (Get-quote).TrimEnd() | cowsay -f moose -W 80 | lolcat
 
+function Has-Command {
+    param(
+        [string] $command
+    )
+    if ((Get-Command $command -ErrorAction SilentlyContinue).length -gt 0) {
+        return $true
+    }
+    return $false
+}
+
+function Has-File {
+    param(
+        [string] $file
+    )
+    if (Test-Path -Path $file -PathType Leaf -ErrorAction SilentlyContinue) {
+        return $true
+    }
+    return $false
+}
+
+function Has-Dir {
+    param(
+        [string] $dir
+    )
+    if (Test-Path -Path $dir -PathType Container -ErrorAction SilentlyContinue) {
+        return $true
+    }
+    return $false
+}
+
 function EditFile
 {
     param($file)
-    if ((Get-Command nvim).length -gt 0) {
+    if (Has-Command nvim) {
         nvim $file
-    } elseif ((Get-Command vim).length -gt 0) {
+    } elseif (Has-Command vim) {
         vim $file
-    } elseif ((Get-Command code).length -gt 0) {
+    } elseif (Has-Command gvim) {
         code $file
     } else {
         notepad.exe $file
@@ -109,7 +139,7 @@ function Has-Conda-Env-Name {
         [string] $name
     )
     $env_file = "$HOME\.conda\environments.txt"
-    if (Test-Path -Path $env_file) {
+    if (Has-File $env_file) {
         $env_paths = Get-Content -Path $env_file
         $env_path = $env_paths | Where-Object { $_ -like "*\$name" }
         if ($env_path) {
@@ -121,51 +151,64 @@ function Has-Conda-Env-Name {
 function Create-Link($target, $link) {
     New-Item -ItemType SymbolicLink -Path $link -Value $target
 }
-function Move-And-Create-Link($target, $link) {
-    if ( -not (Test-Path $target)) {
+function Move-And-Create-Link() {
+    param(
+        [string] $target,
+        [string] $dest
+    )
+
+    if ($target -eq "" -and $dest -eq "") {
+        Write-Host "Move file or directory to a new location and create a link on the original location,"
+        Write-Host "    pointing to the new location.`n"
+        Write-Host "Usage: Move-And-Create-Link [-target] <target> [-dest] <dest>`n"
+        Write-Host "    -target: The file or directory to be moved. Should be absolute path."
+        Write-Host "    -dest: The destination file or directory. Should be absolute path."
+        return
+    }
+
+    if (!(Test-Path $target)) {
         Write-Error "Error: '$target' does not exist."
         return
     }
-    $target_is_file = Test-Path -PathType Leaf $target
-    $target_basename = Split-Path $target -Leaf
 
-    $link_exists = Test-Path $link
-    $link_is_file = $link_exists -and (Test-Path -PathType Leaf $link)
-    $link_is_dir = $link_exists -and (Test-Path -PathType Container $link)
-    $link_parent_dir = Split-Path $link -Parent
-    $link_parent_exists = $link_exists -or (Test-Path $link_parent_dir -PathType Container)
-    if ( -not $link_parent_exists) {
-        Write-Error "Error: '$link_parent_dir' is not a directory or does not exist."
+    if (!([System.IO.Path]::IsPathRooted($target) -and [System.IO.Path]::IsPathRooted($dest))) {
+        Write-Error "Error: Both target and dest should be absolute paths."
         return
     }
 
+    $target_is_file = Has-File $target
+    $target_basename = Split-Path $target -Leaf
+
+    $dest_is_file = Has-File $dest
+    $dest_is_dir = Has-Dir $dest
+
     if ($target_is_file) {
-        if ($link_is_file) {
-            Write-Error "Error: '$link' already exists."
+        if ($dest_is_file) {
+            Write-Error "Error: '$dest' already exists."
             return
         }
-        if ($link_is_dir) {
-            Move-Item $target $link
-            Create-Link (Join-Path $link $target_basename) $target
-        } else { # $link is a new file name
-            Move-Item $target $link
-            Create-Link $link $target
+        if ($dest_is_dir) {
+            Move-Item $target $dest
+            Create-Link (Join-Path $dest $target_basename) $target
+        } else { # $dest is a new file name
+            Move-Item $target $dest
+            Create-Link $dest $target
         }
     } else { # $target is a directory
-        if ($link_is_file) {
-            Write-Error "Error: '$link' is a existing file, cannot move."
+        if ($dest_is_file) {
+            Write-Error "Error: '$dest' is a existing file, cannot move."
             return
         }
-        if ($link_is_dir) {
-            if (Test-Path (Join-Path $link $target_basename)) {
-                Write-Error "Error: A file or directory named '$target_basename' already exists in $link ."
+        if ($dest_is_dir) {
+            if (Test-Path (Join-Path $dest $target_basename)) {
+                Write-Error "Error: A file or directory named '$target_basename' already exists in $dest ."
                 return
             }
-            Move-Item $target $link
-            Create-Link (Join-Path $link $target_basename) $target
-        } else { # $link does not exist
-            Move-Item $target $link
-            Create-Link $link $target
+            Move-Item $target $dest
+            Create-Link (Join-Path $dest $target_basename) $target
+        } else { # $dest does not exist
+            Move-Item $target $dest
+            Create-Link $dest $target
         }
     }
 }
@@ -187,9 +230,9 @@ function Make-Python-Venv {
     param(
         [string] $name = "venv"
     )
-    if ((Get-Command python).length -eq 0) {
+    if (!(Has-Command python)) {
         Write-Error "Error: Cannot find 'python' command."
-        return 1
+        return
     }
     python -m venv $name
     Write-Output "Created venv in '$name'"
@@ -202,9 +245,9 @@ function Activate-Python-Venv {
         [switch] $silent
     )
     $venv_path = Join-Path -Path $dir -ChildPath $name
-    if (Test-Path -Path $venv_path) {
+    if (Has-Dir $venv_path) {
         $activate_script = Join-Path -Path $venv_path -ChildPath "Scripts\Activate.ps1"
-        if (Test-Path -Path $activate_script) {
+        if (Has-File $activate_script) {
             . $activate_script
         } elseif (! $silent) {
             Write-Error "Error: Cannot find 'Scripts\Activate.ps1' in $venv_path"
@@ -234,7 +277,7 @@ function Activate-Python-Venv {
 }
 function Deactivate-Python-Venv {
     if (Has-Virtual-Env) {
-        if ((Get-Command deactivate).length -gt 0) {
+        if (Has-Command deactivate) {
             deactivate
         } else {
             Write-Error "Error: Cannot find 'deactivate' command."
@@ -300,9 +343,9 @@ function Generate-Srt {
     }
     Write-Host
 
-    if (-not (Get-Command whisper -ErrorAction SilentlyContinue)) {
+    if (!(Has-Command whisper)) {
         Activate-Python-Venv -name "whisper"
-        if (-not (Get-Command whisper -ErrorAction SilentlyContinue)) {
+        if (!(Has-Command whisper)) {
             Write-Error "Error: Cannot find 'whisper' command."
             return
         }
@@ -354,7 +397,7 @@ function Ripgrep-Find-Files {
         [string]$glob = "!.git"
     )
 
-    if ((Get-Command rg).length -eq 0) {
+    if (!(Has-Command rg)) {
         Write-Error "Error: Cannot find 'rg' command."
         return
     }
