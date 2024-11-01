@@ -273,6 +273,7 @@ alias ktc="$EDITOR ~/.config/kitty/kitty.conf"
 alias ff='fastfetch'
 alias of='onefetch'
 alias yz='yazi'
+alias rgf='rg --files --hidden --glob "!.git" | rg --pcre2'
 
 if [[ $SYSTEM =~ "WSL[12]" ]]; then
     function wtw() {
