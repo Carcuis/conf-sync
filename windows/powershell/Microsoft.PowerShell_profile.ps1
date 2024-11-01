@@ -348,6 +348,27 @@ function Generate-Srt {
         whisper --language en --model $model -f srt $file.FullName
     }
 }
+function Ripgrep-Find-Files {
+    param (
+        [string]$pattern,
+        [string]$glob = "!.git"
+    )
+
+    if ((Get-Command rg).length -eq 0) {
+        Write-Error "Error: Cannot find 'rg' command."
+        return
+    }
+
+    if ($pattern -eq "") {
+        Write-Host "Ripgrep find files with pattern in directory.`n"
+        Write-Host "Usage: Ripgrep-Find-Files [-pattern] <pattern> [-glob] <pattern>`n"
+        Write-Host "    -pattern: The pattern to search for."
+        Write-Host "    -glob: The glob pattern of files to search. Default is '!git'."
+        return
+    }
+
+    rg --files --hidden --glob $glob | rg --pcre2 $pattern
+}
 
 Set-Alias .. GoUpOne
 Set-Alias ... GoUpTwo
@@ -396,4 +417,5 @@ Set-Alias ff fastfetch
 Set-Alias of onefetch
 Set-Alias yz yazi
 Set-Alias wisp Generate-Srt
+Set-Alias rgf Ripgrep-Find-Files
 
