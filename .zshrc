@@ -235,6 +235,12 @@ function weather_forecast() {
     curl wttr.in/$1\?lang=zh
 }
 
+# search files by rg
+function rgf() {
+    [[ -z $1 ]] && echo "Usage: rgf <pattern> [glob=!.git]" && return
+    rg --files --hidden --glob ${2:-"!.git"} | rg --pcre2 $1
+}
+
 # ================================
 # ============ alias =============
 # ================================
@@ -273,7 +279,6 @@ alias ktc="$EDITOR ~/.config/kitty/kitty.conf"
 alias ff='fastfetch'
 alias of='onefetch'
 alias yz='yazi'
-alias rgf='rg --files --hidden --glob "!.git" | rg --pcre2'
 
 if [[ $SYSTEM =~ "WSL[12]" ]]; then
     function wtw() {
