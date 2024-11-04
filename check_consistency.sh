@@ -29,7 +29,9 @@ declare -a extra_file_list=(
     tealdeer_config
     condarc
     yazi_config
+    yazi_keymap
     yazi_theme
+    yazi_plugin_smart_enter
 )
 
 # shellcheck disable=SC2034
@@ -60,8 +62,12 @@ function declare_dirs() {
     condarc_local=$HOME/.condarc
     yazi_config_remote=$DIR/.config/yazi/yazi.toml
     yazi_config_local=$HOME/.config/yazi/yazi.toml
+    yazi_keymap_remote=$DIR/.config/yazi/keymap.toml
+    yazi_keymap_local=$HOME/.config/yazi/keymap.toml
     yazi_theme_remote=$DIR/.config/yazi/theme.toml
     yazi_theme_local=$HOME/.config/yazi/theme.toml
+    yazi_plugin_smart_enter_remote=$DIR/.config/yazi/plugins/smart-enter.yazi/init.lua
+    yazi_plugin_smart_enter_local=$HOME/.config/yazi/plugins/smart-enter.yazi/init.lua
 
     case $SYSTEM in
         Darwin)

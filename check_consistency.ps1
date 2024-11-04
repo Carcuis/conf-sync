@@ -89,10 +89,20 @@ $yazi_config = @{
     remote = "$PSScriptRoot\.config\yazi\yazi.toml"
     local = "$home\AppData\Roaming\yazi\config\yazi.toml"
 }
+$yazi_keymap = @{
+    name = "yazi keymap.toml"
+    remote = "$PSScriptRoot\.config\yazi\keymap.toml"
+    local = "$home\AppData\Roaming\yazi\config\keymap.toml"
+}
 $yazi_theme = @{
     name = "yazi theme.toml"
     remote = "$PSScriptRoot\.config\yazi\theme.toml"
     local = "$home\AppData\Roaming\yazi\config\theme.toml"
+}
+$yazi_plugin_smart_enter = @{
+    name = "yazi plugin smart-enter"
+    remote = "$PSScriptRoot\.config\yazi\plugins\smart-enter.yazi\init.lua"
+    local = "$home\AppData\Roaming\yazi\config\plugins\smart-enter.yazi\init.lua"
 }
 $file_list = @(
     $psprofile
@@ -112,7 +122,9 @@ $extra_file_list = @(
     $tealdeer
     $condarc
     $yazi_config
+    $yazi_keymap
     $yazi_theme
+    $yazi_plugin_smart_enter
 )
 
 function Print-Line    { param($msg) Write-Host "$WHITE$msg$TAIL"             }
