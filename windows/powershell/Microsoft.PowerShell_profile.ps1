@@ -226,6 +226,32 @@ function Detect-And-Set-Proxy {
         SetProxyOn
     }
 } Detect-And-Set-Proxy
+function Update-TerminalSize-Env {
+<#
+.SYNOPSIS
+    Update the environment variables 'TERMINAL_WIDTH' and 'TERMINAL_HEIGHT' with the current terminal size.
+    Update the environment variable 'OHMYPOSH_MAX_PATH_LENGTH' with the maximum path length that can be displayed.
+#>
+    $width = $Host.UI.RawUI.WindowSize.Width
+    $height = $Host.UI.RawUI.WindowSize.Height
+    $OHMYPOSH_MAX_PATH_LENGTH = [Math]::Floor($width / 2)
+
+    if (Has-Virtual-Env) {
+        $venv_name = Split-Path -Parent $env:VIRTUAL_ENV | Split-Path -Leaf
+        $OHMYPOSH_MAX_PATH_LENGTH = $OHMYPOSH_MAX_PATH_LENGTH - 13 - $venv_name.Length
+    } elseif (Has-Conda-Env) {
+        $conda_env_name = $env:CONDA_DEFAULT_ENV
+        $OHMYPOSH_MAX_PATH_LENGTH = $OHMYPOSH_MAX_PATH_LENGTH - 15 - $conda_env_name.Length
+    }
+
+    [System.Environment]::SetEnvironmentVariable('TERMINAL_WIDTH', $width, 'Process')
+    [System.Environment]::SetEnvironmentVariable('TERMINAL_HEIGHT', $height, 'Process')
+    [System.Environment]::SetEnvironmentVariable('OHMYPOSH_MAX_PATH_LENGTH', $OHMYPOSH_MAX_PATH_LENGTH, 'Process')
+} Update-TerminalSize-Env
+function On-Enter {
+    Update-TerminalSize-Env
+    [Microsoft.PowerShell.PSConsoleReadLine]::AcceptLine()
+} Set-PSReadLineKeyHandler -Key Enter -ScriptBlock { On-Enter }
 function Make-Python-Venv {
     param(
         [string] $name = "venv"
@@ -268,12 +294,11 @@ function Activate-Python-Venv {
                 }
             }
             conda activate $name
-            return
-        }
-        if (! $silent) {
+        } elseif (! $silent) {
             Write-Error "Error: Cannot find '$name' virtual environment."
         }
     }
+    Update-TerminalSize-Env
 }
 function Deactivate-Python-Venv {
     if (Has-Virtual-Env) {
@@ -287,6 +312,7 @@ function Deactivate-Python-Venv {
     } else {
         Write-Error "Error: No virtual environment is activated."
     }
+    Update-TerminalSize-Env
 }
 function Auto-Change-Venv {
 <#

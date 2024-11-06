@@ -114,7 +114,8 @@
           "properties": {
             "folder_icon": "",
             "home_icon": " ~",
-            "style": "full"
+            "max_width": "{{ .Env.OHMYPOSH_MAX_PATH_LENGTH }}",
+            "style": "powerlevel"
           }
         },
         {
