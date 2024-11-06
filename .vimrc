@@ -106,6 +106,7 @@ if has("nvim")
     Plug 'Carcuis/dap-breakpoints.nvim'
     Plug 'MeanderingProgrammer/render-markdown.nvim'
     Plug 'chrisgrieser/nvim-rip-substitute'
+    Plug 'OXY2DEV/helpview.nvim'
 else
     Plug 'Carcuis/darcula'
     Plug 'joshdick/onedark.vim'
