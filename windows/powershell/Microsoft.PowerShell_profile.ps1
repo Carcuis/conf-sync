@@ -236,13 +236,17 @@ function Update-TerminalSize-Env {
     $height = $Host.UI.RawUI.WindowSize.Height
     $OHMYPOSH_MAX_PATH_LENGTH = [Math]::Floor($width / 2)
 
+    $cut_length = 0
     if (Has-Virtual-Env) {
         $venv_name = Split-Path -Parent $env:VIRTUAL_ENV | Split-Path -Leaf
-        $OHMYPOSH_MAX_PATH_LENGTH = $OHMYPOSH_MAX_PATH_LENGTH - 13 - $venv_name.Length
+        $cut_length = 13 + $venv_name.Length
+        $OHMYPOSH_MAX_PATH_LENGTH = $OHMYPOSH_MAX_PATH_LENGTH - $cut_length
     } elseif (Has-Conda-Env) {
         $conda_env_name = $env:CONDA_DEFAULT_ENV
-        $OHMYPOSH_MAX_PATH_LENGTH = $OHMYPOSH_MAX_PATH_LENGTH - 15 - $conda_env_name.Length
+        $cut_length = 15 + $conda_env_name.Length
+        $OHMYPOSH_MAX_PATH_LENGTH = $OHMYPOSH_MAX_PATH_LENGTH - $cut_length
     }
+    $OHMYPOSH_MAX_PATH_LENGTH = [Math]::Min($OHMYPOSH_MAX_PATH_LENGTH, $width - $cut_length - 70)
 
     [System.Environment]::SetEnvironmentVariable('TERMINAL_WIDTH', $width, 'Process')
     [System.Environment]::SetEnvironmentVariable('TERMINAL_HEIGHT', $height, 'Process')
