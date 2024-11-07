@@ -491,4 +491,5 @@ Set-Alias of onefetch
 Set-Alias yz yazi
 Set-Alias wisp Generate-Srt
 Set-Alias rgf Ripgrep-Find-Files
+Set-Alias spa SystemPropertiesAdvanced
 
