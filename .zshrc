@@ -241,6 +241,22 @@ function rgf() {
     rg --files --hidden --glob ${2:-"!.git"} | rg --pcre2 $1
 }
 
+# auto choose gdu or gdu-go and ignore /mnt in WSL
+function gdu() {
+    local _cmd
+    if command -v "gdu-go" > /dev/null; then
+        _cmd="gdu-go"
+    elif command -v "gdu" > /dev/null; then
+        _cmd="gdu"
+    fi
+
+    if [[ $SYSTEM =~ "WSL[12]" ]]; then
+        command "$_cmd" --ignore-dirs "/mnt" $@
+    else
+        command "$_cmd" $@
+    fi
+}
+
 # ================================
 # ============ alias =============
 # ================================
