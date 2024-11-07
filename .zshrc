@@ -326,8 +326,9 @@ if [[ $SYSTEM =~ "WSL[12]" ]]; then
     alias clp='clip.exe'
     alias adb='adb.exe'
     alias fastboot='fastboot.exe'
-    alias o='explorer.exe'
-    alias o.='explorer.exe .'
+    alias o='explorer'
+    alias o.='explorer .'
+    alias no='nautilus'
     alias no.='nautilus .'
     alias px="set_proxy http://$(wsl_get_proxy_server):$(wsl_get_proxy_port)"
     alias upx=unset_proxy
@@ -389,6 +390,10 @@ if [[ $SYSTEM =~ "WSL[12]" ]]; then
     # fi
 
     [[ -d "$HOME/.local/bin/" ]] || mkdir -p "$HOME/.local/bin/"
+
+    local explorer="$HOME/.local/bin/explorer"
+    [[ -f "$explorer" ]] || ln -s "/mnt/c/Windows/explorer.exe" "$explorer"
+    unset explorer
 
     export BROWSER="$HOME/.local/bin/msedge"
     [[ -f "$BROWSER" ]] || ln -s "/mnt/c/Program Files (x86)/Microsoft/Edge/Application/msedge.exe" "$BROWSER"
