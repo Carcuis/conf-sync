@@ -446,6 +446,16 @@ function Ripgrep-Find-Files {
 
     rg --files --hidden --glob $glob | rg --pcre2 $pattern
 }
+function Open-Environment-Variables {
+    param (
+        [switch] $sudo
+    )
+    if ($sudo) {
+        Start-Process -Verb RunAs rundll32.exe "sysdm.cpl,EditEnvironmentVariables"
+    } else {
+        Start-Process rundll32.exe "sysdm.cpl,EditEnvironmentVariables"
+    }
+}
 
 Set-Alias .. GoUpOne
 Set-Alias ... GoUpTwo
@@ -496,4 +506,5 @@ Set-Alias yz yazi
 Set-Alias wisp Generate-Srt
 Set-Alias rgf Ripgrep-Find-Files
 Set-Alias spa SystemPropertiesAdvanced
+Set-Alias pathc Open-Environment-Variables
 
