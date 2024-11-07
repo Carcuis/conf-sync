@@ -239,14 +239,18 @@ function Update-TerminalSize-Env {
     $cut_length = 0
     if (Has-Virtual-Env) {
         $venv_name = Split-Path -Parent $env:VIRTUAL_ENV | Split-Path -Leaf
-        $cut_length = 13 + $venv_name.Length
-        $OHMYPOSH_MAX_PATH_LENGTH = $OHMYPOSH_MAX_PATH_LENGTH - $cut_length
+        $cut_length += 13 + $venv_name.Length
     } elseif (Has-Conda-Env) {
         $conda_env_name = $env:CONDA_DEFAULT_ENV
-        $cut_length = 15 + $conda_env_name.Length
-        $OHMYPOSH_MAX_PATH_LENGTH = $OHMYPOSH_MAX_PATH_LENGTH - $cut_length
+        $cut_length += 15 + $conda_env_name.Length
     }
-    $OHMYPOSH_MAX_PATH_LENGTH = [Math]::Min($OHMYPOSH_MAX_PATH_LENGTH, $width - $cut_length - 70)
+    if ((Get-GitDirectory).length -gt 0) {
+        $cut_length += 15
+    }
+    $OHMYPOSH_MAX_PATH_LENGTH -= $cut_length
+
+    $spare_length = 70
+    $OHMYPOSH_MAX_PATH_LENGTH = [Math]::Min($OHMYPOSH_MAX_PATH_LENGTH, $width - $cut_length - $spare_length)
 
     [System.Environment]::SetEnvironmentVariable('TERMINAL_WIDTH', $width, 'Process')
     [System.Environment]::SetEnvironmentVariable('TERMINAL_HEIGHT', $height, 'Process')
