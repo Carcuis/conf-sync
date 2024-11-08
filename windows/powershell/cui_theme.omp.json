@@ -27,7 +27,7 @@
           "invert_powerline": true,
           "foreground": "#0097de",
           "background": "#19323e",
-          "template": "{{if .Env.ALL_PROXY}}  {{ .Env.ALL_PROXY }} {{ end }}"
+          "template": "{{if .Env.ALL_PROXY}}  {{ .Env.PROXY_PORT }} {{ end }}"
         },
         {
           "type": "status",
