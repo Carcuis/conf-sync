@@ -196,6 +196,7 @@ function set_proxy() {
     export http_proxy=$1
     export https_proxy=$1
     export all_proxy=$1
+    export _PROXY_PORT=$(echo $1 | awk -F: '{print $3}')
 }
 function unset_proxy() {
     unset http_proxy
@@ -204,6 +205,7 @@ function unset_proxy() {
     unset HTTP_PROXY
     unset HTTPS_PROXY
     unset ALL_PROXY
+    unset _PROXY_PORT
 }
 
 # web connection detection
@@ -458,14 +460,15 @@ POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS+=(
     go_version            # go version (https://golang.org)
     rust_version          # rustc version (https://www.rust-lang.org)
     package               # name@version from package.json (https://docs.npmjs.com/files/package.json)
-    proxy                 # system-wide http/https/ftp proxy
     battery               # internal battery
     custom_host_identifier
+    custom_proxy
 )
 POWERLEVEL9K_ANACONDA_CONTENT_EXPANSION='${${${${CONDA_PROMPT_MODIFIER#\(}% }%\)}:-${CONDA_PREFIX:t}} ${P9K_ANACONDA_PYTHON_VERSION} '
 POWERLEVEL9K_VIRTUALENV_VISUAL_IDENTIFIER_EXPANSION='${$(python --version):7} '
 POWERLEVEL9K_BATTERY_STAGES=''
 
+# host identifier
 if [[ $SYSTEM =~ "WSL." ]]; then
     _HOST_IDENTIFIER="$(grep "VERSION=" /etc/os-release | awk -F'[ "]' '{print $2}') "
     POWERLEVEL9K_CUSTOM_HOST_IDENTIFIER_FOREGROUND=172
@@ -481,6 +484,14 @@ function _host_identifier() {
 }
 POWERLEVEL9K_CUSTOM_HOST_IDENTIFIER="_host_identifier"
 unset _host_identifier
+
+# proxy
+function _proxy() {
+    [[ -n $_PROXY_PORT ]] && echo "$_PROXY_PORT "
+}
+POWERLEVEL9K_CUSTOM_PROXY_FOREGROUND=31
+POWERLEVEL9K_CUSTOM_PROXY="_proxy"
+unset _proxy
 
 # === fzf ===
 if command -v fzf > /dev/null; then
