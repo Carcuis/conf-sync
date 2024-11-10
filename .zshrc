@@ -487,7 +487,7 @@ unset _host_identifier
 
 # proxy
 function _proxy() {
-    [[ -n $_PROXY_PORT ]] && echo "$_PROXY_PORT "
+    [[ -n $_PROXY_PORT ]] && echo ""
 }
 POWERLEVEL9K_CUSTOM_PROXY_FOREGROUND=31
 POWERLEVEL9K_CUSTOM_PROXY="_proxy"
