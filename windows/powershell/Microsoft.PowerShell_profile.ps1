@@ -251,7 +251,7 @@ function Update-TerminalSize-Env {
         $cut_length += 15
     }
     if ($env:ALL_PROXY) {
-        $cut_length += 9
+        $cut_length += 4
     }
     $OHMYPOSH_MAX_PATH_LENGTH -= $cut_length
 
