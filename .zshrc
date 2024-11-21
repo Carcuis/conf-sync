@@ -536,13 +536,15 @@ if typeset -f vrun > /dev/null; then
 fi
 function vrun() {
     local name="${1:-$PYTHON_VENV_NAME}"
+    local conda=$HOME/dev/miniconda3/bin/conda
 
-    if [ "$name" != "${PYTHON_VENV_NAME}" ] && conda env list | grep -q "^${name} "; then
+    if [ "$name" != "${PYTHON_VENV_NAME}" ] && $conda env list | grep -q "^${name} "; then
         if [ -n "$VIRTUAL_ENV" ]; then
             deactivate || return $?
         fi
         if [ -z "$CONDA_EXE" ]; then
             cdhk || return $?
+            conda deactivate || return $?
         fi
         conda activate "$name" || return $?
     else
