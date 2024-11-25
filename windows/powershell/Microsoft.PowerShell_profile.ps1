@@ -362,7 +362,8 @@ function Remove-ItemRecurseForce {
 }
 function Generate-Srt {
     param (
-        [string]$file
+        [string]$file,
+        [string]$language = "en"
     )
 
     if ($file -eq "") {
@@ -424,11 +425,11 @@ function Generate-Srt {
     if ($files.Length -gt 1) {
         foreach ($f in $files) {
             Write-Host "`nProcessing file: $f`n"
-            whisper --language en --model $model -f srt $f.FullName
+            whisper --language $language --model $model -f srt $f.FullName
         }
     } else {
         Write-Host "`nProcessing file: $file`n"
-        whisper --language en --model $model -f srt $file.FullName
+        whisper --language $language --model $model -f srt $file.FullName
     }
 }
 function Ripgrep-Find-Files {
