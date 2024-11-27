@@ -473,7 +473,11 @@ if [[ $SYSTEM =~ "WSL." ]]; then
     _HOST_IDENTIFIER="$(grep "VERSION=" /etc/os-release | awk -F'[ "]' '{print $2}') "
     POWERLEVEL9K_CUSTOM_HOST_IDENTIFIER_FOREGROUND=172
 elif [[ $SYSTEM == "Android" ]]; then
-    _HOST_IDENTIFIER="$(getprop ro.product.vendor.name) "
+    if [[ -n $SSH_CONNECTION ]]; then
+        _HOST_IDENTIFIER="$(getprop ro.product.vendor.name) "
+    else
+        _HOST_IDENTIFIER=""
+    fi
     POWERLEVEL9K_CUSTOM_HOST_IDENTIFIER_FOREGROUND=34
 elif [[ $SYSTEM == "Codespace" ]]; then
     _HOST_IDENTIFIER=""
