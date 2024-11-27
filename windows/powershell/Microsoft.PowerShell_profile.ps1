@@ -363,13 +363,16 @@ function Remove-ItemRecurseForce {
 function Generate-Srt {
     param (
         [string]$file,
+        [string]$model = "",
         [string]$language = "en"
     )
 
     if ($file -eq "") {
         Write-Host "Generate SRT file from video/audio file(s).`n"
-        Write-Host "Usage: Generate-Srt [-file] <file>`n"
-        Write-Host "    -file: The video/audio file to be processed. Wildcards are supported."
+        Write-Host "Usage: Generate-Srt [-file] <file> [-model] <model> [-language] <language>`n"
+        Write-Host "    -file: The video/audio file to be processed. Wildcards are supported.`n"
+        Write-Host "    -model: The model to be used for processing. Default is auto-selected based on VRAM size.`n"
+        Write-Host "    -language: The language of the audio. Default is 'en'.`n"
         return
     }
 
@@ -384,16 +387,6 @@ function Generate-Srt {
     }
     Write-Host
 
-    if (!(Has-Command whisper)) {
-        Activate-Python-Venv -name "whisper"
-        if (!(Has-Command whisper)) {
-            Write-Error "Error: Cannot find 'whisper' command."
-            return
-        }
-        Write-Host "Activated 'whisper' virtual environment.`n"
-    }
-
-    $model = "small"
     $vram = 0
     $gpuName = "Unknown"
 
@@ -404,20 +397,48 @@ function Generate-Srt {
             # Retrieve the VRAM size of the active graphics card in megabytes (MB)
             $vram = [math]::round($nvidiaSmiOutput.Trim() -replace " MiB", "")
 
-            # Select the appropriate model based on the VRAM size
-            switch ($vram) {
-                { $_ -lt 2048 } { $model = "base" }
-                { $_ -lt 5120 } { $model = "small" }
-                { $_ -lt 10240 } { $model = "medium" }
-                default { $model = "large-v3" }
-            }
-
             # Retrieve the name of the active graphics card
             $gpuName = (nvidia-smi --query-gpu=name --format=csv,noheader).Trim()
         }
     } catch {
-        # Set the model to "small" by default if an error occurs
-        Write-Warning "Failed to retrieve GPU information. Using default model 'small'."
+        Write-Error "Failed to retrieve GPU information."
+        Write-Error $_.Exception.Message
+        return
+    }
+
+    if ($model -eq "") {
+        # Select the appropriate model based on the VRAM size
+        switch ($vram) {
+            { $_ -lt 2048 } { $model = "base" }
+            { $_ -lt 5120 } { $model = "small" }
+            { $_ -lt 10240 } { $model = "medium" }
+            default { $model = "large-v3" }
+        }
+    } else {
+        # Check if the specified model can be used with the available VRAM
+        $requiredVram = switch -Regex ($model) {
+            "^tiny(\.en)?$" { 1024 }
+            "^base(\.en)?$" { 1024 }
+            "^small(\.en)?$" { 2048 }
+            "^medium(\.en)?$" { 5120 }
+            "^turbo$" { 6144 }
+            "^large-v3$" { 10240 }
+            default { Write-Error "Error: Invalid model '$model' specified."; return }
+        }
+
+        if ($vram -lt $requiredVram) {
+            Write-Error "Error: Not enough VRAM for model '$model'. Required: $requiredVram MB, Available: $vram MB."
+            return
+        }
+    }
+
+    if (!(Has-Command whisper)) {
+        Activate-Python-Venv -name "whisper"
+        if (!(Has-Command whisper)) {
+            Write-Error "Error: Cannot find 'whisper' command."
+            return
+        }
+        Write-Host "Activated 'whisper' virtual environment.`n"
     }
 
     Write-Host "Using model '$model' for GPU '$gpuName' with $vram MB VRAM.`n"
