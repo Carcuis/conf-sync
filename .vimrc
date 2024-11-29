@@ -107,6 +107,7 @@ if has("nvim")
     Plug 'MeanderingProgrammer/render-markdown.nvim'
     Plug 'chrisgrieser/nvim-rip-substitute'
     Plug 'OXY2DEV/helpview.nvim'
+    Plug 'stevearc/quicker.nvim'
 else
     Plug 'Carcuis/darcula'
     Plug 'joshdick/onedark.vim'
@@ -2078,7 +2079,7 @@ if has("nvim")
     end, { nargs = '?' })
 
     local keymaps = {
-        { mode = "n", key = "<C-q>", func = vim.cmd.ToggleDapUI, desc = "Toggle DAP UI" },
+        { mode = "n", key = "<M-C-d>", func = vim.cmd.ToggleDapUI, desc = "Toggle DAP UI" },
         { mode = "n", key = "<F3>", func = dap.pause, desc = "DAP Pause" },
         { mode = "n", key = "<F4>", func = dap.continue, desc = "DAP Continue" },
         { mode = "n", key = "<F5>", func = dap.step_into, desc = "DAP Step Into" },
@@ -2163,6 +2164,23 @@ if has("nvim")
 EOF
 endif
 
+" === quicker.nvim ===
+if has("nvim")
+    lua << EOF
+    require("quicker").setup({
+        keys = {
+            { ">", "<cmd>lua require('quicker').toggle_expand()<CR>", desc = "Expand quickfix content" },
+        },
+        edit = {
+            enabled = false,
+        },
+        highlight = {
+            load_buffers = false,
+        },
+    })
+    vim.keymap.set("n", "<C-q>", require("quicker").toggle, { desc = "Toggle Quicker" })
+EOF
+endif
 
 " ===============
 
