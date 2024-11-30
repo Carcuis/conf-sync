@@ -422,7 +422,7 @@ function Generate-Srt {
             "^small(\.en)?$" { 2048 }
             "^medium(\.en)?$" { 5120 }
             "^turbo$" { 6144 }
-            "^large-v3$" { 10240 }
+            "^large(-v[1-3])?$" { 10240 }
             default { Write-Error "Error: Invalid model '$model' specified."; return }
         }
 
