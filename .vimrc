@@ -1020,7 +1020,7 @@ if has("nvim")
             {
                 sections = { lualine_b = {{
                     function() return 'Terminal' end,
-                    icon = "",
+                    icon = "",
                     padding = { left = 0, right = 0 },
                     separator = { left = '', right = '' },
                 }}, },
@@ -1032,7 +1032,7 @@ if has("nvim")
                         function()
                             return 'Terminal'
                         end,
-                        icon = "",
+                        icon = "",
                         padding = { left = 0, right = 0 },
                         separator = { left = '', right = '' },
                     }},
