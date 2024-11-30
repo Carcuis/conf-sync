@@ -108,6 +108,7 @@ if has("nvim")
     Plug 'chrisgrieser/nvim-rip-substitute'
     Plug 'OXY2DEV/helpview.nvim'
     Plug 'stevearc/quicker.nvim'
+    Plug 'SCJangra/table-nvim'
 else
     Plug 'Carcuis/darcula'
     Plug 'joshdick/onedark.vim'
@@ -2179,6 +2180,13 @@ if has("nvim")
         },
     })
     vim.keymap.set("n", "<C-q>", require("quicker").toggle, { desc = "Toggle Quicker" })
+EOF
+endif
+
+" === table-nvim ===
+if has("nvim")
+    lua << EOF
+    require("table-nvim").setup({})
 EOF
 endif
 
