@@ -104,6 +104,21 @@ $yazi_plugin_smart_enter = @{
     remote = "$PSScriptRoot\.config\yazi\plugins\smart-enter.yazi\init.lua"
     local = "$home\AppData\Roaming\yazi\config\plugins\smart-enter.yazi\init.lua"
 }
+$vscode_nvim_lua = @{
+    name = "vscode-neovim lua config"
+    remote = "$PSScriptRoot\vscode\vscode.nvim.lua"
+    local = "$home\.vscode\vscode.nvim.lua"
+}
+$vscode_keybindings = @{
+    name = "vscode keybindings.json"
+    remote = "$PSScriptRoot\vscode\keybindings.json"
+    local = "$home\AppData\Roaming\Code\User\keybindings.json"
+}
+$vscode_settings = @{
+    name = "vscode settings.json"
+    remote = "$PSScriptRoot\vscode\settings.json"
+    local = "$home\AppData\Roaming\Code\User\settings.json"
+}
 $file_list = @(
     $psprofile
     $vimrc
@@ -125,6 +140,9 @@ $extra_file_list = @(
     $yazi_keymap
     $yazi_theme
     $yazi_plugin_smart_enter
+    $vscode_nvim_lua
+    $vscode_keybindings
+    $vscode_settings
 )
 
 function Print-Line    { param($msg) Write-Host "$WHITE$msg$TAIL"             }

@@ -1,0 +1,131 @@
+[
+    // keybindings send to neovim
+    { "key": "alt+a", "command": "vscode-neovim.send", "args": "<A-a>", "when": "editorTextFocus && neovim.init" },
+    { "key": "alt+c", "command": "vscode-neovim.send", "args": "<A-c>", "when": "editorTextFocus && neovim.init" },
+    { "key": "alt+e", "command": "vscode-neovim.send", "args": "<A-e>", "when": "editorTextFocus && neovim.init" },
+    { "key": "alt+i", "command": "vscode-neovim.send", "args": "<A-i>", "when": "editorTextFocus && neovim.init" },
+    { "key": "alt+l", "command": "vscode-neovim.send", "args": "<A-l>", "when": "editorTextFocus && neovim.init && neovim.mode == 'insert'" },
+    { "key": "alt+n", "command": "vscode-neovim.send", "args": "<A-n>", "when": "editorTextFocus && neovim.init && neovim.mode == 'insert'" },
+    { "key": "alt+p", "command": "vscode-neovim.send", "args": "<A-p>", "when": "editorTextFocus && neovim.init && neovim.mode == 'insert'" },
+    { "key": "alt+right", "command": "vscode-neovim.send", "args": "<A-right>", "when": "editorTextFocus && neovim.init" },
+    { "key": "alt+s", "command": "vscode-neovim.send", "args": "<A-s>", "when": "editorTextFocus && neovim.init" },
+    { "key": "alt+shift+h", "command": "vscode-neovim.send", "args": "<A-H>", "when": "editorTextFocus && neovim.init && neovim.mode == 'insert'" },
+    { "key": "alt+shift+i", "command": "vscode-neovim.send", "args": "<A-I>", "when": "editorTextFocus && neovim.init && neovim.mode == 'insert'" },
+    { "key": "alt+shift+j", "command": "vscode-neovim.send", "args": "<A-J>", "when": "editorTextFocus && neovim.init && neovim.mode == 'insert'" },
+    { "key": "alt+shift+k", "command": "vscode-neovim.send", "args": "<A-K>", "when": "editorTextFocus && neovim.init && neovim.mode == 'insert'" },
+    { "key": "alt+shift+l", "command": "vscode-neovim.send", "args": "<A-L>", "when": "editorTextFocus && neovim.init && neovim.mode == 'insert'" },
+    { "key": "alt+shift+s", "command": "vscode-neovim.send", "args": "<A-S>", "when": "editorTextFocus && neovim.init" },
+    { "key": "alt+w", "command": "vscode-neovim.send", "args": "<A-w>", "when": "editorTextFocus && neovim.init" },
+    { "key": "ctrl+alt+right", "command": "vscode-neovim.send", "args": "<A-C-right>", "when": "editorTextFocus && neovim.init" },
+
+    // navigation keybindings
+    { "key": "alt+h", "command": "workbench.action.navigateLeft", "when": "!editorTextFocus || !neovim.init || neovim.mode != 'insert'" },
+    { "key": "alt+j", "command": "workbench.action.navigateDown", "when": "!editorTextFocus || !neovim.init || neovim.mode != 'insert'" },
+    { "key": "alt+k", "command": "workbench.action.navigateUp", "when": "!editorTextFocus || !neovim.init || neovim.mode != 'insert'" },
+    { "key": "alt+l", "command": "workbench.action.navigateRight", "when": "!editorTextFocus || !neovim.init || neovim.mode != 'insert'" },
+
+    // closing keybindings
+    {
+        "key": "alt+w",
+        "command": "workbench.action.closeActiveEditor",
+        "when": "inKeybindings || inSettingsEditor || inExtensionEditor || inWelcome || activeEditor : 'WebviewEditor'"
+    },
+    {
+        "key": "alt+w",
+        "command": "workbench.action.closeAuxiliaryBar",
+        "when": "auxiliaryBarFocus"
+    },
+    {
+        "key": "alt+w",
+        "command": "workbench.action.closePanel",
+        "when": "panelFocus && !view.terminal.visible"
+    },
+    {
+        "key": "alt+w",
+        "command": "workbench.action.toggleSidebarVisibility",
+        "when": "sideBarFocus"
+    },
+    {
+        "key": "ctrl+c",
+        "command": "closeFindWidget",
+        "when": "!editorTextFocus && findWidgetVisible"
+    },
+    {
+        "key": "ctrl+c",
+        "command": "closeReferenceSearch",
+        "when": "editorTextFocus && referenceSearchVisible && !config.editor.stablePeek || referenceSearchVisible && !config.editor.stablePeek && !inputFocus"
+    },
+    {
+        "key": "ctrl+c",
+        "command": "search.action.clearSearchResults",
+        "when": "searchViewletFocus"
+    },
+    {
+        "key": "ctrl+c",
+        "command": "workbench.action.closeAuxiliaryBar",
+        "when": "auxiliaryBarFocus && inputFocus"
+    },
+    {
+        "key": "ctrl+c",
+        "command": "workbench.action.closeQuickOpen",
+        "when": "inQuickOpen"
+    },
+
+    // disable keybindings
+    {
+        "key": "ctrl+e",
+        "command": "-workbench.action.quickOpen"
+    },
+    {
+        "key": "ctrl+j",
+        "command": "-workbench.action.togglePanel"
+    },
+    {
+        "key": "ctrl+p",
+        "command": "-workbench.action.quickOpen"
+    },
+    {
+        "key": "ctrl+s",
+        "command": "-workbench.action.files.save"
+    },
+    {
+        "key": "tab",
+        "command": "-editor.action.inlineSuggest.commit",
+    },
+    {
+        "key": "tab",
+        "command": "-tabout",
+        "when": "editorTextFocus && !editorHasMultipleSelections && !inSnippetMode && !inlineSuggestionVisible && !suggestWidgetVisible"
+    },
+
+    // other keybindings
+    {
+        "key": "ctrl+c",
+        "command": "workbench.action.togglePanel",
+        "when": "editorTextFocus && !referenceSearchVisible"
+    },
+    {
+        "key": "ctrl+e",
+        "command": "editor.action.triggerSuggest",
+        "when": "neovim.mode == 'insert' && editorHasCompletionItemProvider && textInputFocus && !editorReadonly && !suggestWidgetVisible"
+    },
+    {
+        "key": "ctrl+e",
+        "command": "hideSuggestWidget",
+        "when": "neovim.mode == 'insert' && suggestWidgetVisible && textInputFocus"
+    },
+    {
+        "key": "ctrl+s",
+        "command": "editor.action.replaceAll",
+        "when": "!editorTextFocus && findWidgetVisible"
+    },
+    {
+        "key": "ctrl+t",
+        "command": "workbench.action.terminal.toggleTerminal",
+        "when": "terminal.active"
+    },
+    {
+        "key": "shift shift",
+        "command": "workbench.action.showCommands"
+    },
+]
