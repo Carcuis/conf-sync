@@ -7,6 +7,7 @@ _path_list=(
     $HOME/.local/bin
     $HOME/.cargo/bin
     $HOME/.fzf/bin
+    $HOME/dev/miniconda3/condabin
     /usr/games
     /usr/local/bin
 )
@@ -519,15 +520,14 @@ fi
 
 # === miniconda ===
 function cdhk() {
-    local conda=$HOME/dev/miniconda3/bin/conda
-    if ! command -v $conda > /dev/null; then
+    if ! command -v conda > /dev/null; then
         echo "Error: conda not found."
         return 1
     fi
     if [ -n "$VIRTUAL_ENV" ]; then
         deactivate
     fi
-    local conda_setup="$($conda 'shell.zsh' 'hook' 2> /dev/null)"
+    local conda_setup="$(conda 'shell.zsh' 'hook' 2> /dev/null)"
     if [ $? -eq 0 ]; then
         eval "$conda_setup"
     else
@@ -540,20 +540,25 @@ if typeset -f vrun > /dev/null; then
     eval "$(typeset -f vrun | sed 's/^vrun/_vrun/')"
 fi
 function vrun() {
-    local name="${1:-$PYTHON_VENV_NAME}"
-    local conda=$HOME/dev/miniconda3/bin/conda
+    local venv="${PYTHON_VENV_NAME:-venv}"
+    local name="${1:-$venv}"
 
-    if [ "$name" != "${PYTHON_VENV_NAME}" ] && $conda env list | grep -q "^${name} "; then
+    if [[ -d $name ]] || [[ $name == $venv ]]; then
+        _vrun "$name" || return $?
+    else
+        if ! command -v conda > /dev/null || ! conda env list | grep -q "^${name} " && [[ $name != "base" ]] ; then
+            echo "Error: could not find $name."
+            return 1
+        fi
+
         if [ -n "$VIRTUAL_ENV" ]; then
             deactivate || return $?
         fi
         if [ -z "$CONDA_EXE" ]; then
             cdhk || return $?
-            conda deactivate || return $?
+            [[ $name == "base" ]] || conda deactivate || return $?
         fi
-        conda activate "$name" || return $?
-    else
-        _vrun "$name"
+        [[ $name == "base" ]] || conda activate "$name" || return $?
     fi
 }
 unset _vrun
