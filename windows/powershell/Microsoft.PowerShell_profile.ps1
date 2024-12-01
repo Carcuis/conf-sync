@@ -307,7 +307,9 @@ function Activate-Python-Venv {
                     conda deactivate
                 }
             }
-            conda activate $name
+            if ("$name" -ne "base") {
+                conda activate $name
+            }
         } elseif (! $silent) {
             Write-Error "Error: Cannot find '$name' virtual environment."
         }
