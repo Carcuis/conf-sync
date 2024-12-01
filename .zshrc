@@ -279,6 +279,7 @@ else
     alias la='ls -AF'
     alias l='ls -CF'
 fi
+alias lsp='echo ${PATH//:/\\n} | column'
 alias zshc="$EDITOR ~/.zshrc"
 alias vimc="$EDITOR ~/.vimrc"
 alias src='source ~/.zshrc'
