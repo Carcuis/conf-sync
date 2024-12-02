@@ -486,6 +486,92 @@ function Open-Environment-Variables {
         Start-Process rundll32.exe "sysdm.cpl,EditEnvironmentVariables"
     }
 }
+function Optimize-VHD {
+<#
+.SYNOPSIS
+    Optimize the size of a WSL vhdx file by running the 'compact' command using Diskpart.
+#>
+    param (
+        [string]$Path
+    )
+
+    # List running WSL distributions
+    $runningDistrosLines = $(wsl --list --running) -split "`n"
+
+    if ($runningDistrosLines.Count -le 3) {
+        wsl --shutdown
+    } else {
+        $runningDistros = $runningDistrosLines[1..($runningDistrosLines.Length - 2)] -join "`n" -replace "貫", "Default"
+        Write-Host "The following WSL distributions are currently running:"
+        Write-Host $runningDistros
+        $confirmShutdown = Read-Host "Shut down all running WSL distributions? (y/N)"
+        if ($confirmShutdown -ne 'y') {
+            Write-Host "Operation canceled."
+            return
+        }
+        wsl --shutdown
+    }
+
+    # Automatically search for all Linux subsystem vhdx files
+    if (-not $Path) {
+        $vhdxFiles = Get-ChildItem -Path "$env:LOCALAPPDATA\Packages" -Recurse -Filter "*.vhdx" -ErrorAction SilentlyContinue
+
+        if ($vhdxFiles.Count -eq 1) {
+            $Path = $vhdxFiles.FullName
+        } elseif ($vhdxFiles.Count -gt 1) {
+            Write-Host "The following vhdx files were found, please select one:"
+            for ($i = 0; $i -lt $vhdxFiles.Count; $i++) {
+                Write-Host "$($i + 1). $($vhdxFiles[$i].FullName)"
+            }
+            $selection = Read-Host "Please enter the number"
+            if ($selection -lt 1 -or $selection -gt $vhdxFiles.Count) {
+                Write-Host "Invalid selection. Operation canceled."
+                return
+            }
+            $Path = $vhdxFiles[$selection - 1].FullName
+        } else {
+            Write-Error "Error: No vhdx files found."
+            return
+        }
+    } elseif (-not (Has-File $Path) -or -not ($Path -like "*.vhdx")) {
+        Write-Error "Error: Invalid vhdx file path."
+        return
+    }
+
+    $sizeBefore = (Get-Item $Path).Length
+
+    # Create a script containing Diskpart commands
+    $diskpartScript = @"
+select vdisk file="$Path"
+attach vdisk readonly
+compact vdisk
+detach vdisk
+exit
+"@
+
+    # Save the script to a temporary file
+    $tempFile = New-TemporaryFile
+    Set-Content -Path $tempFile -Value $diskpartScript
+
+    # Run the Diskpart script
+    try {
+        Start-Process -FilePath "diskpart" -ArgumentList "/s $tempFile" -Wait -Verb RunAs
+    } catch {
+        Write-Error $_.Exception.Message
+        return
+    } finally {
+        Remove-Item -Path $tempFile
+    }
+
+    Write-Host "`nOptimization completed.✔`n"
+
+    $sizeAfter = (Get-Item $Path).Length
+    $sizeDifference = $sizeBefore - $sizeAfter
+
+    Write-Host "Size before optimization:`t$($sizeBefore / 1GB)`tGB"
+    Write-Host "Size after optimization:`t$($sizeAfter / 1GB)`tGB"
+    Write-Host "Optimization saved:`t`t$($sizeDifference / 1GB)`tGB"
+}
 
 Set-Alias .. GoUpOne
 Set-Alias ... GoUpTwo
@@ -537,4 +623,5 @@ Set-Alias wisp Generate-Srt
 Set-Alias rgf Ripgrep-Find-Files
 Set-Alias spa SystemPropertiesAdvanced
 Set-Alias pathc Open-Environment-Variables
+Set-Alias optv Optimize-VHD
 
