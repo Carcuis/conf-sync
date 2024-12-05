@@ -1840,7 +1840,7 @@ endif
 if has("nvim")
     lua << EOF
     require("CopilotChat").setup({
-        model = 'gpt-4o-2024-05-13',
+        model = 'gpt-4o-2024-08-06',
         show_folds = false,
         context = 'buffers',
         window = {
