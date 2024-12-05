@@ -192,6 +192,24 @@ function detect_system() {
 }
 detect_system
 
+# remove duplicate dir in $PATH
+function remove_duplicate_path() {
+    local old_path=$PATH
+    local new_path=""
+    local path_element
+
+    for path_element in ${(s/:/)old_path}; do
+        if [[ ":$new_path:" != *":$path_element:"* ]]; then
+            new_path+="$path_element:"
+        fi
+    done
+
+    # Remove the trailing colon
+    new_path=${new_path%:}
+
+    export PATH=$new_path
+}
+
 # proxy env settings
 function set_proxy() {
     export http_proxy=$1
@@ -501,6 +519,7 @@ function cdhk() {
     local conda_setup="$(conda 'shell.zsh' 'hook' 2> /dev/null)"
     if [ $? -eq 0 ]; then
         eval "$conda_setup"
+        remove_duplicate_path
     else
         echo "Error: conda setup failed."
         return 1
