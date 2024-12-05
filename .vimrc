@@ -955,6 +955,7 @@ if has("nvim")
     lua << EOF
     require('lualine').setup {
         extensions = {
+            'quickfix',
             {
                 sections = { lualine_a = {{
                         function()
