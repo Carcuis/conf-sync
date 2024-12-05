@@ -342,7 +342,6 @@ if [[ $SYSTEM =~ "WSL[12]" ]]; then
 
     alias sshon='sudo service ssh start'
     alias sshoff='sudo service ssh stop'
-    # alias cman='man -M /usr/local/share/man/zh_CN'
     alias clp='clip.exe'
     alias adb='adb.exe'
     alias fastboot='fastboot.exe'
@@ -360,21 +359,16 @@ if [[ $SYSTEM =~ "WSL[12]" ]]; then
 elif [[ $SYSTEM == "Android" ]]; then
     unalias ktc
     alias tchroot='termux-chroot'
-    # alias ubuntu='bash ~/ubuntu/start-ubuntu.sh'
     alias chcolor='/data/data/com.termux/files/home/.termux/colors.sh'
     alias chfont='/data/data/com.termux/files/home/.termux/fonts.sh'
     alias termc='vim ~/.termux/termux.properties'
     alias ubuntu2004='~/ubuntu/2004/start-ubuntu20.sh'
 elif [[ $SYSTEM == "Linux" ]]; then
-    # alias sshon='sudo service ssh start'
-    # alias sshoff='sudo service ssh stop'
-    # alias fix-pod='pactl load-module module-bluetooth-discover'
     alias o='nautilus'
     alias o.='nautilus .'
     alias px='set_proxy http://127.0.0.1:1089'
     alias upx=unset_proxy
 elif [[ $SYSTEM == "Darwin" ]]; then
-    # alias cmake-gui='/Applications/CMake.app/Contents/MacOS/CMake .'
     alias sshon='sudo launchctl load -w /System/Library/LaunchDaemons/ssh.plist'
     alias sshoff='sudo launchctl unload -w /System/Library/LaunchDaemons/ssh.plist'
     alias fixroot='sudo mount -uw /'
@@ -391,15 +385,6 @@ fi
 
 if [[ $SYSTEM =~ "WSL[12]" ]]; then
     if [[ $SYSTEM == "WSL1" ]]; then
-        # adjust login path
-        if [ "$PWD" = "/mnt/c/Users/cui" ]; then
-            cd ~
-        elif [ "$PWD" = "/mnt/c/Windows/system32" ]; then
-            cd ~
-        elif [ "$PWD" = "/mnt/c/Windows/System32" ]; then
-            cd ~
-        fi
-        # display env
         export DISPLAY=127.0.0.1:0.0
     fi
 
@@ -426,31 +411,17 @@ if [[ $SYSTEM =~ "WSL[12]" ]]; then
     unset win32yank_wsl win32yank_windows
 
 elif [[ $SYSTEM == "Android" ]]; then
-    ## sshd start-up
-    # if [ $(pgrep sshd | wc -l) -le 0 ];then
-    #     sshd
-    # fi
     if [ ! $XDG_RUNTIME_DIR ]; then
         export XDG_RUNTIME_DIR=/data/data/com.termux/files/usr/tmp/runtime/
     fi
 elif [[ $SYSTEM == "Linux" ]]; then
     # === ROS ===
     # alias src-ros-env='source /opt/ros/melodic/setup.zsh'
-    ## or auto source when shell start up
-    # source /opt/ros/melodic/setup.zsh
-
-    # === CLion ===
-    # alias clion='~/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/202.7319.72/bin/clion.sh'
 
     # === OpenVINO ===
     # alias src-openvino-env='source /opt/intel/openvino/bin/setupvars.sh'
-    ## or auto source when shell start up
-    # source /opt/intel/openvino/bin/setupvars.sh
 
 elif [[ $SYSTEM == "Darwin" ]]; then
-    # === Openni2 ===
-    # export OPENNI2_INCLUDE=/usr/local/include/ni2
-    # export OPENNI2_REDIST=/usr/local/lib/ni2
 fi
 
 # === Powerlevel10k ===
