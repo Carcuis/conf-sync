@@ -28,6 +28,10 @@
             "url": "https://www.zhihu.com/search?type=content&q=%s"
         },
         {
+            "name": "XiaoHongShu",
+            "url": "https://www.xiaohongshu.com/search_result?keyword=%s"
+        },
+        {
             "name": "YouTube",
             "url": "https://youtube.com/results?search_query=%s"
         },
