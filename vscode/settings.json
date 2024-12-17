@@ -69,6 +69,7 @@
     "redhat.telemetry.enabled": false,
     "terminal.integrated.allowChords": false,
     "terminal.integrated.defaultProfile.linux": "zsh",
+    "terminal.integrated.fontLigatures": true,
     "terminal.integrated.fontSize": 16,
     "terminal.integrated.scrollback": 100000,
     "terminal.integrated.smoothScrolling": true,
