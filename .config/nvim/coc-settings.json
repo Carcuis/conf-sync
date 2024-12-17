@@ -75,7 +75,7 @@
     },
     "dialog.floatBorderHighlight": "CocHintFloat",
     "[json]": {
-        "coc.preferences.formatOnSave": true
+        "coc.preferences.formatOnSave": false
     },
     "[python]": {
         "semanticTokens.enable": false
