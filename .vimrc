@@ -211,7 +211,7 @@ if has("nvim")
     else
         let g:python3_host_prog = stdpath('data') . '/pynvim/venv/bin/python3'
     endif
-    set fillchars=eob:\ ,diff:\ 
+    set fillchars=eob:\ ,diff:\ ,fold:\ ,foldsep:\ ,foldopen:,foldclose:
     if has("win32") || has("wsl")
         set guifont=CaskaydiaCove\ NFM,Microsoft\ YaHei\ UI:h13:#e-subpixelantialias
     elseif has("linux")
