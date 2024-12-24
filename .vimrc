@@ -42,8 +42,8 @@ if has("nvim")
     Plug 'folke/tokyonight.nvim'
     Plug 'shaunsingh/moonlight.nvim'
     Plug 'kylechui/nvim-surround'
-    Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
-    Plug 'neoclide/coc.nvim', {'branch': 'release'}
+    Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug'] }
+    Plug 'neoclide/coc.nvim', { 'branch': 'release' }
     Plug 'nvim-lua/plenary.nvim'
     Plug 'nvim-telescope/telescope.nvim'
     Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
@@ -123,7 +123,7 @@ else
     Plug 'preservim/nerdtree'
     Plug 'Xuyuanp/nerdtree-git-plugin'
     Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
-    Plug 'Yggdroot/LeaderF', {'do': ':LeaderfInstallCExtension'}
+    Plug 'Yggdroot/LeaderF', { 'do': ':LeaderfInstallCExtension' }
     Plug 'vim/killersheep'
     Plug 'airblade/vim-gitgutter'
     Plug 'tpope/vim-sleuth'     " indentation-detection
