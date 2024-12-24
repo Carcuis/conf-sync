@@ -17,17 +17,17 @@ Get-Scoop-Root
 $psprofile = @{
     name = "PSProfile"
     remote = "$PSScriptRoot\windows\powershell\Microsoft.PowerShell_profile.ps1"
-    local = "$home\Documents\PowerShell\Microsoft.PowerShell_profile.ps1"
+    local = "$HOME\Documents\PowerShell\Microsoft.PowerShell_profile.ps1"
 }
 $windows_psprofile_v5 = @{
     name = "Windows Powershell (v5) Profile"
     remote = "$PSScriptRoot\windows\powershell\Microsoft.PowerShell_profile.windows_powershell_v5.ps1"
-    local = "$home\Documents\WindowsPowerShell\Microsoft.PowerShell_profile.ps1"
+    local = "$HOME\Documents\WindowsPowerShell\Microsoft.PowerShell_profile.ps1"
 }
 $wsl_config = @{
     name = "WSL Configuration"
     remote = "$PSScriptRoot\windows\wsl\.wslconfig"
-    local = "$home\.wslconfig"
+    local = "$HOME\.wslconfig"
 }
 $ohmyposh_theme = @{
     name = "oh-my-posh theme"
@@ -37,42 +37,42 @@ $ohmyposh_theme = @{
 $vimrc = @{
     name = "vimrc"
     remote = "$PSScriptRoot\.vimrc"
-    local = "$home\_vimrc"
+    local = "$HOME\_vimrc"
 }
 $coc_settings = @{
     name = "coc-settings.json"
     remote = "$PSScriptRoot\.config\nvim\coc-settings.json"
-    local = "$home\AppData\Local\nvim\coc-settings.json"
+    local = "$HOME\AppData\Local\nvim\coc-settings.json"
 }
 $ptpython = @{
     name = "PtPython config.py"
     remote = "$PSScriptRoot\.config\ptpython\config.py"
-    local = "$home\AppData\Local\prompt_toolkit\ptpython\config.py"
+    local = "$HOME\AppData\Local\prompt_toolkit\ptpython\config.py"
 }
 $ideavimrc = @{
     name = "ideavimrc"
     remote = "$PSScriptRoot\dot_files\.ideavimrc"
-    local = "$home\.ideavimrc"
+    local = "$HOME\.ideavimrc"
 }
 $lazygit = @{
     name = "lazygit config.yml"
     remote = "$PSScriptRoot\.config\lazygit\config.yml"
-    local = "$home\AppData\Roaming\lazygit\config.yml"
+    local = "$HOME\AppData\Roaming\lazygit\config.yml"
 }
 $git_config = @{
     name = "Globle git config"
     remote = "$PSScriptRoot\dot_files\.gitconfig"
-    local = "$home\.gitconfig"
+    local = "$HOME\.gitconfig"
 }
 $vifmrc = @{
     name = "vifmrc"
     remote = "$PSScriptRoot\.config\vifm\vifmrc"
-    local = "$home\AppData\Roaming\Vifm\vifmrc"
+    local = "$HOME\AppData\Roaming\Vifm\vifmrc"
 }
 $clangd = @{
     name = "clangd config.yaml"
     remote = "$PSScriptRoot\windows\clangd\config.yaml"
-    local = "$home\AppData\Local\clangd\config.yaml"
+    local = "$HOME\AppData\Local\clangd\config.yaml"
 }
 $tealdeer = @{
     name = "tealdeer config.toml"
@@ -82,42 +82,42 @@ $tealdeer = @{
 $condarc = @{
     name = "condarc"
     remote = "$PSScriptRoot\windows\conda\.condarc"
-    local = "$home\.condarc"
+    local = "$HOME\.condarc"
 }
 $yazi_config = @{
     name = "yazi yazi.toml"
     remote = "$PSScriptRoot\.config\yazi\yazi.toml"
-    local = "$home\AppData\Roaming\yazi\config\yazi.toml"
+    local = "$HOME\AppData\Roaming\yazi\config\yazi.toml"
 }
 $yazi_keymap = @{
     name = "yazi keymap.toml"
     remote = "$PSScriptRoot\.config\yazi\keymap.toml"
-    local = "$home\AppData\Roaming\yazi\config\keymap.toml"
+    local = "$HOME\AppData\Roaming\yazi\config\keymap.toml"
 }
 $yazi_theme = @{
     name = "yazi theme.toml"
     remote = "$PSScriptRoot\.config\yazi\theme.toml"
-    local = "$home\AppData\Roaming\yazi\config\theme.toml"
+    local = "$HOME\AppData\Roaming\yazi\config\theme.toml"
 }
 $yazi_plugin_smart_enter = @{
     name = "yazi plugin smart-enter"
     remote = "$PSScriptRoot\.config\yazi\plugins\smart-enter.yazi\init.lua"
-    local = "$home\AppData\Roaming\yazi\config\plugins\smart-enter.yazi\init.lua"
+    local = "$HOME\AppData\Roaming\yazi\config\plugins\smart-enter.yazi\init.lua"
 }
 $vscode_nvim_lua = @{
     name = "vscode-neovim lua config"
     remote = "$PSScriptRoot\vscode\vscode.nvim.lua"
-    local = "$home\.vscode\vscode.nvim.lua"
+    local = "$HOME\.vscode\vscode.nvim.lua"
 }
 $vscode_keybindings = @{
     name = "vscode keybindings.json"
     remote = "$PSScriptRoot\vscode\keybindings.json"
-    local = "$home\AppData\Roaming\Code\User\keybindings.json"
+    local = "$HOME\AppData\Roaming\Code\User\keybindings.json"
 }
 $vscode_settings = @{
     name = "vscode settings.json"
     remote = "$PSScriptRoot\vscode\settings.json"
-    local = "$home\AppData\Roaming\Code\User\settings.json"
+    local = "$HOME\AppData\Roaming\Code\User\settings.json"
 }
 $file_list = @(
     $psprofile
