@@ -138,14 +138,24 @@ function Has-Conda-Env{
     return $false
 }
 function Has-Conda-Env-Name {
+<#
+.SYNOPSIS
+    Check if a conda environment with the given name exists.
+#>
     param(
         [string] $name
     )
+    if (!(Has-Command conda)) {
+        return $false
+    }
+    if ($name -eq "base") {
+        return $true
+    }
     $env_file = "$HOME\.conda\environments.txt"
     if (Has-File $env_file) {
         $env_paths = Get-Content -Path $env_file
-        $env_path = $env_paths | Where-Object { $_ -like "*\$name" }
-        if ($env_path) {
+        $env_path = $env_paths | Where-Object { $_ -match ".*\\$name$" }
+        if (Has-Dir $env_path) {
             return $true
         }
     }
@@ -289,6 +299,9 @@ function Activate-Python-Venv {
         $activate_script = Join-Path -Path $venv_path -ChildPath "Scripts\Activate.ps1"
         if (Has-File $activate_script) {
             . $activate_script
+            if (! $silent) {
+                Write-Host "Activated virtual environment '$name'."
+            }
         } elseif (! $silent) {
             Write-Error "Error: Cannot find 'Scripts\Activate.ps1' in $venv_path"
         }
@@ -297,21 +310,28 @@ function Activate-Python-Venv {
             Write-Error "Error: Cannot find 'venv' directory in $dir"
         }
     } else {
-        if ((Has-Conda-Env-Name -name $name) -or ("$name" -eq "base")) {
+        if (Has-Conda-Env-Name -name $name) {
             if (Has-Virtual-Env) {
                 Deactivate-Python-Venv
             }
+            $_conda_hooked = $true
             if (! (Conda-Hooked)) {
+                $_conda_hooked = $false
                 Conda-Hook
-                if ("$name" -ne "base") {
+            }
+            if (("$name" -eq "base") -and -not $_conda_hooked) {
+                Write-Host "Activated conda environment 'base'."
+            } elseif ("$name" -eq $env:CONDA_DEFAULT_ENV) {
+                Write-Host "Already activated conda environment '$name'."
+            } else {
+                if (Has-Conda-Env) {
                     conda deactivate
                 }
-            }
-            if ("$name" -ne "base") {
                 conda activate $name
+                Write-Host "Activated conda environment '$name'."
             }
-        } elseif (! $silent) {
-            Write-Error "Error: Cannot find '$name' virtual environment."
+        } else {
+            Write-Error "Error: Cannot find virtual environment '$name'."
         }
     }
     Update-TerminalSize-Env
