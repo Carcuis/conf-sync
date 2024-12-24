@@ -109,6 +109,7 @@ if has("nvim")
     Plug 'OXY2DEV/helpview.nvim'
     Plug 'stevearc/quicker.nvim'
     Plug 'SCJangra/table-nvim'
+    Plug 'linux-cultist/venv-selector.nvim'
 else
     Plug 'Carcuis/darcula'
     Plug 'joshdick/onedark.vim'
@@ -1162,6 +1163,29 @@ if has("nvim")
                     padding = { left = 1, right = 0 },
                 },
                 {
+                    function()
+                        local conda_env = os.getenv("CONDA_DEFAULT_ENV")
+                        local virtual_env = os.getenv("VIRTUAL_ENV")
+                        if conda_env then
+                            return ":"..conda_env
+                        elseif virtual_env then
+                            local venv_name = virtual_env:match("envs[/\\]([^/\\]+)$")
+                            if venv_name then
+                                return ":"..venv_name
+                            end
+                            venv_name = virtual_env:match("([^/\\]+)[/\\]venv$")
+                            if venv_name then
+                                return ":"..venv_name
+                            end
+                        end
+                        return ""
+                    end,
+                    on_click = function()
+                        vim.cmd.VenvSelect()
+                    end,
+                    padding = { left = 1, right = 0 },
+                },
+                {
                     'copilot',
                     show_running = true,
                     symbols = {
@@ -2188,6 +2212,27 @@ endif
 if has("nvim")
     lua << EOF
     require("table-nvim").setup({})
+EOF
+endif
+
+" === venv-selector.nvim ===
+if has("nvim")
+    lua << EOF
+    require("venv-selector").setup({
+        anaconda_base_path = '~/dev/miniconda3',
+        anaconda_envs_path = '~/dev/miniconda3/envs',
+        changed_venv_hooks = { function()
+            local timer = vim.uv.new_timer()
+            timer:start(250, 0, vim.schedule_wrap(function()
+                timer:stop()
+                timer:close()
+                vim.cmd.CocRestart()
+                vim.api.nvim_echo({}, false, {})
+            end))
+        end },
+        stay_on_this_version = true,
+    })
+    vim.keymap.set("n", "<leader>vs", require("venv-selector").open, { desc = "Select python venv" })
 EOF
 endif
 
