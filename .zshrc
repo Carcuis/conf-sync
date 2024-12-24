@@ -537,19 +537,28 @@ function vrun() {
     if [[ -d $name ]] || [[ $name == $venv ]]; then
         _vrun "$name" || return $?
     else
-        if ! command -v conda > /dev/null || ! conda env list | grep -q "^${name} " && [[ $name != "base" ]] ; then
-            echo "Error: could not find $name."
+        if ! command -v conda > /dev/null || ! conda env list | grep -q "^${name} " ; then
+            echo "Error: could not find virtual environment $name."
             return 1
         fi
 
-        if [ -n "$VIRTUAL_ENV" ]; then
-            deactivate || return $?
-        fi
-        if [ -z "$CONDA_EXE" ]; then
+        [[ -z "$VIRTUAL_ENV" ]] || deactivate || return $?
+
+        local _conda_hooked=true
+        if [[ -z "$CONDA_EXE" ]]; then
+            _conda_hooked=false
             cdhk || return $?
-            [[ $name == "base" ]] || conda deactivate || return $?
         fi
-        [[ $name == "base" ]] || conda activate "$name" || return $?
+
+        if [[ $name == "base" ]] && [[ $_conda_hooked == false ]]; then
+            echo "Activated conda environment base"
+        elif [[ $name == $CONDA_DEFAULT_ENV ]]; then
+            echo "Already activated conda environment $name"
+        else
+            [[ -n "$CONDA_EXE" ]] || conda deactivate || return $?
+            conda activate "$name" || return $?
+            echo "Activated conda environment $name"
+        fi
     fi
 }
 unset _vrun
