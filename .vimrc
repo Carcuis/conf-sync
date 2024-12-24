@@ -2248,8 +2248,8 @@ tnoremap <M-h> <C-\><C-N><C-w>h
 tnoremap <M-j> <C-\><C-N><C-w>j
 tnoremap <M-k> <C-\><C-N><C-w>k
 tnoremap <M-l> <C-\><C-N><C-w>l
-nnoremap <leader>sp <C-w>s
-nnoremap <leader>vs <C-w>v
+nnoremap <leader>sh <C-w>s
+nnoremap <leader>sv <C-w>v
 
 nnoremap <M-[> <cmd>tabp<CR>
 nnoremap <M-]> <cmd>tabn<CR>
