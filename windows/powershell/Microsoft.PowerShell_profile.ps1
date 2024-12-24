@@ -642,6 +642,6 @@ Set-Alias yz yazi
 Set-Alias wisp Generate-Srt
 Set-Alias rgf Ripgrep-Find-Files
 Set-Alias spa SystemPropertiesAdvanced
-Set-Alias pathc Open-Environment-Variables
+Set-Alias envs Open-Environment-Variables
 Set-Alias optv Optimize-VHD
 
