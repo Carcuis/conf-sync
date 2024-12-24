@@ -13,7 +13,7 @@
           "invert_powerline": true,
           "foreground": "#100e23",
           "background": "#3776ab",
-          "template": "{{ if .Error }}{{ .Error }}{{ else }}{{ if .Env.VIRTUAL_ENV }}{{ else }} <#43b049></>{{ end }} <#ffbc03></> {{ if .Venv }}{{ .Venv }} {{ end }}{{ .Full }}{{ end }} ",
+          "template": "{{ if .Error }}{{ .Error }}{{ else }}{{ if .Env.VIRTUAL_ENV }} <#ffbc03></>{{ else }} <#43b049></>{{ end }} {{ if .Venv }}{{ .Venv }} {{ end }}{{ .Full }}{{ end }} ",
           "properties": {
             "display_mode": "environment",
             "fetch_virtual_env": true,
