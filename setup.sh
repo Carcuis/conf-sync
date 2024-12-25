@@ -260,6 +260,12 @@ function install_yazi_package() {
         ya pack -a yazi-rs/flavors:catppuccin-mocha
         successfully_installed $? "Yazi flavor catppuccin-mocha"
     fi
+
+    # yazi plugins
+    if not_installed_file "$HOME/.config/yazi/plugins/smart-enter.yazi/init.lua" "Yazi plugin smart-enter"; then
+        ya pack -a yazi-rs/plugins:smart-enter
+        successfully_installed $? "Yazi flavor catppuccin-mocha"
+    fi
 }
 
 function install_all() {

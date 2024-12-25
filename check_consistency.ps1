@@ -99,11 +99,6 @@ $yazi_theme = @{
     remote = "$PSScriptRoot\.config\yazi\theme.toml"
     local = "$HOME\AppData\Roaming\yazi\config\theme.toml"
 }
-$yazi_plugin_smart_enter = @{
-    name = "yazi plugin smart-enter"
-    remote = "$PSScriptRoot\.config\yazi\plugins\smart-enter.yazi\init.lua"
-    local = "$HOME\AppData\Roaming\yazi\config\plugins\smart-enter.yazi\init.lua"
-}
 $vscode_nvim_lua = @{
     name = "vscode-neovim lua config"
     remote = "$PSScriptRoot\vscode\vscode.nvim.lua"
@@ -139,7 +134,6 @@ $extra_file_list = @(
     $yazi_config
     $yazi_keymap
     $yazi_theme
-    $yazi_plugin_smart_enter
     $vscode_nvim_lua
     $vscode_keybindings
     $vscode_settings

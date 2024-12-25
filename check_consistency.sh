@@ -31,7 +31,6 @@ declare -a extra_file_list=(
     yazi_config
     yazi_keymap
     yazi_theme
-    yazi_plugin_smart_enter
 )
 
 # shellcheck disable=SC2034
@@ -66,8 +65,6 @@ function declare_dirs() {
     yazi_keymap_local=$HOME/.config/yazi/keymap.toml
     yazi_theme_remote=$DIR/.config/yazi/theme.toml
     yazi_theme_local=$HOME/.config/yazi/theme.toml
-    yazi_plugin_smart_enter_remote=$DIR/.config/yazi/plugins/smart-enter.yazi/init.lua
-    yazi_plugin_smart_enter_local=$HOME/.config/yazi/plugins/smart-enter.yazi/init.lua
 
     case $SYSTEM in
         Darwin)
