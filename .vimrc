@@ -109,7 +109,7 @@ if has("nvim")
     Plug 'OXY2DEV/helpview.nvim'
     Plug 'stevearc/quicker.nvim'
     Plug 'SCJangra/table-nvim'
-    Plug 'linux-cultist/venv-selector.nvim'
+    Plug 'linux-cultist/venv-selector.nvim', { 'branch': 'regexp' }
 else
     Plug 'Carcuis/darcula'
     Plug 'joshdick/onedark.vim'
@@ -1164,25 +1164,22 @@ if has("nvim")
                 },
                 {
                     function()
-                        local conda_env = os.getenv("CONDA_DEFAULT_ENV")
+                        local conda_prefix = os.getenv("CONDA_PREFIX")
                         local virtual_env = os.getenv("VIRTUAL_ENV")
-                        if conda_env then
-                            return ":"..conda_env
-                        elseif virtual_env then
-                            local venv_name = virtual_env:match("envs[/\\]([^/\\]+)$")
-                            if venv_name then
-                                return ":"..venv_name
-                            end
-                            venv_name = virtual_env:match("([^/\\]+)[/\\]venv$")
-                            if venv_name then
-                                return ":"..venv_name
-                            end
+                        local venv = conda_prefix or virtual_env
+                        local venv_name = venv:match("envs[/\\]([^/\\]+)$")
+                        if venv_name then
+                            return ":"..venv_name
+                        elseif conda_prefix ~= nil then
+                            return ":base"
+                        end
+                        venv_name = venv:match("([^/\\]+)[/\\]venv$")
+                        if venv_name then
+                            return ":"..venv_name
                         end
                         return ""
                     end,
-                    on_click = function()
-                        vim.cmd.VenvSelect()
-                    end,
+                    on_click = function() vim.cmd.VenvSelect() end,
                     padding = { left = 1, right = 0 },
                 },
                 {
@@ -2218,21 +2215,96 @@ endif
 " === venv-selector.nvim ===
 if has("nvim")
     lua << EOF
-    require("venv-selector").setup({
-        anaconda_base_path = '~/dev/miniconda3',
-        anaconda_envs_path = '~/dev/miniconda3/envs',
-        changed_venv_hooks = { function()
-            local timer = vim.uv.new_timer()
-            timer:start(250, 0, vim.schedule_wrap(function()
-                timer:stop()
-                timer:close()
-                vim.cmd.CocRestart()
-                vim.api.nvim_echo({}, false, {})
-            end))
-        end },
-        stay_on_this_version = true,
-    })
-    vim.keymap.set("n", "<leader>vs", require("venv-selector").open, { desc = "Select python venv" })
+    local function has_dir(path)
+        local stat = vim.uv.fs_stat(path)
+        return stat and stat.type == 'directory'
+    end
+    local function get_searches()
+        local default_searches = {
+            cwd = {
+                command = "$FD '/bin/python$' $CWD --full-path --color never -HI -a -L"..
+                    " -E /proc -E .git/ -E .wine/ -E .steam/ -E Steam/ -E site-packages/",
+            },
+            file = {
+                command = "$FD '/bin/python$' $FILE_DIR --full-path --color never -E /proc -HI -a -L",
+            },
+            pipx = {
+                command = "$FD '/bin/python$' ~/.local/share/pipx/venvs ~/.local/pipx/venvs --full-path --color never",
+            },
+            venv = {
+                command = "$FD 'venv/bin/python$' ~ --full-path --color never -HI -a -L -E mason",
+            },
+        }
+        local systems = {
+            ["Linux"] = function()
+                local conda_path = vim.fn.expand("~/dev/miniconda3")
+                return vim.tbl_deep_extend("force", default_searches, {
+                    miniconda_env = {
+                        command = "$FD 'bin/python$' "..conda_path.."/envs --full-path --color never",
+                        type = "anaconda",
+                    },
+                    miniconda_base = {
+                        command = "$FD '/python$' "..conda_path.."/bin --full-path --color never",
+                        type = "anaconda",
+                    },
+                })
+            end,
+            ["Windows_NT"] = function()
+                local dirs = { "D:/dev/scoop/apps/miniconda3/current", "D:/dev/miniconda3" }
+                local conda_path = "D:/"
+                for _, dir in ipairs(dirs) do
+                    if has_dir(dir) then
+                        conda_path = dir
+                        break
+                    end
+                end
+                return vim.tbl_deep_extend("force", default_searches, {
+                    cwd = {
+                        command = "$FD Scripts//python.exe$ $CWD --full-path --color never -HI -a -L",
+                    },
+                    file = {
+                        command = "$FD Scripts//python.exe$ $FILE_DIR --full-path --color never -HI -a -L",
+                    },
+                    miniconda_env = {
+                        command = "$FD python.exe$ "..conda_path.."/envs --full-path --color never -a -E Lib",
+                        type = "anaconda",
+                    },
+                    miniconda_base = {
+                        command = "$FD miniconda3//python.exe$ "..conda_path.." --full-path -a --color never",
+                        type = "anaconda",
+                    },
+                    pipx = {
+                        command = "$FD Scripts//python.exe$ $PIPX_HOME/venvs --full-path -a --color never",
+                    },
+                    venv = {
+                        command = "$FD venv//Scripts//python.exe$ D:/ --full-path --color never -HI -a -L",
+                    },
+                })
+            end,
+        }
+        local name = vim.loop.os_uname().sysname
+        return systems[name] or systems["Linux"]
+    end
+    require("venv-selector").setup({ settings = {
+        cache = {
+            file = vim.fn.stdpath("data").."/venv-selector/venvs2.json",
+        },
+        options = {
+            enable_default_searches = true,
+            require_lsp_activation = false,
+            on_venv_activate_callback = function()
+                local timer = vim.uv.new_timer()
+                timer:start(250, 0, vim.schedule_wrap(function()
+                    timer:stop()
+                    timer:close()
+                    vim.cmd.CocRestart()
+                    vim.api.nvim_echo({}, false, {})
+                end))
+            end,
+        },
+        search = get_searches()(),
+    }})
+    vim.keymap.set("n", "<leader>vs", vim.cmd.VenvSelect, { desc = "Select python venv" })
 EOF
 endif
 
