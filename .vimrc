@@ -1947,10 +1947,15 @@ if has("nvim")
         program = "main.py",
         console = "integratedTerminal",
     }
-    if vim.fn.filereadable("main.py") == 1 then
-        table.insert(dap.configurations.python, 1, python_debug_project_configuration)
-        vim.keymap.set("n", "<leader>dp", function() dap.run(python_debug_project_configuration) end, { desc = "Debug python project" })
-    end
+    table.insert(dap.configurations.python, 1, python_debug_project_configuration)
+
+    vim.keymap.set("n", "<leader>dp", function()
+        if vim.fn.filereadable("main.py") == 1 then
+            dap.run(python_debug_project_configuration)
+        else
+            vim.notify("Launch project failed, main.py not found", vim.log.levels.WARN, { title = "Debug project" })
+        end
+    end, { desc = "Debug project" })
 
     dap.adapters.codelldb = {
         -- see: https://github.com/mfussenegger/nvim-dap/wiki/C-C---Rust-(via--codelldb)
@@ -2301,7 +2306,7 @@ if has("nvim")
             search_timeout = 10,
             on_venv_activate_callback = function()
                 local timer = vim.uv.new_timer()
-                timer:start(250, 0, vim.schedule_wrap(function()
+                timer:start(500, 0, vim.schedule_wrap(function()
                     timer:stop()
                     timer:close()
                     vim.cmd.CocRestart()
