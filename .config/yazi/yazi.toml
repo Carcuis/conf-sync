@@ -11,5 +11,11 @@ edit = [
     { run = 'code -w %*', block = true, desc = "code (block)", for = "windows" },
 ]
 
+[plugin]
+prepend_previewers = [
+    { mime = "{image,audio,video}/*", run = "mediainfo"},
+    { mime = "application/subrip", run = "code"},
+]
+
 [preview]
 image_delay = 0
