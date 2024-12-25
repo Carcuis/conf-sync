@@ -100,6 +100,7 @@ if has("nvim")
     Plug 'nvim-telescope/telescope-dap.nvim'
     Plug 'theHamsta/nvim-dap-virtual-text'
     Plug 'williamboman/mason.nvim'
+    Plug 'RubixDev/mason-update-all'
     Plug 'jay-babu/mason-nvim-dap.nvim'
     Plug 'LiadOz/nvim-dap-repl-highlights'
     Plug 'Weissle/persistent-breakpoints.nvim'
@@ -1892,6 +1893,7 @@ if has("nvim")
             },
         },
     })
+    require("mason-update-all").setup()
 EOF
 endif
 
