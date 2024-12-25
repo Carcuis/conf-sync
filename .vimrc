@@ -1171,6 +1171,10 @@ if has("nvim")
                         if venv_name then
                             return ":"..venv_name
                         elseif conda_prefix ~= nil then
+                            venv_name = require("venv-selector").python():match("envs\\([^\\]+)\\python.exe$")
+                            if venv_name then
+                                return ":"..venv_name
+                            end
                             return ":base"
                         end
                         venv_name = venv:match("([^/\\]+)[/\\]venv$")
@@ -2266,11 +2270,11 @@ if has("nvim")
                         command = "$FD Scripts//python.exe$ $FILE_DIR --full-path --color never -HI -a -L",
                     },
                     miniconda_env = {
-                        command = "$FD python.exe$ "..conda_path.."/envs --full-path --color never -a -E Lib",
+                        command = "$FD //python.exe$ "..conda_path.."/envs --full-path --color never -a -E Lib",
                         type = "anaconda",
                     },
                     miniconda_base = {
-                        command = "$FD miniconda3//python.exe$ "..conda_path.." --full-path -a --color never",
+                        command = "$FD //python.exe$ "..conda_path.." --full-path -a --color never -E pkgs -E Lib -E envs",
                         type = "anaconda",
                     },
                     pipx = {
@@ -2292,6 +2296,7 @@ if has("nvim")
         options = {
             enable_default_searches = true,
             require_lsp_activation = false,
+            search_timeout = 10,
             on_venv_activate_callback = function()
                 local timer = vim.uv.new_timer()
                 timer:start(250, 0, vim.schedule_wrap(function()
