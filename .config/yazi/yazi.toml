@@ -10,3 +10,6 @@ edit = [
     { run = 'code %*', orphan = true, desc = "code", for = "windows" },
     { run = 'code -w %*', block = true, desc = "code (block)", for = "windows" },
 ]
+
+[preview]
+image_delay = 0
