@@ -1701,6 +1701,7 @@ if has("nvim")
         if vim.fn.winwidth(0) >= 130 then
             vim.fn.OpenUnfocusedNvimTreeInNewWindow()
         end
+        vim.cmd.VenvSelectCached()
     end)
 EOF
     function LoadSessionInCurrentCwd()
@@ -2301,12 +2302,13 @@ if has("nvim")
             file = vim.fn.stdpath("data").."/venv-selector/venvs2.json",
         },
         options = {
+            cached_venv_automatic_activation = false,
             enable_default_searches = true,
             require_lsp_activation = false,
             search_timeout = 10,
             on_venv_activate_callback = function()
                 local timer = vim.uv.new_timer()
-                timer:start(500, 0, vim.schedule_wrap(function()
+                timer:start(200, 0, vim.schedule_wrap(function()
                     timer:stop()
                     timer:close()
                     vim.cmd.CocRestart()
@@ -2317,6 +2319,7 @@ if has("nvim")
         search = get_searches()(),
     }})
     vim.keymap.set("n", "<leader>vs", vim.cmd.VenvSelect, { desc = "Select python venv" })
+    vim.keymap.set("n", "<leader>vv", vim.cmd.VenvSelectCached, { desc = "Activate cached venv in cwd" })
 EOF
 endif
 
