@@ -111,6 +111,7 @@ if has("nvim")
     Plug 'stevearc/quicker.nvim'
     Plug 'SCJangra/table-nvim'
     Plug 'linux-cultist/venv-selector.nvim', { 'branch': 'regexp' }
+    Plug 'mikavilpas/yazi.nvim'
 else
     Plug 'Carcuis/darcula'
     Plug 'joshdick/onedark.vim'
@@ -2320,6 +2321,14 @@ if has("nvim")
     }})
     vim.keymap.set("n", "<leader>vs", vim.cmd.VenvSelect, { desc = "Select python venv" })
     vim.keymap.set("n", "<leader>vv", vim.cmd.VenvSelectCached, { desc = "Activate cached venv in cwd" })
+EOF
+endif
+
+" === yazi.nvim ===
+if has("nvim")
+    lua << EOF
+    local yazi = require("yazi")
+    vim.keymap.set("n", "<m-y>", yazi.yazi, { desc = "Open yazi" })
 EOF
 endif
 
