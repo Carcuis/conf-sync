@@ -431,7 +431,7 @@ else
     \ {'r': ['󰄉  Recently Used Files', 'Telescope oldfiles']},
     \ {'w': ['󰉿  Find Word', 'Telescope live_grep']},
     \ {'e': ['󰉋  Nvim Tree', 'NvimTreeOpen']},
-    \ {'C': ['  Configure CoC', 'CocConfig']},
+    \ {'C': ['  Configure CoC', 'e '.expand(stdpath("config")."/coc-settings.json")]},
     \ ]
 endif
 let g:startify_fortune_use_unicode = 1
