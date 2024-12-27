@@ -2337,7 +2337,7 @@ vmap <C-p> #
 nnoremap <M-s> <cmd>w<CR>
 nnoremap <M-S> <cmd>wall<CR>
 nnoremap <M-w> <cmd>q<CR>
-nnoremap <M-q> <cmd>q!<CR>
+nnoremap <M-q> <cmd>qall<CR>
 
 function EditVimrc(way)
     if has("win32")
