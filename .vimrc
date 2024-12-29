@@ -529,7 +529,7 @@ if has("nvim")
     nmap <silent> <leader>lo <Plug>(coc-openlink)
     xmap <silent> <leader>a  <Plug>(coc-codeaction-selected)
     nmap <silent> <leader>a  <Plug>(coc-codeaction-selected)w
-    nmap <silent> <M-f>  <Plug>(coc-fix-current)
+    nmap <M-f> <cmd>call CocActionAsync('format')<CR>
     nmap <M-e> <cmd>call CocActionAsync('doHover')<CR>
     nmap <M-d> <cmd>CocCommand semanticTokens.inspect<CR>
     nmap <silent> <leader>tr <Plug>(coc-translator-p)
