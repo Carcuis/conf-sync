@@ -112,6 +112,8 @@ if has("nvim")
     Plug 'SCJangra/table-nvim'
     Plug 'linux-cultist/venv-selector.nvim', { 'branch': 'regexp' }
     Plug 'mikavilpas/yazi.nvim'
+    Plug 'kawre/leetcode.nvim'
+    Plug 'MunifTanjim/nui.nvim'
 else
     Plug 'Carcuis/darcula'
     Plug 'joshdick/onedark.vim'
@@ -526,7 +528,7 @@ if has("nvim")
     nmap <leader>RN <cmd>CocCommand document.renameCurrentWord<CR>
     nmap <silent> <S-F5> <Plug>(coc-rename)
     nmap <silent> <leader>rf <Plug>(coc-refactor)
-    nmap <silent> <leader>lo <Plug>(coc-openlink)
+    nmap <silent> <leader>lO <Plug>(coc-openlink)
     xmap <silent> <leader>a  <Plug>(coc-codeaction-selected)
     nmap <silent> <leader>a  <Plug>(coc-codeaction-selected)w
     nmap <M-f> <cmd>call CocActionAsync('format')<CR>
@@ -674,6 +676,7 @@ let g:extra_whitespace_ignored_filetypes = [
             \'help',
             \'toggleterm',
             \'mason',
+            \'leetcode.nvim',
             \]
 
 " === bufferline.nvim ===
@@ -734,6 +737,14 @@ if has("nvim")
 
     func OpenUnfocusedNvimTreeInNewWindow()
         lua << EOF
+            local function autogroup_exists(group_name)
+                local status, autocmds = pcall(vim.api.nvim_get_autocmds, { group = group_name })
+                if not status then
+                    return false
+                end
+                return #autocmds > 0
+            end
+
             local data = {
                 file = vim.fn.expand('%:p'),
                 buf = vim.api.nvim_get_current_buf(),
@@ -746,7 +757,10 @@ if has("nvim")
 
             local excluded_filetypes = {}
 
-            if ( real_file or no_name ) and not vim.tbl_contains(excluded_filetypes, vim.bo[data.buf].filetype) then
+            local has_excluded_filetypes = vim.tbl_contains(excluded_filetypes, vim.bo[data.buf].filetype)
+            local has_leetcode = autogroup_exists("leetcode_menu")
+
+            if ( real_file or no_name ) and not has_excluded_filetypes and not has_leetcode then
                 require("nvim-tree.api").tree.toggle({ focus = false })
             end
 EOF
@@ -916,7 +930,7 @@ if has("nvim")
         ensure_installed = {
             "python", "c", "cpp", "lua", "bash", "vim", "vimdoc", "go", "css", "javascript", "typescript", "make",
             "markdown", "markdown_inline", "toml", "yaml", "xml", "git_config", "json", "json5", "jsonc", "sql",
-            "dap_repl", "latex", "regex", "powershell", "java", "gitattributes", "gitignore", "cmake"
+            "dap_repl", "latex", "regex", "powershell", "java", "gitattributes", "gitignore", "cmake", "html"
         },
         highlight = {
             enable = true,
@@ -1061,6 +1075,15 @@ if has("nvim")
                     },
                 },
                 filetypes = {'terminal'},
+            },
+            {
+                sections = { lualine_b = {{
+                    function() return 'LeetCode' end,
+                    icon = "",
+                    padding = { left = 0, right = 0 },
+                    separator = { left = '', right = '' },
+                }}, },
+                filetypes = {'leetcode.nvim'},
             },
         },
         options = {
@@ -2329,6 +2352,44 @@ if has("nvim")
     lua << EOF
     local yazi = require("yazi")
     vim.keymap.set("n", "<m-y>", yazi.yazi, { desc = "Open yazi" })
+EOF
+endif
+
+" === leetcode.nvim ===
+if has("nvim")
+    lua << EOF
+    require("leetcode").setup({
+        lang = "python3",
+        plugins = {
+            non_standalone = true,
+        },
+    })
+    local keymaps = {
+        { mode = "n", key = "<leader>lD", cmd = "Leet daily", desc = "LeetCode Yank" },
+        { mode = "n", key = "<leader>lL", cmd = "Leet last_submit", desc = "LeetCode Open Webpage" },
+        { mode = "n", key = "<leader>lR", cmd = "Leet random", desc = "LeetCode Yank" },
+        { mode = "n", key = "<leader>lc", cmd = "Leet console", desc = "LeetCode Console" },
+        { mode = "n", key = "<leader>ld", cmd = "Leet desc", desc = "LeetCode Description Toggle" },
+        { mode = "n", key = "<leader>lh", cmd = "Leet hints", desc = "LeetCode Hint" },
+        { mode = "n", key = "<leader>li", cmd = "Leet info", desc = "LeetCode Info" },
+        { mode = "n", key = "<leader>ll", cmd = "Leet list", desc = "LeetCode Open Webpage" },
+        { mode = "n", key = "<leader>lm", cmd = "Leet", desc = "LeetCode Menu" },
+        { mode = "n", key = "<leader>lo", cmd = "Leet open", desc = "LeetCode Open Webpage" },
+        { mode = "n", key = "<leader>lr", cmd = "Leet run", desc = "LeetCode Run" },
+        { mode = "n", key = "<leader>ls", cmd = "Leet submit", desc = "LeetCode Submit" },
+        { mode = "n", key = "<leader>lt", cmd = "Leet tabs", desc = "LeetCode Yank" },
+        { mode = "n", key = "<leader>ly", cmd = "Leet yank", desc = "LeetCode Yank" },
+        { mode = "n", key = "<leader>lq", func = require("leetcode").stop, desc = "LeetCode Quit" },
+    }
+    for _, keymap in ipairs(keymaps) do
+        local func
+        if keymap.cmd then
+            func = function() vim.cmd(keymap.cmd) end
+        else
+            func = keymap.func
+        end
+        vim.keymap.set(keymap.mode, keymap.key, func, { desc = keymap.desc })
+    end
 EOF
 endif
 
