@@ -844,6 +844,7 @@ EOF
                         untracked = "",
                     },
                 },
+                symlink_arrow = "  ",
             },
         },
         modified = {
