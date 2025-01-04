@@ -53,6 +53,13 @@
     "Lua.workspace.library": [
         "D:\\dev\\scoop\\apps\\neovim\\current\\share\\nvim\\runtime"
     ],
+    "leetcode.defaultLanguage": "python3",
+    "leetcode.editor.shortcuts": [ "description", "solution", "submit", "test", ],
+    "leetcode.endpoint": "leetcode",
+    "leetcode.hint.commandShortcut": false,
+    "leetcode.hint.configWebviewMarkdown": false,
+    "leetcode.workspaceFolder": "D:\\code\\leetcode",
+    "markdown.preview.fontSize": 18,
     "outline.showVariables": false,
     "output.smartScroll.enabled": false,
     "powershell.buttons.showPanelMovementButtons": false,
