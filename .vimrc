@@ -2245,7 +2245,24 @@ endif
 " === table-nvim ===
 if has("nvim")
     lua << EOF
-    require("table-nvim").setup({})
+    require("table-nvim").setup({
+        padd_column_separators = true,
+        mappings = {
+            next = '<TAB>',
+            prev = '<S-TAB>',
+            insert_row_up = '<C-A-k>',
+            insert_row_down = '<C-A-j>',
+            move_row_up = '<A-K>',
+            move_row_down = '<A-J>',
+            insert_column_left = '<C-A-h>',
+            insert_column_right = '<C-A-l>',
+            move_column_left = '<A-G>',
+            move_column_right = '<A-:>',
+            insert_table = '<C-A-t>',
+            insert_table_alt = '<A-T>',
+            delete_column = '<C-A-d>',
+        }
+    })
 EOF
 endif
 
