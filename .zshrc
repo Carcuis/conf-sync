@@ -414,6 +414,11 @@ if [[ $SYSTEM =~ "WSL[12]" ]]; then
 
     [[ -d "$HOME/.local/bin/" ]] || mkdir -p "$HOME/.local/bin/"
 
+    local cmd_windows="/mnt/c/Windows/System32/cmd.exe"
+    local cmd="$HOME/.local/bin/cmd.exe"
+    [[ -f "$cmd" ]] || ln -s $cmd_windows $cmd
+    unset cmd
+
     local explorer="$HOME/.local/bin/explorer"
     [[ -f "$explorer" ]] || ln -s "/mnt/c/Windows/explorer.exe" "$explorer"
     unset explorer
@@ -421,12 +426,12 @@ if [[ $SYSTEM =~ "WSL[12]" ]]; then
     export BROWSER="$HOME/.local/bin/msedge"
     [[ -f "$BROWSER" ]] || ln -s "/mnt/c/Program Files (x86)/Microsoft/Edge/Application/msedge.exe" "$BROWSER"
 
-    local win32yank_wsl=$HOME/.local/bin/win32yank.exe
+    local win32yank_wsl="$HOME/.local/bin/win32yank.exe"
     if [[ ! -f $win32yank_wsl ]]; then
-        local win32yank_windows=$(wtw $(/mnt/c/Windows/System32/cmd.exe /c "where win32yank" 2>&1 | tail -n 1 | tr -d '\r'))
+        local win32yank_windows=$(wtw $($cmd_windows /c "where win32yank" 2>&1 | tail -n 1 | tr -d '\r'))
         [[ -f $win32yank_windows ]] && ln -s $win32yank_windows $win32yank_wsl
     fi
-    unset win32yank_wsl win32yank_windows
+    unset win32yank_wsl win32yank_windows cmd_windows
 
 elif [[ $SYSTEM == "Android" ]]; then
     if [ ! $XDG_RUNTIME_DIR ]; then
