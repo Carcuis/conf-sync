@@ -113,8 +113,11 @@
     "markdownlint.onChange": false,
     "markdownlint.config": {
         "default": true,
-        "line_length": false
+        "line_length": false,
+        "MD046": false
     },
+    "markdown-preview-enhanced.codeBlockTheme": "darcula.css",
+    "markdown-preview-enhanced.previewTheme": "one-dark.css",
     "translator.window.enableBorder": false,
     "translator.engines": [
         "bing",

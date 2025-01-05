@@ -492,8 +492,8 @@ let g:highlightedyank_highlight_duration = 200
 " === coc.nvim ===
 if has("nvim")
     let g:coc_global_extensions = [
-                \ 'coc-json', 'coc-vimlsp', 'coc-marketplace', 'coc-markdownlint',
-                \ 'coc-basedpyright', 'coc-powershell', 'coc-sh', 'coc-clangd',
+                \ 'coc-json', 'coc-vimlsp', 'coc-marketplace', 'coc-markdownlint', 'coc-markdown-preview-enhanced',
+                \ 'coc-basedpyright', 'coc-powershell', 'coc-sh', 'coc-clangd', 'coc-webview',
                 \ 'coc-cmake', 'coc-actions', 'coc-translator', 'coc-snippets', 'coc-gitignore',
                 \ 'coc-sumneko-lua', 'coc-tsserver', 'coc-eslint', 'https://github.com/Carcuis/coc-nav',
                 \ 'coc-xml', 'coc-yaml', 'coc-toml', 'coc-java-dev', 'coc-css', 'coc-sql']
@@ -549,6 +549,7 @@ if has("nvim")
     command! -nargs=0 Format :call CocActionAsync('format')
     command! -nargs=? Fold :call CocAction('fold', <f-args>)
     command! -nargs=0 OR :call CocActionAsync('runCommand', 'editor.action.organizeImport')
+    command! -nargs=0 MarkdownPreviewEnhanced :CocCommand markdown-preview-enhanced.openPreview
 
     let g:coc_borderchars = ['─', '│', '─', '│', '╭', '╮', '╯', '╰']
     let g:coc_notify_error_icon = ''
