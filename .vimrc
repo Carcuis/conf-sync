@@ -2139,7 +2139,7 @@ if has("nvim")
     end, { nargs = '?' })
 
     local keymaps = {
-        { mode = "n", key = "<M-C-d>", func = vim.cmd.ToggleDapUI, desc = "Toggle DAP UI" },
+        { mode = "n", key = "<C-M-d>", func = vim.cmd.ToggleDapUI, desc = "Toggle DAP UI" },
         { mode = "n", key = "<F3>", func = dap.pause, desc = "DAP Pause" },
         { mode = "n", key = "<F4>", func = dap.continue, desc = "DAP Continue" },
         { mode = "n", key = "<F5>", func = dap.step_into, desc = "DAP Step Into" },
@@ -2251,17 +2251,17 @@ if has("nvim")
         mappings = {
             next = '<TAB>',
             prev = '<S-TAB>',
-            insert_row_up = '<C-A-k>',
-            insert_row_down = '<C-A-j>',
-            move_row_up = '<A-K>',
-            move_row_down = '<A-J>',
-            insert_column_left = '<C-A-h>',
-            insert_column_right = '<C-A-l>',
-            move_column_left = '<A-G>',
-            move_column_right = '<A-:>',
-            insert_table = '<C-A-t>',
-            insert_table_alt = '<A-T>',
-            delete_column = '<C-A-d>',
+            insert_row_up = '<C-M-k>',
+            insert_row_down = '<C-M-j>',
+            move_row_up = '<C-M-K>',
+            move_row_down = '<C-M-J>',
+            insert_column_left = '<C-M-h>',
+            insert_column_right = '<C-M-l>',
+            move_column_left = '<C-M-H>',
+            move_column_right = '<C-M-L>',
+            insert_table = '<C-M-t>',
+            insert_table_alt = '<C-M-T>',
+            delete_column = '<C-M-c>',
         }
     })
 EOF
