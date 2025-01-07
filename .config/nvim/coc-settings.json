@@ -114,6 +114,7 @@
     "markdownlint.config": {
         "default": true,
         "line_length": false,
+        "MD033": false,
         "MD046": false
     },
     "markdown-preview-enhanced.codeBlockTheme": "darcula.css",
