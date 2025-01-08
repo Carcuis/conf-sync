@@ -190,8 +190,8 @@ function check_all_files
 
 function confirm() {
     local user_input
-    read -N1 -p "$1 [Y/n] " user_input </dev/tty
-    [[ "$user_input" == $'\n' ]] && user_input=y || echo
+    read -n1 -p "$1 [Y/n] " user_input </dev/tty
+    [[ -z $user_input ]] && user_input=y || echo
     [[ "$user_input" =~ [yY] ]] && return 0 || return 1
 }
 
