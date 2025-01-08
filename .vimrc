@@ -1967,22 +1967,37 @@ if has("nvim")
         dapui.open()
     end
 
-    local python_debug_project_configuration = {
+    local python_debug_project = {
         type = "python",
         request = "launch",
         name = "Launch project",
         program = "main.py",
         console = "integratedTerminal",
     }
-    table.insert(dap.configurations.python, 1, python_debug_project_configuration)
+    local python_debug_file = {
+        type = "python",
+        request = "launch",
+        name = "Launch file",
+        program = "${file}",
+        console = "integratedTerminal",
+    }
+    table.insert(dap.configurations.python, 1, python_debug_project)
+    table.insert(dap.configurations.python, 1, python_debug_file)
 
     vim.keymap.set("n", "<leader>dp", function()
         if vim.fn.filereadable("main.py") == 1 then
-            dap.run(python_debug_project_configuration)
+            dap.run(python_debug_project)
         else
             vim.notify("Launch project failed, main.py not found", vim.log.levels.WARN, { title = "Debug project" })
         end
     end, { desc = "Debug project" })
+    vim.keymap.set("n", "<leader>df", function()
+        if vim.fn.expand("%:e") == "py" then
+            dap.run(python_debug_file)
+        else
+            vim.notify("Launch file failed, only support py files", vim.log.levels.WARN, { title = "Debug file" })
+        end
+    end, { desc = "Debug file" })
 
     dap.adapters.codelldb = {
         -- see: https://github.com/mfussenegger/nvim-dap/wiki/C-C---Rust-(via--codelldb)
