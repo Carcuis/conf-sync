@@ -151,13 +151,20 @@ function detect_system() {
     else SYSTEM="Unknown"
     fi
 }
+detect_system
 
 function has_command() { command -v "$1" > /dev/null ; }
 function has_dir()     { [[ -d "$1" ]] ; }
 function has_file()    { [[ -f "$1" ]] ; }
 function file_same()   { diff "$1" "$2" > /dev/null ; }
 function ensure_dir()  { has_dir "$1" || mkdir -p "$1" ; }
-function owned_by_root() { [[ $(stat -c %U "$1") == "root" ]] ; }
+
+function owned_by_root
+{
+    local _cmd
+    [[ $SYSTEM == "Darwin" ]] && _cmd="stat -f %Su" || _cmd="stat -c %U"
+    [[ $($_cmd "$1") == "root" ]]
+}
 
 function check_editor
 {
@@ -288,7 +295,6 @@ function link_init_nvim() {
 
 # main
 cmd_parser "$@"
-detect_system
 declare_dirs
 check_editor
 run_edit
