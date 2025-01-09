@@ -856,6 +856,9 @@ EOF
         filters = {
             git_ignored = false,
         },
+        view = {
+            width = math.floor(math.max(20, math.min(30, vim.o.columns / 5.5))),
+        },
     }
 EOF
 endif
@@ -1960,6 +1963,33 @@ if has("nvim")
             expand = { "o", "<2-LeftMouse>" },
             open = "<CR>",
         },
+        layouts = { {
+            elements = { {
+                id = "scopes",
+                size = 0.25
+            }, {
+                id = "breakpoints",
+                size = 0.25
+            }, {
+                id = "stacks",
+                size = 0.25
+            }, {
+                id = "watches",
+                size = 0.25
+            } },
+            position = "left",
+            size = math.floor(math.max(20, math.min(40, vim.o.columns / 5)))
+        }, {
+            elements = { {
+                id = "repl",
+                size = 0.5
+            }, {
+                id = "console",
+                size = 0.5
+            } },
+            position = "bottom",
+            size = math.floor(math.max(5, math.min(10, vim.o.lines / 5)))
+        } },
     })
     dap.listeners.before.launch.dapui_config = function()
         vim.cmd.NvimTreeClose()
