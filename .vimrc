@@ -222,7 +222,7 @@ if has("nvim")
     elseif has("linux")
         set guifont=UbuntuMono\ NF:h16
     elseif has("mac")
-        set guifont=UbuntuMono\ Nerd\ Font\ Mono:h20
+        set guifont=CaskaydiaCove\ Nerd\ Font\ Mono:h18
     endif
     set mousemoveevent
     set winblend=10
