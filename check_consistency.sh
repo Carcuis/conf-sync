@@ -25,7 +25,7 @@ declare -a extra_file_list=(
     global_gitconfig
     shellcheckrc
     kitty_config
-    kitty_config_linux
+    kitty_linux
     vifmrc
     tealdeer_config
     condarc
@@ -54,8 +54,8 @@ function declare_dirs() {
     shellcheckrc_local=$HOME/.shellcheckrc
     kitty_config_remote=$DIR/.config/kitty/kitty.conf
     kitty_config_local=$HOME/.config/kitty/kitty.conf
-    kitty_config_linux_remote=$DIR/.config/kitty/kitty_linux.conf
-    kitty_config_linux_local=$HOME/.config/kitty/kitty_linux.conf
+    kitty_linux_remote=$DIR/.config/kitty/kitty_linux.conf
+    kitty_linux_local=$HOME/.config/kitty/kitty_linux.conf
     vifmrc_remote=$DIR/.config/vifm/vifmrc
     vifmrc_local=$HOME/.config/vifm/vifmrc
     tealdeer_config_remote=$DIR/.config/tealdeer/config.toml
@@ -73,8 +73,8 @@ function declare_dirs() {
         Darwin)
             ptpython_config_local="$HOME/Library/Application Support/ptpython/config.py"
             lazygit_config_local="$HOME/Library/Application Support/lazygit/config.yml"
-            kitty_config_macos_remote=$DIR/.config/kitty/kitty_macos.conf
-            kitty_config_macos_local=$HOME/.config/kitty/kitty_macos.conf
+            kitty_macos_remote=$DIR/.config/kitty/kitty_macos.conf
+            kitty_macos_local=$HOME/.config/kitty/kitty_macos.conf
             ;;
         Android)
             shortcut_sshd_remote=$DIR/android/.shortcuts/sshd
@@ -94,7 +94,7 @@ function declare_dirs() {
 
     case $SYSTEM in
         Android)
-            exclude_file_list+=( ideavimrc kitty_config condarc );
+            exclude_file_list+=( ideavimrc kitty_config kitty_linux condarc );
             addon_file_list+=( shortcut_sshd )
             ;;
         WSL*)
@@ -102,8 +102,8 @@ function declare_dirs() {
             addon_file_list+=( wsl_conf )
             ;;
         Darwin)
-            exclude_file_list+=( kitty_config_linux )
-            addon_file_list+=( kitty_config_macos )
+            exclude_file_list+=( kitty_linux )
+            addon_file_list+=( kitty_macos )
             ;;
         Codespace)
             exclude_file_list+=( ideavimrc kitty_config )
