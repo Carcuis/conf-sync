@@ -472,7 +472,7 @@ if [[ $SYSTEM =~ "WSL." ]]; then
     POWERLEVEL9K_CUSTOM_HOST_IDENTIFIER_FOREGROUND=172
 elif [[ $SYSTEM == "Android" ]]; then
     if [[ -n $SSH_CONNECTION ]]; then
-        _HOST_IDENTIFIER="$(getprop ro.product.vendor.name) "
+        _HOST_IDENTIFIER="$(getprop ro.product.model) "
     else
         _HOST_IDENTIFIER=""
     fi
