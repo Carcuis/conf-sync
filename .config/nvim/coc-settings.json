@@ -108,7 +108,6 @@
     "powershell.integratedConsole.showOnStartup": false,
     "codeLens.enable": true,
     "codeLens.position": "eol",
-    "bashIde.backgroundAnalysisMaxFiles": 0,
     "markdownlint.onOpen": false,
     "markdownlint.onChange": false,
     "markdownlint.config": {
