@@ -998,7 +998,8 @@ if has("nvim")
             },
             {
                 sections = { lualine_y = {{
-                    'filetype',
+                    function() return 'Structure' end,
+                    icon = "󰆧",
                     padding = { left = 0, right = 0 },
                     separator = { left = '', right = '' },
                 }}, },
