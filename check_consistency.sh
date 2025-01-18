@@ -1,17 +1,11 @@
 #!/usr/bin/env bash
 
 DIR=$(dirname $(realpath $0))
+source $DIR/scripts/util.sh
+
 verbose=false
-
-BOLD="$(printf '\033[1m')"; TAIL="$(printf '\033[0m')"; WHITE="$(printf '\033[37m')"
-RED="$(printf '\033[31m')"; GREEN="$(printf '\033[32m')"; YELLOW="$(printf '\033[33m')"; CYAN="$(printf '\033[36m')"
-
-function mesg()     { echo -e "${WHITE}$1${TAIL}" ; }
-function info()     { if [[ $verbose == true ]]; then mesg "${CYAN}$1"; fi ; }
-function bold()     { mesg "${BOLD}$1" ; }
-function success()  { bold "${GREEN}$1 ✔" ; }
-function warning()  { bold "${YELLOW}$1" ; }
-function error()    { bold "${RED}$1" 1>&2 ; }
+force_sync=false
+diff_command=""
 
 declare -a file_list=(
     zshrc
@@ -131,6 +125,7 @@ function usage() {
    mesg
    bold "Options:"
    mesg "  -a, --all        Check all files"
+   mesg "  -f, --force-sync Force sync files"
    mesg "  -h, --help       Display help"
    mesg "  -v, --verbose    Show detailed information"
 }
@@ -142,31 +137,41 @@ function cmd_parser
             a|-a|--all) file_list+=( ${extra_file_list[@]} ) ;;
             h|-h|--help) usage; exit 0 ;;
             v|-v|--verbose) verbose=true ;;
+            f|-f|--force-sync) make_sync_force ;;
             *) error "Error: Invalid option '$1'"; usage; exit 1 ;;
         esac
         shift
     done
 }
 
-function detect_system() {
-    local _uname_a=$(uname -a)
+function make_sync_force
+{
+    force_sync=true
+    diff_command="backup_and_copy"
+}
 
-    if [[ $_uname_a =~ Microsoft ]]; then SYSTEM="WSL1"
-    elif [[ $_uname_a =~ WSL2 ]];    then SYSTEM="WSL2"
-    elif [[ -n $CODESPACE_NAME ]];   then SYSTEM="Codespace"
-    elif [[ $OSTYPE =~ ^darwin ]];   then SYSTEM="Darwin"
-    elif [[ $OSTYPE =~ android ]];   then SYSTEM="Android"
-    elif [[ $OSTYPE =~ ^linux ]];    then SYSTEM="Linux"
-    else SYSTEM="Unknown"
+function backup_and_copy
+{
+    local src=$1
+    local dest=$2
+    local dest_dir=$(dirname "$dest")
+    local backup_dir=$DIR/backup
+
+    ensure_dir $dest_dir
+    ensure_dir $backup_dir
+
+    if has_file $dest; then
+        local backup_file=$backup_dir/$(basename $dest).$(date +%y%m%d_%H%M%S)
+        if ! move_file $dest $backup_file; then
+            return 1
+        fi
+        success "Backuped \`$dest\` to \`$backup_file\`."
+    fi
+
+    if ! copy_file $src $dest; then
+        return 1
     fi
 }
-detect_system
-
-function has_command() { command -v "$1" > /dev/null ; }
-function has_dir()     { [[ -d "$1" ]] ; }
-function has_file()    { [[ -f "$1" ]] ; }
-function file_same()   { diff "$1" "$2" > /dev/null ; }
-function ensure_dir()  { has_dir "$1" || mkdir -p "$1" ; }
 
 function owned_by_root
 {
@@ -202,32 +207,44 @@ function check_all_files
             return 1
         fi
     done
-    return
 }
 
 function confirm() {
+    if [[ $force_sync == true ]]; then
+        return 0
+    fi
+
     local user_input
     read -n1 -p "$1 [Y/n] " user_input </dev/tty
     [[ -z $user_input ]] && user_input=y || echo
     [[ "$user_input" =~ [yY] ]] && return 0 || return 1
 }
 
-function copy_file() {
-    local src=$1
-    local dest=$2
+function transfer_file() {
+    local operation=$1
+    local src=$2
+    local dest=$3
+    local src_dir=$(dirname "$src")
     local dest_dir=$(dirname "$dest")
 
     ensure_dir $dest_dir
-    if owned_by_root $dest_dir; then
-        if ! sudo cp "$src" "$dest"; then
+    if owned_by_root $src_dir || owned_by_root $dest_dir; then
+        if ! sudo $operation "$src" "$dest"; then
             return 1
         fi
     else
-        if ! cp "$src" "$dest"; then
+        if ! $operation "$src" "$dest"; then
             return 1
         fi
     fi
-    return
+}
+
+function copy_file() {
+    transfer_file cp "$1" "$2"
+}
+
+function move_file() {
+    transfer_file mv "$1" "$2"
 }
 
 function run_edit
@@ -256,7 +273,7 @@ function run_edit
             [[ $verbose == true ]] && success "$file has already been synchronized."
         else
             if confirm "$file unsynchronized. Edit with $diff_command ?"; then
-                if owned_by_root $file_local; then
+                if [[ $force_sync == false ]] && owned_by_root $file_local; then
                     diff_command="sudo -E env PATH=$PATH $diff_command"
                 fi
 
@@ -278,9 +295,13 @@ function run_edit
     fi
 }
 
+function main() {
+    cmd_parser "$@"
+    declare_dirs
+    [[ $force_sync == true ]] || check_editor
+    run_edit
+}
 
-# main
-cmd_parser "$@"
-declare_dirs
-check_editor
-run_edit
+if [[ "${BASH_SOURCE[0]}" == "${0}" ]]; then
+    main "$@"
+fi

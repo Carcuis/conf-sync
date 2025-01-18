@@ -1,21 +1,12 @@
 #!/usr/bin/env bash
 
+DIR=$(dirname $(realpath $0))
+source $DIR/scripts/util.sh
+
 verbose=false
 no_error=true
 
-BOLD="$(printf '\033[1m')"; TAIL="$(printf '\033[0m')"
-RED="$(printf '\033[31m')"; GREEN="$(printf '\033[32m')"; YELLOW="$(printf '\033[33m')"
-CYAN="$(printf '\033[36m')"; BLUE="$(printf '\033[34m')"; WHITE="$(printf '\033[37m')"
-
-DIR=$(dirname $(realpath $0))
 ZSH_CUSTOM=${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}
-
-function mesg()     { echo -e "${WHITE}$1${TAIL}" ; }
-function info()     { if [[ $verbose == true ]]; then mesg "${CYAN}$1"; fi ; }
-function bold()     { mesg "${BOLD}$1" ; }
-function success()  { bold "${GREEN}$1 ✔" ; }
-function warning()  { bold "${YELLOW}$1" ; }
-function error()    { bold "${RED}$1" 1>&2 ; }
 
 function cmd_parser() {
     while [ "$#" -gt 0 ]; do
@@ -74,11 +65,6 @@ function test_web_connection() {
         fi
     done
 }
-
-function has_command() { command -v "$1" > /dev/null ; }
-function has_dir() { [[ -d "$1" ]] ; }
-function has_file() { [[ -f "$1" ]] ; }
-function ensure_dir() { has_dir "$1" || mkdir -p "$1" ; }
 
 function installing_mesg() { mesg "${BLUE}Installing ${BOLD}$1${BLUE} ..." ; }
 function already_installed_mesg() { info "$1 has already installed." ; }
@@ -274,8 +260,26 @@ function install_yazi_package() {
     fi
 }
 
-function link_init_nvim() {
-    local init_nvim=$HOME/.config/nvim/init.vim
+function create_symlink() {
+    local src=$1
+    local dest=$2
+    if has_file $dest; then
+        if [[ $(realpath $dest) == $(realpath $src) ]]; then
+            info "$dest has already linked."
+            return
+        else
+            warning "Warning: $dest exists, but not linked to $src."
+            no_error=false
+            return 1
+        fi
+    else
+        ensure_dir $(dirname $dest)
+        ln -s $src $dest
+        success "Linked $dest to $src."
+    fi
+}
+
+function link_files() {
     local vimrc=$HOME/.vimrc
 
     if ! has_file $vimrc; then
@@ -283,20 +287,10 @@ function link_init_nvim() {
         cp $DIR/.vimrc $vimrc
         success "Copied $DIR/.vimrc to $vimrc."
     fi
-    if has_file $init_nvim; then
-        if [[ $(realpath $init_nvim) == $(realpath $vimrc) ]]; then
-            info "Neovim init.nvim has already linked."
-            return
-        else
-            warning "Warning: $init_nvim exists, but not linked to $vimrc."
-            no_error=false
-            return 1
-        fi
-    else
-        ensure_dir $HOME/.config/nvim
-        ln -s $vimrc $init_nvim
-        success "Linked $init_nvim to $vimrc."
-    fi
+
+    create_symlink $vimrc $HOME/.config/nvim/init.vim
+    create_symlink $DIR/scripts/check_all.sh $HOME/.local/bin/csc
+    create_symlink $DIR/scripts/update.sh $HOME/.local/bin/csup
 }
 
 function install_all() {
@@ -304,16 +298,20 @@ function install_all() {
     install_vim_plug
     install_vifm_custom
     install_yazi_package
-    link_init_nvim
+    link_files
 
     if [[ $no_error == true ]]; then
         success "All dependencies have been installed."
     fi
 }
 
+function main() {
+    cmd_parser "$@"
+    detect_system
+    check_deps
+    install_all
+}
 
-# main
-cmd_parser "$@"
-detect_system
-check_deps
-install_all
+if [[ "${BASH_SOURCE[0]}" == "${0}" ]]; then
+    main "$@"
+fi
