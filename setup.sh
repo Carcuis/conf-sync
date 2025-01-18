@@ -7,6 +7,7 @@ BOLD="$(printf '\033[1m')"; TAIL="$(printf '\033[0m')"
 RED="$(printf '\033[31m')"; GREEN="$(printf '\033[32m')"; YELLOW="$(printf '\033[33m')"
 CYAN="$(printf '\033[36m')"; BLUE="$(printf '\033[34m')"; WHITE="$(printf '\033[37m')"
 
+DIR=$(dirname $(realpath $0))
 ZSH_CUSTOM=${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}
 
 function mesg()     { echo -e "${WHITE}$1${TAIL}" ; }
@@ -77,6 +78,7 @@ function test_web_connection() {
 function has_command() { command -v "$1" > /dev/null ; }
 function has_dir() { [[ -d "$1" ]] ; }
 function has_file() { [[ -f "$1" ]] ; }
+function ensure_dir() { has_dir "$1" || mkdir -p "$1" ; }
 
 function installing_mesg() { mesg "${BLUE}Installing ${BOLD}$1${BLUE} ..." ; }
 function already_installed_mesg() { info "$1 has already installed." ; }
@@ -272,11 +274,37 @@ function install_yazi_package() {
     fi
 }
 
+function link_init_nvim() {
+    local init_nvim=$HOME/.config/nvim/init.vim
+    local vimrc=$HOME/.vimrc
+
+    if ! has_file $vimrc; then
+        info "$vimrc not found."
+        cp $DIR/.vimrc $vimrc
+        success "Copied $DIR/.vimrc to $vimrc."
+    fi
+    if has_file $init_nvim; then
+        if [[ $(realpath $init_nvim) == $(realpath $vimrc) ]]; then
+            info "Neovim init.nvim has already linked."
+            return
+        else
+            warning "Warning: $init_nvim exists, but not linked to $vimrc."
+            no_error=false
+            return 1
+        fi
+    else
+        ensure_dir $HOME/.config/nvim
+        ln -s $vimrc $init_nvim
+        success "Linked $init_nvim to $vimrc."
+    fi
+}
+
 function install_all() {
     install_ohmyzsh
     install_vim_plug
     install_vifm_custom
     install_yazi_package
+    link_init_nvim
 
     if [[ $no_error == true ]]; then
         success "All dependencies have been installed."
