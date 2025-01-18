@@ -170,9 +170,10 @@ function ensure_dir()  { has_dir "$1" || mkdir -p "$1" ; }
 
 function owned_by_root
 {
-    local _cmd
-    [[ $SYSTEM == "Darwin" ]] && _cmd="stat -f %Su" || _cmd="stat -c %U"
-    [[ $($_cmd "$1") == "root" ]]
+    local root
+    local file="$1"
+    [[ $SYSTEM == "Darwin" ]] && root=$(stat -f %Su "$file" 2>&1) || root=$(stat -c %U "$file")
+    [[ $root == "root" ]]
 }
 
 function check_editor
