@@ -165,7 +165,7 @@ function backup_and_copy
         if ! move_file $dest $backup_file; then
             return 1
         fi
-        success "Backuped \`$dest\` to \`$backup_file\`."
+        info "Backuped \`$dest\` to \`$backup_file\`."
     fi
 
     if ! copy_file $src $dest; then
