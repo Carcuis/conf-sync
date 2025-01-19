@@ -2296,8 +2296,8 @@ if has("nvim")
     require("table-nvim").setup({
         padd_column_separators = true,
         mappings = {
-            next = '<TAB>',
-            prev = '<S-TAB>',
+            next = '<C-M-n>',
+            prev = '<C-M-p>',
             insert_row_up = '<C-M-k>',
             insert_row_down = '<C-M-j>',
             insert_column_left = '<C-M-h>',
