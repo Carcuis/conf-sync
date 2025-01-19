@@ -533,17 +533,30 @@ function cdhk() {
     fi
 }
 
+# get conda envs from environments.txt rather than `conda env list`
+function get_conda_envs() {
+    local envs_file="${1:-$HOME/.conda/environments.txt}"
+    [[ -f $envs_file ]] || return 1
+
+    local base_dir=$(head -n 1 $envs_file)
+    echo "base $base_dir"
+    tail -n +2 $envs_file | while read line; do
+        local env_name=$(basename $line)
+        echo "$env_name $line"
+    done
+}
+
 if typeset -f vrun > /dev/null; then
-    eval "$(typeset -f vrun | sed 's/^vrun/_vrun/')"
+    eval "$(typeset -f vrun | sed 's/^vrun/activate_venv/')"
 fi
 function vrun() {
     local venv="${PYTHON_VENV_NAME:-venv}"
     local name="${1:-$venv}"
 
     if [[ -d $name ]] || [[ $name == $venv ]]; then
-        _vrun "$name" || return $?
+        activate_venv "$name" || return $?
     else
-        if ! command -v conda > /dev/null || ! conda env list | grep -q "^${name} " ; then
+        if ! command -v conda > /dev/null || ! get_conda_envs | grep -q "^${name} " ; then
             echo "Error: could not find virtual environment $name."
             return 1
         fi
@@ -561,13 +574,17 @@ function vrun() {
         elif [[ $name == $CONDA_DEFAULT_ENV ]]; then
             echo "Already activated conda environment $name"
         else
-            [[ -n "$CONDA_EXE" ]] || conda deactivate || return $?
+            [[ -z "$CONDA_DEFAULT_ENV" ]] || conda deactivate || return $?
             conda activate "$name" || return $?
             echo "Activated conda environment $name"
         fi
     fi
 }
-unset _vrun
+function _vrun() {
+    local envs=("${(@f)$(get_conda_envs | awk '{print $1}')}")
+    _describe 'command' envs
+}
+compdef _vrun vrun
 
 function dac() {
     if [ -n "$CONDA_DEFAULT_ENV" ]; then
