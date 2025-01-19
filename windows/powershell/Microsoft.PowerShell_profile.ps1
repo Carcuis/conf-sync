@@ -137,7 +137,7 @@ function Has-Conda-Env{
     }
     return $false
 }
-function Has-Conda-Env-Name {
+function Check-Conda-Env-By-Name {
 <#
 .SYNOPSIS
     Check if a conda environment with the given name exists.
@@ -310,7 +310,7 @@ function Activate-Python-Venv {
             Write-Error "Error: Cannot find 'venv' directory in $dir"
         }
     } else {
-        if (Has-Conda-Env-Name -name $name) {
+        if (Check-Conda-Env-By-Name -name $name) {
             if (Has-Virtual-Env) {
                 Deactivate-Python-Venv
             }
