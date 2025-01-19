@@ -81,7 +81,7 @@ $tealdeer = @{
 }
 $condarc = @{
     name = "condarc"
-    remote = "$PSScriptRoot\windows\conda\.condarc"
+    remote = "$PSScriptRoot\dot_files\.condarc"
     local = "$HOME\.condarc"
 }
 $yazi_config = @{
