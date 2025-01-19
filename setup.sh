@@ -30,19 +30,6 @@ function usage() {
     mesg "  -v, --verbose Show detailed information"
 }
 
-function detect_system() {
-    local _uname_a=$(uname -a)
-    if [[ $_uname_a =~ Microsoft ]]; then SYSTEM="WSL1"
-    elif [[ $_uname_a =~ WSL2 ]];    then SYSTEM="WSL2"
-    elif [[ -n $CODESPACE_NAME ]];   then SYSTEM="Codespace"
-    elif [[ $OSTYPE =~ ^darwin ]];   then SYSTEM="Darwin"
-    elif [[ $OSTYPE =~ android ]];   then SYSTEM="Android"
-    elif [[ $OSTYPE =~ ^linux ]];    then SYSTEM="Linux"
-    else error "Error: Unsupported system."; exit 1
-    fi
-    mesg "${CYAN}Current system: ${GREEN}$SYSTEM${TAIL}"
-}
-
 function test_web_connection() {
     local web_list=(
         "https://www.baidu.com"
@@ -307,7 +294,6 @@ function install_all() {
 
 function main() {
     cmd_parser "$@"
-    detect_system
     check_deps
     install_all
 }
