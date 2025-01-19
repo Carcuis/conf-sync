@@ -1,24 +1,54 @@
-# conf-sync
+# Carcuis's dotfiles
 
-## Sync `configure`/`rc`/`dot` files between Windows, GNU/Linux distros and MacOS
+This repository is a collection of my personal configuration files for various tools and environments.
+Various scripts are provided to help sync these files between different operating systems like Windows, Linux and MacOS.
 
-### Two simple script for windows and unix
+## Contents
 
-On Windows: to use `nvim -d` to quick compare pwsh `profile.ps1` and `_vimrc` relatively in remote repository and local home directory, simply run:
+* Neovim (vim) config
+* oh-my-zsh config
+* PowerShell profile
+* VSCode settings
+* WSL2 config
+* IdeaVim config
+* Termux shortcuts
+* Edge extension settings
+* And more...
 
-```powershell
-conf-sync> .\check_consistency.ps1    # add `-a` to compare extra files
+## Requirements
+
+* [neovim](https://neovim.io/) >= v0.10
+  * [ripgrep](https://github.com/BurntSushi/ripgrep)
+  * [fd](https://github.com/sharkdp/fd)
+  * [fzf](https://github.com/junegunn/fzf)
+  * [nodejs](https://nodejs.org/)
+  * C++ compiler (for some plugins)
+* [Nerd Fonts](https://github.com/ryanoasis/nerd-fonts/releases) >= v3.3.0
+* [Vifm](https://vifm.info/)
+* [Yazi](https://yazi-rs.github.io/docs/installation) >= v0.4.0
+  * [FFmpeg](https://www.ffmpeg.org/)
+  * [7-Zip](https://www.7-zip.org/)
+  * [jq](https://jqlang.github.io/jq/)
+  * [Poppler](https://poppler.freedesktop.org/)
+  * [ImageMagick](https://imagemagick.org/)
+  * [MediaInfo](https://github.com/MediaArea/MediaInfo)
+* [lazygit](https://github.com/jesseduffield/lazygit) >= v0.45
+  * [delta](https://github.com/dandavison/delta)
+
+## Installation
+
+```bash
+./setup.sh
 ```
 
-On Linux, macOS and Termux: to use `nvim -d` to quick compare `.zshrc` and `.vimrc` relatively in remote repository and local home directory, simply run:
+## Run sync
 
-```zsh
-conf-sync% ./check_consistency.sh    # add `-a` to compare extra files
+```bash
+./check_consistency.sh # [-a|v|f|h]
+
+# or
+csc # [-v|f|h]  # symlinked to scripts/check_all.sh
+
+# or
+csup # [-v|f|h]  # symlinked to scripts/update.sh
 ```
-
-### And a set-up script for `oh-my-zsh` and more with `zsh` pre-installed
-
-```zsh
-conf-sync% ./setup.sh
-```
-
