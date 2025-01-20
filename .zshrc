@@ -582,7 +582,7 @@ function vrun() {
 }
 function _vrun() {
     local envs=("${(@f)$(get_conda_envs | awk '{print $1}')}")
-    _describe 'command' envs
+    [[ -n $envs ]] && _arguments '1: :_values "environment" $envs'
 }
 compdef _vrun vrun
 
