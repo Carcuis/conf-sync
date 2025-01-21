@@ -5,11 +5,12 @@
 # should be linked by ~/.local/bin/csc using setup.sh
 #
 
-DIR=$(dirname $(dirname $(realpath $0)))
-source $DIR/scripts/util.sh
+DIR=$(dirname $(dirname $(realpath ${BASH_SOURCE[0]})))
+source $DIR/check_consistency.sh
 
-verbose=""
-force_sync=""
+function add_extra_files() {
+    file_list+=( ${extra_file_list[@]} )
+}
 
 function usage() {
    bold "Usage:"
@@ -21,26 +22,23 @@ function usage() {
    mesg "  -v, --verbose    Show detailed information"
 }
 
-function cmd_parser
-{
+function cmd_parser() {
     while [ "$#" -gt 0 ]; do
         case "$1" in
             h|-h|--help) usage; exit 0 ;;
-            v|-v|--verbose) verbose="--verbose" ;;
-            f|-f|--force-sync) force_sync="--force-sync" ;;
+            v|-v|--verbose) verbose=true ;;
+            f|-f|--force-sync) make_sync_force ;;
             *) error "Error: Invalid option '$1'"; usage; exit 1 ;;
         esac
         shift
     done
 }
 
-function check_all() {
-    bash $DIR/check_consistency.sh --all $force_sync $verbose
-}
-
 function main() {
     cmd_parser "$@"
-    check_all
+    add_extra_files
+    declare_dirs
+    run_edit
 }
 
 if [[ "${BASH_SOURCE[0]}" == "${0}" ]]; then

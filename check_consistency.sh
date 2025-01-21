@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-DIR=$(dirname $(realpath $0))
+DIR=$(dirname $(realpath ${BASH_SOURCE[0]}))
 source $DIR/scripts/util.sh
 
 verbose=false
@@ -130,8 +130,7 @@ function usage() {
    mesg "  -v, --verbose    Show detailed information"
 }
 
-function cmd_parser
-{
+function cmd_parser() {
     while [ "$#" -gt 0 ]; do
         case "$1" in
             a|-a|--all) file_list+=( ${extra_file_list[@]} ) ;;
@@ -144,14 +143,12 @@ function cmd_parser
     done
 }
 
-function make_sync_force
-{
+function make_sync_force() {
     force_sync=true
     diff_command="backup_and_copy"
 }
 
-function backup_and_copy
-{
+function backup_and_copy() {
     local src=$1
     local dest=$2
     local dest_dir=$(dirname "$dest")
@@ -173,16 +170,14 @@ function backup_and_copy
     fi
 }
 
-function owned_by_root
-{
+function owned_by_root() {
     local root
     local file="$1"
     [[ $SYSTEM == "Darwin" ]] && root=$(stat -f %Su "$file" 2>&1) || root=$(stat -c %U "$file")
     [[ $root == "root" ]]
 }
 
-function check_editor
-{
+function check_editor() {
     if has_command nvim; then
         diff_command="nvim -i NONE -d"
     elif has_command vim; then
@@ -193,8 +188,7 @@ function check_editor
     fi
 }
 
-function check_all_files
-{
+function check_all_files() {
     for file in ${file_list[@]}; do
         local file_remote=$(eval echo \$${file}_remote)
         local file_local=$(eval echo \$${file}_local)
@@ -247,12 +241,13 @@ function move_file() {
     transfer_file mv "$1" "$2"
 }
 
-function run_edit
-{
+function run_edit() {
     if check_all_files; then
         success "All files are the same. Nothing to do."
         return
     fi
+
+    [[ $force_sync == true ]] || check_editor
 
     for file in ${file_list[@]}; do
         local file_remote=$(eval echo \$${file}_remote)
@@ -298,7 +293,6 @@ function run_edit
 function main() {
     cmd_parser "$@"
     declare_dirs
-    [[ $force_sync == true ]] || check_editor
     run_edit
 }
 

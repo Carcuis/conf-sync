@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-DIR=$(dirname $(realpath $0))
+DIR=$(dirname $(realpath ${BASH_SOURCE[0]}))
 source $DIR/scripts/util.sh
 
 verbose=false
