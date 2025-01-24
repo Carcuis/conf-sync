@@ -899,6 +899,9 @@ if has("nvim")
                 link = "ToggleTermFloatBorder",
             }
         },
+        on_open = function() vim.defer_fn(function()
+            vim.cmd('startinsert!')
+        end, 10) end,
     }
 
     local Terminal  = require('toggleterm.terminal').Terminal
@@ -1102,7 +1105,7 @@ if has("nvim")
             },
             ignore_focus = {
                 "dapui_watches", "dapui_stacks", "dapui_breakpoints", "dapui_scopes", "dapui_console",
-                "NvimTree", "coctree", "OverseerList", "terminal"
+                "NvimTree", "coctree", "OverseerList", "terminal", "toggleterm"
             },
         },
         sections = {
@@ -2609,9 +2612,9 @@ autocmd VimEnter * clearjumps
 
 " auto switch mode for terminal
 if has("nvim")
-    autocmd TermOpen term://* let g:terminal_running = v:true | set filetype=terminal
-    autocmd WinEnter term://* if g:terminal_running | startinsert
-    autocmd TermClose term://* let g:terminal_running = v:false | stopinsert
+    autocmd TermOpen term://*[^#toggleterm#]* let g:terminal_running = v:true | set filetype=terminal
+    autocmd WinEnter term://*[^#toggleterm#]* if g:terminal_running | startinsert!
+    autocmd TermClose term://*[^#toggleterm#]* let g:terminal_running = v:false | stopinsert
 endif
 
 " remove trailing ^M
