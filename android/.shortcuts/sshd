@@ -4,6 +4,26 @@ termux-wake-lock
 
 CYAN="$(printf '\033[36m')"; GREEN="$(printf '\033[32m')"; TAIL="$(printf '\033[0m')";
 IP_ADDR=$(ifconfig -a 2>&1 | awk '/wlan0/{flag=1} flag && /inet /{print $2; exit}')
+START_OK=$(cat <<- EOF
+███████╗████████╗ █████╗ ██████╗ ████████╗
+██╔════╝╚══██╔══╝██╔══██╗██╔══██╗╚══██╔══╝
+███████╗   ██║   ███████║██████╔╝   ██║
+╚════██║   ██║   ██╔══██║██╔══██╗   ██║
+███████║   ██║   ██║  ██║██║  ██║   ██║
+╚══════╝   ╚═╝   ╚═╝  ╚═╝╚═╝  ╚═╝   ╚═╝
+
+ ██████╗ ██╗  ██╗
+██╔═══██╗██║ ██╔╝
+██║   ██║█████╔╝
+██║   ██║██╔═██╗
+╚██████╔╝██║  ██╗
+ ╚═════╝ ╚═╝  ╚═╝
+EOF
+)
+if command -v toilet > /dev/null; then
+    IP_ADDR=$(printf "\n\n%s" "$(echo "$IP_ADDR" | toilet -f future --metal | sed 's/^/   /')")
+    START_OK=$(echo "SSHD START OK" | toilet -f future --metal)
+fi
 CONNECT_COMMAND=$(cat <<- EOF
 The server is running on port 8022.
 Connect with the following command:
@@ -28,19 +48,7 @@ start_sshd() {
     if [ $(pgrep sshd | wc -l) -le 0 ]; then
         if sshd; then cat <<EOF
 ${GREEN}
-███████╗████████╗ █████╗ ██████╗ ████████╗
-██╔════╝╚══██╔══╝██╔══██╗██╔══██╗╚══██╔══╝
-███████╗   ██║   ███████║██████╔╝   ██║
-╚════██║   ██║   ██╔══██║██╔══██╗   ██║
-███████║   ██║   ██║  ██║██║  ██║   ██║
-╚══════╝   ╚═╝   ╚═╝  ╚═╝╚═╝  ╚═╝   ╚═╝
-
- ██████╗ ██╗  ██╗
-██╔═══██╗██║ ██╔╝
-██║   ██║█████╔╝
-██║   ██║██╔═██╗
-╚██████╔╝██║  ██╗
- ╚═════╝ ╚═╝  ╚═╝
+${START_OK}
 ${TAIL}
 ${CONNECT_COMMAND}
 ${GREEN}[OK] Started \`sshd\`.
