@@ -318,6 +318,9 @@ alias ktc="$EDITOR ~/.config/kitty/kitty.conf"
 alias ff='fastfetch'
 alias of='onefetch'
 alias yz='yazi'
+alias tm='tmux'
+alias ta='tmux attach'
+alias tl='tmux ls'
 
 if [[ $SYSTEM =~ "WSL[12]" ]]; then
     function wtw() {
