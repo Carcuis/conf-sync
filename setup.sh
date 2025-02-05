@@ -247,6 +247,28 @@ function install_yazi_package() {
     fi
 }
 
+function install_tmux_plugins() {
+    if ! has_command tmux; then
+        warning "Warning: Tmux is not installed, skip installing Tmux plugins."
+        no_error=false
+        return 1
+    fi
+
+    local tpm_dir="$HOME/.config/tmux/plugins/tpm"
+    if not_installed_file "$tpm_dir/tpm" "Tmux Plugin Manager"; then
+        git clone https://github.com/tmux-plugins/tpm $tpm_dir
+        successfully_installed $? "Tmux Plugin Manager"
+
+        if has_file "$tpm_dir/scripts/install_plugins.sh"; then
+            $tpm_dir/scripts/install_plugins.sh
+            successfully_installed $? "Tmux plugins"
+        else
+            warning "Warning: TPM install script not found."
+            no_error=false
+        fi
+    fi
+}
+
 function create_symlink() {
     local src=$1
     local dest=$2
@@ -285,6 +307,7 @@ function install_all() {
     install_vim_plug
     install_vifm_custom
     install_yazi_package
+    install_tmux_plugins
     link_files
 
     if [[ $no_error == true ]]; then
