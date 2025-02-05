@@ -3,15 +3,15 @@
 DIR=$(dirname $(realpath ${BASH_SOURCE[0]}))
 source $DIR/scripts/util.sh
 
-verbose=false
-force_sync=false
-diff_command=""
+verbose=${verbose:-false}
+force_sync=${force_sync:-false}
+diff_command=${diff_command:-""}
 
-declare -a file_list=(
+declare -ag file_list=(
     zshrc
     vimrc
 )
-declare -a extra_file_list=(
+declare -ag extra_file_list=(
     coc_settings
     ptpython_config
     lazygit_config

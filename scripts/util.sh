@@ -1,6 +1,6 @@
 # shellcheck disable=SC2034
 
-verbose=false
+verbose=${verbose:-false}
 
 BOLD="$(printf '\033[1m')"; TAIL="$(printf '\033[0m')"
 RED="$(printf '\033[31m')"; GREEN="$(printf '\033[32m')"; YELLOW="$(printf '\033[33m')"
