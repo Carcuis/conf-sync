@@ -26,6 +26,8 @@ declare -a extra_file_list=(
     yazi_config
     yazi_keymap
     yazi_theme
+    tmux_conf
+    tmux_nerd_font_window_name_yml
 )
 
 # shellcheck disable=SC2034
@@ -62,6 +64,10 @@ function declare_dirs() {
     yazi_keymap_local=$HOME/.config/yazi/keymap.toml
     yazi_theme_remote=$DIR/.config/yazi/theme.toml
     yazi_theme_local=$HOME/.config/yazi/theme.toml
+    tmux_conf_remote=$DIR/.config/tmux/tmux.conf
+    tmux_conf_local=$HOME/.config/tmux/tmux.conf
+    tmux_nerd_font_window_name_yml_remote=$DIR/.config/tmux/tmux-nerd-font-window-name.yml
+    tmux_nerd_font_window_name_yml_local=$HOME/.config/tmux/tmux-nerd-font-window-name.yml
 
     case $SYSTEM in
         Darwin)

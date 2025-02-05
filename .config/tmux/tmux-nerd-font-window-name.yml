@@ -1,0 +1,9 @@
+config:
+  fallback-icon: ""
+
+icons:
+  lazygit: "󰊢"
+  nvim: ""
+  python: ""
+  vi: ""
+  yazi: "󰇥"
