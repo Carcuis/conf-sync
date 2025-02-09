@@ -5,15 +5,15 @@ Various scripts are provided to help sync these files between different operatin
 
 ## Contents
 
-* Neovim (vim) config
-* oh-my-zsh config
-* PowerShell profile
-* VSCode settings
-* WSL2 config
-* IdeaVim config
-* Termux shortcuts
-* Tmux config
-* Edge extension settings
+* [Neovim (vim) config](./.vimrc)
+* [oh-my-zsh config](./.zshrc)
+* [PowerShell profile](./windows/powershell/Microsoft.PowerShell_profile.ps1)
+* [VSCode settings](./vscode/)
+* [WSL2 config](./windows/wsl/)
+* [IdeaVim config](./dot_files/.ideavimrc)
+* [Termux shortcuts](./android/.shortcuts)
+* [Tmux config](./.config/tmux/tmux.conf)
+* [Edge extension settings](./web/)
 * And more...
 
 ## Requirements
