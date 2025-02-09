@@ -471,24 +471,35 @@ POWERLEVEL9K_BATTERY_STAGES=''
 
 # host identifier
 if [[ $SYSTEM =~ "WSL." ]]; then
-    _HOST_IDENTIFIER="$(grep "VERSION=" /etc/os-release | awk -F'[ "]' '{print $2}') "
+    _HOST_NAME="$(grep "VERSION=" /etc/os-release | awk -F'[ "]' '{print $2}')"
+    case "$(grep "^ID=" /etc/os-release | awk -F= '{print $2}')" in
+        ubuntu) _HOST_ICON=" " ;;
+        debian) _HOST_ICON=" " ;;
+        kali) _HOST_ICON=" " ;;
+        arch) _HOST_ICON=" " ;;
+        *) _HOST_ICON=" " ;;
+    esac
     POWERLEVEL9K_CUSTOM_HOST_IDENTIFIER_FOREGROUND=172
 elif [[ $SYSTEM == "Android" ]]; then
-    if [[ -n $SSH_CONNECTION ]]; then
-        _HOST_IDENTIFIER="$(getprop ro.product.model) "
-    else
-        _HOST_IDENTIFIER=""
-    fi
+    _HOST_NAME="$(getprop ro.product.model)"
+    _HOST_ICON=" "
     POWERLEVEL9K_CUSTOM_HOST_IDENTIFIER_FOREGROUND=34
 elif [[ $SYSTEM == "Codespace" ]]; then
-    _HOST_IDENTIFIER=""
+    _HOST_NAME=""
+    _HOST_ICON=""
     POWERLEVEL9K_CUSTOM_HOST_IDENTIFIER_FOREGROUND=75
 fi
 function _host_identifier() {
-    echo $_HOST_IDENTIFIER
+    echo "${_HOST_NAME}${_HOST_ICON}"
 }
-POWERLEVEL9K_CUSTOM_HOST_IDENTIFIER="_host_identifier"
-unset _host_identifier
+if [[ -n $_HOST_NAME ]]; then
+    export TMUX_TITLE_HOST=$_HOST_NAME
+else
+    export TMUX_TITLE_HOST=$HOST
+fi
+export TMUX_HOST_NAME=$(_host_identifier)
+POWERLEVEL9K_CUSTOM_HOST_IDENTIFIER="_host_identifier" ; unset _host_identifier
+[[ $SYSTEM == "Android" ]] && [[ -z $SSH_CONNECTION ]] && unset POWERLEVEL9K_CUSTOM_HOST_IDENTIFIER
 
 # proxy
 function _proxy() {
