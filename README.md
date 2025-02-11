@@ -33,6 +33,7 @@ Various scripts are provided to help sync these files between different operatin
   * [Poppler](https://poppler.freedesktop.org/)
   * [ImageMagick](https://imagemagick.org/)
   * [MediaInfo](https://github.com/MediaArea/MediaInfo)
+  * [ExifTool](https://exiftool.org/)
 * [lazygit](https://github.com/jesseduffield/lazygit) >= v0.45
   * [delta](https://github.com/dandavison/delta)
 * [tmux](https://github.com/tmux/tmux/wiki) >= v3.2
