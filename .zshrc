@@ -108,6 +108,7 @@ plugins=(
     conda-zsh-completion
     git
     python
+    tmux
     z
     zsh-syntax-highlighting
     zsh-autosuggestions
@@ -319,8 +320,6 @@ alias ff='fastfetch'
 alias of='onefetch'
 alias yz='yazi'
 alias tm='tmux'
-alias ta='tmux attach'
-alias tl='tmux ls'
 
 if [[ $SYSTEM =~ "WSL[12]" ]]; then
     function wtw() {
@@ -492,13 +491,7 @@ fi
 function _host_identifier() {
     echo "${_HOST_NAME}${_HOST_ICON}"
 }
-if [[ -n $_HOST_NAME ]]; then
-    export TMUX_TITLE_HOST=$_HOST_NAME
-else
-    export TMUX_TITLE_HOST=$HOST
-fi
-export TMUX_HOST_NAME=$(_host_identifier)
-POWERLEVEL9K_CUSTOM_HOST_IDENTIFIER="_host_identifier" ; unset _host_identifier
+POWERLEVEL9K_CUSTOM_HOST_IDENTIFIER="_host_identifier"
 [[ $SYSTEM == "Android" ]] && [[ -z $SSH_CONNECTION ]] && unset POWERLEVEL9K_CUSTOM_HOST_IDENTIFIER
 
 # proxy
@@ -508,6 +501,10 @@ function _proxy() {
 POWERLEVEL9K_CUSTOM_PROXY_FOREGROUND=31
 POWERLEVEL9K_CUSTOM_PROXY="_proxy"
 unset _proxy
+
+# === tmux ===
+export TMUX_TITLE_HOST=${_HOST_NAME:-$HOST}
+export TMUX_HOST_NAME=${$(_host_identifier):-$HOST}
 
 # === fzf ===
 if command -v fzf > /dev/null; then
