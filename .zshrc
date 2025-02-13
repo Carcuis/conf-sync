@@ -505,6 +505,7 @@ unset _proxy
 # === tmux ===
 export TMUX_TITLE_HOST=${_HOST_NAME:-$HOST}
 export TMUX_HOST_NAME=${$(_host_identifier):-$HOST}
+export TMUX_SYSTEM=$SYSTEM
 
 # === fzf ===
 if command -v fzf > /dev/null; then
