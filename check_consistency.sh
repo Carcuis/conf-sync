@@ -79,6 +79,8 @@ function declare_dirs() {
         Android)
             shortcut_sshd_remote=$DIR/android/.shortcuts/sshd
             shortcut_sshd_local=$HOME/.shortcuts/sshd
+            sshd_config_remote=$DIR/android/sshd_config
+            sshd_config_local=/data/data/com.termux/files/usr/etc/ssh/sshd_config
             ;;
         WSL*)
             wsl_conf_remote=$DIR/windows/wsl/wsl.conf
@@ -95,7 +97,7 @@ function declare_dirs() {
     case $SYSTEM in
         Android)
             exclude_file_list+=( ideavimrc kitty_config kitty_linux condarc );
-            addon_file_list+=( shortcut_sshd )
+            addon_file_list+=( shortcut_sshd sshd_config )
             ;;
         WSL*)
             exclude_file_list+=( ideavimrc )
