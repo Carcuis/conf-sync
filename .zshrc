@@ -361,6 +361,33 @@ if [[ $SYSTEM =~ "WSL[12]" ]]; then
     }
     detect_and_set_proxy
 
+    function x410() {
+        case $1 in
+            ""|enable)
+                [[ -n $_old_display ]] && echo "Already set DISPLAY=$DISPLAY for X410." && return
+                export _old_display=$DISPLAY
+                export DISPLAY=$(wsl_get_proxy_server):0.0
+                echo "Set DISPLAY=$DISPLAY for X410."
+                ;;
+            disable)
+                [[ -z $_old_display ]] && echo "Error: DISPLAY is not set for X410." && return 1
+                export DISPLAY=$_old_display
+                unset _old_display
+                echo "Reset DISPLAY=$DISPLAY."
+                ;;
+            *)
+                echo "Usage: x410 <enable|disable>"
+                echo "    Set DISPLAY for X410."
+                return 1
+                ;;
+        esac
+    }
+    function _x410() {
+        local commands=(enable disable)
+        _arguments '1: :_values "command" $commands'
+    }
+    compdef _x410 x410
+
     alias sshon='sudo service ssh start'
     alias sshoff='sudo service ssh stop'
     alias clp='clip.exe'
