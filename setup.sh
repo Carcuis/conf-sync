@@ -309,6 +309,20 @@ function link_files() {
     create_symlink $DIR/scripts/update.sh $HOME/.local/bin/csup
 }
 
+function create_xauth_file() {
+    if ! has_command xauth; then
+        warning "Warning: xauth is not installed, skip creating xauth file."
+        no_error=false
+        return 1
+    fi
+
+    local xauth_file="$HOME/.Xauthority"
+    if not_installed_file $xauth_file "Xauthority file"; then
+        xauth add :0 . $(mcookie) > /dev/null 2>&1
+        successfully_installed $? "Xauthority file"
+    fi
+}
+
 function install_all() {
     install_ohmyzsh
     install_vim_plug
@@ -316,6 +330,7 @@ function install_all() {
     install_yazi_package
     install_tmux_plugins
     link_files
+    create_xauth_file
 
     if [[ $no_error == true ]]; then
         success "All dependencies have been installed."
