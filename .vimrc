@@ -1676,7 +1676,19 @@ endif
 " === nvim-surround ===
 if has("nvim")
     lua << EOF
-    require("nvim-surround").setup {}
+    require("nvim-surround").setup {
+        surrounds = {
+            ["b"] = {
+                add = { "**", "**" },
+                find = function()
+                    return M.get_selection({ motion = "ab" })
+                end,
+            },
+        },
+        aliases = {
+            ["b"] = "b",
+        },
+    }
 EOF
 endif
 
