@@ -1,5 +1,5 @@
 " vim: filetype=vifm :
-" Sample configuration file for vifm (last updated: 3 April, 2023)
+" Sample configuration file for vifm (last updated: 18 December, 2024)
 " You can edit this file by hand.
 " The " character at the beginning of a line comments out the line.
 " Blank lines are ignored.
@@ -41,10 +41,12 @@ set trash
 
 " What should be saved automatically on restarting vifm.  Drop "savedirs"
 " value if you don't want vifm to remember last visited directories for you.
-set vifminfo=dhistory,savedirs,chistory,state,tui,shistory,
-            \phistory,fhistory,dirstack,registers,bookmarks,bmarks
+set vifminfo=dhistory,savedirs,chistory,state,tui,tabs,shistory,ehistory,
+            \phistory,fhistory,dirstack,registers,bookmarks,bmarks,mchistory
 
-" This is how many directories to store in the directory history.
+" This is size of all of the many kinds of histories, in particular it's the
+" number of last visited directories (not necessarily distinct ones) stored in
+" the directory history.
 set history=100
 
 " Automatically resolve symbolic links on l or Enter.
@@ -84,7 +86,7 @@ set suggestoptions=normal,visual,view,otherpane,keys,marks,registers
 set ignorecase
 set smartcase
 
-" Don't highlight search results automatically
+" Don't select search matches automatically
 set nohlsearch
 
 " Use increment searching (search while typing)
@@ -99,7 +101,19 @@ if !has('win')
 endif
 
 " Set custom status line look
-set statusline="  Hint: %z%= %A %10u:%-7g %15s %20d  "
+if !has('win')
+    set statusline="  Hint: %z%= %A %10u:%-7g %15s %20d  "
+else
+    set statusline="  Hint: %z%= %A %15s %20d  "
+endif
+
+" Suppress "Permission denied" errors using syntax specific to GNU find
+if system("find --version | grep -c 'GNU findutils'") != 0
+    set findprg='find %s %a -print , -type d \( ! -readable -o ! -executable \) -prune'
+endif
+
+" Add -s to the default value to suppress "Permission denied" errors
+set grepprg="grep -n -H -I -r -s %i %a %s"
 
 " List of color schemes to try (picks the first one supported by the terminal)
 colorscheme Default-256 Default
@@ -217,7 +231,7 @@ fileviewer {*.wav,*.mp3,*.flac,*.m4a,*.wma,*.ape,*.ac3,*.og[agx],*.spx,*.opus,
 
 " Video
 filextype {*.avi,*.mp4,*.wmv,*.dat,*.3gp,*.ogv,*.mkv,*.mpg,*.mpeg,*.vob,
-          \*.fl[icv],*.m2v,*.mov,*.webm,*.ts,*.mts,*.m4v,*.r[am],*.qt,*.divx,
+          \*.fl[icv],*.m2v,*.mov,*.webm,*.mts,*.m4v,*.r[am],*.qt,*.divx,
           \*.as[fx],*.unknown_video},
          \<video/*>
         \ {View using ffplay}
@@ -227,9 +241,9 @@ filextype {*.avi,*.mp4,*.wmv,*.dat,*.3gp,*.ogv,*.mkv,*.mpg,*.mpeg,*.vob,
         \ {View using mplayer}
         \ mplayer %f,
         \ {Play using mpv}
-        \ mpv --no-video %f,
+        \ mpv %f,
 fileviewer {*.avi,*.mp4,*.wmv,*.dat,*.3gp,*.ogv,*.mkv,*.mpg,*.mpeg,*.vob,
-           \*.fl[icv],*.m2v,*.mov,*.webm,*.ts,*.mts,*.m4v,*.r[am],*.qt,*.divx,
+           \*.fl[icv],*.m2v,*.mov,*.webm,*.mts,*.m4v,*.r[am],*.qt,*.divx,
            \*.as[fx],*.unknown_video},
           \<video/*>
          \ ffprobe -hide_banner -pretty %c 2>&1
@@ -263,12 +277,15 @@ filextype {*.cr2}
 filextype {*.xcf}
         \ {Open in GIMP}
         \ gimp %f,
-filextype {.kra}
+filextype {*.kra}
         \ {Open in Krita}
         \ krita %f,
-filextype {.blend}
+filextype {*.blend}
         \ {Open in Blender}
         \ blender %c,
+filextype {*.sh3d}
+        \ {Open in Sweet Home 3D}
+        \ sweethome3d %c:p,
 filextype {*.bmp,*.jpg,*.jpeg,*.png,*.gif,*.xpm},<image/*>
         \ {View in sxiv}
         \ sxiv %f,
@@ -332,9 +349,9 @@ filetype {*.zip,*.jar,*.war,*.ear,*.oxt,*.apkg},
 fileviewer *.zip,*.jar,*.war,*.ear,*.oxt unzip -l %f
 
 " ArchiveMount
-filetype {*.tar,*.tar.bz2,*.tbz2,*.tgz,*.tar.gz,*.tar.xz,*.txz,*.tar.zst,
-         \*.tzst},
-        \<application/x-tar>
+filetype {*.cpio,*.cpio.gz,*.rpm,*.tar,*.tar.bz2,*.tbz2,*.tgz,*.tar.gz,*.tar.xz,
+         \*.txz,*.tar.zst,*.tzst},
+        \<application/x-cpio,application/x-rpm,application/x-tar>
        \ {Mount with archivemount}
        \ FUSE_MOUNT|archivemount %SOURCE_FILE %DESTINATION_DIR,
 fileviewer *.tgz,*.tar.gz tar -tzf %c
@@ -342,6 +359,8 @@ fileviewer *.tar.bz2,*.tbz2 tar -tjf %c
 fileviewer *.tar.xz,*.txz tar -tJf %c
 fileviewer *.tar.zst,*.tzst tar -t --zstd -f %c
 fileviewer {*.tar},<application/x-tar> tar -tf %c
+fileviewer {*.cpio},<application/x-cpio> cpio -t < %c
+fileviewer {*.rpm},<application/x-rpm> rpm -q --list %c%q 2> /dev/null
 
 " Rar2FsMount and rar archives
 filetype {*.rar},<application/x-rar>
@@ -449,7 +468,7 @@ nnoremap S :sort<cr>
 nnoremap w :view<cr>
 vnoremap w :view<cr>gv
 
-if $DISPLAY && executable('gvim')
+if $DISPLAY != '' && executable('gvim')
     " Open file in existing instance of gvim
     nnoremap o :!gvim --remote-tab-silent %f<cr>
     " Open file in new instance of gvim
@@ -464,8 +483,8 @@ if has('win')
     " Yank current directory path to Windows clipboard with forward slashes
     nnoremap yp :!echo %"d:gs!\!/! %i | clip<cr>
     " Yank path to current file to Windows clipboard with forward slashes
-    nnoremap yf :!echo %"c:gs!\!/! %i | clip<cr>
-elseif $WAYLAND_DISPLAY
+    nnoremap yf :!echo %"c:p:gs!\!/! %i | clip<cr>
+elseif $WAYLAND_DISPLAY != ''
     if executable('wl-copy')
         " Yank current directory path into primary and selection clipboards
         nnoremap yd :!echo -n %d | wl-copy %i &&
@@ -474,12 +493,12 @@ elseif $WAYLAND_DISPLAY
         nnoremap yf :!echo -n %c:p | wl-copy %i &&
                     \ echo -n %c:p | wl-copy -p %i<cr>
     endif
-elseif $DISPLAY
+elseif $DISPLAY != ''
     if executable('xclip')
         " Yank current directory path into the clipboard
-        nnoremap yd :!echo %d | xclip %i<cr>
+        nnoremap yd :!echo -n %d | xclip -selection clipboard %i<cr>
         " Yank current file path into the clipboard
-        nnoremap yf :!echo %c:p | xclip %i<cr>
+        nnoremap yf :!echo -n %c:p | xclip -selection clipboard %i<cr>
     elseif executable('xsel')
         " Yank current directory path into primary and selection clipboards
         nnoremap yd :!echo -n %d | xsel --input --primary %i &&
@@ -501,9 +520,9 @@ nnoremap A cw
 " nnoremap A cW
 
 " Open console in current directory
-if $DISPLAY && executable('xterm')
+if $DISPLAY != '' && executable('xterm')
     nnoremap ,t :!xterm &<cr>
-elseif $TERMINAL
+elseif $TERMINAL != ''
     nnoremap ,t :!$TERMINAL &<cr>
 endif
 
@@ -511,7 +530,7 @@ endif
 nnoremap ,c :write | edit $MYVIFMRC | restart full<cr>
 
 " Open gvim to edit vifmrc
-if $DISPLAY && executable('gvim')
+if $DISPLAY != '' && executable('gvim')
     nnoremap ,C :!gvim --remote-tab-silent $MYVIFMRC &<cr>
 endif
 
@@ -531,8 +550,8 @@ nnoremap <f8> :delete<cr>
 nnoremap <a-i> :sync<cr>
 " Open directory under cursor in the other pane
 nnoremap <a-o> :sync %c<cr>
-" Swap panes
-nnoremap <c-u> <c-w>x
+" Swap panes (uncomment if you don't need builtin behaviour of Ctrl-U)
+" nnoremap <c-u> <c-w>x
 
 " ------------------------------------------------------------------------------
 " Various customization examples
