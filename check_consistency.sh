@@ -23,6 +23,7 @@ declare -ag extra_file_list=(
     vifmrc
     tealdeer_config
     condarc
+    yazi_init
     yazi_config
     yazi_keymap
     yazi_theme
@@ -58,6 +59,8 @@ function declare_dirs() {
     tealdeer_config_local=$HOME/.config/tealdeer/config.toml
     condarc_remote=$DIR/dot_files/.condarc
     condarc_local=$HOME/.condarc
+    yazi_init_remote=$DIR/.config/yazi/init.lua
+    yazi_init_local=$HOME/.config/yazi/init.lua
     yazi_config_remote=$DIR/.config/yazi/yazi.toml
     yazi_config_local=$HOME/.config/yazi/yazi.toml
     yazi_keymap_remote=$DIR/.config/yazi/keymap.toml

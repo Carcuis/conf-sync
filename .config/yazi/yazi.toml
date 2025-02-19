@@ -16,6 +16,10 @@ prepend_previewers = [
     { mime = "{image,audio,video}/*", run = "mediainfo"},
     { mime = "application/subrip", run = "code"},
 ]
+prepend_fetchers = [
+    { id = "git", name = "*", run = "git" },
+    { id = "git", name = "*/", run = "git" },
+]
 
 [preview]
 image_delay = 0

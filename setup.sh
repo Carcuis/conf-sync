@@ -241,6 +241,10 @@ function install_yazi_package() {
         ya pack -a yazi-rs/plugins:smart-enter
         successfully_installed $? "Yazi plugin smart-enter"
     fi
+    if not_installed_file "$HOME/.config/yazi/plugins/git.yazi/main.lua" "Yazi plugin git"; then
+        ya pack -a yazi-rs/plugins:git
+        successfully_installed $? "Yazi plugin git"
+    fi
     if not_installed_file "$HOME/.config/yazi/plugins/mediainfo.yazi/main.lua" "Yazi plugin mediainfo"; then
         ya pack -a boydaihungst/mediainfo
         successfully_installed $? "Yazi plugin mediainfo"

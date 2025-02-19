@@ -84,6 +84,11 @@ $condarc = @{
     remote = "$PSScriptRoot\dot_files\.condarc"
     local = "$HOME\.condarc"
 }
+$yazi_init = @{
+    name = "yazi init.lua"
+    remote = "$PSScriptRoot\.config\yazi\init.lua"
+    local = "$HOME\AppData\Roaming\yazi\config\init.lua"
+}
 $yazi_config = @{
     name = "yazi yazi.toml"
     remote = "$PSScriptRoot\.config\yazi\yazi.toml"
@@ -131,6 +136,7 @@ $extra_file_list = @(
     $clangd
     $tealdeer
     $condarc
+    $yazi_init
     $yazi_config
     $yazi_keymap
     $yazi_theme
