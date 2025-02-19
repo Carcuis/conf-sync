@@ -310,15 +310,13 @@ function link_files() {
 }
 
 function create_xauth_file() {
-    if ! has_command xauth; then
-        warning "Warning: xauth is not installed, skip creating xauth file."
-        no_error=false
-        return 1
+    if [[ $SYSTEM == "Darwin" ]]; then
+        info "Skip creating xauth file on macOS."
+        return
     fi
 
-    if ! has_command mcookie; then
-        warning "Warning: mcookie command not found, skip creating xauth file."
-        warning "    -- If you are in macOS, you can install it via \`brew install util-linux\`."
+    if ! has_command xauth; then
+        warning "Warning: xauth is not installed, skip creating xauth file."
         no_error=false
         return 1
     fi
