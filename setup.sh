@@ -80,14 +80,14 @@ function check_deps() {
 function download() {
     local url=$1
     local dest=$2
-    if [[ -z $dest ]]; then
+    if [[ -z "$dest" ]]; then
         dest=$(basename $url)
     fi
-    if has_file $dest; then
+    if has_file "$dest"; then
         warning "Warning: $dest already exists, move it to $dest.bak."
         mv $dest{,.bak}
     fi
-    curl -fLo $dest --create-dirs $url
+    curl -fLo "$dest" --create-dirs "$url"
     return $?
 }
 
@@ -262,9 +262,9 @@ function install_tmux_plugins() {
         if has_file "$tpm_dir/scripts/install_plugins.sh"; then
             local tmux_conf_remote="$DIR/.config/tmux/tmux.conf"
             local tmux_conf_local="$HOME/.config/tmux/tmux.conf"
-            if ! has_file $tmux_conf_local; then
+            if ! has_file "$tmux_conf_local"; then
                 info "$tmux_conf_local not found."
-                cp $tmux_conf_remote $tmux_conf_local
+                cp "$tmux_conf_remote" "$tmux_conf_local"
                 successfully_installed $? "Tmux configuration"
             fi
             $tpm_dir/scripts/install_plugins.sh
@@ -279,8 +279,8 @@ function install_tmux_plugins() {
 function create_symlink() {
     local src=$1
     local dest=$2
-    if has_file $dest; then
-        if [[ $(realpath $dest) == $(realpath $src) ]]; then
+    if has_file "$dest"; then
+        if [[ $(realpath "$dest") == $(realpath "$src") ]]; then
             info "$dest has already linked."
             return
         else
@@ -289,8 +289,8 @@ function create_symlink() {
             return 1
         fi
     else
-        ensure_dir $(dirname $dest)
-        ln -s $src $dest
+        ensure_dir "$(dirname $dest)"
+        ln -s "$src" "$dest"
         success "Linked $dest to $src."
     fi
 }
@@ -298,15 +298,15 @@ function create_symlink() {
 function link_files() {
     local vimrc=$HOME/.vimrc
 
-    if ! has_file $vimrc; then
+    if ! has_file "$vimrc"; then
         info "$vimrc not found."
-        cp $DIR/.vimrc $vimrc
+        cp "$DIR/.vimrc" "$vimrc"
         success "Copied $DIR/.vimrc to $vimrc."
     fi
 
-    create_symlink $vimrc $HOME/.config/nvim/init.vim
-    create_symlink $DIR/scripts/check_all.sh $HOME/.local/bin/csc
-    create_symlink $DIR/scripts/update.sh $HOME/.local/bin/csup
+    create_symlink "$vimrc" "$HOME/.config/nvim/init.vim"
+    create_symlink "$DIR/scripts/check_all.sh" "$HOME/.local/bin/csc"
+    create_symlink "$DIR/scripts/update.sh" "$HOME/.local/bin/csup"
 }
 
 function create_xauth_file() {
@@ -324,7 +324,7 @@ function create_xauth_file() {
     fi
 
     local xauth_file="$HOME/.Xauthority"
-    if not_installed_file $xauth_file "Xauthority file"; then
+    if not_installed_file "$xauth_file" "Xauthority file"; then
         xauth add :0 . $(mcookie) > /dev/null 2>&1
         successfully_installed $? "Xauthority file"
     fi

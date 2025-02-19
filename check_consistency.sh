@@ -162,18 +162,18 @@ function backup_and_copy() {
     local dest_dir=$(dirname "$dest")
     local backup_dir=$DIR/backup
 
-    ensure_dir $dest_dir
-    ensure_dir $backup_dir
+    ensure_dir "$dest_dir"
+    ensure_dir "$backup_dir"
 
-    if has_file $dest; then
-        local backup_file=$backup_dir/$(basename $dest).$(date +%y%m%d_%H%M%S)
-        if ! move_file $dest $backup_file; then
+    if has_file "$dest"; then
+        local backup_file="$backup_dir/$(basename $dest).$(date +%y%m%d_%H%M%S)"
+        if ! move_file "$dest" "$backup_file"; then
             return 1
         fi
         info "Backuped \`$dest\` to \`$backup_file\`."
     fi
 
-    if ! copy_file $src $dest; then
+    if ! copy_file "$src" "$dest"; then
         return 1
     fi
 }
@@ -229,8 +229,8 @@ function transfer_file() {
     local src_dir=$(dirname "$src")
     local dest_dir=$(dirname "$dest")
 
-    ensure_dir $dest_dir
-    if owned_by_root $src_dir || owned_by_root $dest_dir; then
+    ensure_dir "$dest_dir"
+    if owned_by_root "$src_dir" || owned_by_root "$dest_dir"; then
         if ! sudo $operation "$src" "$dest"; then
             return 1
         fi
@@ -261,7 +261,7 @@ function run_edit() {
         local file_remote=$(eval echo \$${file}_remote)
         local file_local=$(eval echo \$${file}_local)
 
-        if ! has_file $file_local; then
+        if ! has_file "$file_local"; then
             if confirm "$file not found, create a copy to \`$file_local\` ?"; then
                 if ! copy_file "$file_remote" "$file_local"; then
                     error "Error: Failed to copy \`$file_remote\` to \`$file_local\`."
@@ -276,7 +276,7 @@ function run_edit() {
             [[ $verbose == true ]] && success "$file has already been synchronized."
         else
             if confirm "$file unsynchronized. Edit with $diff_command ?"; then
-                if [[ $force_sync == false ]] && owned_by_root $file_local; then
+                if [[ $force_sync == false ]] && owned_by_root "$file_local"; then
                     diff_command="sudo -E env PATH=$PATH $diff_command"
                 fi
 
