@@ -1655,6 +1655,9 @@ endif
 " === leap.nvim ===
 if has("nvim")
     lua << EOF
+    require("leap").setup {
+        safe_labels = 'fnut/FNLHMUGTZ?',
+    }
     vim.keymap.set({'n', 'x', 'o'}, 'f', '<Plug>(leap-forward-to)')
     vim.keymap.set({'n', 'x', 'o'}, 'F', '<Plug>(leap-backward-to)')
 EOF
