@@ -75,6 +75,7 @@ function declare_dirs() {
             lazygit_config_local="$HOME/Library/Application Support/lazygit/config.yml"
             kitty_macos_remote=$DIR/.config/kitty/kitty_macos.conf
             kitty_macos_local=$HOME/.config/kitty/kitty_macos.conf
+            tealdeer_config_local="$HOME/Library/Application Support/tealdeer/config.toml"
             ;;
         Android)
             shortcut_sshd_remote=$DIR/android/.shortcuts/sshd
