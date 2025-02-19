@@ -316,6 +316,13 @@ function create_xauth_file() {
         return 1
     fi
 
+    if ! has_command mcookie; then
+        warning "Warning: mcookie command not found, skip creating xauth file."
+        warning "    -- If you are in macOS, you can install it via \`brew install util-linux\`."
+        no_error=false
+        return 1
+    fi
+
     local xauth_file="$HOME/.Xauthority"
     if not_installed_file $xauth_file "Xauthority file"; then
         xauth add :0 . $(mcookie) > /dev/null 2>&1
