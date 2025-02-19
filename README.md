@@ -25,6 +25,8 @@ Various scripts are provided to help sync these files between different operatin
   * [nodejs](https://nodejs.org/)
   * C++ compiler (for some plugins)
 * [Nerd Fonts](https://github.com/ryanoasis/nerd-fonts/releases) >= v3.3.0
+* [Bash](https://www.gnu.org/software/bash/) >= v4.2
+* [Zsh](https://www.zsh.org/)
 * [Vifm](https://vifm.info/)
 * [Yazi](https://yazi-rs.github.io/docs/installation) >= v0.4.0
   * [FFmpeg](https://www.ffmpeg.org/)
