@@ -1604,6 +1604,9 @@ if has("nvim")
     vim.api.nvim_create_autocmd("User", {
         pattern = "DiffviewDiffBufWinEnter",
         callback = function()
+            if vim.api.nvim_get_mode().mode ~= "n" then
+                return
+            end
             vim.api.nvim_input('gg')
             vim.api.nvim_input(']c')
         end
