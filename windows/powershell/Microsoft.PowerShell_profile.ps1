@@ -624,6 +624,7 @@ Set-Alias px SetProxyOn
 Set-Alias upx SetProxyOff
 Set-Alias wd WebDetection
 Set-Alias lg lazygit
+Set-Alias lzd lazydocker
 Set-Alias ipy ipython
 Set-Alias pp ptpython
 Set-Alias cdhk Conda-Hook
