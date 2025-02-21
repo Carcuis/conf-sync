@@ -21,6 +21,7 @@ declare -ag extra_file_list=(
     kitty_config
     kitty_linux
     vifmrc
+    btop_config
     tealdeer_config
     condarc
     yazi_init
@@ -55,6 +56,8 @@ function declare_dirs() {
     kitty_linux_local=$HOME/.config/kitty/kitty_linux.conf
     vifmrc_remote=$DIR/.config/vifm/vifmrc
     vifmrc_local=$HOME/.config/vifm/vifmrc
+    btop_config_remote=$DIR/.config/btop/btop.conf
+    btop_config_local=$HOME/.config/btop/btop.conf
     tealdeer_config_remote=$DIR/.config/tealdeer/config.toml
     tealdeer_config_local=$HOME/.config/tealdeer/config.toml
     condarc_remote=$DIR/dot_files/.condarc
