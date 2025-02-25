@@ -83,8 +83,6 @@
     "terminal.integrated.fontSize": 16,
     "terminal.integrated.scrollback": 100000,
     "terminal.integrated.smoothScrolling": true,
-    "terminal.integrated.stickyScroll.enabled": true,
-    "terminal.integrated.suggest.enabled": true,
     "trailing-spaces.backgroundColor": "rgba(255,255,255,0.15)",
     "trailing-spaces.borderColor": "rgba(255,255,255,0.08)",
     "trailing-spaces.highlightCurrentLine": false,
