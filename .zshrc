@@ -543,7 +543,7 @@ if command -v fzf > /dev/null; then
         --color=prompt:#d7005f,spinner:#af5fff,pointer:#af5fff,header:#87afaf
         --color=border:#262626,label:#aeaeae,query:#d9d9d9
         --bind=ctrl-b:preview-page-up,ctrl-f:preview-page-down
-        --preview="bat --color=always --style=header {}"
+        --preview="fzf-preview.sh {}"
         --preview-window="border-rounded" --prompt=" " --marker="◆" --pointer=" "
         --separator="─" --scrollbar="│" --layout="reverse"'
 fi
