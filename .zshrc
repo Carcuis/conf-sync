@@ -162,6 +162,10 @@ command -v brew > /dev/null || eval "$(register-python-argcomplete pipx)"
 # ==== the bellow is cui_pref ====
 # ================================
 
+# keybindings
+bindkey "^[[1;5C" forward-word
+bindkey "^[[1;5D" backward-word
+
 # set editor
 if command -v nvim > /dev/null; then
     export EDITOR=nvim
