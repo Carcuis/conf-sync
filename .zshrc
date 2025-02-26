@@ -270,6 +270,9 @@ function gdu() {
         _cmd="gdu-go"
     elif command -v "gdu" > /dev/null; then
         _cmd="gdu"
+    else
+        echo "Error: gdu or gdu-go not found."
+        return 1
     fi
 
     if [[ $SYSTEM =~ "WSL[12]" ]]; then
