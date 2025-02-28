@@ -594,6 +594,21 @@ exit
     Write-Host "Size after optimization:`t$($sizeAfter / 1GB)`tGB"
     Write-Host "Optimization saved:`t`t$($sizeDifference / 1GB)`tGB"
 }
+function Fzf-Ripgrep {
+<#
+.SYNOPSIS
+    Use fzf to search words in files with ripgrep in the current directory.
+    Need PSFzf module.
+#>
+    param (
+        [string]$words = ""
+    )
+    if (!(Has-Command Invoke-PsFzfRipgrep)) {
+        Write-Error "Error: Cannot find 'Invoke-PsFzfRipgrep' command."
+        return
+    }
+    Invoke-PsFzfRipgrep $words
+}
 
 Set-Alias .. GoUpOne
 Set-Alias ... GoUpTwo
@@ -647,4 +662,5 @@ Set-Alias rgf Ripgrep-Find-Files
 Set-Alias spa SystemPropertiesAdvanced
 Set-Alias envs Open-Environment-Variables
 Set-Alias optv Optimize-VHD
+Set-Alias fgrep Fzf-Ripgrep
 
