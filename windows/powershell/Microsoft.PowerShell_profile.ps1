@@ -16,6 +16,8 @@ Set-PSReadLineOption -PredictionViewStyle ListView
 Set-PSReadLineKeyHandler -Key Tab -Function MenuComplete
 Set-PSReadlineKeyHandler -Key UpArrow -Function HistorySearchBackward
 Set-PSReadlineKeyHandler -Key DownArrow -Function HistorySearchForward
+Set-PSReadLineKeyHandler -Key "Ctrl+LeftArrow" -Function BackwardWord
+Set-PSReadLineKeyHandler -Key "Ctrl+RightArrow" -Function ForwardWord
 Set-PSReadlineKeyHandler -Key "Ctrl+d" -Function DeleteCharOrExit
 Set-PsFzfOption -PSReadlineChordProvider 'Ctrl+t' -PSReadlineChordReverseHistory 'Ctrl+r' -PSReadlineChordSetLocation 'Alt+c'
 
