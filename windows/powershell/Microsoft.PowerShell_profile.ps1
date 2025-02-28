@@ -1,5 +1,6 @@
 oh-my-posh init pwsh --config "$HOME\.config\ohmyposh\themes\cui_theme.omp.json" | Invoke-Expression
 
+$env:EDITOR = "nvim"
 $env:VIRTUAL_ENV_DISABLE_PROMPT = 1
 
 Import-Module -Name Terminal-Icons
