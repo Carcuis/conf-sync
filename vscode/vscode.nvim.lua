@@ -79,6 +79,7 @@ function M.set_keymaps()
         { mode = "i", lhs = "<A-a>", action = "editor.action.inlineSuggest.commit" },
         { mode = "i", lhs = "<A-right>", action = "editor.action.inlineSuggest.acceptNextWord" },
         { mode = "i", lhs = "<A-C-right>", action = "editor.action.inlineSuggest.acceptNextLine" },
+        { mode = "v", lhs = "<C-i>", action = "inlineChat.start" },
 
         -- cursor movement
         { mode = "n", lhs = "H", action = "workbench.action.previousEditor" },

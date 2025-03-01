@@ -70,6 +70,11 @@
         "command": "workbench.action.closeQuickOpen",
         "when": "inQuickOpen"
     },
+    {
+        "key": "ctrl+c",
+        "command": "inlineChat.close",
+        "when": "inlineChatHasProvider && inlineChatVisible"
+    },
 
     // disable keybindings
     {
