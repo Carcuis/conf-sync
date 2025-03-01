@@ -1802,6 +1802,7 @@ if has("nvim")
                 python = "python",
                 sh = "bash",
                 zsh = "zsh",
+                lua = "lua",
                 ps1 = "pwsh -NoProfile -File",
                 c = function()
                     local filename = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(0), ':~:.')
@@ -1848,7 +1849,7 @@ if has("nvim")
             end
         end,
         condition = {
-            filetype = { "python", "sh", "zsh", "go", "ps1", "c", "cpp", "java" },
+            filetype = { "go", "python", "sh", "zsh", "lua", "ps1", "c", "cpp", "java" },
         },
     })
 
