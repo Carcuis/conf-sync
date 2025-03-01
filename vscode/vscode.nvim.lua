@@ -29,12 +29,12 @@ function M.set_keymaps()
     ---@class Keymap
     ---@field mode string|string[]
     ---@field lhs string
-    ---@field rhs string|nil
-    ---@field func function|nil
-    ---@field action string|nil
-    ---@field wait boolean|nil
-    ---@field post_esc boolean|nil
-    ---@field opts table|nil
+    ---@field rhs? string
+    ---@field func? function
+    ---@field action? string
+    ---@field wait? boolean
+    ---@field post_esc? boolean
+    ---@field opts? table
 
     ---@type Keymap[]
     local keymaps = {
