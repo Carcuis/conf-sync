@@ -610,6 +610,16 @@ function Fzf-Ripgrep {
     }
     Invoke-PsFzfRipgrep $words
 }
+function Vscode-Nvim {
+    if (!(Has-Command nvim)) {
+        Write-Error "Error: Cannot find 'nvim' command."
+        return
+    }
+    pwsh -NoLogo -NoProfile -NonInteractive -Command {
+        $env:NVIM_APPNAME="vscnvim"
+        nvim @Args
+    } -Arg $Args
+}
 
 Set-Alias .. GoUpOne
 Set-Alias ... GoUpTwo
@@ -664,4 +674,5 @@ Set-Alias spa SystemPropertiesAdvanced
 Set-Alias envs Open-Environment-Variables
 Set-Alias optv Optimize-VHD
 Set-Alias fgrep Fzf-Ripgrep
+Set-Alias vscnvi Vscode-Nvim
 
