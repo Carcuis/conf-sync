@@ -100,6 +100,7 @@
         "a", "b", "c", "d", "e", "f", "h", "i", "j", "k", "l", "m", "n", "o", "p", "r", "t", "u", "v", "w",
         "x", "y", "z", "/", "]", "right", "left", "up", "down", "backspace", "delete"
     ],
+    "vsintellicode.python.completionsEnabled": false,
     "window.enableMenuBarMnemonics": false,
     "window.restoreWindows": "none",
     "workbench.colorCustomizations": {
