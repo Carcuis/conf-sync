@@ -1687,9 +1687,8 @@ if has("nvim")
         surrounds = {
             ["b"] = {
                 add = { "**", "**" },
-                find = function()
-                    return M.get_selection({ motion = "ab" })
-                end,
+                find = "%*%*.-%*%*",
+                delete = "^(.-%*%*)().-(%*%*)()$",
             },
         },
         aliases = {

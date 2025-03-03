@@ -106,9 +106,8 @@ function M.load_plugins()
                 surrounds = {
                     ["b"] = {
                         add = { "**", "**" },
-                        find = function()
-                            return M.get_selection({ motion = "ab" })
-                        end,
+                        find = "%*%*.-%*%*",
+                        delete = "^(.-%*%*)().-(%*%*)()$",
                     },
                 },
                 aliases = {
