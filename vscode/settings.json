@@ -49,6 +49,7 @@
     },
     "github.copilot.nextEditSuggestions.enabled": true,
     "gitlens.currentLine.enabled": false,
+    "gitlens.launchpad.indicator.enabled": false,
     "inlineChat.accessibleDiffView": "on",
     "Lua.completion.callSnippet": "Replace",
     "Lua.hint.enable": true,
