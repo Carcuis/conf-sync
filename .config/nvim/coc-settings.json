@@ -1,5 +1,5 @@
 {
-    "coc.preferences.extensionUpdateCheck": "weekly",
+    "extensions.updateCheck": "weekly",
     "semanticTokens.enable": true,
     "hover.floatConfig": {
         "border": true,
