@@ -620,6 +620,87 @@ function Vscode-Nvim {
         nvim @Args
     } -Arg $Args
 }
+function CS-Check-All {
+    $script = "$HOME\.local\bin\check_consistency.ps1"
+    if (!(Has-File $script)) {
+        Write-Error "Error: Cannot find 'check_consistency.ps1' script."
+        return
+    }
+
+    function Show-Usage {
+        Write-Host "Usage:"
+        Write-Host "  CS-Check-All [options]"
+        Write-Host
+        Write-Host "Options:"
+        Write-Host "  -f, --force-sync Force sync files"
+        Write-Host "  -h, --help       Display help"
+        Write-Host "  -v, --verbose    Show detailed information"
+    }
+
+    $params = "-a"
+    foreach ($arg in $args) {
+        switch -Regex ($arg) {
+            "^((-?h)|(-?-help))$"     { Show-Usage; return }
+            "^((-?f)|(-?-force))$"    { $params += " -f"; continue }
+            "^((-?v)|(-?-verbose))$"  { $params += " -v"; continue }
+            default { Write-Error "Error: Invalid option '$arg'"; Show-Usage; return }
+        }
+    }
+    & $script $params
+}
+function CS-Update {
+    $script = "$HOME\.local\bin\check_consistency.ps1"
+    if (!(Has-File $script)) {
+        Write-Error "Error: Cannot find 'check_consistency.ps1' script."
+        return
+    }
+
+    function Show-Usage {
+        Write-Host "Usage:"
+        Write-Host "  CS-Update [options]"
+        Write-Host
+        Write-Host "Options:"
+        Write-Host "  -f, --force-sync Force sync files"
+        Write-Host "  -h, --help       Display help"
+        Write-Host "  -v, --verbose    Show detailed information"
+    }
+
+    $params = "-a"
+    foreach ($arg in $args) {
+        switch -Regex ($arg) {
+            "^((-?h)|(-?-help))$"     { Show-Usage; return }
+            "^((-?f)|(-?-force))$"    { $params += " -f"; continue }
+            "^((-?v)|(-?-verbose))$"  { $params += " -v"; continue }
+            default { Write-Error "Error: Invalid option '$arg'"; Show-Usage; return }
+        }
+    }
+
+    if (& $script "-a -s" -eq "Unsynchronized.") {
+        Write-Host "`e[1;33mThere are inconsistent files.`nPlease run 'csc' to sync them first.`e[0m"
+        return
+    }
+
+    $repoDir = Get-Item $script | Select-Object -ExpandProperty Target | Split-Path -Parent
+    if ((git -C $repoDir status -u --porcelain).Length -ne 0) {
+        Write-Host "`e[1;33mThere are uncommitted changes in the repository.`nPlease commit or stash them first.`e[0m"
+        return
+    }
+
+    git -C $repoDir pull --rebase
+
+    & $script $params
+}
+function CS-Lazygit {
+    $script = "$HOME\.local\bin\check_consistency.ps1"
+    if (!(Has-File $script)) {
+        Write-Error "Error: Cannot find 'check_consistency.ps1' script."
+        return
+    }
+
+    $repoDir = Get-Item $script | Select-Object -ExpandProperty Target | Split-Path -Parent
+
+    lazygit -p $repoDir
+}
 
 Set-Alias .. GoUpOne
 Set-Alias ... GoUpTwo
@@ -675,4 +756,7 @@ Set-Alias envs Open-Environment-Variables
 Set-Alias optv Optimize-VHD
 Set-Alias fgrep Fzf-Ripgrep
 Set-Alias vscnvi Vscode-Nvim
+Set-Alias csc CS-Check-All
+Set-Alias csup CS-Update
+Set-Alias csg CS-Lazygit
 
