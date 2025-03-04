@@ -1977,7 +1977,7 @@ if has("nvim")
 
     local dap_python_path = vim.fn.stdpath("data") .. "/mason/packages/debugpy/venv/bin/python"
     if vim.fn.has("win32") == 1 then
-        dap_python_path = vim.fn.stdpath("data") .. "\\mason\\packages\\debugpy\\venv\\Scripts\\python.exe"
+        dap_python_path = vim.fn.stdpath("data") .. "\\mason\\packages\\debugpy\\venv\\Scripts\\pythonw.exe"
     end
     require("dap-python").setup(dap_python_path)
 
