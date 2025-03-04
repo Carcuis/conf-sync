@@ -165,9 +165,9 @@ function Show-Usage {
 function Command-Parser {
     foreach ($arg in $args) {
         switch -Regex ($arg) {
-            "^(-?a)?(--all)?$"      { $script:file_list += $extra_file_list }
-            "^(-?h)?(--help)?$"     { Show-Usage; exit 0 }
-            "^(-?v)?(--verbose)?$"  { $script:verbose = $true }
+            "^((-?a)|(-?-all))$"      { $script:file_list += $extra_file_list }
+            "^((-?h)|(-?-help))$"     { Show-Usage; exit 0 }
+            "^((-?v)|(-?-verbose))$"  { $script:verbose = $true }
             default { Print-Error "Error: Invalid option '$arg'"; Show-Usage; exit 1 }
         }
     }
