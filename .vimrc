@@ -716,6 +716,7 @@ if has("nvim")
             hover = {
                 enabled = false,
             },
+            tab_size = 1,
             diagnostics = "coc",
             diagnostics_indicator = function(count, level, diagnostics_dict, context)
                 local s = ""
