@@ -135,14 +135,14 @@ function declare_dirs() {
 }
 
 function usage() {
-   bold "Usage:"
-   mesg "  check_consistency.sh [options]"
-   mesg
-   bold "Options:"
-   mesg "  -a, --all        Check all files"
-   mesg "  -f, --force-sync Force sync files"
-   mesg "  -h, --help       Display help"
-   mesg "  -v, --verbose    Show detailed information"
+    bold "Usage:"
+    mesg "  check_consistency.sh [options]"
+    mesg
+    bold "Options:"
+    mesg "  -a, --all        Check all files"
+    mesg "  -f, --force-sync Force sync files"
+    mesg "  -h, --help       Display help"
+    mesg "  -v, --verbose    Show detailed information"
 }
 
 function cmd_parser() {
@@ -167,29 +167,13 @@ function backup_and_copy() {
     local src=$1
     local dest=$2
     local dest_dir=$(dirname "$dest")
-    local backup_dir=$DIR/backup
-
     ensure_dir "$dest_dir"
-    ensure_dir "$backup_dir"
 
-    if has_file "$dest"; then
-        local backup_file="$backup_dir/$(basename $dest).$(date +%y%m%d_%H%M%S)"
-        if ! move_file "$dest" "$backup_file"; then
-            return 1
-        fi
-        info "Backuped \`$dest\` to \`$backup_file\`."
-    fi
+    exist_and_backup "$dest"
 
     if ! copy_file "$src" "$dest"; then
         return 1
     fi
-}
-
-function owned_by_root() {
-    local root
-    local file="$1"
-    [[ $SYSTEM == "Darwin" ]] && root=$(stat -f %Su "$file" 2>&1) || root=$(stat -c %U "$file")
-    [[ $root == "root" ]]
 }
 
 function check_editor() {
@@ -227,33 +211,6 @@ function confirm() {
     read -n1 -p "$1 [Y/n] " user_input </dev/tty
     [[ -z $user_input ]] && user_input=y || echo
     [[ "$user_input" =~ [yY] ]] && return 0 || return 1
-}
-
-function transfer_file() {
-    local operation=$1
-    local src=$2
-    local dest=$3
-    local src_dir=$(dirname "$src")
-    local dest_dir=$(dirname "$dest")
-
-    ensure_dir "$dest_dir"
-    if owned_by_root "$src_dir" || owned_by_root "$dest_dir"; then
-        if ! sudo $operation "$src" "$dest"; then
-            return 1
-        fi
-    else
-        if ! $operation "$src" "$dest"; then
-            return 1
-        fi
-    fi
-}
-
-function copy_file() {
-    transfer_file cp "$1" "$2"
-}
-
-function move_file() {
-    transfer_file mv "$1" "$2"
 }
 
 function run_edit() {

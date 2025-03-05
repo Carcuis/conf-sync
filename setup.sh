@@ -6,6 +6,7 @@ source $DIR/scripts/util.sh
 verbose=false
 no_error=true
 
+ZSH=${ZSH:-$HOME/.oh-my-zsh}
 ZSH_CUSTOM=${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}
 
 function cmd_parser() {
@@ -54,7 +55,7 @@ function test_web_connection() {
 }
 
 function installing_mesg() { mesg "${BLUE}Installing ${BOLD}$1${BLUE} ..." ; }
-function already_installed_mesg() { info "$1 has already installed." ; }
+function already_installed_mesg() { info "$1 is already installed." ; }
 
 function check_command() {
     if ! has_command $1; then
@@ -83,10 +84,7 @@ function download() {
     if [[ -z "$dest" ]]; then
         dest=$(basename $url)
     fi
-    if has_file "$dest"; then
-        warning "Warning: $dest already exists, move it to $dest.bak."
-        mv $dest{,.bak}
-    fi
+    exists_and_backup "$dest"
     curl -fLo "$dest" --create-dirs "$url"
     return $?
 }
@@ -129,10 +127,8 @@ function install_ohmyzsh() {
         return 1
     fi
 
-    if not_installed_file "$HOME/.oh-my-zsh/oh-my-zsh.sh" "Oh-My-Zsh"; then
-        if has_dir "$HOME/.oh-my-zsh"; then
-            mv $HOME/.oh-my-zsh{,.bak}
-        fi
+    if not_installed_file "$ZSH/oh-my-zsh.sh" "Oh-My-Zsh"; then
+        exist_and_backup "$ZSH"
 
         local exit_code=0
         download https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh
@@ -145,7 +141,7 @@ function install_ohmyzsh() {
         successfully_installed $exit_code "Oh-My-Zsh"
     fi
 
-    if has_file "$HOME/.oh-my-zsh/oh-my-zsh.sh"; then
+    if has_file "$ZSH/oh-my-zsh.sh"; then
         install_ohmyzsh_plugins
     fi
 }
@@ -211,21 +207,27 @@ function install_vifm_custom() {
 
 	# vifm-colors
     if not_installed_file "$vifm_config_home/colors/solarized-dark.vifm" "Vifm colorshemes"; then
-	    mv $vifm_config_home/colors{,.bak}
+        exist_and_backup "$vifm_config_home/colors"
 	    git clone https://github.com/vifm/vifm-colors $vifm_config_home/colors
         successfully_installed $? "Vifm colorshemes"
 	fi
 
 	# vifm-favicons
-    if not_installed_file "$vifm_config_home/plugged/favicons.vifm" "Vifm favicons"; then
+    if not_installed_file "$vifm_config_home/plugged/favicons.vifm" "Vifm devicons"; then
         download https://raw.githubusercontent.com/cirala/vifm_devicons/master/favicons.vifm "$vifm_config_home/plugged/favicons.vifm"
-        successfully_installed $? "Vifm favicons"
+        successfully_installed $? "Vifm devicons"
 	fi
 }
 
 function install_yazi_package() {
     if ! has_command yazi; then
         warning "Warning: Yazi is not installed, skip installing Yazi package."
+        no_error=false
+        return 1
+    fi
+
+    if ! has_command ya; then
+        warning "Warning: Yazi package manager 'ya' command not found, skip installing Yazi package."
         no_error=false
         return 1
     fi
@@ -268,7 +270,7 @@ function install_tmux_plugins() {
             local tmux_conf_local="$HOME/.config/tmux/tmux.conf"
             if ! has_file "$tmux_conf_local"; then
                 info "$tmux_conf_local not found."
-                cp "$tmux_conf_remote" "$tmux_conf_local"
+                copy_file "$tmux_conf_remote" "$tmux_conf_local"
                 successfully_installed $? "Tmux configuration"
             fi
             $tpm_dir/scripts/install_plugins.sh
@@ -285,7 +287,7 @@ function create_symlink() {
     local dest=$2
     if has_file "$dest"; then
         if [[ $(realpath "$dest") == $(realpath "$src") ]]; then
-            info "$dest has already linked."
+            info "$dest is already linked."
             return
         else
             warning "Warning: $dest exists, but not linked to $src."
@@ -304,7 +306,7 @@ function link_files() {
 
     if ! has_file "$vimrc"; then
         info "$vimrc not found."
-        cp "$DIR/.vimrc" "$vimrc"
+        copy_file "$DIR/.vimrc" "$vimrc"
         success "Copied $DIR/.vimrc to $vimrc."
     fi
 
