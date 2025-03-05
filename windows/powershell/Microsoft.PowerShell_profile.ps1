@@ -675,7 +675,8 @@ function CS-Update {
         }
     }
 
-    if (& $script "-a -s" -eq "Unsynchronized.") {
+    $output = & $script "-a -s"
+    if ($output -eq "Unsynchronized.") {
         Write-Host "`e[1;33mThere are inconsistent files.`nPlease run 'csc' to sync them first.`e[0m"
         return
     }
