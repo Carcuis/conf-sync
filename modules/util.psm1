@@ -1,3 +1,5 @@
+$DIR = Split-Path -Parent $PSScriptRoot
+
 $BOLD = "`e[1m" ; $TAIL  = "`e[0m" ; $WHITE  = "`e[37m"
 $RED  = "`e[31m"; $GREEN = "`e[32m"; $YELLOW = "`e[33m"; $CYAN = "`e[36m"
 
@@ -26,6 +28,26 @@ function Invoke-EnsureDir {
     )
     if (! (Test-HasDir $dir)) {
         New-Item -ItemType "directory" -Path $dir | Out-Null
+    }
+}
+
+function Invoke-ExistAndBackup {
+    param(
+        [string]$src
+    )
+    if (-not (Test-HasFile $src) -and -not (Test-HasDir $src)) {
+        return
+    }
+
+    $backup_dir = Join-Path -Path $DIR -ChildPath "backup"
+    Invoke-EnsureDir $backup_dir
+
+    $backup_file = Join-Path -Path $backup_dir -ChildPath "$(Split-Path -Leaf $src).$(Get-Date -Format 'yyMMdd_HHmmss')"
+    Move-Item -Path $src -Destination $backup_file -Force
+    if ($?) {
+        Write-Info "Backuped '$src' to '$backup_file'."
+    } else {
+        Write-ErrorMsg "Error: Failed to backup '$src' to '$backup_file'."
     }
 }
 

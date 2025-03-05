@@ -213,16 +213,9 @@ function Invoke-RunDiff {
 
     if ($script:force_sync) {
         $dest_dir = Split-Path -Parent $file2
-        $backup_dir = Join-Path -Path $DIR -ChildPath "backup"
-
         Invoke-EnsureDir $dest_dir
-        Invoke-EnsureDir $backup_dir
 
-        if (Test-HasFile $file2) {
-            $backup_file = Join-Path -Path $backup_dir -ChildPath "$(Split-Path -Leaf $file2).$(Get-Date -Format 'yyMMdd_HHmmss')"
-            Move-Item -Path $file2 -Destination $backup_file
-            Write-Info "Backuped `$dest` to `$backup_file`."
-        }
+        Invoke-ExistAndBackup $file2
 
         Copy-Item -Path $file1 -Destination $file2
         return
