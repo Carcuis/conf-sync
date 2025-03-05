@@ -1,22 +1,12 @@
 $DIR = Get-Item $PSCommandPath | Select-Object -ExpandProperty Target | Split-Path -Parent
 if (! $DIR) { $DIR = $PSScriptRoot }
 
+Import-Module (Join-Path $DIR "modules\util.psm1") -Scope Local -Force
+
 $script:verbose = $false
 $script:force_sync = $false
 $script:diff_command = ""
-$script:scoop_root = ""
-
-$BOLD = "`e[1m" ; $TAIL  = "`e[0m" ; $WHITE  = "`e[37m"
-$RED  = "`e[31m"; $GREEN = "`e[32m"; $YELLOW = "`e[33m"; $CYAN = "`e[36m"
-
-function Get-Scoop-Root {
-    if (-not (Get-Command scoop -ErrorAction SilentlyContinue)) {
-        Write-Host "${BOLD}${RED}Error: scoop not found.${TAIL}"
-        exit 1
-    }
-    $script:scoop_root = scoop config root_path
-}
-Get-Scoop-Root
+$script:scoop_root = Get-ScoopRoot
 
 $psprofile = @{
     name = "PSProfile"
@@ -149,26 +139,19 @@ $extra_file_list = @(
     $vscode_settings
 )
 
-function Print-Line    { param([string]$msg) Write-Host "$WHITE$msg$TAIL"             }
-function Print-Info    { param([string]$msg) if ($script:verbose) { Print-Line "$CYAN$msg" } }
-function Print-Bold    { param([string]$msg) Print-Line "$BOLD$msg"                   }
-function Print-Success { param([string]$msg) Print-Bold "$GREEN$msg ✔"                }
-function Print-Warning { param([string]$msg) Print-Bold "$YELLOW$msg"                 }
-function Print-Error   { param([string]$msg) Print-Bold "$RED$msg"                    }
-
 function Show-Usage {
-    Print-Bold "Usage:"
-    Print-Line "  check_consistency.ps1 [options]"
-    Print-Line
-    Print-Bold "Options:"
-    Print-Line "  -a, --all        Check all files"
-    Print-Line "  -f, --force-sync Force sync files"
-    Print-Line "  -h, --help       Display help"
-    Print-Line "  -s, --status     Show status of all files"
-    Print-Line "  -v, --verbose    Show detailed information"
+    Write-Bold "Usage:"
+    Write-Line "  check_consistency.ps1 [options]"
+    Write-Line
+    Write-Bold "Options:"
+    Write-Line "  -a, --all        Check all files"
+    Write-Line "  -f, --force-sync Force sync files"
+    Write-Line "  -h, --help       Display help"
+    Write-Line "  -s, --status     Show status of all files"
+    Write-Line "  -v, --verbose    Show detailed information"
 }
 
-function Command-Parser {
+function Invoke-CmdPaser {
     if (-not $args -or -not $args.Split) { return }
 
     foreach ($arg in $args.Split(" ")) {
@@ -176,46 +159,41 @@ function Command-Parser {
             "^((-?a)|(-?-all))$"      { $script:file_list += $extra_file_list }
             "^((-?f)|(-?-force))$"    { $script:force_sync = $true }
             "^((-?h)|(-?-help))$"     { Show-Usage; exit 0 }
-            "^((-?s)|(-?-status))$"   { if (Check-All-Files) { Write-Output "All synchronized." } else { Write-Output "Unsynchronized." }; exit 0 }
             "^((-?v)|(-?-verbose))$"  { $script:verbose = $true }
-            default { Print-Error "Error: Invalid option '$arg'"; Show-Usage; exit 1 }
+
+            "^((-?s)|(-?-status))$"   {
+                if (Test-AllSynced) {
+                    Write-Line "All synchronized."
+                } else {
+                    Write-Line "Unsynchronized."
+                }
+                exit 0
+            }
+
+            default { Write-ErrorMsg "Error: Invalid option '$arg'"; Show-Usage; exit 1 }
         }
     }
 }
 
-function Has-Command { param([string]$cmd)   return (Get-Command $cmd).length -gt 0 }
-function Has-Dir     { param([string]$dir)   return [System.IO.Path]::Exists($dir)  }
-function Has-File    { param([string]$file)  return [System.IO.File]::Exists($file) }
-function File-Same   { param([string]$file1, [string]$file2) return (Get-FileHash $file1).hash -eq (Get-FileHash $file2).hash }
-function Ensure-Dir  { param([string]$dir)   if (! (Has-Dir $dir)) { New-Item -ItemType "directory" -Path $dir | Out-Null } }
-
-function Check-All-Files {
+function Test-AllSynced {
     foreach ($file in $file_list) {
-        if (! (Has-File $file.local)) { return $false }
-        if (! (File-Same $file.remote $file.local)) { return $false }
+        if (! (Test-HasFile $file.local)) { return $false }
+        if (! (Test-FileSame $file.remote $file.local)) { return $false }
     }
     return $true
 }
 
-function Check-Editor {
-    if (Has-Command nvim) {
+function Set-DiffCommand {
+    if ($script:force_sync) { return }
+
+    if (Test-HasCommand nvim) {
         $script:diff_command = "nvim -i NONE -d"
-    } elseif (Has-Command vim) {
+    } elseif (Test-HasCommand vim) {
         $script:diff_command = "vimdiff"
     } else {
-        Print-Error "Error: vim or nvim not found."
+        Write-ErrorMsg "Error: vim or nvim not found."
         exit 1
     }
-}
-
-function Read-Input-Key {
-    param(
-        [string]$message
-    )
-    Write-Host -NoNewline "$message"
-    $user_input = [Console]::ReadKey()
-    Print-Line
-    return $user_input.Key
 }
 
 function Confirm-Action {
@@ -223,11 +201,11 @@ function Confirm-Action {
         [string]$message
     )
     if ($script:force_sync) { return $true }
-    $input_key = Read-Input-Key "$message [Y/n] "
+    $input_key = Read-InputKey "$message [Y/n] "
     return ($input_key -eq "Y" -or $input_key -eq "Enter")
 }
 
-function Run-Diff {
+function Invoke-RunDiff {
     param(
         [string]$file1,
         [string]$file2
@@ -237,13 +215,13 @@ function Run-Diff {
         $dest_dir = Split-Path -Parent $file2
         $backup_dir = Join-Path -Path $DIR -ChildPath "backup"
 
-        Ensure-Dir $dest_dir
-        Ensure-Dir $backup_dir
+        Invoke-EnsureDir $dest_dir
+        Invoke-EnsureDir $backup_dir
 
-        if (Has-File $file2) {
+        if (Test-HasFile $file2) {
             $backup_file = Join-Path -Path $backup_dir -ChildPath "$(Split-Path -Leaf $file2).$(Get-Date -Format 'yyMMdd_HHmmss')"
             Move-Item -Path $file2 -Destination $backup_file
-            Print-Info "Backuped `$dest` to `$backup_file`."
+            Write-Info "Backuped `$dest` to `$backup_file`."
         }
 
         Copy-Item -Path $file1 -Destination $file2
@@ -257,56 +235,56 @@ function Run-Diff {
     {
         vimdiff $file1 $file2
     } else {
-        Print-Error "Error: diff command '$script:diff_command' not found."
+        Write-ErrorMsg "Error: diff command '$script:diff_command' not found."
         exit 1
     }
 }
 
-function Run-Edit {
-    if (Check-All-Files) {
-        Print-Success "All files are the same. Nothing to do."
+function Invoke-RunSync {
+    if (Test-AllSynced) {
+        Write-Success "All files are the same. Nothing to do."
         return
     }
 
     foreach ($file in $file_list) {
-        if (! (Has-File $file.local)) {
+        if (! (Test-HasFile $file.local)) {
             $file_local_dir = Split-Path $file.local
             if (Confirm-Action "$($file.name) not found, create a copy to $($file.local) ?") {
                 if (! (Has-Dir $file_local_dir)) {
-                    Print-Info "$file_local_dir not found, creating..."
+                    Write-Info "$file_local_dir not found, creating..."
                     New-Item -ItemType "directory" -Path $file_local_dir | Out-Null
                 }
                 Copy-Item -Path $file.remote -Destination $file.local
-                Print-Success "Copied ``$($file.remote)`` to ``$($file.local)``."
+                Write-Success "Copied ``$($file.remote)`` to ``$($file.local)``."
             }
             continue
         }
 
-        if (File-Same $file.remote $file.local) {
-            if ($script:verbose) { Print-Success "$($file.name) has already been synchronized." }
+        if (Test-FileSame $file.remote $file.local) {
+            if ($script:verbose) { Write-Success "$($file.name) has already been synchronized." }
         } else {
             if (Confirm-Action "$($file.name) unsynchronized. Edit with $script:diff_command ?") {
-                Run-Diff -file1 $file.remote -file2 $file.local
-                if (File-Same $file.remote $file.local) {
-                    Print-Success "$($file.name) is now synchronized."
+                Invoke-RunDiff -file1 $file.remote -file2 $file.local
+                if (Test-FileSame $file.remote $file.local) {
+                    Write-Success "$($file.name) is now synchronized."
                 } else {
-                    Print-Info "$($file.name) is still unsynchronized."
-                    Print-Info "-- Use ``$script:diff_command $($file.remote) $($file.local)`` later,"
-                    Print-Info "-- or try to rerun this wizard."
+                    Write-Info "$($file.name) is still unsynchronized."
+                    Write-Info "-- Use ``$script:diff_command $($file.remote) $($file.local)`` later,"
+                    Write-Info "-- or try to rerun this wizard."
                 }
             }
         }
     }
 
-    if (Check-All-Files) {
-        Print-Success "All files are synchronized now."
+    if (Test-AllSynced) {
+        Write-Success "All files are synchronized now."
     }
 }
 
-function Main {
-    Command-Parser $args
-    if (! $script:force_sync) { Check-Editor }
-    Run-Edit
+function Invoke-Main {
+    Invoke-CmdPaser $args
+    Set-DiffCommand
+    Invoke-RunSync
 }
 
-Main $args
+Invoke-Main $args
