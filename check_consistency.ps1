@@ -3,7 +3,7 @@ if (! $DIR) { $DIR = $PSScriptRoot }
 
 Import-Module (Join-Path $DIR "modules\util.psm1") -Scope Local -Force
 
-$script:verbose = $false
+$global:verbose = $false
 $script:force_sync = $false
 $script:diff_command = ""
 $script:scoop_root = Get-ScoopRoot
@@ -159,13 +159,13 @@ function Invoke-CmdPaser {
             "^((-?a)|(-?-all))$"      { $script:file_list += $extra_file_list }
             "^((-?f)|(-?-force))$"    { $script:force_sync = $true }
             "^((-?h)|(-?-help))$"     { Show-Usage; exit 0 }
-            "^((-?v)|(-?-verbose))$"  { $script:verbose = $true }
+            "^((-?v)|(-?-verbose))$"  { $global:verbose = $true }
 
             "^((-?s)|(-?-status))$"   {
                 if (Test-AllSynced) {
-                    Write-Line "All synchronized."
+                    Write-Output "All synchronized."
                 } else {
-                    Write-Line "Unsynchronized."
+                    Write-Output "Unsynchronized."
                 }
                 exit 0
             }
@@ -261,7 +261,7 @@ function Invoke-RunSync {
         }
 
         if (Test-FileSame $file.remote $file.local) {
-            if ($script:verbose) { Write-Success "$($file.name) has already been synchronized." }
+            if ($global:verbose) { Write-Success "$($file.name) has already been synchronized." }
         } else {
             if (Confirm-Action "$($file.name) unsynchronized. Edit with $script:diff_command ?") {
                 Invoke-RunDiff -file1 $file.remote -file2 $file.local
@@ -285,6 +285,7 @@ function Invoke-Main {
     Invoke-CmdPaser $args
     Set-DiffCommand
     Invoke-RunSync
+    Remove-Globals
 }
 
 Invoke-Main $args

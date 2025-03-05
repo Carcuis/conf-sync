@@ -1,8 +1,8 @@
 $BOLD = "`e[1m" ; $TAIL  = "`e[0m" ; $WHITE  = "`e[37m"
 $RED  = "`e[31m"; $GREEN = "`e[32m"; $YELLOW = "`e[33m"; $CYAN = "`e[36m"
 
-function Write-Line     { param([string]$msg) Write-Output "$WHITE$msg$TAIL" }
-function Write-Info     { param([string]$msg) if ($using:verbose) { Write-Line "$CYAN$msg" } }
+function Write-Line     { param([string]$msg) Write-Host "$WHITE$msg$TAIL" }
+function Write-Info     { param([string]$msg) if ($global:verbose) { Write-Line "$CYAN$msg" } }
 function Write-Bold     { param([string]$msg) Write-Line "$BOLD$msg" }
 function Write-Success  { param([string]$msg) Write-Bold "$GREEN$msg ✔" }
 function Write-WarnMsg  { param([string]$msg) Write-Bold "$YELLOW$msg" }
@@ -45,5 +45,9 @@ function Read-InputKey {
     $user_input = [Console]::ReadKey()
     Write-Host
     return $user_input.Key
+}
+
+function Remove-Globals {
+    Remove-Variable -Name verbose -Scope Global -Force
 }
 
