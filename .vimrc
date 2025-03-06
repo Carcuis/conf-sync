@@ -1606,11 +1606,16 @@ if has("nvim")
     vim.api.nvim_create_autocmd("User", {
         pattern = "DiffviewDiffBufWinEnter",
         callback = function()
-            if vim.api.nvim_get_mode().mode ~= "n" then
-                return
-            end
-            vim.api.nvim_input('gg')
-            vim.api.nvim_input(']c')
+            local timer = vim.uv.new_timer()
+            timer:start(10, 0, vim.schedule_wrap(function()
+                timer:stop()
+                timer:close()
+                if vim.api.nvim_get_mode().mode ~= "n" or vim.api.nvim_buf_get_name(0):match("^diffview:///panels") then
+                    return
+                end
+                vim.api.nvim_input('gg')
+                vim.api.nvim_input(']c')
+            end))
         end
     })
     vim.api.nvim_create_autocmd("BufEnter", {
