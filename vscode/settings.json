@@ -7,6 +7,8 @@
         "editor.wordWrap": "off",
     },
     "basedpyright.analysis.typeCheckingMode": "standard",
+    "chat.experimental.statusIndicator.enabled": true,
+    "chat.renderRelatedFiles": true,
     "code-runner.executorMap": {
         "java": "javac -encoding utf8 -d class $fileName && java -Dfile.encoding=UTF-8 -cp class $fileNameWithoutExt",
         "python": "set PYTHONIOENCODING=utf8 && $pythonPath $fullFileName",
@@ -39,9 +41,10 @@
         "asvetliakov.vscode-neovim": 1
     },
     "files.defaultLanguage": "",
+    "files.simpleDialog.enable": true,
     "git.autofetch": true,
     "git.confirmSync": false,
-    "github.copilot.chat.edits.codesearch.enabled": true,
+    "github.copilot.chat.codesearch.enabled": true,
     "github.copilot.enable": {
         "plaintext": true,
         "markdown": true,
@@ -63,7 +66,7 @@
     "leetcode.hint.configWebviewMarkdown": false,
     "leetcode.workspaceFolder": "D:\\code\\leetcode",
     "markdown.preview.fontSize": 18,
-    "notebook.inlineValues": true,
+    "notebook.inlineValues": "on",
     "outline.showVariables": false,
     "output.smartScroll.enabled": false,
     "powershell.buttons.showPanelMovementButtons": false,
