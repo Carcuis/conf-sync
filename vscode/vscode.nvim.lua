@@ -88,6 +88,9 @@ function M.load_plugins()
             cond = vim.g.vscode == nil,
             event = "VeryLazy",
             opts = {
+                options = {
+                    disabled_filetypes = { statusline = { "dashboard" } },
+                },
             },
         },
         {
@@ -130,6 +133,107 @@ function M.load_plugins()
                     ["b"] = "b",
                 },
             }
+        },
+        {
+            'nvim-telescope/telescope.nvim',
+            dependencies = { 'nvim-lua/plenary.nvim' },
+            cond = vim.g.vscode == nil,
+            event = "VeryLazy",
+        },
+        {
+            "nvimdev/dashboard-nvim",
+            cond = vim.g.vscode == nil,
+            lazy = false,
+            opts = function()
+                local logo = [[
+                    ██╗   ██╗███████╗ ██████╗ ██████╗ ██████╗ ███████╗    ███╗   ██╗██╗   ██╗██╗███╗   ███╗
+                    ██║   ██║██╔════╝██╔════╝██╔═══██╗██╔══██╗██╔════╝    ████╗  ██║██║   ██║██║████╗ ████║
+                    ██║   ██║███████╗██║     ██║   ██║██║  ██║█████╗      ██╔██╗ ██║██║   ██║██║██╔████╔██║
+                    ╚██╗ ██╔╝╚════██║██║     ██║   ██║██║  ██║██╔══╝      ██║╚██╗██║╚██╗ ██╔╝██║██║╚██╔╝██║
+                     ╚████╔╝ ███████║╚██████╗╚██████╔╝██████╔╝███████╗    ██║ ╚████║ ╚████╔╝ ██║██║ ╚═╝ ██║
+                      ╚═══╝  ╚══════╝ ╚═════╝ ╚═════╝ ╚═════╝ ╚══════╝    ╚═╝  ╚═══╝  ╚═══╝  ╚═╝╚═╝     ╚═╝
+                ]]
+                logo = logo:gsub(string.rep(" ", 20), "") .. "\n\n"
+
+                local opts = {
+                    theme = "doom",
+                    config = {
+                        header = vim.split(logo, "\n"),
+                        center = {
+                            { action = 'Telescope find_files', desc = " Find File", icon = " ", key = "f" },
+                            { action = "ene | startinsert", desc = " New File", icon = " ", key = "i" },
+                            { action = 'Telescope oldfiles', desc = " Recent Files", icon = " ", key = "r" },
+                            { action = 'Telescope live_grep', desc = " Find Text", icon = " ", key = "w" },
+                            { action = 'e $MYVIMRC', desc = " Config", icon = " ", key = "c" },
+                            { action = "Lazy", desc = " Lazy", icon = "󰒲 ", key = "l" },
+                            { action = function() vim.api.nvim_input("<cmd>qa<cr>") end, desc = " Quit", icon = " ", key = "q" },
+                        },
+                        footer = function()
+                            local stats = require("lazy").stats()
+                            local ms = (math.floor(stats.startuptime * 100 + 0.5) / 100)
+                            return { "⚡ Neovim loaded " ..
+                            stats.loaded .. "/" .. stats.count .. " plugins in " .. ms .. "ms" }
+                        end,
+                        vertical_center = true,
+                    },
+                }
+
+                for _, button in ipairs(opts.config.center) do
+                    button.desc = button.desc .. string.rep(" ", 43 - #button.desc)
+                    button.key_format = "  %s"
+                end
+
+                -- open dashboard after closing lazy
+                if vim.o.filetype == "lazy" then
+                    vim.api.nvim_create_autocmd("WinClosed", {
+                        pattern = tostring(vim.api.nvim_get_current_win()),
+                        once = true,
+                        callback = function()
+                            vim.schedule(function()
+                                vim.api.nvim_exec_autocmds("UIEnter", { group = "dashboard" })
+                            end)
+                        end,
+                    })
+                end
+
+                return opts
+            end,
+        },
+        {
+            "lukas-reineke/indent-blankline.nvim",
+            cond = vim.g.vscode == nil,
+            event = "VeryLazy",
+            main = "ibl",
+            opts = function()
+                local opts = {
+                    scope = {
+                        enabled = true,
+                        show_start = true,
+                        show_end = false,
+                    },
+                    exclude = {
+                        filetypes = {
+                            'dashboard',
+                        },
+                    },
+                }
+
+                local hooks = require "ibl.hooks"
+                hooks.register(
+                    hooks.type.WHITESPACE,
+                    hooks.builtin.hide_first_space_indent_level
+                )
+
+                return opts
+            end,
+        },
+        {
+            'mikavilpas/yazi.nvim',
+            cond = vim.g.vscode == nil,
+            event = "VeryLazy",
+            keys = {
+                { '<M-y>', '<cmd>Yazi<CR>', desc = "Open Yazi" },
+            },
         }
     })
 end
@@ -301,9 +405,10 @@ function M.vsc_set_keymaps(vscode)
     end
 end
 
----@param vscode vscode
-function M.vsc_set_autocmds(vscode)
+function M.set_autocmds()
     local group = vim.api.nvim_create_augroup("user_group", { clear = true })
+
+    -- autocmds for all
     vim.api.nvim_create_autocmd("TextYankPost", {
         group = group,
         callback = function()
@@ -314,6 +419,21 @@ function M.vsc_set_autocmds(vscode)
         group = group,
         command = "set formatoptions-=cro"
     })
+
+    if vim.g.vscode then
+        -- autocmds inside vscode only
+    else
+        -- autocmds outside vscode only
+        vim.api.nvim_create_autocmd("BufReadPost", {
+            group = group,
+            pattern = "*",
+            callback = function()
+                if vim.fn.line("'\"") > 1 and vim.fn.line("'\"") <= vim.fn.line("$") then
+                    vim.api.nvim_input("g'\"")
+                end
+            end
+        })
+    end
 end
 
 ---@param vscode vscode
@@ -345,12 +465,12 @@ function M.setup()
             vim.notify("vscode nvim: `NVIM_APPNAME` error, not equal to `vscnvim`", vim.log.levels.WARN)
         end
         M.vsc_set_keymaps(vscode)
-        M.vsc_set_autocmds(vscode)
         M.vsc_set_usercmds(vscode)
     else
         M.set_keymaps()
     end
 
+    M.set_autocmds()
     M.setup_lazy_nvim()
 end
 
