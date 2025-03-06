@@ -175,6 +175,12 @@ end
 
 ---@param vscode vscode
 function M.vsc_set_keymaps(vscode)
+    local file_path = debug.getinfo(1).source:sub(2)
+
+    for _, mapping in ipairs({ "jj", "jk", "kj", "kk", "jl", "jh" }) do
+        vim.keymap.set("c", mapping, "<C-c>", { noremap = true })
+    end
+
     ---@class VscKeymap
     ---@field mode string|string[]
     ---@field lhs string
@@ -184,12 +190,6 @@ function M.vsc_set_keymaps(vscode)
     ---@field wait? boolean
     ---@field post_esc? boolean
     ---@field opts? table
-
-    local file_path = debug.getinfo(1).source:sub(2)
-
-    for _, mapping in ipairs({ "jj", "jk", "kj", "kk", "jl", "jh" }) do
-        vim.keymap.set("c", mapping, "<C-c>", { noremap = true })
-    end
 
     ---@type VscKeymap[]
     local keymaps = {
@@ -213,17 +213,25 @@ function M.vsc_set_keymaps(vscode)
         { mode = "n", lhs = "<leader>sf", func = function() vim.cmd.source(file_path) end },
 
         -- backup line and restore
-        { mode = "n", lhs = "DC", func = function()
-            vscode.call("editor.action.commentLine")
-            vscode.call("editor.action.clipboardCopyAction")
-            vscode.call("editor.action.clipboardPasteAction")
-            vscode.call("editor.action.commentLine")
-        end },
-        { mode = "n", lhs = "DR", func = function()
-            vscode.call("editor.action.deleteLines")
-            vscode.call("cursorUp")
-            vscode.call("editor.action.commentLine")
-        end },
+        {
+            mode = "n",
+            lhs = "DC",
+            func = function()
+                vscode.call("editor.action.commentLine")
+                vscode.call("editor.action.clipboardCopyAction")
+                vscode.call("editor.action.clipboardPasteAction")
+                vscode.call("editor.action.commentLine")
+            end
+        },
+        {
+            mode = "n",
+            lhs = "DR",
+            func = function()
+                vscode.call("editor.action.deleteLines")
+                vscode.call("cursorUp")
+                vscode.call("editor.action.commentLine")
+            end
+        },
 
         -- copilot
         { mode = "i", lhs = "<A-n>", action = "editor.action.inlineSuggest.showPrevious" },
@@ -310,7 +318,6 @@ function M.setup()
     M.set_options()
 
     if vim.g.vscode then
-
         ---@class vscode
         ---@field action fun(name: string, opts?: table)
         ---@field call fun(name: string, opts?: table, timeout?: number): any
