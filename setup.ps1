@@ -134,6 +134,15 @@ function Install-VimPlug {
     }
 }
 
+function Install-VscLazyNvim {
+    $lazy_nvim = "$HOME\AppData\Local\vscnvim-data\lazy\lazy.nvim"
+    $lazy_repo = "https://github.com/folke/lazy.nvim.git"
+    if (Test-NotInstalledInPath -dir $lazy_nvim -package "VSCode Neovim Lazy.nvim") {
+        git clone --filter=blob:none --branch=stable $lazy_repo $lazy_nvim
+        Trace-InstallStatus -status $? -package "VSCode Neovim Lazy.nvim"
+    }
+}
+
 function Install-VifmCustom {
     if (! (Test-HasCommand vifm)) {
         warning "Warning: Vifm is not installed, skip installing Vifm custom."
@@ -240,6 +249,7 @@ function Invoke-LinkFiles {
 
 function Invoke-InstallAll {
     Install-VimPlug
+    Install-VscLazyNvim
     Install-VifmCustom
     Install-YaziPackage
     Invoke-LinkFiles
