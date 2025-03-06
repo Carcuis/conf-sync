@@ -104,7 +104,7 @@
         "x", "y", "z", "/", "]", "right", "left", "up", "down", "backspace", "delete"
     ],
     "vscode-neovim.NVIM_APPNAME": "vscnvim",
-    "vscode-neovim.neovimInitVimPaths.win32": "~\\.vscode\\vscode.nvim.lua",
+    "vscode-neovim.neovimInitVimPaths.win32": "~\\AppData\\Local\\vscnvim\\init.lua",
     "vsintellicode.python.completionsEnabled": false,
     "window.enableMenuBarMnemonics": false,
     "window.restoreWindows": "none",

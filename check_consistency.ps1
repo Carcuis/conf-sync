@@ -101,7 +101,7 @@ $yazi_theme = @{
 $vscode_nvim_lua = @{
     name = "vscode-neovim lua config"
     remote = "$DIR\vscode\vscode.nvim.lua"
-    local = "$HOME\.vscode\vscode.nvim.lua"
+    local = "$HOME\Appdata\Local\vscnvim\init.lua"
 }
 $vscode_keybindings = @{
     name = "vscode keybindings.json"
