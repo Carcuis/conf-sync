@@ -987,11 +987,11 @@ if has("nvim")
             'quickfix',
             {
                 sections = { lualine_a = {{
-                        function()
-                            return vim.fn.fnamemodify(vim.fn.getcwd(), ':~')
-                        end,
-                        padding = { left = 0, right = 0 },
-                        separator = { left = '', right = '' },
+                    function()
+                        return vim.fn.fnamemodify(vim.fn.getcwd(), ':~')
+                    end,
+                    padding = { left = 0, right = 0 },
+                    separator = { left = '', right = '' },
                 }}, },
                 filetypes = {'NvimTree'},
             },
@@ -1001,7 +1001,7 @@ if has("nvim")
                     padding = { left = 0, right = 0 },
                     separator = { left = '', right = '' },
                 }}, },
-                filetypes = {'DiffviewFiles'},
+                filetypes = {'DiffviewFiles', 'DiffviewFileHistory'},
             },
             {
                 sections = { lualine_y = {{
