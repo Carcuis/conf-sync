@@ -113,8 +113,9 @@
         "editorHoverWidget.background": "#202020ee",
     },
     "workbench.editor.highlightModifiedTabs": true,
-    "workbench.iconTheme": "vscode-jetbrains-icon-theme-2023-auto",
+    "workbench.iconTheme": "material-icon-theme",
     "workbench.list.smoothScrolling": true,
     "workbench.localHistory.maxFileEntries": 500,
     "workbench.panel.showLabels": false,
+    "workbench.secondarySideBar.showLabels": false,
 }
