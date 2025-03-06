@@ -128,6 +128,9 @@
     "sumneko-lua.enableNvimLuaDev": true,
     "sumneko-lua.locale": "zh-cn",
     "Lua.completion.callSnippet": "Replace",
+    "Lua.format.defaultConfig": {
+        "align_array_table": "false",
+    },
     "Lua.runtime.version": "Lua 5.1",
     "basedpyright.analysis.typeCheckingMode": "standard",
 }
