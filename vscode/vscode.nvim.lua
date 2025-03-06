@@ -76,34 +76,43 @@ function M.load_plugins()
     require("lazy").setup({
         {
             "Mofiqul/vscode.nvim",
+            cond = vim.g.vscode == nil,
             priority = 1000,
             config = function()
                 vim.cmd.colorscheme("vscode")
             end,
-            enabled = vim.g.vscode == nil,
         },
         {
             'nvim-lualine/lualine.nvim',
             dependencies = { 'nvim-tree/nvim-web-devicons' },
+            cond = vim.g.vscode == nil,
+            event = "VeryLazy",
             opts = {
             },
-            enabled = vim.g.vscode == nil,
         },
         {
             'akinsho/bufferline.nvim',
             dependencies = { 'nvim-tree/nvim-web-devicons' },
+            cond = vim.g.vscode == nil,
             opts = {
             },
-            enabled = vim.g.vscode == nil,
         },
         {
             'ggandor/leap.nvim',
-            config = function()
-                require("leap").setup {
-                    safe_labels = 'fnut/FNLHMUGTZ?',
-                }
-                vim.keymap.set({'n', 'x', 'o'}, 'f', '<Plug>(leap-forward-to)')
-                vim.keymap.set({'n', 'x', 'o'}, 'F', '<Plug>(leap-backward-to)')
+            event = "VeryLazy",
+            keys = {
+                { 'f', '<Plug>(leap-forward-to)', mode = { 'n', 'x', 'o' }, desc = "Leap Forward to" },
+                { 'F', '<Plug>(leap-backward-to)', mode = { 'n', 'x', 'o' }, desc = "Leap Backward to" },
+            },
+            opts = {
+                safe_labels = 'fnut/FNLHMUGTZ?',
+                labels = 'fnjklhodweimbuyvrgtaqpcxz/FNJKLHODWEIMBUYVRGTAQPCXZ?'
+            },
+            config = function(_, opts)
+                local leap = require("leap")
+                for k, v in pairs(opts) do
+                    leap.opts[k] = v
+                end
             end,
         },
         {
