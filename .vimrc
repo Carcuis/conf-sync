@@ -906,14 +906,19 @@ if has("nvim")
         end, 10) end,
     }
 
-    local Terminal  = require('toggleterm.terminal').Terminal
-    local lazygit = Terminal:new({ cmd = "lazygit", hidden = false })
+    local Terminal = require('toggleterm.terminal').Terminal
+    local lazygit = Terminal:new({
+        cmd = "lazygit",
+        hidden = false,
+        float_opts = {
+            border = "none",
+        },
+        on_close = function(term)
+            vim.cmd.checktime()
+        end,
+    })
 
-    function _lazygit_toggle()
-      lazygit:toggle()
-    end
-
-    vim.api.nvim_set_keymap("n", "<leader>gg", "<cmd>lua _lazygit_toggle()<CR>", {noremap = true, silent = true})
+    vim.keymap.set("n", "<leader>gg", function() lazygit:toggle() end, { noremap = true, silent = true })
 EOF
 endif
 
