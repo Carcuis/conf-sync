@@ -79,6 +79,8 @@
     "python.analysis.inlayHints.functionReturnTypes": true,
     "python.analysis.inlayHints.pytestParameters": true,
     "python.analysis.inlayHints.variableTypes": true,
+    "python.analysis.languageServerMode": "full",
+    "python.analysis.typeCheckingMode": "standard",
     "python.terminal.activateEnvironment": false,
     "redhat.telemetry.enabled": false,
     "terminal.integrated.allowChords": false,
