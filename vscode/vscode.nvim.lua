@@ -6,7 +6,25 @@
 --
 -- =============================================================================================
 
-local M = {}
+local M = {
+    has_vscode = vim.g.vscode == 1,
+    not_vscode = vim.g.vscode == nil,
+    autogroup = vim.api.nvim_create_augroup("user_group", { clear = true }),
+    this_file_path = debug.getinfo(1).source:sub(2),
+}
+
+---@class vscode
+---@field action fun(name: string, opts?: table)
+---@field call fun(name: string, opts?: table, timeout?: number): any
+---@field on fun(event: string, callback: function)
+---@field has_config fun(name: string|string[]): boolean|boolean[]
+---@field get_config fun(name: string|string[]): any|any[]
+---@field update_config fun(name: string|string[], value: any|any[], target?: "global"|"workspace")
+---@field notify fun(msg: string, level?: number)
+---@field eval fun(code: string, opts?: table, timeout?: number): any
+---@field eval_async fun(code: string, opts?: table): any
+---@field with_insert fun(callback: function)
+M.vscode = M.has_vscode and require("vscode") or nil
 
 function M.set_options()
     vim.o.conceallevel = 1
@@ -14,7 +32,7 @@ function M.set_options()
     vim.o.smartcase = true
     vim.g.mapleader = " "
 
-    if not vim.g.vscode then
+    if M.not_vscode then
         vim.o.number = true
         vim.o.relativenumber = true
         vim.o.cursorline = true
@@ -42,7 +60,7 @@ end
 
 function M.setup_lazy_nvim()
     if not M.check_appname_ok() then
-        vim.notify("NVIM_APPNAME error, not equal to `vscnvim`", vim.log.levels.ERROR)
+        vim.notify("warning: `NVIM_APPNAME` is not equal to `vscnvim`, skip loading lazy.nvim", vim.log.levels.WARN)
         return
     end
 
@@ -50,7 +68,7 @@ function M.setup_lazy_nvim()
     local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
     ---@diagnostic disable-next-line: undefined-field
     if not (vim.uv or vim.loop).fs_stat(lazypath) then
-        if vim.g.vscode then
+        if M.has_vscode then
             vim.notify("vscode nvim: Lazy.nvim not installed, please run `vscnvim` in terminal", vim.log.levels.WARN)
             return
         end
@@ -76,7 +94,7 @@ function M.load_plugins()
     require("lazy").setup({
         {
             "Mofiqul/vscode.nvim",
-            cond = vim.g.vscode == nil,
+            cond = M.not_vscode,
             priority = 1000,
             config = function()
                 vim.cmd.colorscheme("vscode")
@@ -85,7 +103,7 @@ function M.load_plugins()
         {
             'nvim-lualine/lualine.nvim',
             dependencies = { 'nvim-tree/nvim-web-devicons' },
-            cond = vim.g.vscode == nil,
+            cond = M.not_vscode,
             event = "VeryLazy",
             opts = {
                 options = {
@@ -96,7 +114,7 @@ function M.load_plugins()
         {
             'akinsho/bufferline.nvim',
             dependencies = { 'nvim-tree/nvim-web-devicons' },
-            cond = vim.g.vscode == nil,
+            cond = M.not_vscode,
             opts = {
             },
         },
@@ -137,12 +155,37 @@ function M.load_plugins()
         {
             'nvim-telescope/telescope.nvim',
             dependencies = { 'nvim-lua/plenary.nvim' },
-            cond = vim.g.vscode == nil,
+            cond = M.not_vscode,
             event = "VeryLazy",
+            keys = {
+                -- basic
+                { '<leader>fu', '<cmd>Telescope resume<CR>', desc = "Telescope Resume" },
+                { '<leader>fb', '<cmd>Telescope buffers<CR>', desc = "Buffers" },
+                { '<leader>fh', '<cmd>Telescope help_tags<CR>', desc = "Help Tags" },
+                { '<leader>fH', '<cmd>Telescope highlights<CR>', desc = "Highlights" },
+                { '<leader>fR', '<cmd>Telescope registers<CR>', desc = "Registers" },
+                { '<leader>fc', '<cmd>Telescope command_history<CR>', desc = "Command History" },
+
+                -- files
+                { '<leader>ff', '<cmd>Telescope find_files<CR>', desc = "Find Files" },
+                { '<leader>fF', '<cmd>Telescope find_files hidden=true<CR>', desc = "Find Hidden Files" },
+                { '<leader>fr', '<cmd>Telescope oldfiles<CR>', desc = "Recent Files" },
+
+                -- find and replace
+                { '<leader>fw', '<cmd>Telescope live_grep<CR>', desc = "Find Text" },
+                { '<leader>f/', '<cmd>Telescope current_buffer_fuzzy_find<CR>', desc = "Fuzzy Find" },
+
+                -- git
+                { '<leader>fgC', '<cmd>Telescope git_bcommits<CR>', desc = "Git BCommits" },
+                { '<leader>fgb', '<cmd>Telescope git_branches<CR>', desc = "Git Branches" },
+                { '<leader>fgc', '<cmd>Telescope git_commits<CR>', desc = "Git Commits" },
+                { '<leader>fgf', '<cmd>Telescope git_files<CR>', desc = "Git Files" },
+                { '<leader>fgs', '<cmd>Telescope git_status<CR>', desc = "Git Status" },
+            },
         },
         {
             "nvimdev/dashboard-nvim",
-            cond = vim.g.vscode == nil,
+            cond = M.not_vscode,
             lazy = false,
             opts = function()
                 local logo = [[
@@ -201,7 +244,7 @@ function M.load_plugins()
         },
         {
             "lukas-reineke/indent-blankline.nvim",
-            cond = vim.g.vscode == nil,
+            cond = M.not_vscode,
             event = "VeryLazy",
             main = "ibl",
             opts = function()
@@ -229,203 +272,233 @@ function M.load_plugins()
         },
         {
             'mikavilpas/yazi.nvim',
-            cond = vim.g.vscode == nil,
+            cond = M.not_vscode,
             event = "VeryLazy",
             keys = {
                 { '<M-y>', '<cmd>Yazi<CR>', desc = "Open Yazi" },
+                { '<leader>ee', '<cmd>Yazi<CR>', desc = "Open Yazi" },
             },
         }
     })
 end
 
 function M.set_keymaps()
-    ---@class Keymap
-    ---@field mode string|string[]
-    ---@field lhs string
-    ---@field rhs? string
-    ---@field func? function
-    ---@field opts? table
-
     for _, mapping in ipairs({ "jj", "jk", "kj", "kk", "jl", "jh" }) do
-        vim.keymap.set("i", mapping, "<esc>", { noremap = true })
         vim.keymap.set("c", mapping, "<C-c>", { noremap = true })
+        if M.not_vscode then
+            vim.keymap.set("i", mapping, "<esc>", { noremap = true })
+        end
     end
+
+    ---@class VscAction
+    ---@field [1] string vscode action id
+    ---@field wait? boolean use `vscode.call` instead of `vscode.action` if true
+    ---@field post_esc? boolean press `<esc>` after action if true
+
+    ---@class Keymap: vim.keymap.set.Opts
+    ---@field [1] string lhs
+    ---@field [2] string|function|VscAction rhs
+    ---@field mode? string|string[] @default "n"
 
     ---@type Keymap[]
     local keymaps = {
         -- basic commands
-        { mode = "n", lhs = "<esc>", func = vim.cmd.nohlsearch },
-        { mode = "n", lhs = "<A-s>", func = vim.cmd.write },
-        { mode = "n", lhs = "<A-S>", func = vim.cmd.wall },
-        { mode = "n", lhs = "<A-w>", func = vim.cmd.quit },
-        { mode = "n", lhs = "<leader>c", func = vim.cmd.bdelete },
-        { mode = "n", lhs = "<leader>q", func = vim.cmd.quit },
-        { mode = "n", lhs = "<leader>sv", func = vim.cmd.vsplit },
-        { mode = "n", lhs = "<leader>sh", func = vim.cmd.split },
-
-        -- edit config file and source
-        { mode = "n", lhs = "<leader>ef", func = function() vim.cmd.edit("$MYVIMRC") end },
-        { mode = "n", lhs = "<leader>sf", func = function() vim.cmd.source("$MYVIMRC") end },
+        { "<esc>", vim.cmd.nohlsearch },
 
         -- copy and paste
-        { mode = { "n", "v" }, lhs = "<leader>y", rhs = "\"+y", opts = { noremap = true } },
-        { mode = { "n", "v" }, lhs = "<leader>p", rhs = "\"+p", opts = { noremap = true } },
-
-        -- window navigation
-        { mode = "n", lhs = "<A-h>", rhs = "<C-w>h", opts = { noremap = true } },
-        { mode = "n", lhs = "<A-j>", rhs = "<C-w>j", opts = { noremap = true } },
-        { mode = "n", lhs = "<A-k>", rhs = "<C-w>k", opts = { noremap = true } },
-        { mode = "n", lhs = "<A-l>", rhs = "<C-w>l", opts = { noremap = true } },
-        { mode = "n", lhs = "<A-->", rhs = "<C-w>_", opts = { noremap = true } },
-        { mode = "n", lhs = "H", func = vim.cmd.bprevious },
-        { mode = "n", lhs = "L", func = vim.cmd.bnext },
-    }
-    for _, map in ipairs(keymaps) do
-        local rhs = map.func or map.rhs or ""
-        vim.keymap.set(map.mode, map.lhs, rhs, map.opts)
-    end
-end
-
----@param vscode vscode
-function M.vsc_set_keymaps(vscode)
-    local file_path = debug.getinfo(1).source:sub(2)
-
-    for _, mapping in ipairs({ "jj", "jk", "kj", "kk", "jl", "jh" }) do
-        vim.keymap.set("c", mapping, "<C-c>", { noremap = true })
-    end
-
-    ---@class VscKeymap
-    ---@field mode string|string[]
-    ---@field lhs string
-    ---@field rhs? string
-    ---@field func? function
-    ---@field action? string
-    ---@field wait? boolean
-    ---@field post_esc? boolean
-    ---@field opts? table
-
-    ---@type VscKeymap[]
-    local keymaps = {
-        -- basic commands
-        { mode = "n", lhs = "<esc>", func = vim.cmd.nohlsearch },
-        { mode = "n", lhs = "<A-s>", action = "workbench.action.files.save" },
-        { mode = "n", lhs = "<A-S>", action = "workbench.action.files.saveAll" },
-        { mode = "n", lhs = "<A-w>", func = vim.cmd.Quit },
-        { mode = "n", lhs = "<leader>c", func = vim.cmd.Quit },
-        { mode = "n", lhs = "<leader>q", func = vim.cmd.Quit },
-        { mode = "n", lhs = "<leader>sv", func = vim.cmd.Vsplit },
-        { mode = "n", lhs = "<leader>sh", func = vim.cmd.Split },
-
-        -- copy and paste
-        { mode = { "n", "v" }, lhs = "<A-c>", action = "editor.action.clipboardCopyAction", wait = true, post_esc = true },
-        { mode = { "n", "v" }, lhs = "<leader>y", rhs = "\"+y", opts = { noremap = true } },
-        { mode = { "n", "v" }, lhs = "<leader>p", rhs = "\"+p", opts = { noremap = true } },
-
-        -- edit config file and source
-        { mode = "n", lhs = "<leader>ef", func = function() vim.cmd.Edit(file_path) end },
-        { mode = "n", lhs = "<leader>sf", func = function() vim.cmd.source(file_path) end },
-
-        -- backup line and restore
-        {
-            mode = "n",
-            lhs = "DC",
-            func = function()
-                vscode.call("editor.action.commentLine")
-                vscode.call("editor.action.clipboardCopyAction")
-                vscode.call("editor.action.clipboardPasteAction")
-                vscode.call("editor.action.commentLine")
-            end
-        },
-        {
-            mode = "n",
-            lhs = "DR",
-            func = function()
-                vscode.call("editor.action.deleteLines")
-                vscode.call("cursorUp")
-                vscode.call("editor.action.commentLine")
-            end
-        },
-
-        -- copilot
-        { mode = "i", lhs = "<A-n>", action = "editor.action.inlineSuggest.showPrevious" },
-        { mode = "i", lhs = "<A-p>", action = "editor.action.inlineSuggest.showNext" },
-        { mode = "i", lhs = "<A-I>", action = "interactiveEditor.start" },
-        { mode = "i", lhs = "<A-i>", action = "workbench.panel.chat.view.copilot.focus", post_esc = true },
-        { mode = { "n", "v" }, lhs = "<A-i>", action = "workbench.panel.chat.view.copilot.focus" },
-        { mode = "i", lhs = "<A-a>", action = "editor.action.inlineSuggest.commit" },
-        { mode = "i", lhs = "<A-right>", action = "editor.action.inlineSuggest.acceptNextWord" },
-        { mode = "i", lhs = "<A-C-right>", action = "editor.action.inlineSuggest.acceptNextLine" },
-        { mode = "v", lhs = "<C-i>", action = "inlineChat.start" },
+        { "<leader>y", "\"+y", mode = { "n", "v" }, noremap = true },
+        { "<leader>p", "\"+p", mode = { "n", "v" }, noremap = true },
 
         -- cursor movement
-        { mode = "n", lhs = "H", action = "workbench.action.previousEditor" },
-        { mode = "n", lhs = "L", action = "workbench.action.nextEditor" },
-        { mode = "i", lhs = "<A-l>", action = "tabout" },
-        { mode = "n", lhs = "<C-j>", action = "workbench.action.editor.nextChange" },
-        { mode = "n", lhs = "<C-k>", action = "workbench.action.editor.previousChange" },
-        { mode = "n", lhs = "<C-l>", rhs = "50l", opts = { noremap = true } },
-        { mode = "n", lhs = "<C-h>", rhs = "50h", opts = { noremap = true } },
-        { mode = { "n", "v" }, lhs = "<C-n>", rhs = "*<esc>", opts = { noremap = true } },
-        { mode = { "n", "v" }, lhs = "<C-p>", rhs = "#<esc>", opts = { noremap = true } },
-        { mode = "n", lhs = "<C-i>", action = "workbench.action.navigateForward" },
-        { mode = "n", lhs = "<C-o>", action = "workbench.action.navigateBack" },
-
-        -- lsp
-        { mode = "n", lhs = "<leader>rn", action = "editor.action.rename" },
-        { mode = "n", lhs = "<A-e>", action = "editor.action.showHover" },
-        { mode = "n", lhs = "gr", action = "editor.action.goToReferences" },
-        { mode = "n", lhs = "gp", action = "editor.action.showDefinitionPreviewHover" },
-
-        -- files
-        { mode = "n", lhs = "<leader>fr", action = "workbench.action.quickOpen" },
-        { mode = "n", lhs = "<leader>ff", action = "workbench.action.quickOpen" },
-        { mode = "n", lhs = "<leader>ee", action = "workbench.files.action.focusFilesExplorer" },
-
-        -- find and replace
-        { mode = { "n", "v" }, lhs = "<leader>fw", action = "workbench.action.findInFiles", wait = true, post_esc = true },
-        { mode = { "n", "v" }, lhs = "<leader>fR", action = "workbench.action.replaceInFiles", wait = true, post_esc = true },
-        { mode = { "n", "v" }, lhs = "R", action = "editor.action.startFindReplaceAction", wait = true, post_esc = true },
-
-        -- run and debug
-        { mode = "n", lhs = "<leader>ru", action = "code-runner.run" },
-        { mode = "n", lhs = "<leader>rr", action = "taskExplorer.runLastTask" },
+        { "<C-n>", "g*", noremap = true },
+        { "<C-p>", "g#", noremap = true },
+        { "<C-n>", function() vim.api.nvim_input("*") end, mode = "v" },
+        { "<C-p>", function() vim.api.nvim_input("#") end, mode = "v" },
+        { "<C-j>", "<esc>o", mode = "i", noremap = true },
+        { "<C-k>", "<esc>O", mode = "i", noremap = true },
+        { "<C-h>", "<esc>I", mode = "i", noremap = true },
+        { "<C-l>", "<esc>A", mode = "i", noremap = true },
+        { "<A-J>", "<Down>", mode = "i", noremap = true },
+        { "<A-K>", "<Up>", mode = "i", noremap = true },
+        { "<A-H>", "<C-Left>", mode = "i", noremap = true },
+        { "<A-L>", "<C-Right>", mode = "i", noremap = true },
+        { "<A-j>", "<Down>", mode = "i", noremap = true },
+        { "<A-k>", "<Up>", mode = "i", noremap = true },
+        { "<A-h>", "<C-Left>", mode = "i", noremap = true },
     }
-    for _, map in ipairs(keymaps) do
-        local rhs = map.func or map.rhs or function()
-            if map.wait then
-                vscode.call(map.action)
-            else
-                vscode.action(map.action)
-            end
-            if map.post_esc then
-                vim.api.nvim_input("<esc>")
+
+    if M.has_vscode then
+        keymaps = vim.list_extend(keymaps, {
+            -- basic commands
+            { "<A-s>", { "workbench.action.files.save" } },
+            { "<A-S>", { "workbench.action.files.saveAll" } },
+            { "<A-w>", vim.cmd.Quit },
+            { "<leader>c", vim.cmd.Quit },
+            { "<leader>q", vim.cmd.Quit },
+            { "<leader>sv", vim.cmd.Vsplit },
+            { "<leader>sh", vim.cmd.Split },
+
+            -- copy and paste
+            { "<A-c>", { "editor.action.clipboardCopyAction", wait = true, post_esc = true }, mode = { "n", "v" } },
+
+            -- edit config file and source
+            { "<leader>ef", function() vim.cmd.Edit(M.this_file_path) end },
+            { "<leader>sf", function() vim.cmd.source(M.this_file_path) end },
+
+            -- backup line and restore
+            {
+                "DC",
+                function()
+                    M.vscode.call("editor.action.commentLine")
+                    M.vscode.call("editor.action.clipboardCopyAction")
+                    M.vscode.call("editor.action.clipboardPasteAction")
+                    M.vscode.call("editor.action.commentLine")
+                end
+            },
+            {
+                "DR",
+                function()
+                    M.vscode.call("editor.action.deleteLines")
+                    M.vscode.call("cursorUp")
+                    M.vscode.call("editor.action.commentLine")
+                end
+            },
+
+            -- copilot
+            { "<A-n>", { "editor.action.inlineSuggest.showPrevious" }, mode = "i" },
+            { "<A-p>", { "editor.action.inlineSuggest.showNext" }, mode = "i" },
+            { "<A-I>", { "interactiveEditor.start" }, mode = "i" },
+            { "<A-i>", { "workbench.panel.chat.view.copilot.focus", post_esc = true }, mode = "i" },
+            { "<A-i>", { "workbench.panel.chat.view.copilot.focus" }, mode = { "n", "v" } },
+            { "<A-a>", { "editor.action.inlineSuggest.commit" }, mode = "i" },
+            { "<A-Right>", { "editor.action.inlineSuggest.acceptNextWord" }, mode = "i" },
+            { "<A-C-Right>", { "editor.action.inlineSuggest.acceptNextLine" }, mode = "i" },
+            { "<C-i>", { "inlineChat.start" }, mode = "v" },
+
+            -- cursor movement
+            { "H", { "workbench.action.previousEditor" } },
+            { "L", { "workbench.action.nextEditor" } },
+            { "<A-l>", { "tabout" }, mode = "i" },
+            { "<C-j>", { "workbench.action.editor.nextChange" } },
+            { "<C-k>", { "workbench.action.editor.previousChange" } },
+            { "<C-l>", "50l", noremap = true },
+            { "<C-h>", "50h", noremap = true },
+            { "<C-i>", { "workbench.action.navigateForward" } },
+            { "<C-o>", { "workbench.action.navigateBack" } },
+
+            -- lsp
+            { "<leader>rn", { "editor.action.rename" } },
+            { "<A-e>", { "editor.action.showHover" } },
+            { "gr", { "editor.action.goToReferences" } },
+            { "gp", { "editor.action.showDefinitionPreviewHover" } },
+
+            -- files
+            { "<leader>fr", { "workbench.action.quickOpen" } },
+            { "<leader>ff", { "workbench.action.quickOpen" } },
+            { "<leader>ee", { "workbench.files.action.focusFilesExplorer" } },
+
+            -- find and replace
+            { "<leader>fw", { "workbench.action.findInFiles", wait = true, post_esc = true }, mode = { "n", "v" } },
+            { "<leader>fR", { "workbench.action.replaceInFiles", wait = true, post_esc = true }, mode = { "n", "v" } },
+            { "R", { "editor.action.startFindReplaceAction", wait = true, post_esc = true }, mode = { "n", "v" } },
+
+            -- run and debug
+            { "<leader>ru", { "code-runner.run" } },
+            { "<leader>rr", { "taskExplorer.runLastTask" } },
+        })
+    else
+        keymaps = vim.list_extend(keymaps, {
+            -- basic commands
+            { "<A-s>", vim.cmd.write },
+            { "<A-S>", vim.cmd.wall },
+            { "<A-w>", vim.cmd.quit },
+            { "<A-W>", function() vim.cmd.quit({ bang = true }) end },
+            { "<A-q>", vim.cmd.quitall },
+            { "<leader>c", vim.cmd.bdelete },
+            { "<leader>q", vim.cmd.quit },
+            { "<leader>sv", vim.cmd.vsplit },
+            { "<leader>sh", vim.cmd.split },
+
+            -- edit config file and source
+            { "<leader>ef", function() vim.cmd.edit("$MYVIMRC") end },
+            { "<leader>sf", function() vim.cmd.source("$MYVIMRC") end },
+
+            -- backup line and restore
+            { "DC", function() vim.api.nvim_input("yypkgccj") end },
+            { "DR", function() vim.api.nvim_input("ddkgcc") end },
+
+            -- cursor movement
+            { "H", vim.cmd.bprevious },
+            { "L", vim.cmd.bnext },
+            { "<A-h>", "<C-w>h", noremap = true },
+            { "<A-j>", "<C-w>j", noremap = true },
+            { "<A-k>", "<C-w>k", noremap = true },
+            { "<A-l>", "<C-w>l", noremap = true },
+            { "<A-->", "<C-w>_", noremap = true },
+            { "<C-h>", "10zh", noremap = true },
+            { "<C-l>", "10zl", noremap = true },
+            { "<A-l>", "<C-Right>", mode = "i", noremap = true },
+
+            -- diff
+            { "DO", function() vim.cmd("%diffget") end },
+            { "DP", function() vim.cmd("%diffput") end },
+            { "DU", vim.cmd.diffupdate },
+
+            -- quickfix
+            { "<A-N>", vim.cmd.cnext },
+            { "<A-P>", vim.cmd.cprevious },
+        })
+    end
+
+    ---@param map Keymap
+    ---@return vim.keymap.set.Opts
+    local function get_opts(map)
+        local opts = {}
+        for k, v in pairs(map) do
+            if type(k) ~= "number" and k ~= "mode" then
+                opts[k] = v
             end
         end
-        vim.keymap.set(map.mode, map.lhs, rhs, map.opts)
+        return opts
+    end
+
+    for _, map in ipairs(keymaps) do
+        local rhs = map[2] ---@type string|function|table
+        if type(rhs) == "table" then
+            local action = rhs[1]
+            local wait = rhs.wait
+            local post_esc = rhs.post_esc
+            rhs = function()
+                if wait then
+                    M.vscode.call(action)
+                else
+                    M.vscode.action(action)
+                end
+                if post_esc then
+                    vim.api.nvim_input("<esc>")
+                end
+            end
+        end
+        vim.keymap.set(map.mode or "n", map[1], rhs, get_opts(map))
     end
 end
 
 function M.set_autocmds()
-    local group = vim.api.nvim_create_augroup("user_group", { clear = true })
-
-    -- autocmds for all
     vim.api.nvim_create_autocmd("TextYankPost", {
-        group = group,
+        group = M.autogroup,
         callback = function()
             vim.highlight.on_yank({ higroup = "Search", timeout = 300 })
         end,
     })
     vim.api.nvim_create_autocmd("FileType", {
-        group = group,
+        group = M.autogroup,
         command = "set formatoptions-=cro"
     })
 
-    if vim.g.vscode then
-        -- autocmds inside vscode only
+    if M.has_vscode then
     else
-        -- autocmds outside vscode only
         vim.api.nvim_create_autocmd("BufReadPost", {
-            group = group,
+            group = M.autogroup,
             pattern = "*",
             callback = function()
                 if vim.fn.line("'\"") > 1 and vim.fn.line("'\"") <= vim.fn.line("$") then
@@ -436,42 +509,36 @@ function M.set_autocmds()
     end
 end
 
----@param vscode vscode
-function M.vsc_set_usercmds(vscode)
-    vim.api.nvim_create_user_command("FixWhitespace", function()
-        vscode.action("editor.action.trimTrailingWhitespace")
-    end, {})
+function M.set_usercmds()
+    if M.has_vscode then
+        vim.api.nvim_create_user_command("FixWhitespace", function()
+            M.vscode.action("editor.action.trimTrailingWhitespace")
+        end, {})
+        vim.api.nvim_create_user_command("ReloadWindow", function()
+            M.vscode.action("workbench.action.reloadWindow")
+        end, {})
+        vim.api.nvim_create_user_command("ReloadExtension", function()
+            M.vscode.action("workbench.extensions.action.refreshExtension")
+        end, {})
+        vim.api.nvim_create_user_command("ReloadNeovim", function()
+            M.vscode.action("vscode-neovim.restart")
+        end, {})
+    end
 end
 
 function M.setup()
-    M.set_options()
-
-    if vim.g.vscode then
-        ---@class vscode
-        ---@field action fun(name: string, opts?: table)
-        ---@field call fun(name: string, opts?: table, timeout?: number): any
-        ---@field on fun(event: string, callback: function)
-        ---@field has_config fun(name: string|string[]): boolean|boolean[]
-        ---@field get_config fun(name: string|string[]): any|any[]
-        ---@field update_config fun(name: string|string[], value: any|any[], target?: "global"|"workspace")
-        ---@field notify fun(msg: string, level?: number)
-        ---@field eval fun(code: string, opts?: table, timeout?: number): any
-        ---@field eval_async fun(code: string, opts?: table): any
-        ---@field with_insert fun(callback: function)
-        local vscode = require("vscode")
-
-        vim.notify = vscode.notify
+    if M.has_vscode then
+        vim.notify = M.vscode.notify
         if not M.check_appname_ok() then
-            vim.notify("vscode nvim: `NVIM_APPNAME` error, not equal to `vscnvim`", vim.log.levels.WARN)
+            vim.notify("warning(vscode nvim): `NVIM_APPNAME` is not equal to `vscnvim`", vim.log.levels.WARN)
         end
-        M.vsc_set_keymaps(vscode)
-        M.vsc_set_usercmds(vscode)
-    else
-        M.set_keymaps()
     end
 
-    M.set_autocmds()
+    M.set_options()
     M.setup_lazy_nvim()
+    M.set_keymaps()
+    M.set_autocmds()
+    M.set_usercmds()
 end
 
 M.setup()
