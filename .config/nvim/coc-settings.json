@@ -111,10 +111,9 @@
     "markdownlint.onOpen": false,
     "markdownlint.onChange": false,
     "markdownlint.config": {
-        "default": true,
+        "code-block-style": false,
         "line_length": false,
-        "MD033": false,
-        "MD046": false
+        "no-inline-html": false,
     },
     "markdown-preview-enhanced.codeBlockTheme": "darcula.css",
     "markdown-preview-enhanced.previewTheme": "one-dark.css",

@@ -66,6 +66,11 @@
     "leetcode.hint.configWebviewMarkdown": false,
     "leetcode.workspaceFolder": "D:\\code\\leetcode",
     "markdown.preview.fontSize": 18,
+    "markdownlint.config": {
+        "code-block-style": false,
+        "line_length": false,
+        "no-inline-html": false,
+    },
     "notebook.inlineValues": "on",
     "outline.showVariables": false,
     "output.smartScroll.enabled": false,
