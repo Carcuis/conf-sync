@@ -2443,6 +2443,10 @@ endif
 if has("nvim")
     lua << EOF
     local yazi = require("yazi")
+    yazi.setup({
+        yazi_floating_window_border = "none",
+        yazi_floating_window_winblend = 10,
+    })
     vim.keymap.set("n", "<m-y>", yazi.yazi, { desc = "Open yazi" })
 EOF
 endif

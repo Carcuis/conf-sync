@@ -278,6 +278,10 @@ function M.load_plugins()
                 { '<M-y>', '<cmd>Yazi<CR>', desc = "Open Yazi" },
                 { '<leader>ee', '<cmd>Yazi<CR>', desc = "Open Yazi" },
             },
+            opts = {
+                yazi_floating_window_border = "none",
+                yazi_floating_window_winblend = 10,
+            },
         }
     })
 end
