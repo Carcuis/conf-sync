@@ -468,7 +468,7 @@ function M.set_keymaps()
     end
 
     for _, map in ipairs(keymaps) do
-        local rhs = map[2] ---@type string|function|table
+        local rhs = map[2] --[[@as string|function|table]]
         if type(rhs) == "table" then
             local action = rhs[1]
             local wait = rhs.wait
