@@ -689,28 +689,29 @@ if has("nvim")
     nnoremap <M-H> <cmd>BufferLineMovePrev<CR>
     nnoremap <M-L> <cmd>BufferLineMoveNext<CR>
     lua << EOF
+    local bufdelete = require('bufdelete').bufdelete
     require("bufferline").setup{
         options = {
-            middle_mouse_command = function(bufnum)
-                require('bufdelete').bufdelete(bufnum)
-            end,
-            close_command = function(bufnum)
-                require('bufdelete').bufdelete(bufnum)
-            end,
+            close_command = function(bufnum) bufdelete(bufnum) end,
+            right_mouse_command = "",
+            middle_mouse_command = function(bufnum) bufdelete(bufnum) end,
             show_buffer_close_icons = false,
             separator_style = vim.g.transparent_background == 1 and "thin" or "slant",
             offsets = {
                 {
                     filetype = "NvimTree",
                     text = "Nvim Tree",
+                    separator = " ",
                 },
                 {
                     filetype = "DiffviewFiles",
                     text = "Source Control",
+                    separator = " ",
                 },
                 {
                     filetype = "dapui_watches",
                     text = "Debug",
+                    separator = " ",
                 },
             },
             hover = {
