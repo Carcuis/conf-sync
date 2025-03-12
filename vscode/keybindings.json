@@ -20,6 +20,7 @@
     { "key": "alt+shift+s", "command": "vscode-neovim.send", "args": "<A-S>", "when": "editorTextFocus && neovim.init" },
     { "key": "alt+w", "command": "vscode-neovim.send", "args": "<A-w>", "when": "editorTextFocus && neovim.init" },
     { "key": "ctrl+alt+right", "command": "vscode-neovim.send", "args": "<A-C-right>", "when": "editorTextFocus && neovim.init" },
+    { "key": "ctrl+shift+c", "command": "vscode-neovim.send", "args": "<C-S-c>", "when": "editorTextFocus && neovim.init" },
 
     // navigation keybindings
     { "key": "alt+h", "command": "workbench.action.navigateLeft", "when": "!editorTextFocus || !neovim.init || neovim.mode != 'insert'" },
@@ -95,6 +96,16 @@
     {
         "key": "ctrl+s",
         "command": "-workbench.action.files.save"
+    },
+    {
+        "key": "ctrl+shift+c",
+        "command": "-workbench.action.terminal.openNativeConsole",
+        "when": "!terminalFocus"
+    },
+    {
+        "key": "ctrl+shift+v",
+        "command": "-markdown.showPreview",
+        "when": "!notebookEditorFocused && editorLangId == 'markdown'"
     },
     {
         "key": "tab",

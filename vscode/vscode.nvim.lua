@@ -345,6 +345,7 @@ function M.set_keymaps()
 
             -- copy and paste
             { "<A-c>", { "editor.action.clipboardCopyAction", wait = true, post_esc = true }, mode = { "n", "v" } },
+            { "<C-S-c>", { "editor.action.clipboardCopyAction", wait = true, post_esc = true }, mode = { "n", "v" } },
 
             -- edit config file and source
             { "<leader>ef", function() vim.cmd.Edit(M.this_file_path) end },
@@ -527,6 +528,9 @@ function M.set_usercmds()
         end, {})
         vim.api.nvim_create_user_command("RestartNeovim", function()
             M.vscode.action("vscode-neovim.restart")
+        end, {})
+        vim.api.nvim_create_user_command("MarkdownPreview", function()
+            M.vscode.action("markdown.showPreviewToSide")
         end, {})
     end
 end
