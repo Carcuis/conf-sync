@@ -55,6 +55,9 @@
     "gitlens.launchpad.indicator.enabled": false,
     "inlineChat.accessibleDiffView": "on",
     "Lua.completion.callSnippet": "Replace",
+    "Lua.format.defaultConfig": {
+        "align_array_table": "false"
+    },
     "Lua.hint.enable": true,
     "Lua.workspace.library": [
         "D:\\dev\\scoop\\apps\\neovim\\current\\share\\nvim\\runtime"
