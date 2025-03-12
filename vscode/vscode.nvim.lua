@@ -342,6 +342,7 @@ function M.set_keymaps()
             { "<leader>q", vim.cmd.Quit },
             { "<leader>sv", vim.cmd.Vsplit },
             { "<leader>sh", vim.cmd.Split },
+            { "<leader>b", { "workbench.action.toggleSidebarVisibility" } },
 
             -- copy and paste
             { "<A-c>", { "editor.action.clipboardCopyAction", wait = true, post_esc = true }, mode = { "n", "v" } },
@@ -395,6 +396,7 @@ function M.set_keymaps()
             -- lsp
             { "<leader>rn", { "editor.action.rename" } },
             { "<A-e>", { "editor.action.showHover" } },
+            { "<A-f>", { "editor.action.formatDocument" } },
             { "gr", { "editor.action.goToReferences" } },
             { "gp", { "editor.action.showDefinitionPreviewHover" } },
 
