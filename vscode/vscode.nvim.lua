@@ -283,7 +283,11 @@ function M.load_plugins()
                 yazi_floating_window_border = "none",
                 yazi_floating_window_winblend = 10,
             },
-        }
+        },
+        {
+            'gcmt/wildfire.vim',
+            event = "VeryLazy",
+        },
     })
 end
 
