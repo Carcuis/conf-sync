@@ -249,10 +249,14 @@ function M.load_plugins()
             main = "ibl",
             opts = function()
                 local opts = {
+                    indent = {
+                        highlight = { "IndentBlanklineChar" }
+                    },
                     scope = {
                         enabled = true,
                         show_start = true,
                         show_end = false,
+                        highlight = { "IndentBlanklineContextChar" }
                     },
                     exclude = {
                         filetypes = {
@@ -261,11 +265,11 @@ function M.load_plugins()
                     },
                 }
 
-                local hooks = require "ibl.hooks"
-                hooks.register(
-                    hooks.type.WHITESPACE,
-                    hooks.builtin.hide_first_space_indent_level
-                )
+                -- local hooks = require "ibl.hooks"
+                -- hooks.register(
+                --     hooks.type.WHITESPACE,
+                --     hooks.builtin.hide_first_space_indent_level
+                -- )
 
                 return opts
             end,
