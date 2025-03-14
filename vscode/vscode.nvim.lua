@@ -277,7 +277,7 @@ function M.load_plugins()
             keys = {
                 { '<M-y>', '<cmd>Yazi cwd<CR>', desc = "Open Yazi in cwd" },
                 { '<M-Y>', '<cmd>Yazi<CR>', desc = "Open Yazi at file" },
-                { '<leader>ee', '<cmd>Yazi<CR>', desc = "Open Yazi in cwd" },
+                { '<leader>ee', '<cmd>Yazi cwd<CR>', desc = "Open Yazi in cwd" },
             },
             opts = {
                 yazi_floating_window_border = "none",
