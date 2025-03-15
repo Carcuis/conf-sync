@@ -227,6 +227,7 @@ if has("nvim")
     set mousemoveevent
     set winblend=10
     set pumblend=10
+    set jumpoptions=clean
 elseif has("gui_running") "gvim
     " set guioptions-=m  "remove menu bar
     " set guioptions-=T  "remove toolbar
