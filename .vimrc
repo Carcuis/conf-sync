@@ -1626,6 +1626,12 @@ if has("nvim")
             vim.keymap.set("n", "q", "<Cmd>DiffviewClose<CR>", { desc = "Quit Diffview", buffer = true })
         end
     })
+    vim.api.nvim_create_autocmd("BufEnter", {
+        pattern = "diffview://*/commit_log",
+        callback = function()
+            vim.keymap.set("n", "q", vim.cmd.quit, { desc = "Quit Commit Log", buffer = true })
+        end
+    })
 EOF
 endif
 
