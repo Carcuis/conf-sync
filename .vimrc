@@ -501,6 +501,8 @@ if has("nvim")
                 \ 'coc-xml', 'coc-yaml', 'coc-toml', 'coc-java-dev', 'coc-css', 'coc-sql']
     if has("win32")
         call remove(g:coc_global_extensions, index(g:coc_global_extensions, 'coc-sh'))
+    else
+        call remove(g:coc_global_extensions, index(g:coc_global_extensions, 'coc-powershell'))
     endif
 
     inoremap <silent><expr> <TAB>
