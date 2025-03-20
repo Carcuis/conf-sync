@@ -1229,11 +1229,11 @@ if has("nvim")
                             end
                             return ":base"
                         end
-                        venv_name = venv:match("([^/\\]+)[/\\]venv$")
-                        if venv_name then
-                            return ":"..venv_name
+                        venv_name = venv:match("([^/\\]+)[/\\][%.]?venv$")
+                        if venv_name == nil then
+                            venv_name = venv:match("[/\\]([^/\\]+)$")
                         end
-                        return ""
+                        return ":"..venv_name
                     end,
                     on_click = function() vim.cmd.VenvSelect() end,
                     padding = { left = 1, right = 0 },
