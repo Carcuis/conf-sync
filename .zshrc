@@ -562,7 +562,7 @@ if command -v java > /dev/null; then
     [[ -d $JAVA_HOME ]] || export JAVA_HOME=$(realpath $(command -v java) | sed "s|/bin/java||" | sed "s|/jre||")
 fi
 
-# === miniconda ===
+# === Python ===
 function cdhk() {
     if ! command -v conda > /dev/null; then
         echo "Error: conda not found."
@@ -594,14 +594,35 @@ function get_conda_envs() {
     done
 }
 
-if typeset -f vrun > /dev/null; then
-    eval "$(typeset -f vrun | sed 's/^vrun/activate_venv/')"
-fi
+# override func in python plugin to support uv and venv
+function auto_vrun() {
+    if (( $+functions[deactivate] )) && [[ $PWD != ${VIRTUAL_ENV:h}* ]]
+    then
+        deactivate > /dev/null 2>&1
+    fi
+    if [[ $PWD != ${VIRTUAL_ENV:h} ]]
+    then
+        for _file in "${PYTHON_VENV_NAME}"*/bin/activate(N.) .venv/bin/activate(N.)
+        do
+            (( $+functions[deactivate] )) && deactivate > /dev/null 2>&1
+            source $_file > /dev/null 2>&1
+            break
+        done
+    fi
+}
+
+# re-define func in python plugin to support uv, venv and conda
+eval "$(typeset -f vrun | sed 's/^vrun/activate_venv/')"
 function vrun() {
     local venv="${PYTHON_VENV_NAME:-venv}"
-    local name="${1:-$venv}"
+    local name="${1:-}"
 
-    if [[ -d $name ]] || [[ $name == $venv ]]; then
+    if [[ -z $name ]]; then
+        auto_vrun
+        return $?
+    fi
+
+    if [[ -n $name && -f "$name/bin/activate" ]]; then
         activate_venv "$name"
         return $?
     fi
@@ -630,8 +651,11 @@ function vrun() {
     fi
 }
 function _vrun() {
-    local envs=("${(@f)$(get_conda_envs | awk '{print $1}')}")
-    [[ -n $envs ]] && _arguments '1: :_values "environment" $envs'
+    local envs=("${(@f)$(get_conda_envs | awk '{print $1 ":" $2}')}")
+    envs+=("${(@f)$(fd -HI -tf --exact-depth 3 "^.*activate$" \
+        | rg ".*/bin/activate" \
+        | awk -F'/bin/activate' '{print $1 ":" $0}' 2>/dev/null)}")
+    [[ -n $envs ]] && _describe "environment" envs
 }
 compdef _vrun vrun
 
