@@ -81,6 +81,12 @@
         "semanticTokens.enable": false
     },
     "coc.preferences.enableMessageDialog": true,
+    "coc.source.nerdfonts.filetypes": [
+        "json",
+        "lua",
+        "markdown",
+        "vim",
+    ],
     "notification.border": false,
     "notification.highlightGroup": "CocNotification",
     "notification.marginRight": 5,
