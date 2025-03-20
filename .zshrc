@@ -109,6 +109,7 @@ plugins=(
     git
     python
     tmux
+    uv
     z
     zsh-syntax-highlighting
     zsh-autosuggestions
