@@ -497,7 +497,28 @@ function Ripgrep-Find-Files {
         return
     }
 
-    rg --files --hidden --glob $glob | rg --pcre2 $pattern
+    rg --files --hidden --sort-files --glob $glob | rg --pcre2 $pattern
+}
+function Ripgrep-Find-Directories {
+    param (
+        [string]$pattern,
+        [string]$glob = "!.git"
+    )
+
+    if (!(Has-Command rg)) {
+        Write-Error "Error: Cannot find 'rg' command."
+        return
+    }
+
+    if ($pattern -eq "") {
+        Write-Host "Ripgrep find directories with pattern in directory.`n"
+        Write-Host "Usage: Ripgrep-Find-Directories [-pattern] <pattern> [-glob] <pattern>`n"
+        Write-Host "    -pattern: The pattern to search for."
+        Write-Host "    -glob: The glob pattern of files to search. Default is '!git'."
+        return
+    }
+
+    rg --files --hidden --glob $glob | rg --pcre2 "${pattern}\\[^\\]+$" | Split-Path -Parent | Sort-Object -Unique
 }
 function Open-Environment-Variables {
     param (
@@ -751,6 +772,7 @@ Set-Alias of onefetch
 Set-Alias yz yazi
 Set-Alias wisp Generate-Srt
 Set-Alias rgf Ripgrep-Find-Files
+Set-Alias rgd Ripgrep-Find-Directories
 Set-Alias spa SystemPropertiesAdvanced
 Set-Alias envs Open-Environment-Variables
 Set-Alias optv Optimize-VHD
