@@ -263,8 +263,16 @@ function weather_forecast() {
 
 # search files by rg
 function rgf() {
+    [[ ! -x "$(command -v rg)" ]] && echo "Error: ripgrep not found." && return 1
     [[ -z $1 ]] && echo "Usage: rgf <pattern> [glob=!.git]" && return
-    rg --files --hidden --glob ${2:-"!.git"} | rg --pcre2 $1
+    rg --files --hidden --sort-files --glob ${2:-"!.git"} | rg --pcre2 $1
+}
+
+# search directories by rg
+function rgd() {
+    [[ ! -x "$(command -v rg)" ]] && echo "Error: ripgrep not found." && return 1
+    [[ -z $1 ]] && echo "Usage: rgd <pattern> [glob=!.git]" && return
+    rg --files --hidden --sort-files --glob ${2:-"!.git"} | rg --pcre2 $1 --null | xargs -0 dirname 2>/dev/null | rg --pcre2 "$1\$" --color=always | uniq
 }
 
 # auto choose gdu or gdu-go and ignore /mnt in WSL
