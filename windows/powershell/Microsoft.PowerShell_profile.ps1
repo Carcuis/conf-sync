@@ -140,6 +140,45 @@ function Has-Conda-Env{
     }
     return $false
 }
+function Get-Conda-Envs {
+    $envs_file = "$HOME\.conda\environments.txt"
+    if (! (Test-Path $envs_file)) {
+        return @()
+    }
+    $envs = @()
+    $base_paths = @()
+    $lines = Get-Content $envs_file | Sort-Object
+    foreach ($line in $lines) {
+        if ($line -match "envs\\[^\\]+$") {
+            # Extract environment name from path
+            $env_name = $line -replace ".*envs\\", ""
+            $envs += [PSCustomObject]@{ Name = $env_name; Path = $line }
+        } else {
+            # Base environment
+            $resolved_path = Get-Item $line | Select-Object -ExpandProperty Target -ErrorAction SilentlyContinue
+            if ($resolved_path) {
+                # If it's a symlink, check if the target is already in the list
+                if ($base_paths -notcontains $resolved_path) {
+                    $base_paths += $resolved_path
+                    $envs += [PSCustomObject]@{ Name = "base"; Path = $line }
+                }
+            } else {
+                # If not a symlink, add it directly
+                $base_paths += $line
+                $envs += [PSCustomObject]@{ Name = "base"; Path = $line }
+            }
+        }
+    }
+    return $envs
+}
+function Get-Virtual-Envs {
+    $fdOutput = & fd -HI -tf --exact-depth 3 "^.*activate\.ps1$" 2>$null
+    $fdOutput | ForEach-Object {
+        $path = $_
+        $name = Split-Path $path -Parent | Split-Path -Parent
+        [PSCustomObject]@{ Name = $name; Path = $path }
+    }
+}
 function Check-Conda-Env-By-Name {
 <#
 .SYNOPSIS
@@ -148,19 +187,8 @@ function Check-Conda-Env-By-Name {
     param(
         [string] $name
     )
-    if (!(Has-Command conda)) {
-        return $false
-    }
-    if ($name -eq "base") {
+    if (Get-Conda-Envs | Where-Object { $_.Name -eq $name }) {
         return $true
-    }
-    $env_file = "$HOME\.conda\environments.txt"
-    if (Has-File $env_file) {
-        $env_paths = Get-Content -Path $env_file
-        $env_path = $env_paths | Where-Object { $_ -match ".*\\$name$" }
-        if (Has-Dir $env_path) {
-            return $true
-        }
     }
     return $false
 }
@@ -293,36 +321,43 @@ function Make-Python-Venv {
 }
 function Activate-Python-Venv {
     param(
-        [string] $name = "venv",
+        [string] $name,
         [string] $dir = $PWD,
         [switch] $silent
     )
-    $venv_path = Join-Path -Path $dir -ChildPath $name
-    if (Has-Dir $venv_path) {
-        $activate_script = Join-Path -Path $venv_path -ChildPath "Scripts\Activate.ps1"
-        if (Has-File $activate_script) {
-            . $activate_script
-            if (! $silent) {
-                Write-Host "Activated virtual environment '$name'."
+    if (! $name) {
+        $found = $false
+        foreach ($_name in @("venv", ".venv")) {
+            $activate_script = Join-Path -Path $dir -ChildPath "${_name}\Scripts\Activate.ps1"
+            if (Has-File $activate_script) {
+                $found = $true
+                . $activate_script
+                if (! $silent) {
+                    Write-Host "Activated virtual environment '$_name'."
+                }
+                break
             }
-        } elseif (! $silent) {
-            Write-Error "Error: Cannot find 'Scripts\Activate.ps1' in $venv_path"
         }
-    } elseif ($name -eq "venv") {
-        if (! $silent) {
-            Write-Error "Error: Cannot find 'venv' directory in $dir"
+        if (! $found) {
+            if (! $silent) {
+                Write-Error "Error: Cannot find venv in $dir"
+            }
         }
     } else {
-        if (Check-Conda-Env-By-Name -name $name) {
+        $activate_script = Join-Path -Path $dir -ChildPath "${name}\Scripts\Activate.ps1"
+        if (Has-File $activate_script) {
+            . $activate_script
+            Write-Host "Activated virtual environment '$name'."
+        } elseif (Check-Conda-Env-By-Name -name $name) {
             if (Has-Virtual-Env) {
                 Deactivate-Python-Venv
             }
-            $_conda_hooked = $true
+            $no_conda_before = $false
             if (! (Conda-Hooked)) {
-                $_conda_hooked = $false
+                $no_conda_before = $true
                 Conda-Hook
             }
-            if (("$name" -eq "base") -and -not $_conda_hooked) {
+            if ("$name" -eq "base" -and $no_conda_before) {
                 Write-Host "Activated conda environment 'base'."
             } elseif ("$name" -eq $env:CONDA_DEFAULT_ENV) {
                 Write-Host "Already activated conda environment '$name'."
@@ -338,6 +373,17 @@ function Activate-Python-Venv {
         }
     }
     Update-TerminalSize-Env
+}
+Register-ArgumentCompleter -CommandName Activate-Python-Venv -ParameterName name -ScriptBlock {
+    param($commandName, $parameterName, $wordToComplete, $commandAst, $fakeBoundParameters)
+
+    $condaEnvs = Get-Conda-Envs
+    $virtualEnvs = Get-Virtual-Envs
+    $allEnvs = $condaEnvs + $virtualEnvs
+
+    $allEnvs | Where-Object { $_.Name -like "$wordToComplete*" } | ForEach-Object {
+        [System.Management.Automation.CompletionResult]::new($_.Name, $_.Name, 'ParameterValue', $_.Path)
+    }
 }
 function Deactivate-Python-Venv {
     if (Has-Virtual-Env) {
@@ -369,7 +415,7 @@ function Auto-Change-Venv {
         }
     }
 
-    Activate-Python-Venv -dir $dir -name "venv" -silent
+    Activate-Python-Venv -dir $dir -silent
 }
 (Get-Variable PWD).Attributes.Add($(New-Object ValidateScript { Auto-Change-Venv $_; return $true }))
 function Delete-Old-PSModules {
