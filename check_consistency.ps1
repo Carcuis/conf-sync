@@ -163,9 +163,9 @@ function Invoke-CmdPaser {
 
             "^((-?s)|(-?-status))$"   {
                 if (Test-AllSynced) {
-                    Write-Output "All synchronized."
+                    Write-Line "All synchronized."
                 } else {
-                    Write-Output "Unsynchronized."
+                    Write-Line "Unsynchronized."
                 }
                 exit 0
             }

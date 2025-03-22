@@ -666,12 +666,20 @@ function Vscode-Nvim {
         nvim @Args
     } -Arg $Args
 }
-function CS-Check-All {
+function Get-Check-Consistency-Ps1 {
     $script = "$HOME\.local\bin\check_consistency.ps1"
     if (!(Has-File $script)) {
-        Write-Error "Error: Cannot find 'check_consistency.ps1' script."
+        Write-Error "Error: Cannot find '$script'."
         return
     }
+    return $script
+}
+function Get-CS-Dir {
+    if (! ($script = Get-Check-Consistency-Ps1)) { return }
+    return (Get-Item $script | Select-Object -ExpandProperty Target | Split-Path -Parent)
+}
+function CS-Check-All {
+    if (! ($script = Get-Check-Consistency-Ps1)) { return }
 
     function Show-Usage {
         Write-Host "Usage:"
@@ -680,14 +688,16 @@ function CS-Check-All {
         Write-Host "Options:"
         Write-Host "  -f, --force-sync Force sync files"
         Write-Host "  -h, --help       Display help"
+        Write-Host "  -s, --status     Show status of all files"
         Write-Host "  -v, --verbose    Show detailed information"
     }
 
     $params = "-a"
     foreach ($arg in $args) {
         switch -Regex ($arg) {
-            "^((-?h)|(-?-help))$"     { Show-Usage; return }
             "^((-?f)|(-?-force))$"    { $params += " -f"; continue }
+            "^((-?h)|(-?-help))$"     { Show-Usage; return }
+            "^((-?s)|(-?-status))$"   { $params += " -s"; continue }
             "^((-?v)|(-?-verbose))$"  { $params += " -v"; continue }
             default { Write-Error "Error: Invalid option '$arg'"; Show-Usage; return }
         }
@@ -695,11 +705,7 @@ function CS-Check-All {
     & $script $params
 }
 function CS-Update {
-    $script = "$HOME\.local\bin\check_consistency.ps1"
-    if (!(Has-File $script)) {
-        Write-Error "Error: Cannot find 'check_consistency.ps1' script."
-        return
-    }
+    if (! ($script = Get-Check-Consistency-Ps1)) { return }
 
     function Show-Usage {
         Write-Host "Usage:"
@@ -714,38 +720,30 @@ function CS-Update {
     $params = "-a"
     foreach ($arg in $args) {
         switch -Regex ($arg) {
-            "^((-?h)|(-?-help))$"     { Show-Usage; return }
             "^((-?f)|(-?-force))$"    { $params += " -f"; continue }
+            "^((-?h)|(-?-help))$"     { Show-Usage; return }
             "^((-?v)|(-?-verbose))$"  { $params += " -v"; continue }
             default { Write-Error "Error: Invalid option '$arg'"; Show-Usage; return }
         }
     }
 
-    if ((& $script "-a -s") -eq "Unsynchronized.") {
+    if ((& $script "-a -s" 6>&1 | Out-String -NoNewline) -eq "Unsynchronized.") {
         Write-Host "`e[1;33mThere are inconsistent files.`nPlease run 'csc' to sync them first.`e[0m"
         return
     }
 
-    $repoDir = Get-Item $script | Select-Object -ExpandProperty Target | Split-Path -Parent
-    if ((git -C $repoDir status -u --porcelain).Length -ne 0) {
+    $DIR = Get-CS-Dir
+    if ((git -C $DIR status -u --porcelain).Length -ne 0) {
         Write-Host "`e[1;33mThere are uncommitted changes in the repository.`nPlease commit or stash them first.`e[0m"
         return
     }
-
-    git -C $repoDir pull --rebase
+    git -C $DIR pull --rebase
 
     & $script $params
 }
 function CS-Lazygit {
-    $script = "$HOME\.local\bin\check_consistency.ps1"
-    if (!(Has-File $script)) {
-        Write-Error "Error: Cannot find 'check_consistency.ps1' script."
-        return
-    }
-
-    $repoDir = Get-Item $script | Select-Object -ExpandProperty Target | Split-Path -Parent
-
-    lazygit -p $repoDir
+    if (! (Get-Check-Consistency-Ps1)) { return }
+    lazygit -p (Get-CS-Dir)
 }
 
 Set-Alias .. GoUpOne
