@@ -1,4 +1,6 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/Microsoft/vscode-python/main/schemas/condarc.json
 changeps1: false
 channels:
   - defaults
 
+# vim:ft=yaml
