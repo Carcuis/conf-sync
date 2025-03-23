@@ -77,7 +77,7 @@
     "[json]": {
         "coc.preferences.formatOnSave": false
     },
-    "[python]": {
+    "[ps1][python]": {
         "semanticTokens.enable": false
     },
     "coc.preferences.enableMessageDialog": true,
@@ -110,9 +110,31 @@
     "outline.showLineNumber": false,
     "outline.followCursor": false,
     "snippets.ultisnips.enable": true,
-    "powershell.powerShellExePath": "pwsh",
-    "powershell.powerShellDefaultVersion": "Powershell Core 7 (x64)",
-    "powershell.integratedConsole.showOnStartup": false,
+    "languageserver": {
+        "powershell": {
+            "command": "pwsh",
+            "args": [
+                "-NoLogo",
+                "-NoProfile",
+                "-NonInteractive",
+                "-Command",
+                "Import-Module $env:NVIM_DATA_PATH/mason/packages/powershell-editor-services/PowerShellEditorServices/PowerShellEditorServices.psd1;",
+                "Start-EditorServices",
+                "-HostName coc.nvim",
+                "-HostProfileId coc.nvim",
+                "-SessionDetailsPath $env:NVIM_DATA_PATH/pses/session.json",
+                "-AdditionalModules @()",
+                "-FeatureFlags @()",
+                "-Stdio",
+            ],
+            "filetypes": [
+                "ps1",
+                "psm1",
+                "psd1",
+            ],
+            "maxRestartCount": 1,
+        },
+    },
     "codeLens.enable": true,
     "codeLens.position": "eol",
     "markdownlint.onOpen": false,

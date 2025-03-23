@@ -100,6 +100,7 @@ if has("nvim")
     Plug 'nvim-telescope/telescope-dap.nvim'
     Plug 'theHamsta/nvim-dap-virtual-text'
     Plug 'williamboman/mason.nvim'
+    Plug 'williamboman/mason-lspconfig.nvim'
     Plug 'RubixDev/mason-update-all'
     Plug 'jay-babu/mason-nvim-dap.nvim'
     Plug 'LiadOz/nvim-dap-repl-highlights'
@@ -495,15 +496,14 @@ let g:highlightedyank_highlight_duration = 200
 if has("nvim")
     let g:coc_global_extensions = [
                 \ 'coc-json', 'coc-vimlsp', 'coc-marketplace', 'coc-markdownlint', 'coc-markdown-preview-enhanced',
-                \ 'coc-basedpyright', 'coc-powershell', 'coc-sh', 'coc-clangd', 'coc-webview',
+                \ 'coc-basedpyright', 'coc-sh', 'coc-clangd', 'coc-webview',
                 \ 'coc-cmake', 'coc-actions', 'coc-translator', 'coc-snippets', 'coc-gitignore',
                 \ 'coc-sumneko-lua', 'coc-tsserver', 'coc-eslint', 'https://github.com/Carcuis/coc-nav',
                 \ 'coc-xml', 'coc-yaml', 'coc-toml', 'coc-java-dev', 'coc-css', 'coc-sql',
                 \ 'coc-word', 'coc-emoji', 'coc-nerdfonts']
     if has("win32")
         call remove(g:coc_global_extensions, index(g:coc_global_extensions, 'coc-sh'))
-    else
-        call remove(g:coc_global_extensions, index(g:coc_global_extensions, 'coc-powershell'))
+        call setenv("NVIM_DATA_PATH", stdpath("data"))
     endif
 
     inoremap <silent><expr> <TAB>
@@ -1971,6 +1971,16 @@ if has("nvim")
         },
     })
     require("mason-update-all").setup()
+
+    local mason_lsp_ensure_installed = {}
+    if vim.fn.has("win32") == 1 then
+        vim.list_extend(mason_lsp_ensure_installed, {
+            "powershell_es",
+        })
+    end
+    require("mason-lspconfig").setup({
+        ensure_installed = mason_lsp_ensure_installed,
+    })
 EOF
 endif
 
