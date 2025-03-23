@@ -192,7 +192,16 @@ function Check-Conda-Env-By-Name {
     }
     return $false
 }
-function Create-Link($target, $link) {
+function Create-Link() {
+    param(
+        [string] $target,
+        [string] $link
+    )
+    if (! (Test-Path $target)) {
+        Write-Error "Error: '$target' does not exist."
+        return
+    }
+    $target = (Get-Item $target).FullName
     New-Item -ItemType SymbolicLink -Path $link -Value $target
 }
 function Move-And-Create-Link() {
