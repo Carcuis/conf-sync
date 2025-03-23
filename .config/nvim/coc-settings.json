@@ -122,7 +122,7 @@
                 "Start-EditorServices",
                 "-HostName coc.nvim",
                 "-HostProfileId coc.nvim",
-                "-SessionDetailsPath $env:NVIM_DATA_PATH/pses/session.json",
+                "-SessionDetailsPath $env:NVIM_DATA_PATH/mason/packages/powershell-editor-services/PowerShellEditorServices/session.json",
                 "-AdditionalModules @()",
                 "-FeatureFlags @()",
                 "-Stdio",
