@@ -763,6 +763,7 @@ function Invoke-ConfSyncUpdate {
         return
     }
     git -C $DIR pull --rebase
+    git -C $DIR log --format="%C(blue)%h%C(white) %s" ORIG_HEAD..HEAD
 
     & $script $params
 }

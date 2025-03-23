@@ -25,6 +25,7 @@ function update_repo() {
         exit 2
     fi
     git -C $DIR pull --rebase
+    git -C $DIR log --format="%C(blue)%h%C(white) %s" ORIG_HEAD..HEAD
 }
 
 function reload_script() {
