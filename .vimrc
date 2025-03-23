@@ -613,8 +613,8 @@ endif
 
 " === telescope.nvim ===
 if has("nvim")
-    nnoremap <leader>ff <cmd>Telescope find_files<cr>
-    nnoremap <leader>fF <cmd>Telescope find_files hidden=true<cr>
+    nnoremap <leader><leader> <cmd>Telescope find_files<cr>
+    nnoremap <leader>ff <cmd>Telescope find_files hidden=true<cr>
     nnoremap <leader>fw <cmd>Telescope live_grep<cr>
     nnoremap <leader>fe <cmd>Telescope grep_string<cr>
     nnoremap <leader>f/ <cmd>Telescope current_buffer_fuzzy_find<cr>
@@ -2561,7 +2561,6 @@ nnoremap <leader>wq <cmd>wq<CR>
 nnoremap <leader>fq <cmd>q!<CR>
 nnoremap <leader>rq <cmd>qa<CR>
 nnoremap <leader>ewq <cmd>wqa<CR>
-nnoremap <leader><leader>r <cmd>redraw!<CR>
 nnoremap <leader>i <cmd>Inspect<CR>
 
 nnoremap <M-h> <C-w>h

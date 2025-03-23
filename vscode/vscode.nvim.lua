@@ -167,8 +167,8 @@ function M.load_plugins()
                 { '<leader>fc', '<cmd>Telescope command_history<CR>', desc = "Command History" },
 
                 -- files
-                { '<leader>ff', '<cmd>Telescope find_files<CR>', desc = "Find Files" },
-                { '<leader>fF', '<cmd>Telescope find_files hidden=true<CR>', desc = "Find Hidden Files" },
+                { '<leader><leader>', '<cmd>Telescope find_files<CR>', desc = "Find Files" },
+                { '<leader>ff', '<cmd>Telescope find_files hidden=true<CR>', desc = "Find Hidden Files" },
                 { '<leader>fr', '<cmd>Telescope oldfiles<CR>', desc = "Recent Files" },
 
                 -- find and replace
@@ -410,7 +410,7 @@ function M.set_keymaps()
 
             -- files
             { "<leader>fr", { "workbench.action.quickOpen" } },
-            { "<leader>ff", { "workbench.action.quickOpen" } },
+            { "<leader><leader>", { "workbench.action.quickOpen" } },
             { "<leader>ee", { "workbench.files.action.focusFilesExplorer" } },
 
             -- find and replace

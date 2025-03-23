@@ -55,7 +55,7 @@ map rd <Action>(Debug)
 map rn <Action>(RenameElement)
 map <c-t> <Action>(ActivateTerminalToolWindow)
 map <Leader>fr <Action>(RecentFiles)
-map <Leader>ff <Action>(GotoFile)
+map <Leader><Leader> <Action>(GotoFile)
 map <Leader>fw <Action>(FindInPath)
 imap <C-e> <Action>(CodeCompletion)
 if ! g:nova
