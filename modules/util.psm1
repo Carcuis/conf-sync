@@ -10,7 +10,7 @@ function Write-Success  { param([string]$msg) Write-Bold "$GREEN$msg ✔" }
 function Write-WarnMsg  { param([string]$msg) Write-Bold "$YELLOW$msg" }
 function Write-ErrorMsg { param([string]$msg) Write-Bold "$RED$msg" }
 
-function Test-HasCommand { param([string]$cmd)   return (Get-Command $cmd).length -gt 0 }
+function Test-HasCommand { param([string]$cmd)   return (Get-Command $cmd -ErrorAction SilentlyContinue).length -gt 0 }
 function Test-HasDir     { param([string]$dir)   return [System.IO.Path]::Exists($dir)  }
 function Test-HasFile    { param([string]$file)  return [System.IO.File]::Exists($file) }
 
