@@ -503,8 +503,10 @@ if has("nvim")
                 \ 'coc-word', 'coc-emoji', 'coc-nerdfonts']
     if has("win32")
         call remove(g:coc_global_extensions, index(g:coc_global_extensions, 'coc-sh'))
-        call setenv("NVIM_DATA_PATH", stdpath("data"))
     endif
+
+    " for powershell_es
+    call setenv("NVIM_DATA_PATH", stdpath("data"))
 
     inoremap <silent><expr> <TAB>
           \ coc#pum#visible() ? coc#_select_confirm() :
