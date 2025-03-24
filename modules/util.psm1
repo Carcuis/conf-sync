@@ -22,7 +22,7 @@ function Test-FileSame {
     return (Get-FileHash $file1).hash -eq (Get-FileHash $file2).hash
 }
 
-function Invoke-EnsureDir {
+function New-DirIfMissing {
     param(
         [string]$dir
     )
@@ -31,7 +31,7 @@ function Invoke-EnsureDir {
     }
 }
 
-function Invoke-ExistAndBackup {
+function Backup-ExistingItem {
     param(
         [string]$src
     )
@@ -40,7 +40,7 @@ function Invoke-ExistAndBackup {
     }
 
     $backup_dir = Join-Path -Path $DIR -ChildPath "backup"
-    Invoke-EnsureDir $backup_dir
+    New-DirIfMissing $backup_dir
 
     $backup_file = Join-Path -Path $backup_dir -ChildPath "$(Split-Path -Leaf $src).$(Get-Date -Format 'yyMMdd_HHmmss')"
     Move-Item -Path $src -Destination $backup_file -Force
@@ -51,15 +51,23 @@ function Invoke-ExistAndBackup {
     }
 }
 
-function Get-ScoopRoot {
-    if (-not (Get-Command scoop -ErrorAction SilentlyContinue)) {
-        Write-ErrorMsg "Error: scoop not found."
+function Test-SystemCompatibility {
+    if ([System.Environment]::OSVersion.Platform -ne "Win32NT") {
+        Write-ErrorMsg "Error: This script can only run on Windows systems."
         exit 1
     }
-    return scoop config root_path
 }
 
-function Read-InputKey {
+function Get-ScoopRoot {
+    if (Get-Command scoop -ErrorAction SilentlyContinue) {
+        return scoop config root_path
+    }
+    $dir = "D:\dev\scoop"
+    Write-Info "Scoop is not installed. Fallback scoop_root to $dir."
+    return $dir
+}
+
+function Read-UserInputKey {
     param(
         [string]$message
     )
@@ -69,7 +77,6 @@ function Read-InputKey {
     return $user_input.Key
 }
 
-function Remove-Globals {
+function Remove-ScriptVariables {
     Remove-Variable -Name verbose -Scope Global -Force
 }
-

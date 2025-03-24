@@ -15,7 +15,7 @@ function Show-Usage {
     Write-Line "  -v, --verbose    Show detailed information"
 }
 
-function Invoke-CmdPaser {
+function Invoke-ArgParser {
     if (-not $args -or -not $args.Split) { return }
 
     foreach ($arg in $args.Split(" ")) {
@@ -27,7 +27,7 @@ function Invoke-CmdPaser {
     }
 }
 
-function Invoke-CheckDependencies {
+function Test-Dependencies {
     $dependencies = @(
         "git"
     )
@@ -55,8 +55,8 @@ function Invoke-DownloadFromUrl {
         $output = (Split-Path $url -Leaf)
     }
 
-    Invoke-EnsureDir (Split-Path $output)
-    Invoke-ExistAndBackup $output
+    New-DirIfMissing (Split-Path $output)
+    Backup-ExistingItem $output
 
     $web_client = New-Object System.Net.WebClient
     try {
@@ -83,7 +83,7 @@ function Write-InstalledMsg {
     Write-Info "$package is already installed."
 }
 
-function Test-NotInstalledInPath {
+function Test-DirNotInstalled {
     param(
         [string]$dir,
         [string]$package
@@ -97,7 +97,7 @@ function Test-NotInstalledInPath {
     }
 }
 
-function Test-NotInstalledFile {
+function Test-FileNotInstalled {
     param(
         [string]$file,
         [string]$package
@@ -111,7 +111,7 @@ function Test-NotInstalledFile {
     }
 }
 
-function Trace-InstallStatus {
+function Write-InstallStatus {
     param(
         [bool]$status,
         [string]$package
@@ -126,20 +126,20 @@ function Trace-InstallStatus {
 
 function Install-VimPlug {
     $vim_plug = "$HOME\AppData\Local\nvim-data\site\autoload\plug.vim"
-    if (Test-NotInstalledFile -file $vim_plug -package "Vim-Plug") {
+    if (Test-FileNotInstalled -file $vim_plug -package "Vim-Plug") {
         $result = Invoke-DownloadFromUrl `
             -url "https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim" `
             -output $vim_plug
-        Trace-InstallStatus -status $result -package "Vim-Plug"
+        Write-InstallStatus -status $result -package "Vim-Plug"
     }
 }
 
 function Install-VscLazyNvim {
     $lazy_nvim = "$HOME\AppData\Local\vscnvim-data\lazy\lazy.nvim"
     $lazy_repo = "https://github.com/folke/lazy.nvim.git"
-    if (Test-NotInstalledInPath -dir $lazy_nvim -package "VSCode Neovim Lazy.nvim") {
+    if (Test-DirNotInstalled -dir $lazy_nvim -package "VSCode Neovim Lazy.nvim") {
         git clone --filter=blob:none --branch=stable $lazy_repo $lazy_nvim
-        Trace-InstallStatus -status $? -package "VSCode Neovim Lazy.nvim"
+        Write-InstallStatus -status $? -package "VSCode Neovim Lazy.nvim"
     }
 }
 
@@ -157,17 +157,17 @@ function Install-VifmCustom {
     }
 
     # vifm colors
-    if (Test-NotInstalledFile -file "$vifm_config_home\colors\solarized-dark.vifm" -package "Vifm colorschemes") {
-        Invoke-ExistAndBackup "$vifm_config_home\colors"
+    if (Test-FileNotInstalled -file "$vifm_config_home\colors\solarized-dark.vifm" -package "Vifm colorschemes") {
+        Backup-ExistingItem "$vifm_config_home\colors"
         git clone https://github.com/vifm/vifm-colors "$vifm_config_home\colors"
-        Trace-InstallStatus -status $? -package "Vifm colorschemes"
+        Write-InstallStatus -status $? -package "Vifm colorschemes"
     }
     # vifm-favicons
-    if (Test-NotInstalledFile -file "$vifm_config_home\plugged\favicons.vifm" -package "Vifm devicons") {
+    if (Test-FileNotInstalled -file "$vifm_config_home\plugged\favicons.vifm" -package "Vifm devicons") {
         $result = Invoke-DownloadFromUrl `
             -url "https://raw.githubusercontent.com/cirala/vifm_devicons/master/favicons.vifm" `
             -output "$vifm_config_home\plugged\favicons.vifm"
-        Trace-InstallStatus -status $result -package "Vifm devicons"
+        Write-InstallStatus -status $result -package "Vifm devicons"
     }
 }
 
@@ -187,27 +187,27 @@ function Install-YaziPackage {
     $yazi_config_home = "$HOME\AppData\Roaming\yazi\config"
 
     # yazi theme
-    if (Test-NotInstalledFile -file "$yazi_config_home\flavors\catppuccin-mocha.yazi\flavor.toml" -package "Yazi theme") {
+    if (Test-FileNotInstalled -file "$yazi_config_home\flavors\catppuccin-mocha.yazi\flavor.toml" -package "Yazi theme") {
         ya pack -a yazi-rs/flavors:catppuccin-mocha
-        Trace-InstallStatus -status $? -package "Yazi flavor catppuccin-mocha"
+        Write-InstallStatus -status $? -package "Yazi flavor catppuccin-mocha"
     }
 
     # yazi plugins
-    if (Test-NotInstalledFile -file "$yazi_config_home\plugins\smart-enter.yazi\main.lua" -package "Yazi plugin smart-enter") {
+    if (Test-FileNotInstalled -file "$yazi_config_home\plugins\smart-enter.yazi\main.lua" -package "Yazi plugin smart-enter") {
         ya pack -a yazi-rs/plugins:smart-enter
-        Trace-InstallStatus -status $? -package "Yazi plugin smart-enter"
+        Write-InstallStatus -status $? -package "Yazi plugin smart-enter"
     }
-    if (Test-NotInstalledFile -file "$yazi_config_home\plugins\git.yazi\main.lua" -package "Yazi plugin git") {
+    if (Test-FileNotInstalled -file "$yazi_config_home\plugins\git.yazi\main.lua" -package "Yazi plugin git") {
         ya pack -a yazi-rs/plugins:git
-        Trace-InstallStatus -status $? -package "Yazi plugin git"
+        Write-InstallStatus -status $? -package "Yazi plugin git"
     }
-    if (Test-NotInstalledFile -file "$yazi_config_home\plugins\mediainfo.yazi\main.lua" -package "Yazi plugin mediainfo") {
+    if (Test-FileNotInstalled -file "$yazi_config_home\plugins\mediainfo.yazi\main.lua" -package "Yazi plugin mediainfo") {
         ya pack -a boydaihungst/mediainfo
-        Trace-InstallStatus -status $? -package "Yazi plugin mediainfo"
+        Write-InstallStatus -status $? -package "Yazi plugin mediainfo"
     }
 }
 
-function Invoke-CreateSymlink {
+function New-Symlink {
     param(
         [string]$src,
         [string]$dest
@@ -223,13 +223,13 @@ function Invoke-CreateSymlink {
             return
         }
     } else {
-        Invoke-EnsureDir (Split-Path $dest)
+        New-DirIfMissing (Split-Path $dest)
         New-Item -ItemType SymbolicLink -Path $dest -Value $src | Out-Null
         Write-Success "Linked $dest to $src."
     }
 }
 
-function Invoke-LinkFiles {
+function Install-LinkFiles {
     $vimrc = "$HOME\_vimrc"
     if (! (Test-HasFile -file $vimrc)) {
         Write-Info "$vimrc not found."
@@ -243,27 +243,28 @@ function Invoke-LinkFiles {
     )
 
     foreach ($file in $files) {
-        Invoke-CreateSymlink -src $file[0] -dest $file[1]
+        New-Symlink -src $file[0] -dest $file[1]
     }
 }
 
-function Invoke-InstallAll {
+function Install-All {
     Install-VimPlug
     Install-VscLazyNvim
     Install-VifmCustom
     Install-YaziPackage
-    Invoke-LinkFiles
+    Install-LinkFiles
 
     if ($script:no_error) {
         Write-Success "All dependencies have been installed."
     }
 }
 
-function Invoke-Main {
-    Invoke-CmdPaser $args
-    Invoke-CheckDependencies
-    Invoke-InstallAll
-    Remove-Globals
+function Start-MainProcess {
+    Test-SystemCompatibility
+    Invoke-ArgParser $args
+    Test-Dependencies
+    Install-All
+    Remove-ScriptVariables
 }
 
-Invoke-Main $args
+Start-MainProcess $args

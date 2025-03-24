@@ -151,7 +151,7 @@ function Show-Usage {
     Write-Line "  -v, --verbose    Show detailed information"
 }
 
-function Invoke-CmdPaser {
+function Invoke-ArgParser {
     if (-not $args -or -not $args.Split) { return }
 
     foreach ($arg in $args.Split(" ")) {
@@ -201,11 +201,11 @@ function Confirm-Action {
         [string]$message
     )
     if ($script:force_sync) { return $true }
-    $input_key = Read-InputKey "$message [Y/n] "
+    $input_key = Read-UserInputKey "$message [Y/n] "
     return ($input_key -eq "Y" -or $input_key -eq "Enter")
 }
 
-function Invoke-RunDiff {
+function Compare-FilesWithDiffTool {
     param(
         [string]$file1,
         [string]$file2
@@ -213,9 +213,9 @@ function Invoke-RunDiff {
 
     if ($script:force_sync) {
         $dest_dir = Split-Path -Parent $file2
-        Invoke-EnsureDir $dest_dir
+        New-DirIfMissing $dest_dir
 
-        Invoke-ExistAndBackup $file2
+        Backup-ExistingItem $file2
 
         Copy-Item -Path $file1 -Destination $file2
         return
@@ -233,7 +233,7 @@ function Invoke-RunDiff {
     }
 }
 
-function Invoke-RunSync {
+function Sync-RemoteFiles {
     if (Test-AllSynced) {
         Write-Success "All files are the same. Nothing to do."
         return
@@ -257,7 +257,7 @@ function Invoke-RunSync {
             if ($global:verbose) { Write-Success "$($file.name) has already been synchronized." }
         } else {
             if (Confirm-Action "$($file.name) unsynchronized. Edit with $script:diff_command ?") {
-                Invoke-RunDiff -file1 $file.remote -file2 $file.local
+                Compare-FilesWithDiffTool -file1 $file.remote -file2 $file.local
                 if (Test-FileSame $file.remote $file.local) {
                     Write-Success "$($file.name) is now synchronized."
                 } else {
@@ -274,11 +274,12 @@ function Invoke-RunSync {
     }
 }
 
-function Invoke-Main {
-    Invoke-CmdPaser $args
+function Start-MainProcess {
+    Test-SystemCompatibility
+    Invoke-ArgParser $args
     Set-DiffCommand
-    Invoke-RunSync
-    Remove-Globals
+    Sync-RemoteFiles
+    Remove-ScriptVariables
 }
 
-Invoke-Main $args
+Start-MainProcess $args
