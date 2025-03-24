@@ -127,9 +127,6 @@ source $ZSH/oh-my-zsh.sh
 # zsh-completion @ref: https://github.com/zsh-users/zsh-completions/issues/603#issuecomment-967116106
 autoload -U compinit && compinit
 
-# if pipx is not installed by brew, then register the completion
-command -v brew > /dev/null || eval "$(register-python-argcomplete pipx)"
-
 # User configuration
 
 # export MANPATH="/usr/local/man:$MANPATH"
