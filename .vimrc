@@ -115,6 +115,7 @@ if has("nvim")
     Plug 'mikavilpas/yazi.nvim'
     Plug 'kawre/leetcode.nvim'
     Plug 'MunifTanjim/nui.nvim'
+    Plug 'MagicDuck/grug-far.nvim'
 else
     Plug 'Carcuis/darcula'
     Plug 'joshdick/onedark.vim'
@@ -1114,6 +1115,23 @@ if has("nvim")
                 }}, },
                 filetypes = {'leetcode.nvim'},
             },
+            {
+                sections = {
+                    lualine_b = {{
+                        function() return 'Replace All' end,
+                        icon = "",
+                        padding = { left = 0, right = 0 },
+                        separator = { left = '', right = '' },
+                    }},
+                    lualine_c = {{
+                        function()
+                            local bufname = vim.api.nvim_buf_get_name(0)
+                            return bufname:match("Grug FAR %- %d+: (.*)") or ""
+                        end,
+                    }},
+                },
+                filetypes = {'grug-far'},
+            },
         },
         options = {
             section_separators = { left = '', right = '' },
@@ -1659,6 +1677,7 @@ if has("nvim")
     let g:copilot_no_tab_map = v:true
     let g:copilot_filetypes = {
                 \ 'rip-substitute' : v:false,
+                \ 'grug-far' : v:false,
                 \ }
 endif
 
@@ -2514,6 +2533,58 @@ if has("nvim")
         end
         vim.keymap.set(keymap.mode, keymap.key, func, { desc = keymap.desc })
     end
+EOF
+endif
+
+" === grug-far.nvim ===
+if has("nvim")
+    lua << EOF
+    local grug_far = require("grug-far")
+    local width = math.floor(math.max(20, math.min(100, vim.o.columns / 3.25)))
+    grug_far.setup({
+        keymaps = {
+            replace = { n = '<C-s>', i = '<C-s>' },
+            qflist = { n = '<C-q>', i = '<C-q>' },
+            close = { n = 'q' },
+            historyOpen = { n = '<C-h>' },
+            refresh = { i = '<C-f>' },
+        },
+        transient = true,
+        windowCreationCommand = "belowright " .. width .. " vsplit",
+        helpLine = {
+            enabled = false,
+        },
+        folding = {
+            foldcolumn = '0',
+        },
+    })
+
+    vim.keymap.set({ "n", "v" }, "<leader>RR", function()
+        grug_far.open({ prefills = { search = vim.fn.expand("<cword>") } })
+    end, { desc = "Open Grug Far" })
+
+    vim.api.nvim_create_autocmd("FileType", {
+        pattern = "grug-far",
+        callback = function()
+            vim.o.signcolumn = "no"
+            vim.keymap.set({ "n", "i" }, "<C-c>", function()
+                vim.api.nvim_input("<esc>q")
+            end, { buffer = true, desc = "Close Grug Far" })
+            vim.keymap.set("i", "<CR>", function()
+                vim.api.nvim_input("<down>")
+            end, { buffer = true })
+            vim.keymap.set("i", "<C-h>", function()
+                vim.api.nvim_input("<esc><C-h>")
+            end, { buffer = true, desc = "Open Grug Far History" })
+        end
+    })
+    vim.api.nvim_create_autocmd("FileType", {
+        pattern = "grug-far-history",
+        callback = function()
+            vim.keymap.set({ "n", "i" }, "<C-c>", vim.cmd.quit, { buffer = true, desc = "Close Grug Far History" })
+            vim.keymap.set("n", "q", vim.cmd.quit, { buffer = true, desc = "Close Grug Far History" })
+        end
+    })
 EOF
 endif
 
