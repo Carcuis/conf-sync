@@ -59,7 +59,7 @@ function Test-SystemCompatibility {
 }
 
 function Get-ScoopRoot {
-    if (Get-Command scoop -ErrorAction SilentlyContinue) {
+    if (Test-HasCommand scoop) {
         return scoop config root_path
     }
     $dir = "D:\dev\scoop"
