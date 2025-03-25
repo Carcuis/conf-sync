@@ -1,3 +1,13 @@
+# ====================================================================
+#   _____                  _         ___  _______           ____ __
+#  / ___/__ ___________ __(_)__     / _ \/ __/ _ \_______  / _(_) /__
+# / /__/ _ `/ __/ __/ // / (_-<    / ___/\ \/ ___/ __/ _ \/ _/ / / -_)
+# \___/\_,_/_/  \__/\_,_/_/___/   /_/  /___/_/  /_/  \___/_//_/_/\__/
+#
+# ====================================================================
+
+(Get-quote).TrimEnd() | cowsay -f moose -W 80 | lolcat
+
 oh-my-posh init pwsh --config "$HOME\.config\ohmyposh\themes\cui_theme.omp.json" | Invoke-Expression
 
 $env:EDITOR = "nvim"
@@ -10,19 +20,32 @@ Import-Module -Name posh-git -arg 0,0,1
 Import-Module -Name scoop-completion
 Import-Module -Name WSLTabCompletion
 
-Set-PSReadLineOption -EditMode Emacs
-Set-PSReadLineOption -HistorySearchCursorMovesToEnd:$true
-Set-PSReadLineOption -PredictionSource HistoryAndPlugin
-Set-PSReadLineOption -PredictionViewStyle ListView
-Set-PSReadLineKeyHandler -Key Tab -Function MenuComplete
-Set-PSReadlineKeyHandler -Key UpArrow -Function HistorySearchBackward
-Set-PSReadlineKeyHandler -Key DownArrow -Function HistorySearchForward
-Set-PSReadLineKeyHandler -Key "Ctrl+LeftArrow" -Function BackwardWord
-Set-PSReadLineKeyHandler -Key "Ctrl+RightArrow" -Function ForwardWord
-Set-PSReadlineKeyHandler -Key "Ctrl+d" -Function DeleteCharOrExit
-Set-PsFzfOption -PSReadlineChordProvider 'Ctrl+t' -PSReadlineChordReverseHistory 'Ctrl+r' -PSReadlineChordSetLocation 'Alt+c'
+$PSReadLineOption = @{
+    EditMode = "Emacs"
+    HistorySearchCursorMovesToEnd = $true
+    PredictionSource = "HistoryAndPlugin"
+    PredictionViewStyle = "ListView"
+}
+Set-PSReadLineOption @PSReadLineOption
 
-(Get-quote).TrimEnd() | cowsay -f moose -W 80 | lolcat
+$PSReadLineKeyHandler = @{
+    Tab = "MenuComplete"
+    UpArrow = "HistorySearchBackward"
+    DownArrow = "HistorySearchForward"
+    "Ctrl+LeftArrow" = "BackwardWord"
+    "Ctrl+RightArrow" = "ForwardWord"
+    "Ctrl+d" = "DeleteCharOrExit"
+}
+foreach ($key in $PSReadLineKeyHandler.GetEnumerator()) {
+    Set-PSReadLineKeyHandler -Key $key.Key -Function $key.Value
+}
+
+$PsFzfOption = @{
+    PSReadlineChordProvider = 'Ctrl+t'
+    PSReadlineChordReverseHistory = 'Ctrl+r'
+    PSReadlineChordSetLocation = 'Alt+c'
+}
+Set-PsFzfOption @PsFzfOption
 
 # === util functions ===
 function Test-HasCommand { param([string]$cmd)   return (Get-Command $cmd -ErrorAction SilentlyContinue).length -gt 0 }
@@ -157,7 +180,7 @@ function Update-TerminalSizeValue {
 #>
     $width = $Host.UI.RawUI.WindowSize.Width
     $height = $Host.UI.RawUI.WindowSize.Height
-    $OHMYPOSH_MAX_PATH_LENGTH = [Math]::Floor($width / 2)
+    $max_path_length = [Math]::Floor($width / 2)
 
     $cut_length = 0
     if (Test-HasVirtualEnv) {
@@ -173,14 +196,14 @@ function Update-TerminalSizeValue {
     if ($env:ALL_PROXY) {
         $cut_length += 4
     }
-    $OHMYPOSH_MAX_PATH_LENGTH -= $cut_length
+    $max_path_length -= $cut_length
 
     $spare_length = 70
-    $OHMYPOSH_MAX_PATH_LENGTH = [Math]::Min($OHMYPOSH_MAX_PATH_LENGTH, $width - $cut_length - $spare_length)
+    $max_path_length = [Math]::Min($max_path_length, $width - $cut_length - $spare_length)
 
-    [System.Environment]::SetEnvironmentVariable('TERMINAL_WIDTH', $width, 'Process')
-    [System.Environment]::SetEnvironmentVariable('TERMINAL_HEIGHT', $height, 'Process')
-    [System.Environment]::SetEnvironmentVariable('OHMYPOSH_MAX_PATH_LENGTH', $OHMYPOSH_MAX_PATH_LENGTH, 'Process')
+    $env:TERMINAL_WIDTH = $width
+    $env:TERMINAL_HEIGHT = $height
+    $env:OHMYPOSH_MAX_PATH_LENGTH = $max_path_length
 } Update-TerminalSizeValue
 Set-PSReadLineKeyHandler -Key Enter -ScriptBlock {
     Update-TerminalSizeValue
