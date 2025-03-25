@@ -1846,7 +1846,7 @@ if has("nvim")
                 sh = "bash",
                 zsh = "zsh",
                 lua = "lua",
-                ps1 = "pwsh -NoProfile -File",
+                ps1 = "pwsh -NoLogo -NoProfile -NonInteractive -File",
                 c = function()
                     local filename = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(0), ':~:.')
                     local output = filename:gsub("%.c$", "")
