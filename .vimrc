@@ -418,7 +418,7 @@ let g:startify_lists = [
     \ ]
 let g:startify_commands = [
     \ {'c': ['  Configuration', 'call EditVimrc("normal")']},
-    \ {'P': ['  Plugin Install', 'PlugInstall']},
+    \ {'z': ['  Edit Shell Profile', 'call EditShellrc()']},
     \ {'U': ['  Plugin Update', 'PlugUpdate']},
     \ ]
 if ! has("nvim")
@@ -432,7 +432,7 @@ if ! has("nvim")
 else
     let g:startify_commands += [
     \ {'l': ['󰈢  Load Session', 'lua require("resession").load()']},
-    \ {'L': ['󰬲  Load Current Session', 'call LoadSessionInCurrentCwd()']},
+    \ {'L': ['󰬲  Load Current Session', 'call LoadSessionInCwd()']},
     \ {'f': ['󰈞  Find File', 'Telescope find_files']},
     \ {'p': ['  Recent Projects', 'Telescope projects']},
     \ {'r': ['󰄉  Recently Used Files', 'Telescope oldfiles']},
@@ -1800,7 +1800,7 @@ if has("nvim")
         vim.cmd.VenvSelectCached()
     end)
 EOF
-    function LoadSessionInCurrentCwd()
+    function LoadSessionInCwd()
         lua << EOF
         local cwd = vim.fn.getcwd()
         local session_dir = vim.fn.expand(vim.fn.stdpath("data") .. "/session/")
@@ -2618,6 +2618,14 @@ function EditVimrc(way)
         elseif a:way == "vs"
             vsplit ~/.vimrc
         endif
+    endif
+endfunction
+
+function EditShellrc()
+    if has("win32")
+        execute 'edit' expand('~/Documents/PowerShell/Microsoft.PowerShell_profile.ps1')
+    else
+        execute 'edit' "~/." . fnamemodify($SHELL, ':t') . "rc"
     endif
 endfunction
 
