@@ -212,6 +212,10 @@ Set-PSReadLineKeyHandler -Key Enter -ScriptBlock {
 
 # === python environment list ===
 function Get-CondaEnvs {
+<#
+.SYNOPSIS
+    Get a list of conda environments from the 'environments.txt' file rather than using 'conda env list'.
+#>
     $envs_file = "$HOME\.conda\environments.txt"
     if (! (Test-Path $envs_file)) {
         return @()
@@ -224,20 +228,14 @@ function Get-CondaEnvs {
             # Extract environment name from path
             $env_name = $line -replace ".*envs\\", ""
             $envs += [PSCustomObject]@{ Name = $env_name; Path = $line }
-        } else {
-            # Base environment
+        } else { # Base environment
+            # If it's a symlink, check if the target is already in the list
             $resolved_path = Get-Item $line | Select-Object -ExpandProperty Target -ErrorAction SilentlyContinue
-            if ($resolved_path) {
-                # If it's a symlink, check if the target is already in the list
-                if ($base_paths -notcontains $resolved_path) {
-                    $base_paths += $resolved_path
-                    $envs += [PSCustomObject]@{ Name = "base"; Path = $line }
-                }
-            } else {
-                # If not a symlink, add it directly
-                $base_paths += $line
-                $envs += [PSCustomObject]@{ Name = "base"; Path = $line }
-            }
+            if ($base_paths -contains $resolved_path) { continue }
+
+            # Else, add it to the list
+            $base_paths += $line
+            $envs += [PSCustomObject]@{ Name = "base"; Path = $line }
         }
     }
     return $envs
