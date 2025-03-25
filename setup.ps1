@@ -237,13 +237,13 @@ function Install-LinkFiles {
         Write-Success "Copied $DIR\.vimrc to $vimrc."
     }
 
-    $files = @(
-        @("$vimrc", "$HOME\AppData\Local\nvim\init.vim"),
-        @("$DIR\check_consistency.ps1", "$HOME\.local\bin\check_consistency.ps1")
-    )
+    $links = @{
+        "$vimrc" = "$HOME\AppData\Local\nvim\init.vim"
+        "$DIR\check_consistency.ps1" = "$HOME\.local\bin\check_consistency.ps1"
+    }
 
-    foreach ($file in $files) {
-        New-Symlink -src $file[0] -dest $file[1]
+    foreach ($link in $links.GetEnumerator()) {
+        New-Symlink -src $link.Key -dest $link.Value
     }
 }
 
