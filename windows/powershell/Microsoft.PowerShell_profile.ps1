@@ -175,6 +175,9 @@ function Test-HasCondaEnv{
 function Update-TerminalSizeValue {
 <#
 .SYNOPSIS
+    Update environment variables with the current terminal size.
+
+.DESCRIPTION
     Update the environment variables 'TERMINAL_WIDTH' and 'TERMINAL_HEIGHT' with the current terminal size.
     Update the environment variable 'OHMYPOSH_MAX_PATH_LENGTH' with the maximum path length that can be displayed.
 #>
@@ -215,6 +218,9 @@ function Get-CondaEnvs {
 <#
 .SYNOPSIS
     Get a list of conda environments from the 'environments.txt' file rather than using 'conda env list'.
+
+.OUTPUTS
+    [PSCustomObject[]] An array of objects containing the environment name and path.
 #>
     $envs_file = "$HOME\.conda\environments.txt"
     if (! (Test-Path $envs_file)) {
@@ -242,8 +248,14 @@ function Get-CondaEnvs {
 }
 
 function Get-VirtualEnvsCwd {
-    $fdOutput = & fd -HI -tf --exact-depth 3 "^.*activate\.ps1$" 2>$null
-    $fdOutput | ForEach-Object {
+<#
+.SYNOPSIS
+    Get a list of virtual environments in the current directory.
+
+.OUTPUTS
+    [PSCustomObject[]] An array of objects containing the environment folder name and its Activate.ps1 path.
+#>
+    & fd -HI -tf --exact-depth 3 "^.*activate\.ps1$" 2>$null | ForEach-Object {
         $path = $_
         $name = Split-Path $path -Parent | Split-Path -Parent
         [PSCustomObject]@{ Name = $name; Path = $path }
@@ -259,6 +271,12 @@ function Test-HasCondaEnvName {
 <#
 .SYNOPSIS
     Check if a conda environment with the given name exists.
+
+.PARAMETER name
+    The name of the conda environment to check.
+
+.OUTPUTS
+    [bool] True if the conda environment exists, false otherwise.
 #>
     param(
         [string] $name
@@ -284,11 +302,28 @@ function Invoke-MakePythonVenv {
 }
 
 function Invoke-ActivatePythonVenv {
+<#
+.SYNOPSIS
+    Activate a virtual environment (uv/venv/conda) by name or search for venv in the current directory.
+
+.PARAMETER name
+    The name of the virtual environment to activate. If not provided, searches for "venv" or ".venv" in the current directory.
+
+.PARAMETER dir
+    The directory to search for the virtual environment. Defaults to the current working directory.
+
+.PARAMETER silent
+    Suppresses output messages if specified.
+#>
     param(
         [string] $name,
         [string] $dir = $PWD,
         [switch] $silent
     )
+
+    function Write-Info { param([string]$msg) if (! $silent) { Write-Host $msg } }
+    function Write-ErrorMsg { param([string]$msg) if (! $silent) { Write-Error $msg } }
+
     if (! $name) {
         $found = $false
         foreach ($_name in @("venv", ".venv")) {
@@ -296,22 +331,18 @@ function Invoke-ActivatePythonVenv {
             if (Test-HasFile $activate_script) {
                 $found = $true
                 . $activate_script
-                if (! $silent) {
-                    Write-Host "Activated virtual environment '$_name'."
-                }
+                Write-Info "Activated virtual environment '$_name'."
                 break
             }
         }
         if (! $found) {
-            if (! $silent) {
-                Write-Error "Error: Cannot find venv in $dir"
-            }
+            Write-ErrorMsg "Error: Cannot find venv in $dir"
         }
     } else {
         $activate_script = Join-Path -Path $dir -ChildPath "${name}\Scripts\Activate.ps1"
         if (Test-HasFile $activate_script) {
             . $activate_script
-            Write-Host "Activated virtual environment '$name'."
+            Write-Info "Activated virtual environment '$name'."
         } elseif (Test-HasCondaEnvName -name $name) {
             if (Test-HasVirtualEnv) {
                 Invoke-DeactivatePythonVenv
@@ -322,18 +353,18 @@ function Invoke-ActivatePythonVenv {
                 Invoke-CondaHook
             }
             if ("$name" -eq "base" -and $no_conda_before) {
-                Write-Host "Activated conda environment 'base'."
+                Write-Info "Activated conda environment 'base'."
             } elseif ("$name" -eq $env:CONDA_DEFAULT_ENV) {
-                Write-Host "Already activated conda environment '$name'."
+                Write-Info "Already activated conda environment '$name'."
             } else {
                 if (Test-HasCondaEnv) {
                     conda deactivate
                 }
                 conda activate $name
-                Write-Host "Activated conda environment '$name'."
+                Write-Info "Activated conda environment '$name'."
             }
         } else {
-            Write-Error "Error: Cannot find virtual environment '$name'."
+            Write-ErrorMsg "Error: Cannot find virtual environment '$name'."
         }
     }
     Update-TerminalSizeValue
@@ -347,6 +378,10 @@ Register-ArgumentCompleter -CommandName Invoke-ActivatePythonVenv -ParameterName
 }
 
 function Invoke-DeactivatePythonVenv {
+<#
+.SYNOPSIS
+    Deactivate current virtual environment (uv/venv/conda).
+#>
     if (Test-HasVirtualEnv) {
         if (Test-HasCommand deactivate) {
             deactivate
@@ -365,6 +400,9 @@ function Invoke-AutoActivatePythonVenv {
 <#
 .SYNOPSIS
     Automatically activate/deactivate virtual environment when changing directory.
+
+.PARAMETER dir
+    The directory to search for the virtual environment. Defaults to the current working directory.
 #>
     param(
         [string] $dir
@@ -596,6 +634,10 @@ function Optimize-VHD {
 <#
 .SYNOPSIS
     Optimize the size of a WSL vhdx file by running the 'compact' command using Diskpart.
+
+.PARAMETER Path
+    The path to the vhdx file to optimize. If not provided, the script will automatically search for all vhdx files in
+    %LOCALAPPDATA%\Packages and prompt the user to select one.
 #>
     param (
         [string]$Path
@@ -682,8 +724,10 @@ exit
 function Search-WordByFzf {
 <#
 .SYNOPSIS
-    Use fzf to search words in files with ripgrep in the current directory.
-    Need PSFzf module.
+    Use PSFzf to search words in files with ripgrep in the current directory.
+
+.PARAMETER words
+    The words to search for in files.
 #>
     param (
         [string]$words = ""
