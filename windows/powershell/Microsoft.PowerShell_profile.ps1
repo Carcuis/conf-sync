@@ -493,15 +493,13 @@ function Invoke-GenerateSrt {
         return
     }
 
-    $files = Get-Item $file -ErrorAction SilentlyContinue
+    $files = Get-Item $file -ErrorAction SilentlyContinue | Where-Object { $_.Extension -ne ".srt" }
     if ($null -eq $files) {
-        Write-Error "Error: Cannot find '$file'."
+        Write-Error "Error: No video/audio files found."
         return
     }
     Write-Host "Total files: $(($files | Measure-Object).Count)"
-    foreach ($f in $files) {
-        Write-Host "$f"
-    }
+    $files | ForEach-Object { Write-Host "$_" }
     Write-Host
 
     $vram = 0
@@ -568,7 +566,7 @@ function Invoke-GenerateSrt {
 
     foreach ($file in $files) {
         Write-Host "`nProcessing file: $file`n"
-        whisper --language $language --model $model -f srt $file.FullName
+        whisper --language $language --model $model -f srt $file
     }
 }
 
