@@ -7,6 +7,7 @@ _path_list=(
     $HOME/.local/bin
     $HOME/.cargo/bin
     $HOME/.fzf/bin
+    /home/linuxbrew/.linuxbrew/bin
     $HOME/dev/miniconda3/condabin
     /usr/games
     /usr/local/bin
