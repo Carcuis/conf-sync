@@ -84,3 +84,8 @@ function detect_system() {
     fi
 }
 detect_system
+
+function add_to_path() {
+    local _path=$1
+    [[ -d $_path ]] && [[ ! $PATH == *$_path* ]] && export PATH=$_path:$PATH
+}

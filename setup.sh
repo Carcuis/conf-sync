@@ -335,6 +335,15 @@ function create_xauth_file() {
     fi
 }
 
+function update_envs() {
+    local paths=(
+        "$HOME/.local/bin"
+    )
+    for path in ${paths[@]}; do
+        add_to_path "$path"
+    done
+}
+
 function install_all() {
     install_ohmyzsh
     install_vim_plug
@@ -343,6 +352,7 @@ function install_all() {
     install_tmux_plugins
     link_files
     create_xauth_file
+    update_envs
 
     if [[ $no_error == true ]]; then
         success "All dependencies have been installed."
