@@ -84,7 +84,7 @@ function download() {
     if [[ -z "$dest" ]]; then
         dest=$(basename $url)
     fi
-    exists_and_backup "$dest"
+    exist_and_backup "$dest"
     curl -fLo "$dest" --create-dirs "$url"
     return $?
 }
