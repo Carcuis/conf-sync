@@ -2464,7 +2464,7 @@ if has("nvim")
         local name = vim.loop.os_uname().sysname
         return systems[name] or systems["Linux"]
     end
-    require("venv-selector").setup({ settings = {
+    require("venv-selector").setup({
         cache = {
             file = vim.fn.stdpath("data").."/venv-selector/venvs2.json",
         },
@@ -2479,7 +2479,7 @@ if has("nvim")
             end, 200) end,
         },
         search = get_searches()(),
-    }})
+    })
     vim.keymap.set("n", "<leader>vs", vim.cmd.VenvSelect, { desc = "Select python venv" })
     vim.keymap.set("n", "<leader>vv", vim.cmd.VenvSelectCached, { desc = "Activate cached venv in cwd" })
 EOF
