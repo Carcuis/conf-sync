@@ -75,6 +75,7 @@
         "no-inline-html": false,
     },
     "notebook.inlineValues": "on",
+    "notebook.lineNumbers": "on",
     "outline.showVariables": false,
     "output.smartScroll.enabled": false,
     "powershell.buttons.showPanelMovementButtons": false,
