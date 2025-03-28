@@ -116,6 +116,7 @@ if has("nvim")
     Plug 'kawre/leetcode.nvim'
     Plug 'MunifTanjim/nui.nvim'
     Plug 'MagicDuck/grug-far.nvim'
+    Plug 'goerz/jupytext.nvim'
 else
     Plug 'Carcuis/darcula'
     Plug 'joshdick/onedark.vim'
@@ -1559,6 +1560,11 @@ if has("nvim")
             border = 'rounded',
         },
         on_attach = function(bufnr)
+            local buf_name = vim.api.nvim_buf_get_name(bufnr)
+            if buf_name:match('%.ipynb$') then
+                return false
+            end
+
             local function map(mode, lhs, rhs, opts)
                 opts = vim.tbl_extend('force', {noremap = true, silent = true}, opts or {})
                 vim.api.nvim_buf_set_keymap(bufnr, mode, lhs, rhs, opts)
@@ -2584,6 +2590,14 @@ if has("nvim")
             vim.keymap.set({ "n", "i" }, "<C-c>", vim.cmd.quit, { buffer = true, desc = "Close Grug Far History" })
             vim.keymap.set("n", "q", vim.cmd.quit, { buffer = true, desc = "Close Grug Far History" })
         end
+    })
+EOF
+endif
+
+" === jupytext.nvim ===
+if has("nvim")
+    lua << EOF
+    require("jupytext").setup({
     })
 EOF
 endif
