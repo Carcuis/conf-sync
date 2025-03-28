@@ -591,8 +591,8 @@ function Invoke-GenerateSrt {
             return
         }
 
-        Invoke-ActivatePythonVenv -name "whisper"
-        Write-Host "Activated 'whisper' virtual environment.`n"
+        Invoke-ActivatePythonVenv -name "whisper" -silent
+        if ($?) { Write-Host "Activated 'whisper' virtual environment.`n" }
 
         if (! (Test-HasCommand whisper)) {
             Write-Error "Error: Cannot find 'whisper' command."
