@@ -744,10 +744,15 @@ function Start-VscodeNvim {
         Write-Error "Error: Cannot find 'nvim' command."
         return
     }
-    pwsh -NoLogo -NoProfile -NonInteractive -Command {
-        $env:NVIM_APPNAME="vscnvim"
-        nvim @Args
-    } -Arg $Args
+
+    ## nvim --clean +q ~460ms
+    # pwsh -NoLogo -NoProfile -NonInteractive -Command {
+    #     $env:NVIM_APPNAME="vscnvim"
+    #     nvim @Args
+    # } -Arg $Args
+
+    ## nvim --clean +q ~140ms
+    cmd /c "set NVIM_APPNAME=vscnvim&& nvim $args"
 }
 
 # === conf-sync ===
