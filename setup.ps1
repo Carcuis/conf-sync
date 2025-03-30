@@ -257,12 +257,30 @@ function Install-LinkFiles {
     }
 }
 
+function Register-Paths {
+    $paths = @(
+        "$HOME\.local\bin"
+    )
+
+    $old_path = [System.Environment]::GetEnvironmentVariable("PATH")
+    $old_user_path = [System.Environment]::GetEnvironmentVariable("PATH", "User")
+    foreach ($path in $paths) {
+        if (! (($old_path.Split(";") | Where-Object { $_ -notmatch "^#" }).Contains($path))) {
+            Write-Info "Adding $path to PATH."
+            $env:PATH = $path + ";" + $env:PATH
+            [System.Environment]::SetEnvironmentVariable("PATH", $path + ";" + $old_user_path, "User")
+            Write-InstallStatus -status $? -content "$path" -prefix @("Added PATH", "Failed to add PATH")
+        }
+    }
+}
+
 function Install-All {
     Install-VimPlug
     Install-VscLazyNvim
     Install-VifmCustom
     Install-YaziPackage
     Install-LinkFiles
+    Register-Paths
 
     if ($script:no_error) {
         Write-Success "All dependencies have been installed."
