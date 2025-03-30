@@ -114,12 +114,22 @@ function Test-FileNotInstalled {
 function Write-InstallStatus {
     param(
         [bool]$status,
-        [string]$package
+        [string]$content,
+        [string[]]$prefix = @("Successfully installed", "Failed to install"),
+        [string[]]$message = @("success", "failure")
     )
     if ($status) {
-        Write-Success "$package has been installed."
+        if ($content) {
+            Write-Success "$($prefix[0]) $content."
+        } else {
+            Write-Success "$($message[0])"
+        }
     } else {
-        Write-ErrorMsg "Error: Failed to install $package."
+        if ($content) {
+            Write-ErrorMsg "Error: $($prefix[1]) $content."
+        } else {
+            Write-ErrorMsg "Error: $($message[1])"
+        }
         $script:no_error = $false
     }
 }
@@ -130,7 +140,7 @@ function Install-VimPlug {
         $result = Invoke-DownloadFromUrl `
             -url "https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim" `
             -output $vim_plug
-        Write-InstallStatus -status $result -package "Vim-Plug"
+        Write-InstallStatus -status $result -content "Vim-Plug"
     }
 }
 
@@ -139,7 +149,7 @@ function Install-VscLazyNvim {
     $lazy_repo = "https://github.com/folke/lazy.nvim.git"
     if (Test-DirNotInstalled -dir $lazy_nvim -package "VSCode Neovim Lazy.nvim") {
         git clone --filter=blob:none --branch=stable $lazy_repo $lazy_nvim
-        Write-InstallStatus -status $? -package "VSCode Neovim Lazy.nvim"
+        Write-InstallStatus -status $? -content "VSCode Neovim Lazy.nvim"
     }
 }
 
@@ -160,14 +170,14 @@ function Install-VifmCustom {
     if (Test-FileNotInstalled -file "$vifm_config_home\colors\solarized-dark.vifm" -package "Vifm colorschemes") {
         Backup-ExistingItem "$vifm_config_home\colors"
         git clone https://github.com/vifm/vifm-colors "$vifm_config_home\colors"
-        Write-InstallStatus -status $? -package "Vifm colorschemes"
+        Write-InstallStatus -status $? -content "Vifm colorschemes"
     }
     # vifm-favicons
     if (Test-FileNotInstalled -file "$vifm_config_home\plugged\favicons.vifm" -package "Vifm devicons") {
         $result = Invoke-DownloadFromUrl `
             -url "https://raw.githubusercontent.com/cirala/vifm_devicons/master/favicons.vifm" `
             -output "$vifm_config_home\plugged\favicons.vifm"
-        Write-InstallStatus -status $result -package "Vifm devicons"
+        Write-InstallStatus -status $result -content "Vifm devicons"
     }
 }
 
@@ -189,21 +199,21 @@ function Install-YaziPackage {
     # yazi theme
     if (Test-FileNotInstalled -file "$yazi_config_home\flavors\catppuccin-mocha.yazi\flavor.toml" -package "Yazi theme") {
         ya pack -a yazi-rs/flavors:catppuccin-mocha
-        Write-InstallStatus -status $? -package "Yazi flavor catppuccin-mocha"
+        Write-InstallStatus -status $? -content "Yazi flavor catppuccin-mocha"
     }
 
     # yazi plugins
     if (Test-FileNotInstalled -file "$yazi_config_home\plugins\smart-enter.yazi\main.lua" -package "Yazi plugin smart-enter") {
         ya pack -a yazi-rs/plugins:smart-enter
-        Write-InstallStatus -status $? -package "Yazi plugin smart-enter"
+        Write-InstallStatus -status $? -content "Yazi plugin smart-enter"
     }
     if (Test-FileNotInstalled -file "$yazi_config_home\plugins\git.yazi\main.lua" -package "Yazi plugin git") {
         ya pack -a yazi-rs/plugins:git
-        Write-InstallStatus -status $? -package "Yazi plugin git"
+        Write-InstallStatus -status $? -content "Yazi plugin git"
     }
     if (Test-FileNotInstalled -file "$yazi_config_home\plugins\mediainfo.yazi\main.lua" -package "Yazi plugin mediainfo") {
         ya pack -a boydaihungst/mediainfo
-        Write-InstallStatus -status $? -package "Yazi plugin mediainfo"
+        Write-InstallStatus -status $? -content "Yazi plugin mediainfo"
     }
 }
 
@@ -225,7 +235,7 @@ function New-Symlink {
     } else {
         New-DirIfMissing (Split-Path $dest)
         New-Item -ItemType SymbolicLink -Path $dest -Value $src | Out-Null
-        Write-Success "Linked $dest to $src."
+        Write-InstallStatus -status $? -content "$dest to $src" -prefix @("Linked", "Failed to link")
     }
 }
 
@@ -234,7 +244,7 @@ function Install-LinkFiles {
     if (! (Test-HasFile -file $vimrc)) {
         Write-Info "$vimrc not found."
         Copy-Item "$DIR\.vimrc" $vimrc
-        Write-Success "Copied $DIR\.vimrc to $vimrc."
+        Write-InstallStatus -status $? -content "$DIR\.vimrc to $vimrc" -prefix @("Copied", "Failed to copy")
     }
 
     $links = @{
