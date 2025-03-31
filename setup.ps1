@@ -116,19 +116,19 @@ function Write-InstallStatus {
         [bool]$status,
         [string]$content,
         [string[]]$prefix = @("Successfully installed", "Failed to install"),
-        [string[]]$message = @("success", "failure")
+        [string[]]$message = @("Success", "Failure")
     )
     if ($status) {
         if ($content) {
             Write-Success "$($prefix[0]) $content."
         } else {
-            Write-Success "$($message[0])"
+            Write-Success "$($message[0])."
         }
     } else {
         if ($content) {
             Write-ErrorMsg "Error: $($prefix[1]) $content."
         } else {
-            Write-ErrorMsg "Error: $($message[1])"
+            Write-ErrorMsg "Error: $($message[1])."
         }
         $script:no_error = $false
     }
