@@ -185,10 +185,21 @@ function install_vim_plug() {
         download https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim "$HOME/.vim/autoload/plug.vim"
         successfully_installed $? "Vim-Plug"
     fi
+    if not_installed_in_dir "$HOME/.vim/plugged" "Vim plugins"; then
+        sed -n '/call plug#begin/,/call plug#end/p' "$DIR/.vimrc" | \
+            vim -es -u NONE -i NONE -c "source /dev/stdin" -c "PlugInstall" -c "qa"
+        successfully_installed $? "Vim plugins"
+    fi
+
     if not_installed_file "$HOME/.local/share/nvim/site/autoload/plug.vim" "Vim-Plug for Neovim"; then
         download https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim \
            "$HOME/.local/share/nvim/site/autoload/plug.vim"
         successfully_installed $? "Vim-Plug for Neovim"
+    fi
+    if not_installed_in_dir "$HOME/.local/share/nvim/plugged" "Neovim plugins"; then
+        sed -n '/call plug#begin/,/call plug#end/p' "$DIR/.vimrc" | \
+            nvim -es -u NONE -i NONE -c "source /dev/stdin" -c "PlugInstall" -c "qa"
+        successfully_installed $? "Neovim plugins"
     fi
 }
 
