@@ -82,7 +82,6 @@
     "powershell.codeFormatting.alignPropertyValuePairs": false,
     "powershell.codeFormatting.newLineAfterCloseBrace": false,
     "powershell.integratedConsole.showOnStartup": false,
-    "powershell.sideBar.CommandExplorerVisibility": false,
     "python.analysis.inlayHints.callArgumentNames": "all",
     "python.analysis.inlayHints.functionReturnTypes": true,
     "python.analysis.inlayHints.pytestParameters": true,
