@@ -8,7 +8,7 @@
 
 (Get-quote).TrimEnd() | cowsay -f moose -W 80 | lolcat
 
-oh-my-posh init pwsh --config "$HOME\.config\ohmyposh\themes\cui_theme.omp.json" | Invoke-Expression
+(oh-my-posh init pwsh --config "$HOME\.config\ohmyposh\themes\cui_theme.omp.json" --print) -join "`n" | Invoke-Expression
 
 $env:EDITOR = "nvim"
 $env:VIRTUAL_ENV_DISABLE_PROMPT = 1
