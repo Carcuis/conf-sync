@@ -2618,6 +2618,11 @@ if has("nvim")
                   return true
                 end
 
+                -- fix for vim-startuptime
+                if vim.tbl_contains(vim.v.argv, "--startuptime") then
+                  return true
+                end
+
                 -- don't nest in a neovim terminal (unless nest_if_no_args is set)
                 if vim.env.NVIM ~= nil then
                   return false
