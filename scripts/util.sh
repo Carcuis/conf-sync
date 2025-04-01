@@ -57,7 +57,7 @@ function move_file() {
 
 function exist_and_backup() {
     local src=$1
-    [[ -z $src ]] && return 0
+    [[ -e $src ]] || return 0
 
     local backup_dir=$DIR/backup
     ensure_dir "$backup_dir"
