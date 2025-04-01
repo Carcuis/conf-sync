@@ -133,6 +133,11 @@
                 "psd1",
             ],
             "maxRestartCount": 1,
+            "settings": {
+                "powershell.codeFormatting.ignoreOneLineBlock": true,
+                "powershell.codeFormatting.newLineAfterCloseBrace": false,
+                "powershell.codeFormatting.openBraceOnSameLine": true,
+            },
         },
     },
     "codeLens.enable": true,
