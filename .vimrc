@@ -2615,33 +2615,39 @@ if has("nvim")
             should_nest = function(host)
                 -- don't nest in diff'
                 if vim.tbl_contains(vim.v.argv, "-d") then
-                  return true
+                    return true
                 end
 
                 -- fix for vim-startuptime
                 if vim.tbl_contains(vim.v.argv, "--startuptime") then
-                  return true
+                    return true
+                end
+
+                -- don't nest in tmp files (for shell edit-command-line mode)
+                local bufname = vim.fn.bufname()
+                if bufname:find("^/tmp/.+") or bufname:find("^AppData\\Local\\Temp\\.+") then
+                    return true
                 end
 
                 -- don't nest in a neovim terminal (unless nest_if_no_args is set)
                 if vim.env.NVIM ~= nil then
-                  return false
+                    return false
                 end
 
                 -- If in a wezterm or kitty split, only open files in the first neovim instance
                 -- if their working directories are the same.
                 -- This allows you to open a new instance in a different cwd, but open files from the active cwd in your current session.
                 local ok, host_cwd = pcall(
-                  require("flatten.rpc").exec_on_host,
-                  host,
-                  function() return vim.fn.getcwd(-1) end,
-                  {},
-                  true
+                    require("flatten.rpc").exec_on_host,
+                    host,
+                    function() return vim.fn.getcwd(-1) end,
+                    {},
+                    true
                 )
 
                 -- Yield to default behavior if RPC call fails
                 if not ok then
-                  return false
+                    return false
                 end
 
                 return not vim.startswith(vim.fn.getcwd(-1), host_cwd)
