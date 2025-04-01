@@ -766,6 +766,7 @@ if has("nvim")
                 file = vim.fn.expand('%:p'),
                 buf = vim.api.nvim_get_current_buf(),
             }
+
             -- buffer is a real file on the disk
             local real_file = vim.fn.filereadable(data.file) == 1
             -- buffer is a [No Name]
@@ -780,6 +781,11 @@ if has("nvim")
             end
 
             if autogroup_exists("leetcode_menu") then
+                return
+            end
+
+            -- win temp dir make neovim too slow
+            if vim.fn.has("win32") and data.file:find("^C:\\Users\\[^\\]+\\AppData\\Local\\Temp\\") then
                 return
             end
 
