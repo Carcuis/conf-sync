@@ -767,18 +767,22 @@ if has("nvim")
             }
             -- buffer is a real file on the disk
             local real_file = vim.fn.filereadable(data.file) == 1
-
             -- buffer is a [No Name]
             local no_name = data.file == "" and vim.bo[data.buf].buftype == ""
+            if not real_file and not no_name then
+                return
+            end
 
             local excluded_filetypes = {}
-
-            local has_excluded_filetypes = vim.tbl_contains(excluded_filetypes, vim.bo[data.buf].filetype)
-            local has_leetcode = autogroup_exists("leetcode_menu")
-
-            if ( real_file or no_name ) and not has_excluded_filetypes and not has_leetcode then
-                require("nvim-tree.api").tree.toggle({ focus = false })
+            if vim.tbl_contains(excluded_filetypes, vim.bo[data.buf].filetype) then
+                return
             end
+
+            if autogroup_exists("leetcode_menu") then
+                return
+            end
+
+            require("nvim-tree.api").tree.toggle({ focus = false })
 EOF
     endfunction
 
