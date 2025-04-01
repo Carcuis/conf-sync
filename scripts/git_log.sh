@@ -22,16 +22,25 @@ function usage() {
 function cmd_parser() {
     while [ "$#" -gt 0 ]; do
         case "$1" in
-            h|-h|--help) usage; exit 0 ;;
-            n|-n|--max-count)
+            h | -h | --help)
+                usage
+                exit 0
+                ;;
+            n | -n | --max-count)
                 if [[ "$2" =~ ^[0-9]+$ ]]; then
                     commit_count="$2"
                 else
-                    error "Error: Invalid value '$2'"; usage; exit 1
+                    error "Error: Invalid value '$2'"
+                    usage
+                    exit 1
                 fi
                 ;;
             [0-9]*) commit_count="$1" ;;
-            *) error "Error: Invalid option '$1'"; usage; exit 1 ;;
+            *)
+                error "Error: Invalid option '$1'"
+                usage
+                exit 1
+                ;;
         esac
         shift
     done

@@ -19,8 +19,15 @@ function usage() {
 function cmd_parser() {
     while [ "$#" -gt 0 ]; do
         case "$1" in
-            h|-h|--help) usage; exit 0 ;;
-            *) error "Error: Invalid option '$1'"; usage; exit 1 ;;
+            h | -h | --help)
+                usage
+                exit 0
+                ;;
+            *)
+                error "Error: Invalid option '$1'"
+                usage
+                exit 1
+                ;;
         esac
     done
 }

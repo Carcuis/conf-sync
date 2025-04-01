@@ -12,10 +12,20 @@ ZSH_CUSTOM=${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}
 function cmd_parser() {
     while [ "$#" -gt 0 ]; do
         case "$1" in
-            h|-h|--help) usage; exit 0 ;;
-            t|-t|--test) test_web_connection; exit 0 ;;
-            v|-v|--verbose) verbose=true ;;
-            *) error "Error: Invalid option '$1'."; usage; exit 1 ;;
+            h | -h | --help)
+                usage
+                exit 0
+                ;;
+            t | -t | --test)
+                test_web_connection
+                exit 0
+                ;;
+            v | -v | --verbose) verbose=true ;;
+            *)
+                error "Error: Invalid option '$1'."
+                usage
+                exit 1
+                ;;
         esac
         shift
     done
@@ -38,11 +48,13 @@ function test_web_connection() {
         "https://github.com"
     )
 
-    for i in ${web_list[@]}
-    do
+    for i in ${web_list[@]}; do
         echo -n "[TEST] $i ... "
         local status_code
-        status_code="$(curl -I --max-time 5 $i 2>/dev/null | grep "HTTP" | sed -n '$p' | cut -d ' ' -f 2; exit ${PIPESTATUS[0]})"
+        status_code="$(
+            curl -I --max-time 5 $i 2> /dev/null | grep "HTTP" | sed -n '$p' | cut -d ' ' -f 2
+            exit ${PIPESTATUS[0]}
+        )"
         local exit_code=$?
         if [[ $exit_code == 0 && $status_code == 200 ]]; then
             success "OK"
@@ -54,8 +66,8 @@ function test_web_connection() {
     done
 }
 
-function installing_mesg() { mesg "${BLUE}Installing ${BOLD}$1${BLUE} ..." ; }
-function already_installed_mesg() { info "$1 is already installed." ; }
+function installing_mesg() { mesg "${BLUE}Installing ${BOLD}$1${BLUE} ..."; }
+function already_installed_mesg() { info "$1 is already installed."; }
 
 function check_command() {
     if ! has_command $1; then
@@ -161,17 +173,17 @@ function install_ohmyzsh_plugins() {
         fi
     done
 
-	# powerlevel10k
+    # powerlevel10k
     if not_installed_in_dir "$ZSH_CUSTOM/themes/powerlevel10k" "powerlevel10k"; then
-	    git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM}/themes/powerlevel10k
+        git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM}/themes/powerlevel10k
         successfully_installed $? "powerlevel10k"
     fi
 
-	# autoupdate-zsh-plugin
+    # autoupdate-zsh-plugin
     if not_installed_in_dir "$ZSH_CUSTOM/plugins/autoupdate" "autoupdate-oh-my-zsh-plugin"; then
-	    git clone https://github.com/TamCore/autoupdate-oh-my-zsh-plugins ${ZSH_CUSTOM}/plugins/autoupdate
+        git clone https://github.com/TamCore/autoupdate-oh-my-zsh-plugins ${ZSH_CUSTOM}/plugins/autoupdate
         successfully_installed $? "autoupdate-oh-my-zsh-plugin"
-	fi
+    fi
 
     # conda-zsh-completion
     if not_installed_in_dir "$ZSH_CUSTOM/plugins/conda-zsh-completion" "conda-zsh-completion"; then
@@ -186,18 +198,18 @@ function install_vim_plug() {
         successfully_installed $? "Vim-Plug"
     fi
     if not_installed_in_dir "$HOME/.vim/plugged" "Vim plugins"; then
-        sed -n '/call plug#begin/,/call plug#end/p' "$DIR/.vimrc" | \
+        sed -n '/call plug#begin/,/call plug#end/p' "$DIR/.vimrc" |
             vim -es -u NONE -i NONE -c "source /dev/stdin" -c "PlugInstall" -c "qa"
         successfully_installed $? "Vim plugins"
     fi
 
     if not_installed_file "$HOME/.local/share/nvim/site/autoload/plug.vim" "Vim-Plug for Neovim"; then
         download https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim \
-           "$HOME/.local/share/nvim/site/autoload/plug.vim"
+            "$HOME/.local/share/nvim/site/autoload/plug.vim"
         successfully_installed $? "Vim-Plug for Neovim"
     fi
     if not_installed_in_dir "$HOME/.local/share/nvim/plugged" "Neovim plugins"; then
-        sed -n '/call plug#begin/,/call plug#end/p' "$DIR/.vimrc" | \
+        sed -n '/call plug#begin/,/call plug#end/p' "$DIR/.vimrc" |
             nvim -es -u NONE -i NONE -c "source /dev/stdin" -c "PlugInstall" -c "qa"
         successfully_installed $? "Neovim plugins"
     fi
@@ -213,21 +225,21 @@ function install_vifm_custom() {
     local vifm_config_home="$HOME/.config/vifm"
     if ! has_dir $vifm_config_home; then
         info "Generating original vifm configuration..."
-	    vifm +q
+        vifm +q
     fi
 
-	# vifm-colors
+    # vifm-colors
     if not_installed_file "$vifm_config_home/colors/solarized-dark.vifm" "Vifm colorshemes"; then
         exist_and_backup "$vifm_config_home/colors"
-	    git clone https://github.com/vifm/vifm-colors $vifm_config_home/colors
+        git clone https://github.com/vifm/vifm-colors $vifm_config_home/colors
         successfully_installed $? "Vifm colorshemes"
-	fi
+    fi
 
-	# vifm-favicons
+    # vifm-favicons
     if not_installed_file "$vifm_config_home/plugged/favicons.vifm" "Vifm devicons"; then
         download https://raw.githubusercontent.com/cirala/vifm_devicons/master/favicons.vifm "$vifm_config_home/plugged/favicons.vifm"
         successfully_installed $? "Vifm devicons"
-	fi
+    fi
 }
 
 function install_yazi_package() {

@@ -9,7 +9,7 @@ DIR=$(dirname $(dirname $(realpath ${BASH_SOURCE[0]})))
 source $DIR/check_consistency.sh
 
 function add_extra_files() {
-    file_list+=( ${extra_file_list[@]} )
+    file_list+=(${extra_file_list[@]})
 }
 
 function usage() {
@@ -25,10 +25,17 @@ function usage() {
 function cmd_parser() {
     while [ "$#" -gt 0 ]; do
         case "$1" in
-            h|-h|--help) usage; exit 0 ;;
-            v|-v|--verbose) verbose=true ;;
-            f|-f|--force-sync) make_sync_force ;;
-            *) error "Error: Invalid option '$1'"; usage; exit 1 ;;
+            h | -h | --help)
+                usage
+                exit 0
+                ;;
+            v | -v | --verbose) verbose=true ;;
+            f | -f | --force-sync) make_sync_force ;;
+            *)
+                error "Error: Invalid option '$1'"
+                usage
+                exit 1
+                ;;
         esac
         shift
     done

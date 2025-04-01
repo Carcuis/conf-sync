@@ -8,7 +8,7 @@
 DIR=$(dirname $(dirname $(realpath ${BASH_SOURCE[0]})))
 source $DIR/scripts/check_all.sh
 
-function git_dirty() { [[ -n $(git -C $DIR status -u --porcelain) ]] ; }
+function git_dirty() { [[ -n $(git -C $DIR status -u --porcelain) ]]; }
 
 function ensure_synced() {
     add_extra_files

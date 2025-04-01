@@ -103,32 +103,32 @@ function declare_dirs() {
 
     case $SYSTEM in
         Android)
-            exclude_file_list+=( ideavimrc kitty_config kitty_linux btop_config condarc );
-            addon_file_list+=( shortcut_sshd sshd_config )
+            exclude_file_list+=(ideavimrc kitty_config kitty_linux btop_config condarc)
+            addon_file_list+=(shortcut_sshd sshd_config)
             ;;
         WSL*)
-            exclude_file_list+=( ideavimrc )
-            addon_file_list+=( wsl_conf )
+            exclude_file_list+=(ideavimrc)
+            addon_file_list+=(wsl_conf)
             ;;
         Darwin)
-            exclude_file_list+=( kitty_linux )
-            addon_file_list+=( kitty_macos )
+            exclude_file_list+=(kitty_linux)
+            addon_file_list+=(kitty_macos)
             ;;
         Codespace)
-            exclude_file_list+=( ideavimrc kitty_config )
+            exclude_file_list+=(ideavimrc kitty_config)
             ;;
     esac
 
     if [[ ${#exclude_file_list[@]} != 0 ]]; then
         for exclude_file in ${exclude_file_list[@]}; do
-            file_list=( ${file_list[@]/$exclude_file} )
+            file_list=(${file_list[@]/$exclude_file/})
         done
         info "Skipped ${exclude_file_list[*]} on current system: ${GREEN}$SYSTEM ✔"
     fi
 
     if [[ ${#addon_file_list[@]} != 0 ]]; then
         for addon_file in ${addon_file_list[@]}; do
-            file_list+=( $addon_file )
+            file_list+=($addon_file)
         done
         info "Added ${addon_file_list[*]} on current system: ${GREEN}$SYSTEM ✔"
     fi
@@ -148,11 +148,18 @@ function usage() {
 function cmd_parser() {
     while [ "$#" -gt 0 ]; do
         case "$1" in
-            a|-a|--all) file_list+=( ${extra_file_list[@]} ) ;;
-            h|-h|--help) usage; exit 0 ;;
-            v|-v|--verbose) verbose=true ;;
-            f|-f|--force-sync) make_sync_force ;;
-            *) error "Error: Invalid option '$1'"; usage; exit 1 ;;
+            a | -a | --all) file_list+=(${extra_file_list[@]}) ;;
+            h | -h | --help)
+                usage
+                exit 0
+                ;;
+            v | -v | --verbose) verbose=true ;;
+            f | -f | --force-sync) make_sync_force ;;
+            *)
+                error "Error: Invalid option '$1'"
+                usage
+                exit 1
+                ;;
         esac
         shift
     done
@@ -208,7 +215,7 @@ function confirm() {
     fi
 
     local user_input
-    read -n1 -p "$1 [Y/n] " user_input </dev/tty
+    read -n1 -p "$1 [Y/n] " user_input < /dev/tty
     [[ -z $user_input ]] && user_input=y || echo
     [[ "$user_input" =~ [yY] ]] && return 0 || return 1
 }
