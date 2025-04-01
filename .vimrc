@@ -117,6 +117,7 @@ if has("nvim")
     Plug 'MunifTanjim/nui.nvim'
     Plug 'MagicDuck/grug-far.nvim'
     Plug 'goerz/jupytext.nvim'
+    Plug 'willothy/flatten.nvim'
 else
     Plug 'Carcuis/darcula'
     Plug 'joshdick/onedark.vim'
@@ -2602,6 +2603,50 @@ endif
 if has("nvim")
     lua << EOF
     require("jupytext").setup({
+    })
+EOF
+endif
+
+" === flatten.nvim ===
+if has("nvim")
+    lua << EOF
+    require("flatten").setup({
+        hooks = {
+            should_nest = function(host)
+                -- don't nest in diff'
+                if vim.tbl_contains(vim.v.argv, "-d") then
+                  return true
+                end
+
+                -- don't nest in a neovim terminal (unless nest_if_no_args is set)
+                if vim.env.NVIM ~= nil then
+                  return false
+                end
+
+                -- If in a wezterm or kitty split, only open files in the first neovim instance
+                -- if their working directories are the same.
+                -- This allows you to open a new instance in a different cwd, but open files from the active cwd in your current session.
+                local ok, host_cwd = pcall(
+                  require("flatten.rpc").exec_on_host,
+                  host,
+                  function() return vim.fn.getcwd(-1) end,
+                  {},
+                  true
+                )
+
+                -- Yield to default behavior if RPC call fails
+                if not ok then
+                  return false
+                end
+
+                return not vim.startswith(vim.fn.getcwd(-1), host_cwd)
+            end,
+        },
+        nest_if_no_args = true,
+        nest_if_cmds = true,
+        window = {
+            open = "smart",
+        },
     })
 EOF
 endif
