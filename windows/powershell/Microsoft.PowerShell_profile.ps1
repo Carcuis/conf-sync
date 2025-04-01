@@ -831,7 +831,11 @@ function Invoke-ConfSyncUpdate {
         return
     }
     git -C $DIR pull --rebase
-    git -C $DIR log --format="%C(blue)%h %C(green)(%ad) %C(white)%s" --date=format-local:'%b %e %H:%M' ORIG_HEAD..HEAD
+    git -C $DIR log `
+        --reverse `
+        --format="%C(blue)%h %C(green)(%ad) %C(white)%s" `
+        --date=format-local:'%b %e %H:%M' `
+        ORIG_HEAD..HEAD
 
     & $script $params
 }
