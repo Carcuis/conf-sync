@@ -221,11 +221,9 @@ function Compare-FilesWithDiffTool {
         return
     }
 
-    if ($script:diff_command -eq "nvim -i NONE -d")
-    {
+    if ($script:diff_command -eq "nvim -i NONE -d") {
         nvim -i NONE -d $file1 $file2
-    } elseif ($script:diff_command -eq "vimdiff")
-    {
+    } elseif ($script:diff_command -eq "vimdiff") {
         vimdiff $file1 $file2
     } else {
         Write-ErrorMsg "Error: diff command '$script:diff_command' not found."
