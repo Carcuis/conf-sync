@@ -53,9 +53,10 @@ function Test-HasDir     { param([string]$dir)   return [System.IO.Path]::Exists
 function Test-HasFile    { param([string]$file)  return [System.IO.File]::Exists($file) }
 
 # === edit files ===
-function Start-EditFile
-{
-    param($file)
+function Start-EditFile {
+    param(
+        [string]$file
+    )
     if (Test-HasCommand nvim) {
         nvim $file
     } elseif (Test-HasCommand vim) {
@@ -143,8 +144,7 @@ function Test-WebConnection {
             if ($status -eq 200) {
                 Write-Host "OK" -ForegroundColor Green
             }
-        }
-        catch {
+        } catch {
             Write-Host "FAIL" -ForegroundColor Red
         }
     }
@@ -173,14 +173,14 @@ function Test-HasCondaEnv{
 }
 
 function Update-TerminalSizeValue {
-<#
-.SYNOPSIS
-    Update environment variables with the current terminal size.
+    <#
+    .SYNOPSIS
+        Update environment variables with the current terminal size.
 
-.DESCRIPTION
-    Update the environment variables 'TERMINAL_WIDTH' and 'TERMINAL_HEIGHT' with the current terminal size.
-    Update the environment variable 'OHMYPOSH_MAX_PATH_LENGTH' with the maximum path length that can be displayed.
-#>
+    .DESCRIPTION
+        Update the environment variables 'TERMINAL_WIDTH' and 'TERMINAL_HEIGHT' with the current terminal size.
+        Update the environment variable 'OHMYPOSH_MAX_PATH_LENGTH' with the maximum path length that can be displayed.
+    #>
     $width = $Host.UI.RawUI.WindowSize.Width
     $height = $Host.UI.RawUI.WindowSize.Height
     $max_path_length = [Math]::Floor($width / 2)
@@ -215,13 +215,13 @@ Set-PSReadLineKeyHandler -Key Enter -ScriptBlock {
 
 # === python environment list ===
 function Get-CondaEnvs {
-<#
-.SYNOPSIS
-    Get a list of conda environments from the 'environments.txt' file rather than using 'conda env list'.
+    <#
+    .SYNOPSIS
+        Get a list of conda environments from the 'environments.txt' file rather than using 'conda env list'.
 
-.OUTPUTS
-    [PSCustomObject[]] An array of objects containing the environment name and path.
-#>
+    .OUTPUTS
+        [PSCustomObject[]] An array of objects containing the environment name and path.
+    #>
     $envs_file = "$HOME\.conda\environments.txt"
     if (! (Test-Path $envs_file)) {
         return @()
@@ -248,13 +248,13 @@ function Get-CondaEnvs {
 }
 
 function Get-VirtualEnvsCwd {
-<#
-.SYNOPSIS
-    Get a list of virtual environments in the current directory.
+    <#
+    .SYNOPSIS
+        Get a list of virtual environments in the current directory.
 
-.OUTPUTS
-    [PSCustomObject[]] An array of objects containing the environment folder name and its Activate.ps1 path.
-#>
+    .OUTPUTS
+        [PSCustomObject[]] An array of objects containing the environment folder name and its Activate.ps1 path.
+    #>
     & fd -HI -tf --exact-depth 3 "^.*activate\.ps1$" 2>$null | ForEach-Object {
         $path = $_
         $name = Split-Path $path -Parent | Split-Path -Parent
@@ -268,16 +268,16 @@ function Invoke-CondaHook {
 }
 
 function Test-HasCondaEnvName {
-<#
-.SYNOPSIS
-    Check if a conda environment with the given name exists.
+    <#
+    .SYNOPSIS
+        Check if a conda environment with the given name exists.
 
-.PARAMETER name
-    The name of the conda environment to check.
+    .PARAMETER name
+        The name of the conda environment to check.
 
-.OUTPUTS
-    [bool] True if the conda environment exists, false otherwise.
-#>
+    .OUTPUTS
+        [bool] True if the conda environment exists, false otherwise.
+    #>
     param(
         [string] $name
     )
@@ -302,19 +302,19 @@ function Invoke-MakePythonVenv {
 }
 
 function Invoke-ActivatePythonVenv {
-<#
-.SYNOPSIS
-    Activate a virtual environment (uv/venv/conda) by name or search for venv in the current directory.
+    <#
+    .SYNOPSIS
+        Activate a virtual environment (uv/venv/conda) by name or search for venv in the current directory.
 
-.PARAMETER name
-    The name of the virtual environment to activate. If not provided, searches for "venv" or ".venv" in the current directory.
+    .PARAMETER name
+        The name of the virtual environment to activate. If not provided, searches for "venv" or ".venv" in the current directory.
 
-.PARAMETER dir
-    The directory to search for the virtual environment. Defaults to the current working directory.
+    .PARAMETER dir
+        The directory to search for the virtual environment. Defaults to the current working directory.
 
-.PARAMETER silent
-    Suppresses output messages if specified.
-#>
+    .PARAMETER silent
+        Suppresses output messages if specified.
+    #>
     param(
         [string] $name,
         [string] $dir = $PWD,
@@ -378,10 +378,10 @@ Register-ArgumentCompleter -CommandName Invoke-ActivatePythonVenv -ParameterName
 }
 
 function Invoke-DeactivatePythonVenv {
-<#
-.SYNOPSIS
-    Deactivate current virtual environment (uv/venv/conda).
-#>
+    <#
+    .SYNOPSIS
+        Deactivate current virtual environment (uv/venv/conda).
+    #>
     if (Test-HasVirtualEnv) {
         if (Test-HasCommand deactivate) {
             deactivate
@@ -397,13 +397,13 @@ function Invoke-DeactivatePythonVenv {
 }
 
 function Invoke-AutoActivatePythonVenv {
-<#
-.SYNOPSIS
-    Automatically activate/deactivate virtual environment when changing directory.
+    <#
+    .SYNOPSIS
+        Automatically activate/deactivate virtual environment when changing directory.
 
-.PARAMETER dir
-    The directory to search for the virtual environment. Defaults to the current working directory.
-#>
+    .PARAMETER dir
+        The directory to search for the virtual environment. Defaults to the current working directory.
+    #>
     param(
         [string] $dir
     )
@@ -631,14 +631,14 @@ function Search-FilesByRipgrep {
 }
 
 function Optimize-VHD {
-<#
-.SYNOPSIS
-    Optimize the size of a WSL vhdx file by running the 'compact' command using Diskpart.
+    <#
+    .SYNOPSIS
+        Optimize the size of a WSL vhdx file by running the 'compact' command using Diskpart.
 
-.PARAMETER Path
-    The path to the vhdx file to optimize. If not provided, the script will automatically search for all vhdx files in
-    %LOCALAPPDATA%\Packages and prompt the user to select one.
-#>
+    .PARAMETER Path
+        The path to the vhdx file to optimize. If not provided, the script will automatically search for all vhdx files in
+        %LOCALAPPDATA%\Packages and prompt the user to select one.
+    #>
     param (
         [string]$Path
     )
@@ -722,13 +722,13 @@ exit
 }
 
 function Search-WordByFzf {
-<#
-.SYNOPSIS
-    Use PSFzf to search words in files with ripgrep in the current directory.
+    <#
+    .SYNOPSIS
+        Use PSFzf to search words in files with ripgrep in the current directory.
 
-.PARAMETER words
-    The words to search for in files.
-#>
+    .PARAMETER words
+        The words to search for in files.
+    #>
     param (
         [string]$words = ""
     )
