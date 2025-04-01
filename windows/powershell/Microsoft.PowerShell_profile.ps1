@@ -845,6 +845,48 @@ function Start-ConfSyncLazygit {
     lazygit -p (Get-ConfSyncDir)
 }
 
+function Write-ConfSyncGitLog {
+    if (! (Get-CheckConsistencyPs1)) { return }
+
+    $commit_count = 8
+
+    function Show-Usage {
+        Write-Host "Usage:"
+        Write-Host "  Write-ConfSyncGitLog [options]"
+        Write-Host
+        Write-Host "Options:"
+        Write-Host "  -n, --max-count   Number of commits to show (default: 8)"
+        Write-Host "  -h, --help        Display help"
+    }
+
+    foreach ($arg in $args) {
+        switch -Regex ($arg) {
+            "^((-?n)|(-?-max-count))$"  {
+                try {
+                    $next = $args[$args.IndexOf($arg) + 1]
+                    if (! $next) { throw }
+                    $commit_count = [int]$next
+                    if ($commit_count -lt 0) { throw }
+                } catch {
+                    Write-Error "Error: Invalid value '$next'"
+                    Show-Usage
+                    return
+                }
+                continue
+            }
+            "^[0-9]+$"                  { $commit_count = [int]$arg; continue }
+            "^((-?h)|(-?-help))$"       { Show-Usage; return }
+            default { Write-Error "Error: Invalid option '$arg'"; Show-Usage; return }
+        }
+    }
+
+    git -C (Get-ConfSyncDir) log `
+        --reverse `
+        --format="%C(blue)%h %C(green)(%ad) %C(white)%s" `
+        --date=format-local:'%b %e %H:%M' `
+        -n $commit_count
+}
+
 @{
     # builtin function aliases
     "which" = "Get-Command"
@@ -927,5 +969,6 @@ function Start-ConfSyncLazygit {
     "csc" = "Invoke-ConfSyncCheckAll"
     "csup" = "Invoke-ConfSyncUpdate"
     "csg" = "Start-ConfSyncLazygit"
+    "csl" = "Write-ConfSyncGitLog"
 
 }.GetEnumerator() | ForEach-Object { Set-Alias -Name $_.Key -Value $_.Value }
