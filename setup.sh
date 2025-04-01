@@ -312,6 +312,7 @@ function link_files() {
 
     create_symlink "$vimrc" "$HOME/.config/nvim/init.vim"
     create_symlink "$DIR/scripts/check_all.sh" "$HOME/.local/bin/csc"
+    create_symlink "$DIR/scripts/git_log.sh" "$HOME/.local/bin/csl"
     create_symlink "$DIR/scripts/open_lazygit.sh" "$HOME/.local/bin/csg"
     create_symlink "$DIR/scripts/update.sh" "$HOME/.local/bin/csup"
 }
