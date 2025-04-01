@@ -9,11 +9,11 @@ DIR=$(dirname $(dirname $(realpath ${BASH_SOURCE[0]})))
 source $DIR/scripts/util.sh
 
 function usage() {
-   bold "Usage:"
-   mesg "  $(realpath $0) [options]"
-   mesg
-   bold "Options:"
-   mesg "  -h, --help       Display help"
+    bold "Usage:"
+    mesg "  $(realpath $0) [options]"
+    mesg
+    bold "Options:"
+    mesg "  -h, --help       Display help"
 }
 
 function cmd_parser() {

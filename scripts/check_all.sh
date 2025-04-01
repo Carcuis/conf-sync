@@ -13,13 +13,13 @@ function add_extra_files() {
 }
 
 function usage() {
-   bold "Usage:"
-   mesg "  $(realpath $0) [options]"
-   mesg
-   bold "Options:"
-   mesg "  -f, --force-sync Force sync files"
-   mesg "  -h, --help       Display help"
-   mesg "  -v, --verbose    Show detailed information"
+    bold "Usage:"
+    mesg "  $(realpath $0) [options]"
+    mesg
+    bold "Options:"
+    mesg "  -f, --force-sync Force sync files"
+    mesg "  -h, --help       Display help"
+    mesg "  -v, --verbose    Show detailed information"
 }
 
 function cmd_parser() {
