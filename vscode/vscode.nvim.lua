@@ -304,7 +304,7 @@ function M.set_keymaps()
     end
 
     ---@class VscAction
-    ---@field [1] string vscode action id
+    ---@field [1] string|string[] vscode action id
     ---@field wait? boolean use `vscode.call` instead of `vscode.action` if true
     ---@field post_esc? boolean press `<esc>` after action if true
 
@@ -363,20 +363,26 @@ function M.set_keymaps()
             -- backup line and restore
             {
                 "DC",
-                function()
-                    M.vscode.call("editor.action.commentLine")
-                    M.vscode.call("editor.action.clipboardCopyAction")
-                    M.vscode.call("editor.action.clipboardPasteAction")
-                    M.vscode.call("editor.action.commentLine")
-                end
+                {
+                    {
+                        "editor.action.commentLine",
+                        "editor.action.clipboardCopyAction",
+                        "editor.action.clipboardPasteAction",
+                        "editor.action.commentLine",
+                    },
+                    wait = true,
+                }
             },
             {
                 "DR",
-                function()
-                    M.vscode.call("editor.action.deleteLines")
-                    M.vscode.call("cursorUp")
-                    M.vscode.call("editor.action.commentLine")
-                end
+                {
+                    {
+                        "editor.action.deleteLines",
+                        "cursorUp",
+                        "editor.action.commentLine",
+                    },
+                    wait = true,
+                }
             },
 
             -- copilot
@@ -482,16 +488,15 @@ function M.set_keymaps()
         local rhs = map[2] --[[@as string|function|table]]
         if type(rhs) == "table" then
             local action = rhs[1]
-            local wait = rhs.wait
-            local post_esc = rhs.post_esc
-            rhs = function()
-                if wait then
-                    M.vscode.call(action)
-                else
-                    M.vscode.action(action)
-                end
-                if post_esc then
-                    vim.api.nvim_input("<esc>")
+            local _run = rhs.wait and M.vscode.call or M.vscode.action
+            local _esc = rhs.post_esc and function() vim.api.nvim_input("<esc>") end or function() end
+            rhs = type(action) == "string" and function()
+                _run(action)
+                _esc()
+            end or function()
+                for _, n in ipairs(action) do
+                    _run(n)
+                    _esc()
                 end
             end
         end
