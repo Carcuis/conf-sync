@@ -359,6 +359,8 @@ function M.set_keymaps()
             -- edit config file and source
             { "<leader>ef", function() vim.cmd.Edit(M.this_file_path) end },
             { "<leader>sf", function() vim.cmd.source(M.this_file_path) end },
+            { "<leader>ec", { "workbench.action.openSettingsJson" } },
+            { "<leader>ek", { "workbench.action.openGlobalKeybindingsFile" } },
 
             -- backup line and restore
             {
@@ -427,6 +429,13 @@ function M.set_keymaps()
             -- run and debug
             { "<leader>ru", { "code-runner.run" } },
             { "<leader>rr", { "taskExplorer.runLastTask" } },
+
+            -- git
+            { "<leader>gd", { { "workbench.view.scm", "git.openChange" } } },
+            { "<leader>gf", { "git.viewFileHistory" } },
+            { "<leader>gp", { "editor.action.dirtydiff.next" } },
+            { "<leader>gr", { "git.revertSelectedRanges" } },
+            { "<leader>gs", { "git.stageSelectedRanges" } },
         })
     else
         keymaps = vim.list_extend(keymaps, {

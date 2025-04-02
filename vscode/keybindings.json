@@ -118,6 +118,35 @@
         "when": "editorTextFocus && !editorHasMultipleSelections && !inSnippetMode && !inlineSuggestionVisible && !suggestWidgetVisible"
     },
 
+    // git diff keybindings
+    {
+        "key": "d o",
+        "command": "git.revertSelectedRanges",
+        "when": "editorTextFocus && isInDiffEditor && isInDiffRightEditor && !operationInProgress && resourceScheme == 'file'"
+    },
+    {
+        "key": "d o",
+        "command": "git.unstageSelectedRanges",
+        "when": "editorTextFocus && isInDiffEditor && isInDiffRightEditor && !operationInProgress && resourceScheme == 'git'"
+    },
+    {
+        "key": "d p",
+        "command": "git.stageSelectedRanges",
+        "when": "editorTextFocus && isInDiffEditor && isInDiffRightEditor && !operationInProgress && resourceScheme == 'file'",
+    },
+    {
+        "key": "q",
+        "command": "runCommands",
+        "args": {
+            "commands": [
+                "git.openFile",
+                "workbench.view.explorer",
+                "workbench.action.navigateRight",
+            ]
+        },
+        "when": "editorTextFocus && isInDiffEditor"
+    },
+
     // other keybindings
     {
         "key": "ctrl+c",
@@ -133,6 +162,16 @@
         "key": "ctrl+e",
         "command": "hideSuggestWidget",
         "when": "neovim.mode == 'insert' && suggestWidgetVisible && textInputFocus"
+    },
+    {
+        "key": "ctrl+j",
+        "command": "workbench.action.compareEditor.nextChange",
+        "when": "textCompareEditorVisible"
+    },
+    {
+        "key": "ctrl+k",
+        "command": "workbench.action.compareEditor.previousChange",
+        "when": "textCompareEditorVisible"
     },
     {
         "key": "ctrl+s",
