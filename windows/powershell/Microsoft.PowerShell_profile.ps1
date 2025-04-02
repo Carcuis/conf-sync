@@ -16,7 +16,7 @@ $env:VIRTUAL_ENV_DISABLE_PROMPT = 1
 Import-Module -Name Terminal-Icons
 Import-Module -Name CompletionPredictor
 Import-Module -Name git-aliases-plus -DisableNameChecking
-Import-Module -Name posh-git -arg 0,0,1
+Import-Module -Name posh-git -arg 0, 0, 1
 Import-Module -Name scoop-completion
 Import-Module -Name WSLTabCompletion
 
@@ -140,7 +140,7 @@ function Test-WebConnection {
     foreach ($web in $web_list) {
         try {
             Write-Host -NoNewline "[TEST] $web ... "
-            $status = Invoke-WebRequest -Uri $web -DisableKeepAlive -Method Head -TimeoutSec 10 | ForEach-Object {$_.StatusCode}
+            $status = Invoke-WebRequest -Uri $web -DisableKeepAlive -Method Head -TimeoutSec 10 | ForEach-Object { $_.StatusCode }
             if ($status -eq 200) {
                 Write-Host "OK" -ForegroundColor Green
             }
@@ -165,7 +165,7 @@ function Test-HasVirtualEnv {
     return $false
 }
 
-function Test-HasCondaEnv{
+function Test-HasCondaEnv {
     if ($env:CONDA_DEFAULT_ENV) {
         return $true
     }
@@ -234,7 +234,8 @@ function Get-CondaEnvs {
             # Extract environment name from path
             $env_name = $line -replace ".*envs\\", ""
             $envs += [PSCustomObject]@{ Name = $env_name; Path = $line }
-        } else { # Base environment
+        } else {
+            # Base environment
             # If it's a symlink, check if the target is already in the list
             $resolved_path = Get-Item $line | Select-Object -ExpandProperty Target -ErrorAction SilentlyContinue
             if ($base_paths -contains $resolved_path) { continue }
@@ -264,7 +265,7 @@ function Get-VirtualEnvsCwd {
 
 # === miniconda function ===
 function Invoke-CondaHook {
-    conda shell.powershell hook | Out-String | Where-Object {$_} | Invoke-Expression
+    conda shell.powershell hook | Out-String | Where-Object { $_ } | Invoke-Expression
 }
 
 function Test-HasCondaEnvName {
@@ -472,11 +473,13 @@ function Invoke-MoveAndCreateLink() {
         if ($dest_is_dir) {
             Move-Item $target $dest
             Invoke-CreateLink (Join-Path $dest $target_basename) $target
-        } else { # $dest is a new file name
+        } else {
+            # $dest is a new file name
             Move-Item $target $dest
             Invoke-CreateLink $dest $target
         }
-    } else { # $target is a directory
+    } else {
+        # $target is a directory
         if ($dest_is_file) {
             Write-Error "Error: '$dest' is a existing file, cannot move."
             return
@@ -488,7 +491,8 @@ function Invoke-MoveAndCreateLink() {
             }
             Move-Item $target $dest
             Invoke-CreateLink (Join-Path $dest $target_basename) $target
-        } else { # $dest does not exist
+        } else {
+            # $dest does not exist
             Move-Item $target $dest
             Invoke-CreateLink $dest $target
         }
@@ -504,7 +508,7 @@ function Remove-OldPSMuduleVersions {
 
 function Remove-ItemRecurseForce {
     param (
-        [Parameter(Mandatory=$true)]
+        [Parameter(Mandatory = $true)]
         [string]$Path
     )
     Remove-Item -Path $Path -Recurse -Force
@@ -545,13 +549,13 @@ function Invoke-GenerateSrt {
 
     # Retrieve information about the active graphics card
     try {
-        $nvidiaSmiOutput = nvidia-smi --query-gpu=memory.total --format=csv,noheader
+        $nvidiaSmiOutput = nvidia-smi --query-gpu=memory.total --format='csv,noheader'
         if ($null -ne $nvidiaSmiOutput) {
             # Retrieve the VRAM size of the active graphics card in megabytes (MB)
             $vram = [math]::round($nvidiaSmiOutput.Trim() -replace " MiB", "")
 
             # Retrieve the name of the active graphics card
-            $gpuName = (nvidia-smi --query-gpu=name --format=csv,noheader).Trim()
+            $gpuName = (nvidia-smi --query-gpu=name --format='csv,noheader').Trim()
         }
     } catch {
         Write-Error "Failed to retrieve GPU information."
@@ -861,7 +865,7 @@ function Write-ConfSyncGitLog {
 
     foreach ($arg in $args) {
         switch -Regex ($arg) {
-            "^((-?n)|(-?-max-count))$"  {
+            "^((-?n)|(-?-max-count))$" {
                 try {
                     $next = $args[$args.IndexOf($arg) + 1]
                     if (! $next) { throw }
@@ -874,8 +878,8 @@ function Write-ConfSyncGitLog {
                 }
                 continue
             }
-            "^[0-9]+$"                  { $commit_count = [int]$arg; continue }
-            "^((-?h)|(-?-help))$"       { Show-Usage; return }
+            "^[0-9]+$"              { $commit_count = [int]$arg; continue }
+            "^((-?h)|(-?-help))$"   { Show-Usage; return }
             default { Write-Error "Error: Invalid option '$arg'"; Show-Usage; return }
         }
     }
