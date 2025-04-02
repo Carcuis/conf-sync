@@ -166,4 +166,6 @@
     },
     "Lua.runtime.version": "Lua 5.1",
     "basedpyright.analysis.typeCheckingMode": "standard",
+    "bashIde.shfmt.caseIndent": true,
+    "bashIde.shfmt.spaceRedirects": true,
 }
