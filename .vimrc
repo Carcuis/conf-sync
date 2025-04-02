@@ -2630,8 +2630,8 @@ if has("nvim")
                 end
 
                 -- don't nest in tmp files (for shell edit-command-line mode)
-                local bufname = vim.fn.bufname()
-                if bufname:find("^/tmp/.+") or bufname:find("^AppData\\Local\\Temp\\.+") then
+                local filename = vim.fn.expand("%:p")
+                if filename:find("^/tmp/[^/]+") or filename:find("^C:\\Users\\[^\\]+\\AppData\\Local\\Temp\\.+.ps1$") then
                     return true
                 end
 
