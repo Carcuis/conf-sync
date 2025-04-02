@@ -7,6 +7,8 @@
         "editor.wordWrap": "off",
     },
     "basedpyright.analysis.typeCheckingMode": "standard",
+    "bashIde.shfmt.caseIndent": true,
+    "bashIde.shfmt.spaceRedirects": true,
     "chat.experimental.statusIndicator.enabled": true,
     "chat.renderRelatedFiles": true,
     "code-runner.executorMap": {
