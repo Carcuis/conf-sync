@@ -142,6 +142,29 @@ function Install-VimPlug {
             -output $vim_plug
         Write-InstallStatus -status $result -content "Vim-Plug"
     }
+
+    $plugins = "$HOME\AppData\Local\nvim-data\plugged"
+    if (Test-DirNotInstalled -dir $plugins -package "Neovim plugins") {
+        $temp_file = [System.IO.Path]::GetTempFileName()
+        $inside_block = $false
+        Get-Content -Path (Join-Path -Path $PSScriptRoot -ChildPath ".vimrc") | Where-Object {
+            if ($_ -match 'call plug#begin') { $inside_block = $true }
+            if ($_ -match 'call plug#end') { $inside_block = $false; $true }
+            $inside_block
+        } | Set-Content -Path $temp_file
+
+        $no_error = $true
+        try {
+            nvim -es -u NONE -i NONE -c "source $temp_file" -c "PlugInstall" -c "qa"
+            $no_error = $?
+        } catch {
+            Write-Error $_.Exception.Message
+            $no_error = $false
+        } finally {
+            Remove-Item -Path $temp_file
+        }
+        Write-InstallStatus -status $no_error -content "Neovim plugins"
+    }
 }
 
 function Install-VscLazyNvim {
