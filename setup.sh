@@ -122,12 +122,17 @@ function not_installed_file() {
 }
 
 function successfully_installed() {
-    if [[ $1 == 0 ]]; then
-        success "$2 has been installed."
+    local exit_code=$1
+    local content=$2
+    local prefix_success=${3:-"Successfully installed"}
+    local prefix_failure=${4:-"Failed to install"}
+
+    if [[ $exit_code -eq 0 ]]; then
+        success "$prefix_success $content."
         return 0
     else
+        error "Error: $prefix_failure $content."
         no_error=false
-        error "Error: Failed to install $2."
         return 1
     fi
 }
@@ -320,7 +325,7 @@ function create_symlink() {
     else
         ensure_dir "$(dirname $dest)"
         ln -s "$src" "$dest"
-        success "Linked $dest to $src."
+        successfully_installed $? "$dest to $src" "Linked" "Failed to link"
     fi
 }
 
@@ -330,7 +335,7 @@ function link_files() {
     if ! has_file "$vimrc"; then
         info "$vimrc not found."
         copy_file "$DIR/.vimrc" "$vimrc"
-        success "Copied $DIR/.vimrc to $vimrc."
+        successfully_installed $? "$DIR/.vimrc to $vimrc" "Copied" "Failed to copy"
     fi
 
     create_symlink "$vimrc" "$HOME/.config/nvim/init.vim"
