@@ -13,8 +13,8 @@ edit = [
 
 [plugin]
 prepend_previewers = [
-    { mime = "{image,audio,video}/*", run = "mediainfo"},
-    { mime = "application/subrip", run = "code"},
+    { mime = "{image,audio,video}/*", run = "mediainfo" },
+    { mime = "application/subrip", run = "code" },
 ]
 prepend_fetchers = [
     { id = "git", name = "*", run = "git" },
