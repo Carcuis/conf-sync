@@ -168,4 +168,5 @@
     "basedpyright.analysis.typeCheckingMode": "standard",
     "bashIde.shfmt.caseIndent": true,
     "bashIde.shfmt.spaceRedirects": true,
+    "toml.formatter.indentString": "    ",
 }
