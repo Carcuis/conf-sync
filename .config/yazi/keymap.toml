@@ -1,8 +1,10 @@
 [manager]
 prepend_keymap = [
+    { on = "<A-v>", run = "visual_mode --unset", desc = "Enter visual mode (unset mode)" },
     { on = "<A-w>", run = "quit", desc = "Quit the process" },
     { on = "<A-y>", run = "quit", desc = "Quit the process" },
     { on = "D", run = "remove", desc = "Trash selected files" },
+    { on = "V", run = "visual_mode", desc = "Enter visual mode (selection mode)" },
     { on = "d", run = "remove --permanently", desc = "Permanently delete selected files" },
     { on = "l", run = "plugin smart-enter", desc = "Enter the child directory, or open the file" },
 ]
