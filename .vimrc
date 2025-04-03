@@ -34,6 +34,7 @@ Plug 'lambdalisue/suda.vim' " save file by sudo
 Plug 'fladson/vim-kitty' " syntax highlight for kitty.conf
 Plug 'a5ob7r/shellcheckrc.vim' " syntax highlight for shellcheckrc
 Plug 'machakann/vim-highlightedyank' " highlight on yank
+Plug 'will133/vim-dirdiff'
 
 if has("nvim")
     Plug 'Carcuis/darcula.nvim'
