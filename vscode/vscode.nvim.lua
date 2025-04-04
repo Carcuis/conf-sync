@@ -415,6 +415,8 @@ function M.set_keymaps()
             { "<A-f>", { "editor.action.formatDocument" } },
             { "gr", { "editor.action.goToReferences" } },
             { "gp", { "editor.action.showDefinitionPreviewHover" } },
+            { "[g", { "editor.action.marker.prevInFiles" } },
+            { "]g", { "editor.action.marker.nextInFiles" } },
 
             -- files
             { "<leader>fr", { "workbench.action.quickOpen" } },
