@@ -1215,18 +1215,14 @@ if has("nvim")
                 {
                     function()
                         local items = vim.b.coc_nav
-                        local t = {''}
-                        for k,v in ipairs(items) do
-                            local highlight = v.highlight or "Normal"
+                        local t = {}
+                        for k, v in ipairs(items) do
+                            local highlight = v.highlight or "Comment"
                             local name = v.name or ''
-                            local has_label = type(v.label) ~= 'nil'
-                            if has_label then
-                                t[#t+1] = '%#' .. highlight .. '# ' .. v.label .. ' %#Normal#'.. name
-                            else
-                                t[#t+1] = '%#' .. highlight .. '#  %#Normal#' .. name
-                            end
-                            if next(items,k) ~= nil then
-                                t[#t+1] = '%#Comment# '
+                            local label = v.label or ''
+                            table.insert(t, '%#' .. highlight .. '# ' .. label .. ' %#StatusLine#'.. name)
+                            if k < #items then
+                                table.insert(t, '%#Comment# ')
                             end
                         end
                         return table.concat(t)
