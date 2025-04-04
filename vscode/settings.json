@@ -29,7 +29,6 @@
     "editor.fontSize": 18,
     "editor.inlayHints.fontFamily": "Calibri",
     "editor.inlayHints.padding": true,
-    "editor.inlineSuggest.syntaxHighlightingEnabled": true,
     "editor.largeFileOptimizations": false,
     "editor.lineHeight": 1.6,
     "editor.lineNumbers": "relative",
