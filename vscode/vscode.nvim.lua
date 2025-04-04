@@ -425,7 +425,7 @@ function M.set_keymaps()
 
             -- find and replace
             { "<leader>fw", { "workbench.action.findInFiles", wait = true, post_esc = true }, mode = { "n", "v" } },
-            { "<leader>fR", { "workbench.action.replaceInFiles", wait = true, post_esc = true }, mode = { "n", "v" } },
+            { "<leader>RR", { "workbench.action.replaceInFiles", wait = true, post_esc = true }, mode = { "n", "v" } },
             { "R", { "editor.action.startFindReplaceAction", wait = true, post_esc = true }, mode = { "n", "v" } },
 
             -- run and debug
