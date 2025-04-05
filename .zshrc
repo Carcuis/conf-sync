@@ -107,6 +107,7 @@ plugins=(
     brew
     colored-man-pages
     conda-zsh-completion
+    dotenv
     git
     python
     tmux
