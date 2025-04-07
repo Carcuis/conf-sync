@@ -119,6 +119,7 @@ if has("nvim")
     Plug 'MagicDuck/grug-far.nvim'
     Plug 'goerz/jupytext.nvim'
     Plug 'willothy/flatten.nvim'
+    Plug 'hat0uma/csvview.nvim'
 else
     Plug 'Carcuis/darcula'
     Plug 'joshdick/onedark.vim'
@@ -2661,6 +2662,33 @@ if has("nvim")
         window = {
             open = "smart",
         },
+    })
+EOF
+endif
+
+" === csvview.nvim ===
+if has("nvim")
+    lua << EOF
+    require("csvview").setup({
+        view = {
+            spacing = 0,
+            display_mode = "border",
+            header_lnum = 1,
+        },
+        keymaps = {
+            textobject_field_inner = { "if", mode = { "o", "x" } },
+            textobject_field_outer = { "af", mode = { "o", "x" } },
+            jump_next_field_end = { "<Tab>", mode = { "n", "v" } },
+            jump_prev_field_end = { "<S-Tab>", mode = { "n", "v" } },
+            jump_next_row = { "<Enter>", mode = { "n", "v" } },
+            jump_prev_row = { "<S-Enter>", mode = { "n", "v" } },
+        },
+    })
+    vim.api.nvim_create_autocmd("FileType", {
+        pattern = "csv",
+        callback = function()
+            require('csvview').toggle(0)
+        end,
     })
 EOF
 endif
