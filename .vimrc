@@ -2787,7 +2787,7 @@ inoremap <M-K> <C-up>
 inoremap <M-H> <C-left>
 inoremap <M-L> <C-right>
 
-nnoremap DO <cmd>%diffget<CR>
+nnoremap DO <cmd>1,$+1diffget<CR>
 nnoremap DP <cmd>%diffput<CR>
 nnoremap DU <cmd>diffupdate<CR>
 
