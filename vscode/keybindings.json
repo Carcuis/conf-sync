@@ -81,7 +81,7 @@
         "when": "inlineChatHasProvider && inlineChatVisible"
     },
 
-    // disable keybindings
+    // disabled keybindings
     {
         "key": "ctrl+e",
         "command": "-workbench.action.quickOpen"
@@ -148,6 +148,11 @@
     },
 
     // other keybindings
+    {
+        "key": "alt+s",
+        "command": "workbench.action.files.save",
+        "when": "notebookEditorFocused && !inputFocus && !notebookOutputInputFocused"
+    },
     {
         "key": "ctrl+c",
         "command": "workbench.action.togglePanel",
