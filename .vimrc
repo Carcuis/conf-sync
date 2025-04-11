@@ -1014,91 +1014,86 @@ endif
 " === lualine.nvim ===
 if has("nvim")
     lua << EOF
+    local left_end = vim.g.neovide and "" or ""
+    local right_end = vim.g.neovide and "" or ""
+    local seg_padding = vim.g.neovide and 1 or 0
+
+    local seg_opts = {
+        padding = { left = seg_padding, right = seg_padding },
+    }
+    local left_seg_opts = vim.tbl_extend("force", seg_opts, {
+        separator = { left = vim.g.neovide and '' or left_end, right = right_end },
+    })
+    local right_seg_opts = vim.tbl_extend("force", seg_opts, {
+        separator = { left = left_end, right = vim.g.neovide and '' or right_end },
+    })
     require('lualine').setup {
         extensions = {
             'quickfix',
             {
-                sections = { lualine_a = {{
+                sections = { lualine_a = { vim.tbl_extend("force", {
                     function()
                         return vim.fn.fnamemodify(vim.fn.getcwd(), ':~')
                     end,
-                    padding = { left = 0, right = 0 },
-                    separator = { left = '', right = '' },
-                }}, },
+                }, left_seg_opts) }, },
                 filetypes = {'NvimTree'},
             },
             {
-                sections = { lualine_b = {{
+                sections = { lualine_b = { vim.tbl_extend("force", {
                     'filetype',
-                    padding = { left = 0, right = 0 },
-                    separator = { left = '', right = '' },
-                }}, },
+                }, left_seg_opts) }, },
                 filetypes = {'DiffviewFiles', 'DiffviewFileHistory'},
             },
             {
-                sections = { lualine_y = {{
+                sections = { lualine_y = { vim.tbl_extend("force", {
                     function() return 'Structure' end,
                     icon = "󰆧",
-                    padding = { left = 0, right = 0 },
-                    separator = { left = '', right = '' },
-                }}, },
+                }, right_seg_opts), }, },
                 filetypes = {'coctree'},
             },
             {
-                sections = { lualine_b = {{
+                sections = { lualine_b = { vim.tbl_extend("force", {
                     function() return 'Tasks' end,
                     icon = "",
-                    padding = { left = 0, right = 0 },
-                    separator = { left = '', right = '' },
-                }}, },
+                }, left_seg_opts), }, },
                 filetypes = {'OverseerList'},
             },
             {
-                sections = { lualine_a = {{
+                sections = { lualine_a = { vim.tbl_extend("force", {
                     function() return 'Scope' end,
                     icon = "",
-                    padding = { left = 0, right = 0 },
-                    separator = { left = '', right = '' },
-                }}, },
+                }, left_seg_opts), }, },
                 filetypes = {'dapui_scopes'},
             },
             {
-                sections = { lualine_a = {{
+                sections = { lualine_a = { vim.tbl_extend("force", {
                     function() return 'Console' end,
                     icon = "",
-                    padding = { left = 0, right = 0 },
-                    separator = { left = '', right = '' },
-                }}, },
+                }, left_seg_opts), }, },
                 filetypes = {'dapui_console'},
             },
             {
-                sections = { lualine_a = {{
+                sections = { lualine_a = { vim.tbl_extend("force", {
                     function() return 'Repl' end,
                     icon = "",
-                    padding = { left = 0, right = 0 },
-                    separator = { left = '', right = '' },
-                }}, },
+                }, left_seg_opts), }, },
                 filetypes = {'dap-repl'},
             },
             {
-                sections = { lualine_b = {{
+                sections = { lualine_b = { vim.tbl_extend("force", {
                     function() return 'Terminal' end,
                     icon = "",
-                    padding = { left = 0, right = 0 },
-                    separator = { left = '', right = '' },
-                }}, },
+                }, left_seg_opts), }, },
                 filetypes = {'toggleterm'},
             },
             {
                 sections = {
-                    lualine_b = {{
+                    lualine_b = { vim.tbl_extend("force", {
                         function()
                             return 'Terminal'
                         end,
                         icon = "",
-                        padding = { left = 0, right = 0 },
-                        separator = { left = '', right = '' },
-                    }},
+                    }, left_seg_opts), },
                     lualine_c = {
                         {
                             function()
@@ -1122,22 +1117,18 @@ if has("nvim")
                 filetypes = {'terminal'},
             },
             {
-                sections = { lualine_b = {{
+                sections = { lualine_b = { vim.tbl_extend("force", {
                     function() return 'LeetCode' end,
                     icon = "",
-                    padding = { left = 0, right = 0 },
-                    separator = { left = '', right = '' },
-                }}, },
+                }, left_seg_opts), }, },
                 filetypes = {'leetcode.nvim'},
             },
             {
                 sections = {
-                    lualine_b = {{
+                    lualine_b = { vim.tbl_extend("force", {
                         function() return 'Replace All' end,
                         icon = "",
-                        padding = { left = 0, right = 0 },
-                        separator = { left = '', right = '' },
-                    }},
+                    }, left_seg_opts), },
                     lualine_c = {{
                         function()
                             local bufname = vim.api.nvim_buf_get_name(0)
@@ -1149,7 +1140,7 @@ if has("nvim")
             },
         },
         options = {
-            section_separators = { left = '', right = '' },
+            section_separators = { left = right_end, right = left_end },
             component_separators = { left = '', right = '' },
             disabled_filetypes = {
                 "dapui_watches", "dapui_stacks", "dapui_breakpoints",
@@ -1161,18 +1152,16 @@ if has("nvim")
         },
         sections = {
             lualine_a = {
-                {
-                    'mode',
-                    padding = { left = 0, right = 0 },
-                    separator = { left = '', right = '' },
-                },
+                vim.tbl_extend("force", {
+                   'mode',
+                }, left_seg_opts),
             },
             lualine_b = {
                 {
                     "b:gitsigns_head",
                     icon = "",
                     color = { gui = "bold" },
-                    padding = { left = 1, right = 0 },
+                    padding = { left = 1, right = seg_padding },
                 },
             },
             lualine_c = {
@@ -1310,14 +1299,12 @@ if has("nvim")
                 'fileformat',
             },
             lualine_y = {
-                { 'filetype', padding = { left = 0, right = 1 }, color = { gui = "bold" }, },
+                { 'filetype', padding = { left = seg_padding, right = 1 }, color = { gui = "bold" }, },
             },
             lualine_z = {
-                {
+                vim.tbl_extend("force", {
                     'location',
-                    padding = { left = 0, right = 0 },
-                    separator = { left = '', right = '' },
-                },
+                }, right_seg_opts),
                 {
                     function()
                         local current_line = vim.fn.line "."
