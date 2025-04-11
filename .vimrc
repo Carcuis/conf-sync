@@ -278,7 +278,8 @@ else "vim in tui
 endif
 
 if exists("g:neovide")
-    let g:neovide_cursor_vfx_mode = "wireframe"
+    set linespace=5
+    let g:neovide_cursor_vfx_mode = "pixiedust"
     let g:neovide_cursor_trail_size = 0.5
     let g:neovide_profiler = v:false
     let g:neovide_floating_shadow = v:false
