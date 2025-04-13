@@ -279,15 +279,28 @@ endif
 
 if exists("g:neovide")
     set linespace=5
-    let g:neovide_cursor_vfx_mode = "pixiedust"
-    let g:neovide_cursor_trail_size = 0.5
-    let g:neovide_profiler = v:false
-    let g:neovide_floating_shadow = v:false
-    let g:neovide_scroll_animation_length = 0.15
-    let g:neovide_hide_mouse_when_typing = v:true
-    let g:neovide_underline_stroke_scale = 2.0
+
     let g:neovide_cursor_animate_command_line = v:false
-    let g:neovide_input_macos_option_key_is_meta = "only_left"
+    let g:neovide_cursor_trail_size = 0.5
+    let g:neovide_cursor_vfx_mode = "pixiedust"
+    let g:neovide_floating_shadow = v:false
+    let g:neovide_hide_mouse_when_typing = v:true
+    let g:neovide_profiler = v:false
+    let g:neovide_scroll_animation_length = 0.15
+    let g:neovide_underline_stroke_scale = 2.0
+
+    if has("mac")
+        let g:neovide_input_macos_option_key_is_meta = "only_left"
+
+        for key in 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ-[]:'
+            execute "map <D-".key."> <M-".key.">"
+            execute "imap <D-".key."> <M-".key.">"
+            execute "tmap <D-".key."> <M-".key.">"
+        endfor
+        map <D-Right> <M-Right>
+        imap <D-Right> <M-Right>
+        tmap <D-Right> <M-Right>
+    endif
 endif
 
 " ===============
