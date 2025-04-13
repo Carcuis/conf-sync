@@ -1209,9 +1209,9 @@ if has("nvim")
                         local t = {}
                         for k, v in ipairs(items) do
                             local highlight = v.highlight or "Comment"
-                            local name = v.name or ''
+                            local name = v.name and v.name ~= ' ' and ' %#StatusLine#'.. v.name or ''
                             local label = v.label or ''
-                            table.insert(t, '%#' .. highlight .. '# ' .. label .. ' %#StatusLine#'.. name)
+                            table.insert(t, '%#' .. highlight .. '# ' .. label .. name)
                             if k < #items then
                                 table.insert(t, '%#Comment# ')
                             end
