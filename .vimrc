@@ -287,6 +287,7 @@ if exists("g:neovide")
     let g:neovide_hide_mouse_when_typing = v:true
     let g:neovide_underline_stroke_scale = 2.0
     let g:neovide_cursor_animate_command_line = v:false
+    let g:neovide_input_macos_option_key_is_meta = "only_left"
 endif
 
 " ===============
