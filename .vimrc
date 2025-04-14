@@ -942,6 +942,13 @@ if has("nvim")
                 link = "ToggleTermFloatBorder",
             }
         },
+        on_create = function(term)
+            if term.direction == "float" then
+                for _, key in ipairs({ "h", "j", "k", "l" }) do
+                    vim.keymap.set("t", "<M-" .. key .. ">", "<M-" .. key .. ">", { buffer = term.bufnr })
+                end
+            end
+        end,
         on_open = function() vim.defer_fn(function()
             vim.cmd('startinsert!')
         end, 10) end,
