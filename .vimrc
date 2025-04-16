@@ -1683,6 +1683,12 @@ if has("nvim")
             vim.keymap.set("n", "q", vim.cmd.quit, { desc = "Quit Commit Log", buffer = true })
         end
     })
+    vim.api.nvim_create_autocmd("FileType", {
+        pattern = "DiffviewFileHistory",
+        callback = function() vim.defer_fn(function()
+            vim.opt.winhighlight:append({ CursorLineNr = "DiffviewNonText" })
+        end, 10) end
+    })
 EOF
 endif
 
