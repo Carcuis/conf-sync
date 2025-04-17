@@ -118,6 +118,18 @@
         "when": "editorTextFocus && !editorHasMultipleSelections && !inSnippetMode && !inlineSuggestionVisible && !suggestWidgetVisible"
     },
 
+    // copilot inline suggest
+    {
+        "key": "escape",
+        "command": "editor.action.inlineSuggest.hide",
+        "when": "editorTextFocus && (inlineEditIsVisible || inlineSuggestionVisible)"
+    },
+    {
+        "key": "tab",
+        "command": "editor.action.inlineSuggest.jump",
+        "when": "editorTextFocus && inlineEditIsVisible && tabShouldJumpToInlineEdit && !editorHoverFocused && !editorTabMovesFocus && !suggestWidgetVisible"
+    },
+
     // git diff keybindings
     {
         "key": "d o",
