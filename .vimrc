@@ -2732,14 +2732,14 @@ if has("nvim") && !exists("g:neovide")
         if vim.fn['coc#float#has_scroll']() == 1 then
             vim.fn['coc#float#scroll'](1)
         else
-            neoscroll.ctrl_f({ duration = 550 })
+            neoscroll.ctrl_f({ duration = 50 })
         end
     end)
     vim.keymap.set('n', '<C-b>', function()
         if vim.fn['coc#float#has_scroll']() == 1 then
             vim.fn['coc#float#scroll'](0)
         else
-            neoscroll.ctrl_b({ duration = 550 })
+            neoscroll.ctrl_b({ duration = 50 })
         end
     end)
     vim.keymap.set({ 'n', 'i', 'v' }, '<ScrollWheelDown>', function()
