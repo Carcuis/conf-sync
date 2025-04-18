@@ -120,6 +120,9 @@ if has("nvim")
     Plug 'goerz/jupytext.nvim'
     Plug 'willothy/flatten.nvim'
     Plug 'hat0uma/csvview.nvim'
+    Plug 'sphamba/smear-cursor.nvim'
+    Plug 'karb94/neoscroll.nvim'
+    Plug 'meznaric/key-analyzer.nvim'
 else
     Plug 'Carcuis/darcula'
     Plug 'joshdick/onedark.vim'
@@ -2704,6 +2707,48 @@ if has("nvim")
         callback = function()
             require('csvview').toggle(0)
         end,
+    })
+EOF
+endif
+
+" === smear-cursor.nvim ===
+if has("nvim") && !exists("g:neovide")
+    lua << EOF
+    require('smear_cursor').setup({
+    })
+EOF
+endif
+
+" === neoscroll.nvim ===
+if has("nvim") && !exists("g:neovide")
+    lua << EOF
+    local neoscroll = require("neoscroll")
+    neoscroll.setup({
+        duration_multiplier = 0.1,
+        easing = 'quintic',
+        mappings = { '<C-u>', '<C-d>', 'zt', 'zz', 'zb' },
+    })
+    vim.keymap.set('n', '<C-f>', function()
+        if vim.fn['coc#float#has_scroll']() == 1 then
+            vim.fn['coc#float#scroll'](1)
+        else
+            neoscroll.ctrl_f({ duration = 550 })
+        end
+    end)
+    vim.keymap.set('n', '<C-b>', function()
+        if vim.fn['coc#float#has_scroll']() == 1 then
+            vim.fn['coc#float#scroll'](0)
+        else
+            neoscroll.ctrl_b({ duration = 550 })
+        end
+    end)
+EOF
+endif
+
+" === key-analyzer.nvim ===
+if has("nvim")
+    lua << EOF
+    require('key-analyzer').setup({
     })
 EOF
 endif
