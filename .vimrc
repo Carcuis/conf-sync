@@ -2742,6 +2742,12 @@ if has("nvim") && !exists("g:neovide")
             neoscroll.ctrl_b({ duration = 550 })
         end
     end)
+    vim.keymap.set({ 'n', 'i', 'v' }, '<ScrollWheelDown>', function()
+        neoscroll.scroll(5, { move_cursor = false, duration = 300, winid = vim.fn.getmousepos().winid })
+    end)
+    vim.keymap.set({ 'n', 'i', 'v' }, '<ScrollWheelUp>', function()
+        neoscroll.scroll(-5, { move_cursor = false, duration = 300, winid = vim.fn.getmousepos().winid })
+    end)
 EOF
 endif
 
