@@ -2742,11 +2742,31 @@ if has("nvim") && !exists("g:neovide")
             neoscroll.ctrl_b({ duration = 50 })
         end
     end)
-    vim.keymap.set({ 'n', 'i', 'v' }, '<ScrollWheelDown>', function()
+    mode = { 'n', 'i', 'v' }
+    vim.keymap.set(mode, '<ScrollWheelDown>', function()
         neoscroll.scroll(5, { move_cursor = false, duration = 300, winid = vim.fn.getmousepos().winid })
     end)
-    vim.keymap.set({ 'n', 'i', 'v' }, '<ScrollWheelUp>', function()
+    vim.keymap.set(mode, '<ScrollWheelUp>', function()
         neoscroll.scroll(-5, { move_cursor = false, duration = 300, winid = vim.fn.getmousepos().winid })
+    end)
+    vim.keymap.set(mode, 'gg', function()
+        vim.cmd('normal! m`')
+        local pos = 2 * vim.fn.winheight(0)
+        local cursor = vim.api.nvim_win_get_cursor(0)
+        if cursor[1] > pos then
+            vim.api.nvim_win_set_cursor(0, { pos, cursor[2] })
+        end
+        neoscroll.scroll(-pos, { move_cursor = true, duration = 500 })
+    end)
+    vim.keymap.set(mode, 'G', function()
+        vim.cmd('normal! m`')
+        local scroll = 2 * vim.fn.winheight(0)
+        local pos = vim.fn.line('$') - scroll
+        local cursor = vim.api.nvim_win_get_cursor(0)
+        if cursor[1] < pos then
+            vim.api.nvim_win_set_cursor(0, { pos, cursor[2] })
+        end
+        neoscroll.scroll(scroll, { move_cursor = true, duration = 500 })
     end)
 EOF
 endif
