@@ -96,7 +96,6 @@ function Set-LocationUpFour { Set-Location ..\..\..\.. }
 
 # === open in cwd ===
 function Start-ExplorerCwd { explorer . }
-function Start-VifmCwd { vifm.exe . }
 
 # === pwsh util functions ===
 function Invoke-ReloadPSProfile { . $profile }
@@ -904,6 +903,7 @@ function Write-ConfSyncGitLog {
     "nvi" = "nvim"
     "nvid" = "neovide"
     "gnvi" = "nvim-qt"
+    "vif" = "vifm"
     "lg" = "lazygit"
     "lzd" = "lazydocker"
     "pp" = "ptpython"
@@ -932,8 +932,6 @@ function Write-ConfSyncGitLog {
 
     # open in cwd
     "o." = "Start-ExplorerCwd"
-    "vif" = "Start-VifmCwd"
-    "vifm" = "Start-VifmCwd"
 
     # pwsh util functions
     "src" = "Invoke-ReloadPSProfile"

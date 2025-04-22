@@ -311,7 +311,6 @@ alias lsp='echo ${PATH//:/\\n} | column'
 alias zshc="$EDITOR ~/.zshrc"
 alias vimc="$EDITOR ~/.vimrc"
 alias src='source ~/.zshrc'
-alias vifm='vifm .'
 alias vif='vifm'
 alias gvi='gvim'
 alias nvi='nvim'

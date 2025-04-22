@@ -595,3 +595,4 @@ else
     source $HOME/.config/vifm/plugged/favicons.vifm
     set vicmd=$EDITOR
 endif
+set vifminfo-=savedirs
