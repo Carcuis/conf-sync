@@ -525,7 +525,7 @@ if has("nvim")
                 \ 'coc-xml', 'coc-yaml', 'coc-toml', 'coc-java-dev', 'coc-css', 'coc-sql',
                 \ 'coc-word', 'coc-emoji', 'coc-nerdfonts']
     if has("win32")
-        call remove(g:coc_global_extensions, index(g:coc_global_extensions, 'coc-sh'))
+        call filter(g:coc_global_extensions, {idx, val -> index(['coc-sh', 'coc-eslint'], val) == -1})
     endif
 
     " for powershell_es
