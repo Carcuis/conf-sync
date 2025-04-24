@@ -2349,6 +2349,7 @@ if has("nvim")
         code = {
             position = "right",
             width = "block",
+            border = "thin",
             inline_pad = 1,
         },
         render_modes = { 'n', 'c', 'i', 'v', 'V', '' },
