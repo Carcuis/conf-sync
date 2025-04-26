@@ -178,7 +178,7 @@ function Install-VscLazyNvim {
 
 function Install-VifmCustom {
     if (! (Test-HasCommand vifm)) {
-        warning "Warning: Vifm is not installed, skip installing Vifm custom."
+        Write-WarnMsg "Warning: Vifm is not installed, skip installing Vifm custom."
         $script:no_error = $false
         return
     }
