@@ -2704,7 +2704,7 @@ if has("nvim")
         },
     })
     vim.api.nvim_create_autocmd("FileType", {
-        pattern = "csv",
+        pattern = { "csv", "tsv" },
         callback = function()
             require('csvview').toggle(0)
         end,
