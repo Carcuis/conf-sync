@@ -2750,6 +2750,7 @@ if has("nvim") && !exists("g:neovide")
     vim.keymap.set(mode, '<ScrollWheelUp>', function()
         neoscroll.scroll(-5, { move_cursor = false, duration = 300, winid = vim.fn.getmousepos().winid })
     end)
+    mode = { 'n', 'v' }
     vim.keymap.set(mode, 'gg', function()
         vim.cmd('normal! m`')
         local pos = 2 * vim.fn.winheight(0)
