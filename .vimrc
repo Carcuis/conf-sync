@@ -2752,6 +2752,10 @@ if has("nvim") && !exists("g:neovide")
     end)
     mode = { 'n', 'v' }
     vim.keymap.set(mode, 'gg', function()
+        if vim.bo.filetype == "startify" then
+            vim.cmd('normal! gg')
+            return
+        end
         vim.cmd('normal! m`')
         local pos = 2 * vim.fn.winheight(0)
         local cursor = vim.api.nvim_win_get_cursor(0)
