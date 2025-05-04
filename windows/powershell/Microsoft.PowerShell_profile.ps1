@@ -417,7 +417,7 @@ function Invoke-AutoActivatePythonVenv {
 
     Invoke-ActivatePythonVenv -dir $dir -silent
 }
-(Get-Variable PWD).Attributes.Add($(New-Object ValidateScript { Invoke-AutoActivatePythonVenv $_; return $true }))
+(Get-Variable PWD).Attributes.Add((New-Object ValidateScript { Invoke-AutoActivatePythonVenv $_; return $true }))
 
 # === manage files ===
 function Invoke-CreateLink() {
@@ -647,7 +647,7 @@ function Optimize-VHD {
     )
 
     # List running WSL distributions
-    $runningDistrosLines = $(wsl --list --running) -split "`n"
+    $runningDistrosLines = (wsl --list --running) -split "`n"
 
     if ($runningDistrosLines.Count -le 3) {
         wsl --shutdown
