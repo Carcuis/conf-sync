@@ -25,6 +25,7 @@
     "enabled": true,
     "firstUse": 1718380558626,
     "freshKeybinds": false,
+    "hideMediaView": false,
     "keybinds": [
         {
             "command": "pin",
@@ -293,6 +294,13 @@
                         "id": "2953636465",
                         "type": "CONTAINS",
                         "valueContains": "music.163.com",
+                        "valueRegex": "example\\.com",
+                        "valueStartsWith": "https://example.com"
+                    },
+                    {
+                        "id": "91841524",
+                        "type": "CONTAINS",
+                        "valueContains": "tv.cctv.com/live",
                         "valueRegex": "example\\.com",
                         "valueStartsWith": "https://example.com"
                     }
