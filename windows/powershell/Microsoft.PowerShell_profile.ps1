@@ -229,6 +229,7 @@ function Get-CondaEnvs {
     $base_paths = @()
     $lines = Get-Content $envs_file | Sort-Object
     foreach ($line in $lines) {
+        if (-not $line) { continue }
         if ($line -match "envs\\[^\\]+$") {
             # Extract environment name from path
             $env_name = $line -replace ".*envs\\", ""
