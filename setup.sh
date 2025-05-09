@@ -179,9 +179,13 @@ function install_ohmyzsh_plugins() {
     done
 
     # powerlevel10k
-    if not_installed_in_dir "$ZSH_CUSTOM/themes/powerlevel10k" "powerlevel10k"; then
+    if not_installed_in_dir "$ZSH_CUSTOM/themes/powerlevel10k" "Powerlevel10k"; then
         git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM}/themes/powerlevel10k
-        successfully_installed $? "powerlevel10k"
+        successfully_installed $? "Powerlevel10k"
+    fi
+    if not_installed_file "$HOME/.p10k.zsh" "Powerlevel10k config"; then
+        copy_file "$DIR/dot_files/.p10k.zsh" "$HOME/.p10k.zsh"
+        successfully_installed $? "Powerlevel10k config"
     fi
 
     # autoupdate-zsh-plugin
