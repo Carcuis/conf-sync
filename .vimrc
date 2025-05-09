@@ -2715,7 +2715,13 @@ endif
 " === smear-cursor.nvim ===
 if has("nvim") && !exists("g:neovide")
     lua << EOF
-    require('smear_cursor').setup({
+    vim.api.nvim_create_autocmd("User", {
+        pattern = "Startified",
+        once = true,
+        callback = function()
+            require('smear_cursor').setup({
+            })
+        end,
     })
 EOF
 endif
