@@ -52,6 +52,7 @@
         "scminput": true
     },
     "github.copilot.nextEditSuggestions.enabled": true,
+    "github.copilot.nextEditSuggestions.fixes": true,
     "gitlens.currentLine.enabled": false,
     "gitlens.launchpad.indicator.enabled": false,
     "inlineChat.accessibleDiffView": "on",
