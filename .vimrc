@@ -2720,6 +2720,7 @@ if has("nvim") && !exists("g:neovide")
         once = true,
         callback = function()
             require('smear_cursor').setup({
+                legacy_computing_symbols_support = true,
             })
         end,
     })
