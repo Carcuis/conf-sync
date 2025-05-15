@@ -104,7 +104,6 @@ if has("nvim")
     Plug 'mason-org/mason-lspconfig.nvim'
     Plug 'RubixDev/mason-update-all'
     Plug 'jay-babu/mason-nvim-dap.nvim'
-    Plug 'LiadOz/nvim-dap-repl-highlights'
     Plug 'Weissle/persistent-breakpoints.nvim'
     Plug 'Carcuis/dap-breakpoints.nvim'
     Plug 'MeanderingProgrammer/render-markdown.nvim'
@@ -993,12 +992,11 @@ endif
 " === nvim-treesitter ===
 if has("nvim")
     lua << EOF
-    require('nvim-dap-repl-highlights').setup()
     require('nvim-treesitter.configs').setup {
         ensure_installed = {
             "python", "c", "cpp", "lua", "bash", "vim", "vimdoc", "go", "css", "javascript", "typescript", "make",
             "markdown", "markdown_inline", "toml", "yaml", "xml", "git_config", "json", "json5", "jsonc", "sql",
-            "dap_repl", "latex", "regex", "powershell", "java", "gitattributes", "gitignore", "cmake", "html"
+            "latex", "regex", "powershell", "java", "gitattributes", "gitignore", "cmake", "html"
         },
         highlight = {
             enable = true,
