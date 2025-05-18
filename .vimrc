@@ -2311,21 +2311,28 @@ if has("nvim")
 
     require("persistent-breakpoints").setup()
     require("dap-breakpoints").setup({
-        breakpoint = {
-            auto_load = true,
-            auto_save = true,
+        auto_load = true,
+        auto_save = true,
+        virtual_text = {
+            preset = "default",
+            order = "chl",
+            layout = {
+                position = 121,
+            },
         },
     })
 
     local dapbp_api = require("dap-breakpoints.api")
     local dapbp_keymaps = {
         { key = "<leader>b", api = dapbp_api.toggle_breakpoint, desc = "Toggle Breakpoint" },
+        { key = "<leader>dts", api = dapbp_api.set_breakpoint, desc = "Set Breakpoint" },
         { key = "<leader>dtc", api = dapbp_api.set_conditional_breakpoint, desc = "Set Conditional Breakpoint" },
         { key = "<leader>dth", api = dapbp_api.set_hit_condition_breakpoint, desc = "Set Hit Condition Breakpoint" },
         { key = "<leader>dtl", api = dapbp_api.set_log_point, desc = "Set Log Point" },
         { key = "<leader>dtL", api = function() dapbp_api.load_breakpoints({ notify = true }) end, desc = "Load Breakpoints" },
-        { key = "<leader>dts", api = function() dapbp_api.save_breakpoints({ notify = true }) end, desc = "Save Breakpoints" },
+        { key = "<leader>dtS", api = function() dapbp_api.save_breakpoints({ notify = true }) end, desc = "Save Breakpoints" },
         { key = "<leader>dte", api = dapbp_api.edit_property, desc = "Edit Breakpoint Property" },
+        { key = "<leader>dtE", api = function() dapbp_api.edit_property({ all = true }) end, desc = "Edit All Breakpoint Properties" },
         { key = "<leader>dtv", api = dapbp_api.toggle_virtual_text, desc = "Toggle Breakpoint Virtual Text" },
         { key = "<leader>dtC", api = dapbp_api.clear_all_breakpoints, desc = "Clear All Breakpoints" },
         { key = "[b", api = dapbp_api.go_to_previous, desc = "Go to Previous Breakpoint" },
