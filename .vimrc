@@ -1668,7 +1668,7 @@ if has("nvim")
             if vim.api.nvim_get_mode().mode ~= "n" or vim.api.nvim_buf_get_name(0):match("^diffview:///panels") then
                 return
             end
-            vim.api.nvim_input('gg')
+            vim.fn.cursor(1, 1)
             vim.api.nvim_input(']c')
         end, 10) end
     })
@@ -2765,7 +2765,7 @@ if has("nvim") && !exists("g:neovide")
         local pos = 2 * vim.fn.winheight(0)
         local cursor = vim.api.nvim_win_get_cursor(0)
         if cursor[1] > pos then
-            vim.api.nvim_win_set_cursor(0, { pos, cursor[2] })
+            vim.fn.cursor(pos, cursor[2])
         end
         neoscroll.scroll(-pos, { move_cursor = true, duration = 500 })
     end)
@@ -2775,7 +2775,7 @@ if has("nvim") && !exists("g:neovide")
         local pos = vim.fn.line('$') - scroll
         local cursor = vim.api.nvim_win_get_cursor(0)
         if cursor[1] < pos then
-            vim.api.nvim_win_set_cursor(0, { pos, cursor[2] })
+            vim.fn.cursor(pos, cursor[2])
         end
         neoscroll.scroll(scroll, { move_cursor = true, duration = 500 })
     end)
