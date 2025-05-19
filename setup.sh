@@ -283,6 +283,10 @@ function install_yazi_package() {
         ya pack -a boydaihungst/mediainfo
         successfully_installed $? "Yazi plugin mediainfo"
     fi
+    if not_installed_file "$HOME/.config/yazi/plugins/lazygit.yazi/main.lua" "Yazi plugin lazygit"; then
+        ya pack -a Lil-Dank/lazygit
+        successfully_installed $? "Yazi plugin lazygit"
+    fi
 }
 
 function install_tmux_plugins() {

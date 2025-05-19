@@ -7,4 +7,5 @@ prepend_keymap = [
     { on = "V", run = "visual_mode", desc = "Enter visual mode (selection mode)" },
     { on = "d", run = "remove --permanently", desc = "Permanently delete selected files" },
     { on = "l", run = "plugin smart-enter", desc = "Enter the child directory, or open the file" },
+    { on = ["g", "i"], run = "plugin lazygit", desc = "run lazygit" },
 ]

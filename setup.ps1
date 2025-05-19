@@ -238,6 +238,10 @@ function Install-YaziPackage {
         ya pack -a boydaihungst/mediainfo
         Write-InstallStatus -status $? -content "Yazi plugin mediainfo"
     }
+    if (Test-FileNotInstalled -file "$yazi_config_home\plugins\lazygit.yazi\main.lua" -package "Yazi plugin lazygit") {
+        ya pack -a Lil-Dank/lazygit
+        Write-InstallStatus -status $? -content "Yazi plugin lazygit"
+    }
 }
 
 function New-Symlink {
