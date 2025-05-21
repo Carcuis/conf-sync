@@ -276,7 +276,8 @@ function Install-LinkFiles {
 
     $links = @{
         "$vimrc" = "$HOME\AppData\Local\nvim\init.vim"
-        "$DIR\check_consistency.ps1" = "$HOME\.local\bin\check_consistency.ps1"
+        "$DIR\check_consistency.ps1" = "$HOME\.local\bin\conf_sync_check_consistency.ps1"
+        "$DIR\setup.ps1" = "$HOME\.local\bin\conf_sync_setup.ps1"
     }
 
     foreach ($link in $links.GetEnumerator()) {

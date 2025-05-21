@@ -760,8 +760,8 @@ function Start-VscodeNvim {
 }
 
 # === conf-sync ===
-function Get-CheckConsistencyPs1 {
-    $script = "$HOME\.local\bin\check_consistency.ps1"
+function Get-CSCheckConsistencyPs1 {
+    $script = "$HOME\.local\bin\conf_sync_check_consistency.ps1"
     if (! (Test-HasFile $script)) {
         Write-Error "Error: Cannot find '$script'."
         return
@@ -770,12 +770,12 @@ function Get-CheckConsistencyPs1 {
 }
 
 function Get-ConfSyncDir {
-    if (! ($script = Get-CheckConsistencyPs1)) { return }
+    if (! ($script = Get-CSCheckConsistencyPs1)) { return }
     return (Get-Item $script | Select-Object -ExpandProperty Target | Split-Path -Parent)
 }
 
 function Invoke-ConfSyncCheckAll {
-    if (! ($script = Get-CheckConsistencyPs1)) { return }
+    if (! ($script = Get-CSCheckConsistencyPs1)) { return }
 
     function Show-Usage {
         Write-Host "Usage:"
@@ -802,7 +802,7 @@ function Invoke-ConfSyncCheckAll {
 }
 
 function Invoke-ConfSyncUpdate {
-    if (! ($script = Get-CheckConsistencyPs1)) { return }
+    if (! ($script = Get-CSCheckConsistencyPs1)) { return }
 
     function Show-Usage {
         Write-Host "Usage:"
@@ -844,13 +844,22 @@ function Invoke-ConfSyncUpdate {
     & $script $params
 }
 
+function Invoke-ConfSyncSetup {
+    $script = "$HOME\.local\bin\conf_sync_setup.ps1"
+    if (! (Test-HasFile $script)) {
+        Write-Error "Error: Cannot find '$script'."
+        return
+    }
+    & $script $args
+}
+
 function Start-ConfSyncLazygit {
-    if (! (Get-CheckConsistencyPs1)) { return }
+    if (! (Get-CSCheckConsistencyPs1)) { return }
     lazygit -p (Get-ConfSyncDir)
 }
 
 function Write-ConfSyncGitLog {
-    if (! (Get-CheckConsistencyPs1)) { return }
+    if (! (Get-CSCheckConsistencyPs1)) { return }
 
     $commit_count = 8
 
@@ -971,6 +980,7 @@ function Write-ConfSyncGitLog {
     # conf-sync
     "csc" = "Invoke-ConfSyncCheckAll"
     "csup" = "Invoke-ConfSyncUpdate"
+    "cssup" = "Invoke-ConfSyncSetup"
     "csg" = "Start-ConfSyncLazygit"
     "csl" = "Write-ConfSyncGitLog"
 
