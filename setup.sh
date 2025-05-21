@@ -351,6 +351,7 @@ function link_files() {
     create_symlink "$DIR/scripts/git_log.sh" "$HOME/.local/bin/csl"
     create_symlink "$DIR/scripts/open_lazygit.sh" "$HOME/.local/bin/csg"
     create_symlink "$DIR/scripts/update.sh" "$HOME/.local/bin/csup"
+    create_symlink "$DIR/setup.sh" "$HOME/.local/bin/cssup"
 }
 
 function create_xauth_file() {
