@@ -303,6 +303,13 @@
                         "valueContains": "tv.cctv.com/live",
                         "valueRegex": "example\\.com",
                         "valueStartsWith": "https://example.com"
+                    },
+                    {
+                        "id": "2894322416",
+                        "type": "CONTAINS",
+                        "valueContains": "mytvsuper.com",
+                        "valueRegex": "example\\.com",
+                        "valueStartsWith": "https://example.com"
                     }
                 ]
             },
