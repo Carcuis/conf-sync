@@ -1,4 +1,4 @@
-[manager]
+[mgr]
 prepend_keymap = [
     { on = "<A-v>", run = "visual_mode --unset", desc = "Enter visual mode (unset mode)" },
     { on = "<A-w>", run = "quit", desc = "Quit the process" },

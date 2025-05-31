@@ -33,5 +33,5 @@ rules = [
 	{ name = "*/", fg = "#89b4fa" }
 ]
 
-[manager]
+[mgr]
 border_symbol = " "
