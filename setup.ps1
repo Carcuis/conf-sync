@@ -221,25 +221,25 @@ function Install-YaziPackage {
 
     # yazi theme
     if (Test-FileNotInstalled -file "$yazi_config_home\flavors\catppuccin-mocha.yazi\flavor.toml" -package "Yazi theme") {
-        ya pack -a yazi-rs/flavors:catppuccin-mocha
+        ya pkg add yazi-rs/flavors:catppuccin-mocha
         Write-InstallStatus -status $? -content "Yazi flavor catppuccin-mocha"
     }
 
     # yazi plugins
     if (Test-FileNotInstalled -file "$yazi_config_home\plugins\smart-enter.yazi\main.lua" -package "Yazi plugin smart-enter") {
-        ya pack -a yazi-rs/plugins:smart-enter
+        ya pkg add yazi-rs/plugins:smart-enter
         Write-InstallStatus -status $? -content "Yazi plugin smart-enter"
     }
     if (Test-FileNotInstalled -file "$yazi_config_home\plugins\git.yazi\main.lua" -package "Yazi plugin git") {
-        ya pack -a yazi-rs/plugins:git
+        ya pkg add yazi-rs/plugins:git
         Write-InstallStatus -status $? -content "Yazi plugin git"
     }
     if (Test-FileNotInstalled -file "$yazi_config_home\plugins\mediainfo.yazi\main.lua" -package "Yazi plugin mediainfo") {
-        ya pack -a boydaihungst/mediainfo
+        ya pkg add boydaihungst/mediainfo
         Write-InstallStatus -status $? -content "Yazi plugin mediainfo"
     }
     if (Test-FileNotInstalled -file "$yazi_config_home\plugins\lazygit.yazi\main.lua" -package "Yazi plugin lazygit") {
-        ya pack -a Lil-Dank/lazygit
+        ya pkg add Lil-Dank/lazygit
         Write-InstallStatus -status $? -content "Yazi plugin lazygit"
     }
 }
