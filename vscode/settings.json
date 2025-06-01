@@ -92,6 +92,9 @@
     "python.analysis.typeCheckingMode": "standard",
     "python.terminal.activateEnvironment": false,
     "redhat.telemetry.enabled": false,
+    "remote.SSH.remotePlatform": {
+        "host1": "linux"
+    },
     "terminal.integrated.allowChords": false,
     "terminal.integrated.defaultProfile.linux": "zsh",
     "terminal.integrated.fontLigatures.enabled": true,
