@@ -827,18 +827,28 @@ EOF
     local function on_attach(bufnr)
         -- @see: https://github.com/nvim-tree/nvim-tree.lua/wiki/Migrating-To-on_attach
         local api = require('nvim-tree.api')
+        api.config.mappings.default_on_attach(bufnr)
         local function opts(desc)
             return { desc = 'nvim-tree: ' .. desc, buffer = bufnr, noremap = true, silent = true, nowait = true }
         end
-        api.config.mappings.default_on_attach(bufnr)
-        vim.keymap.set('n', 'l', api.node.open.edit, opts('Open'))
-        vim.keymap.set('n', '<CR>', api.node.open.edit, opts('Open'))
-        vim.keymap.set('n', 'o', api.node.open.edit, opts('Open'))
-        vim.keymap.set('n', 'h', api.node.navigate.parent_close, opts('Close Directory'))
-        vim.keymap.set('n', 'v', api.node.open.vertical, opts('Open: Vertical Split'))
-        vim.keymap.set('n', 'C', api.tree.change_root_to_node, opts('CD'))
-        vim.keymap.set('n', '<M-e>', api.node.show_info_popup, opts("Info"))
-        vim.keymap.del('n', '<C-k>', opts("Info"))
+        local keymaps = {
+            { 'l', api.node.open.edit, 'Open' },
+            { '<CR>', api.node.open.edit, 'Open' },
+            { 'o', api.node.open.edit, 'Open' },
+            { 'h', api.node.navigate.parent_close, 'Close Directory' },
+            { 'v', api.node.open.vertical, 'Open: Vertical Split' },
+            { 'C', api.tree.change_root_to_node, 'CD' },
+            { '<M-e>', api.node.show_info_popup, 'Info' },
+            { 'R', api.fs.rename_sub, 'Rename: Omit Filename' },
+            { '<C-r>', api.tree.reload, 'Refresh' },
+        }
+        local delete_keymaps = { '<C-k>' }
+        for _, keymap in ipairs(keymaps) do
+            vim.keymap.set('n', keymap[1], keymap[2], opts(keymap[3]))
+        end
+        for _, keymap in ipairs(delete_keymaps) do
+            vim.keymap.del('n', keymap, { buffer = bufnr })
+        end
     end
     require('nvim-tree').setup {
         on_attach = on_attach,
