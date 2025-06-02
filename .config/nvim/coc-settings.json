@@ -147,6 +147,7 @@
     "markdownlint.config": {
         "code-block-style": false,
         "line_length": false,
+        "no-emphasis-as-heading": false,
         "no-inline-html": false,
     },
     "markdown-preview-enhanced.codeBlockTheme": "darcula.css",
