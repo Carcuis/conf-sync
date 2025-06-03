@@ -2368,6 +2368,9 @@ if has("nvim")
             inline_pad = 1,
         },
         render_modes = { 'n', 'c', 'i', 'v', 'V', '' },
+        latex = {
+            enabled = false,
+        },
     })
 EOF
 endif
