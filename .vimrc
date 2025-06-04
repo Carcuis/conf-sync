@@ -2973,3 +2973,6 @@ endif
 " remove trailing ^M
 command -nargs=0 FixEOL %s/\r$//
 
+" fix wrong spaces often seen in obsidian
+command -nargs=0 FixSpaces %s/ / /g
+
