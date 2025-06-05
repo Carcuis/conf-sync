@@ -534,7 +534,6 @@ function _proxy() {
 }
 POWERLEVEL9K_CUSTOM_PROXY_FOREGROUND=31
 POWERLEVEL9K_CUSTOM_PROXY="_proxy"
-unset _proxy
 
 # === tmux ===
 export TMUX_TITLE_HOST=${_HOST_NAME:-$HOST}
