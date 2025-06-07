@@ -7,6 +7,15 @@
       "alignment": "right",
       "segments": [
         {
+          "type": "text",
+          "style": "powerline",
+          "powerline_symbol": "",
+          "invert_powerline": true,
+          "foreground": "#d7af00",
+          "background": "#1A2429",
+          "template": "{{if .Env.YAZI_LEVEL}} {{.Env.YAZI_LEVEL}}{{ end }} {{if .Env.YAZI_ID}}󰇥 {{ end }}"
+        },
+        {
           "type": "python",
           "style": "powerline",
           "powerline_symbol": "",
