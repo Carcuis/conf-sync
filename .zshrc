@@ -17,9 +17,8 @@ for _path in ${_path_list[@]}; do
 done
 unset _path_list _path
 
-if [[ ! $VIFM ]]; then
-    fortune | cowsay -f moose -W $(($(tput cols)-3<80?$(tput cols)-3:80)) | lolcat
-fi
+[[ -n $YAZI_SHELL ]] && unset YAZI_SHELL \
+    || fortune | cowsay -f moose -W $(($(tput cols)-3<80?$(tput cols)-3:80)) | lolcat
 
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
@@ -501,6 +500,7 @@ POWERLEVEL9K_ANACONDA_CONTENT_EXPANSION='${${${${CONDA_PROMPT_MODIFIER#\(}% }%\)
 POWERLEVEL9K_ANACONDA_VISUAL_IDENTIFIER_EXPANSION=''
 POWERLEVEL9K_VIRTUALENV_VISUAL_IDENTIFIER_EXPANSION='${$(python --version):7} '
 POWERLEVEL9K_BATTERY_STAGES=''
+POWERLEVEL9K_YAZI_VISUAL_IDENTIFIER_EXPANSION='󰇥'
 
 # host identifier
 if [[ $SYSTEM =~ "WSL." ]]; then
