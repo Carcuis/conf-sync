@@ -6,7 +6,8 @@
 #
 # ====================================================================
 
-(Get-quote).TrimEnd() | cowsay -f moose -W 80 | lolcat
+if ($env:YAZI_SHELL) { Remove-Item Env:\YAZI_SHELL -ErrorAction SilentlyContinue }
+else { (Get-quote).TrimEnd() | cowsay -f moose -W 80 | lolcat }
 
 (oh-my-posh init pwsh --config "$HOME\.config\ohmyposh\themes\cui_theme.omp.json" --print) -join "`n" | Invoke-Expression
 
