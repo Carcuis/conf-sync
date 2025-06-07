@@ -5,7 +5,7 @@ prepend_keymap = [
     { on = "<A-y>", run = "quit", desc = "Quit the process" },
     { on = "D", run = "remove", desc = "Trash selected files" },
     { on = "T", run = 'shell "YAZI_SHELL=1 $SHELL" --block', desc = "Open $SHELL here", for = "unix" },
-    { on = "T", run = 'shell "cmd /c \"set YAZI_SHELL=1&& pwsh.exe -NoLogo\"" --block', desc = "Open PowerShell here", for = "windows" },
+    { on = "T", run = 'shell "set YAZI_SHELL=1&& pwsh.exe -NoLogo" --block', desc = "Open PowerShell here", for = "windows" },
     { on = "V", run = "visual_mode", desc = "Enter visual mode (selection mode)" },
     { on = "d", run = "remove --permanently", desc = "Permanently delete selected files" },
     { on = "l", run = "plugin smart-enter", desc = "Enter the child directory, or open the file" },
