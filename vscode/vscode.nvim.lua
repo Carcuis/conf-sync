@@ -288,6 +288,10 @@ function M.load_plugins()
             'gcmt/wildfire.vim',
             event = "VeryLazy",
         },
+        {
+            'romainl/vim-cool',
+            event = "VeryLazy",
+        },
     })
 end
 
