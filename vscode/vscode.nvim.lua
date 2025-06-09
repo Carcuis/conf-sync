@@ -316,7 +316,6 @@ function M.set_keymaps()
     ---@type Keymap[]
     local keymaps = {
         -- basic commands
-        { "<esc>", vim.cmd.nohlsearch },
 
         -- copy and paste
         { "<leader>y", "\"+y", mode = { "n", "v" }, noremap = true },
