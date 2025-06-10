@@ -95,6 +95,7 @@
         "host1": "linux"
     },
     "shellformat.flag": "-ci -sr",
+    "taskExplorer.enableSideBar": true,
     "terminal.integrated.allowChords": false,
     "terminal.integrated.defaultProfile.linux": "zsh",
     "terminal.integrated.fontLigatures.enabled": true,
