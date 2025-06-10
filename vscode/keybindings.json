@@ -62,7 +62,14 @@
     },
     {
         "key": "ctrl+c",
-        "command": "search.action.clearSearchResults",
+        "command": "runCommands",
+        "args": {
+            "commands": [
+                "search.action.clearSearchResults",
+                "workbench.view.explorer",
+                "workbench.action.navigateRight",
+            ]
+        },
         "when": "searchViewletFocus"
     },
     {
@@ -151,7 +158,7 @@
         "command": "runCommands",
         "args": {
             "commands": [
-                "git.openFile",
+                "workbench.action.closeActiveEditor",
                 "workbench.view.explorer",
                 "workbench.action.navigateRight",
             ]
