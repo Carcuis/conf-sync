@@ -6,10 +6,9 @@
     "[markdown]": {
         "editor.wordWrap": "off",
     },
-    "basedpyright.analysis.typeCheckingMode": "standard",
-    "bashIde.shfmt.caseIndent": true,
-    "bashIde.shfmt.spaceRedirects": true,
-    "chat.experimental.statusIndicator.enabled": true,
+    "[shellscript]": {
+        "editor.defaultFormatter": "foxundermoon.shell-format"
+    },
     "chat.renderRelatedFiles": true,
     "code-runner.executorMap": {
         "java": "javac -encoding utf8 -d class $fileName && java -Dfile.encoding=UTF-8 -cp class $fileNameWithoutExt",
@@ -95,6 +94,7 @@
     "remote.SSH.remotePlatform": {
         "host1": "linux"
     },
+    "shellformat.flag": "-ci -sr",
     "terminal.integrated.allowChords": false,
     "terminal.integrated.defaultProfile.linux": "zsh",
     "terminal.integrated.fontLigatures.enabled": true,
