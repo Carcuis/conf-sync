@@ -141,7 +141,7 @@
     {
         "key": "d o",
         "command": "git.revertSelectedRanges",
-        "when": "editorTextFocus && isInDiffEditor && isInDiffRightEditor && !operationInProgress && resourceScheme == 'file'"
+        "when": "editorTextFocus && isInDiffEditor && isInDiffRightEditor && !operationInProgress && resourceScheme != 'git'"
     },
     {
         "key": "d o",
@@ -151,7 +151,7 @@
     {
         "key": "d p",
         "command": "git.stageSelectedRanges",
-        "when": "editorTextFocus && isInDiffEditor && isInDiffRightEditor && !operationInProgress && resourceScheme == 'file'",
+        "when": "editorTextFocus && isInDiffEditor && isInDiffRightEditor && !operationInProgress && resourceScheme != 'git'",
     },
     {
         "key": "q",
