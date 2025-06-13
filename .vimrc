@@ -2970,6 +2970,9 @@ if has("nvim")
     autocmd TermClose term://*[^#toggleterm#]* let g:terminal_running = v:false | stopinsert
 endif
 
+" set wrap in markdown files
+autocmd FileType markdown setlocal wrap
+
 " remove trailing ^M
 command -nargs=0 FixEOL %s/\r$//
 
