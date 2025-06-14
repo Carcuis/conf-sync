@@ -31,6 +31,11 @@
 
     // closing keybindings
     {
+        "key": "alt+i",
+        "command": "workbench.action.toggleAuxiliaryBar",
+        "when": "auxiliaryBarFocus && inputFocus"
+    },
+    {
         "key": "alt+w",
         "command": "workbench.action.closeActiveEditor",
         "when": "inKeybindings || inSettingsEditor || inExtensionEditor || inWelcome || activeEditor : 'WebviewEditor'"
@@ -71,11 +76,6 @@
             ]
         },
         "when": "searchViewletFocus"
-    },
-    {
-        "key": "ctrl+c",
-        "command": "workbench.action.closeAuxiliaryBar",
-        "when": "auxiliaryBarFocus && inputFocus"
     },
     {
         "key": "ctrl+c",
