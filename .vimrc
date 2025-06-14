@@ -100,6 +100,7 @@ if has("nvim")
     Plug 'rcarriga/nvim-dap-ui'
     Plug 'nvim-telescope/telescope-dap.nvim'
     Plug 'theHamsta/nvim-dap-virtual-text'
+    Plug 'LiadOz/nvim-dap-repl-highlights'
     Plug 'mason-org/mason.nvim'
     Plug 'mason-org/mason-lspconfig.nvim'
     Plug 'RubixDev/mason-update-all'
@@ -2111,9 +2112,7 @@ if has("nvim")
         } },
     })
     dap.listeners.before.launch.dapui_config = function()
-        vim.cmd.NvimTreeClose()
-        vim.cmd.OverseerClose()
-        dapui.open()
+        vim.cmd.ToggleDapUI()
     end
 
     local python_debug_project = {
@@ -2281,6 +2280,10 @@ if has("nvim")
     end, {})
 
     vim.api.nvim_create_user_command("ToggleDapUI", function(layout_num)
+        require('nvim-dap-repl-highlights').setup()
+        if #vim.api.nvim_get_runtime_file("parser/dap_repl.so", false) < 1 then
+            vim.cmd.TSInstallSync("dap_repl")
+        end
         local nvim_tree = require("nvim-tree.api").tree
         local dapui_windows = require("dapui.windows")
 
