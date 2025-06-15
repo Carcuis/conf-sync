@@ -122,6 +122,7 @@
     "vscode-neovim.neovimInitVimPaths.win32": "~\\AppData\\Local\\vscnvim\\init.lua",
     "vsintellicode.python.completionsEnabled": false,
     "window.enableMenuBarMnemonics": false,
+    "window.newWindowDimensions": "maximized",
     "window.restoreWindows": "none",
     "workbench.colorCustomizations": {
         "editor.lineHighlightBackground": "#262626",
