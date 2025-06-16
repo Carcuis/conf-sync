@@ -421,6 +421,7 @@ function M.set_keymaps()
             { "<leader>fr", { "workbench.action.quickOpen" } },
             { "<leader><leader>", { "workbench.action.quickOpen" } },
             { "<leader>ee", { "workbench.files.action.focusFilesExplorer" } },
+            { "<A-y>", { "yazi-vscode.toggle" } },
 
             -- find and replace
             { "<leader>fw", { "workbench.action.findInFiles", wait = true, post_esc = true }, mode = { "n", "v" } },
