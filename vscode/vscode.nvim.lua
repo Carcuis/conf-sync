@@ -433,7 +433,8 @@ function M.set_keymaps()
             { "<leader>rr", { "taskExplorer.runLastTask" } },
 
             -- git
-            { "<leader>gg", { "workbench.view.scm" } },
+            { "<leader>gg", { "lazygit-vscode.toggle" } },
+            { "<leader>GG", { "workbench.view.scm" } },
             { "<leader>gd", { { "workbench.view.scm", "git.openChange" } } },
             { "<leader>gf", { "git.viewFileHistory" } },
             { "<leader>gp", { "editor.action.dirtydiff.next" } },
