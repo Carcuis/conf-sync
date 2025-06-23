@@ -139,6 +139,15 @@
                 "powershell.codeFormatting.openBraceOnSameLine": true,
             },
         },
+        "toml": {
+            "command": "tombi",
+            "args": [
+                "lsp",
+            ],
+            "filetypes": [
+                "toml",
+            ]
+        }
     },
     "codeLens.enable": true,
     "codeLens.position": "eol",
@@ -169,5 +178,4 @@
     "basedpyright.analysis.typeCheckingMode": "standard",
     "bashIde.shfmt.caseIndent": true,
     "bashIde.shfmt.spaceRedirects": true,
-    "toml.formatter.indentString": "    ",
 }

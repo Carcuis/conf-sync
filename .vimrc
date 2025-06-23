@@ -522,7 +522,7 @@ if has("nvim")
                 \ 'coc-basedpyright', 'coc-sh', 'coc-clangd', 'coc-webview',
                 \ 'coc-cmake', 'coc-actions', 'coc-translator', 'coc-snippets', 'coc-gitignore',
                 \ 'coc-sumneko-lua', 'coc-tsserver', 'coc-eslint', 'https://github.com/Carcuis/coc-nav',
-                \ 'coc-xml', 'coc-yaml', 'coc-toml', 'coc-java-dev', 'coc-css', 'coc-sql',
+                \ 'coc-xml', 'coc-yaml', 'coc-java-dev', 'coc-css', 'coc-sql',
                 \ 'coc-word', 'coc-emoji', 'coc-nerdfonts']
     if has("win32")
         call filter(g:coc_global_extensions, {idx, val -> index(['coc-sh'], val) == -1})
@@ -2035,7 +2035,7 @@ if has("nvim")
     })
     require("mason-update-all").setup()
 
-    local mason_lsp_ensure_installed = {}
+    local mason_lsp_ensure_installed = { "tombi" }
     if vim.fn.has("win32") == 1 then
         vim.list_extend(mason_lsp_ensure_installed, {
             "powershell_es",
