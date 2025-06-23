@@ -88,6 +88,7 @@ function Edit-EnvironmentVariables {
 function Invoke-ListChildAutoSize { Get-ChildItem | Format-Wide -AutoSize }
 function Invoke-ListAllChildAutoSize { Get-ChildItem -Force | Format-Wide -AutoSize }
 function Invoke-ListAllChild { Get-ChildItem -Force }
+function Get-PathList { $env:PATH.Split(";") }
 
 # === cd functions ===
 function Set-LocationUpOne { Set-Location .. }
@@ -934,6 +935,7 @@ function Write-ConfSyncGitLog {
     "al" = "Invoke-ListAllChildAutoSize"
     "la" = "Invoke-ListAllChildAutoSize"
     "ll" = "Invoke-ListAllChild"
+    "lsp" = "Get-PathList"
 
     # cd functions
     ".." = "Set-LocationUpOne"
