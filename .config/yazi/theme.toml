@@ -1,7 +1,7 @@
-"$schema" = "https://yazi-rs.github.io/schemas/theme.json"
+#:schema https://yazi-rs.github.io/schemas/theme.json
 
 [flavor]
-use = "catppuccin-mocha"
+dark = "catppuccin-mocha"
 
 [filetype]
 rules = [

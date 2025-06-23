@@ -2040,6 +2040,16 @@ if has("nvim")
         vim.list_extend(mason_lsp_ensure_installed, {
             "powershell_es",
         })
+        local new_paths = {
+            vim.fn.stdpath("data") .. "\\mason\\packages\\tombi\\venv\\Scripts",
+        }
+        local current_paths = vim.split(vim.env.PATH or '', ';')
+        for _, p in ipairs(new_paths) do
+            if not vim.tbl_contains(current_paths, p) then
+                table.insert(current_paths, 1, p)
+            end
+        end
+        vim.env.PATH = table.concat(current_paths, ';')
     end
     require("mason-lspconfig").setup({
         ensure_installed = mason_lsp_ensure_installed,
