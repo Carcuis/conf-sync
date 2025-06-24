@@ -123,6 +123,7 @@ if has("nvim")
     Plug 'sphamba/smear-cursor.nvim'
     Plug 'karb94/neoscroll.nvim'
     Plug 'meznaric/key-analyzer.nvim'
+    Plug 'fei6409/log-highlight.nvim'
 else
     Plug 'Carcuis/darcula'
     Plug 'joshdick/onedark.vim'
