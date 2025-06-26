@@ -349,7 +349,6 @@ function M.set_keymaps()
             { "<leader>q", vim.cmd.Quit },
             { "<leader>sv", vim.cmd.Vsplit },
             { "<leader>sh", vim.cmd.Split },
-            { "<leader>b", { "workbench.action.toggleSidebarVisibility" } },
 
             -- copy and paste
             { "<A-c>", { "editor.action.clipboardCopyAction", wait = true, post_esc = true }, mode = { "n", "v" } },
@@ -431,6 +430,14 @@ function M.set_keymaps()
             -- run and debug
             { "<leader>ru", { "code-runner.run" } },
             { "<leader>rr", { "taskExplorer.runLastTask" } },
+            { "<leader>dl", { "workbench.action.debug.start" } },
+            { "<leader>do", { "workbench.action.debug.selectandstart" } },
+            { "<leader>b", { "editor.debug.action.toggleBreakpoint" } },
+            { "<leader>dte", { "editor.debug.action.editBreakpoint" } },
+            { "<leader>dtc", { "editor.debug.action.conditionalBreakpoint" } },
+            { "<leader>dtl", { "editor.debug.action.addLogPoint" } },
+            { "[b", { "editor.debug.action.goToPreviousBreakpoint", wait = true, post_esc = true } },
+            { "]b", { "editor.debug.action.goToNextBreakpoint", wait = true, post_esc = true } },
 
             -- git
             { "<leader>gg", { "lazygit-vscode.toggle" } },

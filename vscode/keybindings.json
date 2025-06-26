@@ -91,6 +91,10 @@
 
     // disabled keybindings
     {
+        "key": "ctrl+b",
+        "command": "-workbench.action.toggleSidebarVisibility"
+    },
+    {
         "key": "ctrl+e",
         "command": "-workbench.action.quickOpen"
     },
@@ -202,6 +206,10 @@
         "key": "ctrl+s",
         "command": "editor.action.replaceAll",
         "when": "!editorTextFocus && findWidgetVisible"
+    },
+    {
+        "key": "ctrl+shift+alt+b",
+        "command": "workbench.action.toggleSidebarVisibility"
     },
     {
         "key": "ctrl+t",
