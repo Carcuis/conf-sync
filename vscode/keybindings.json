@@ -121,6 +121,10 @@
         "when": "!notebookEditorFocused && editorLangId == 'markdown'"
     },
     {
+        "key": "ctrl+shift+y",
+        "command": "-yazi-vscode.toggle"
+    },
+    {
         "key": "tab",
         "command": "-editor.action.inlineSuggest.commit",
     },
