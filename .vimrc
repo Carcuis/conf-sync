@@ -2055,6 +2055,7 @@ if has("nvim")
     require("mason-lspconfig").setup({
         ensure_installed = mason_lsp_ensure_installed,
     })
+    vim.keymap.set("n", "<leader>ms", vim.cmd.Mason, { desc = "Open Mason" })
 EOF
 endif
 
