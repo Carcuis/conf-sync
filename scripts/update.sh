@@ -25,7 +25,7 @@ function update_repo() {
         exit 2
     fi
     git -C $DIR pull --rebase
-    git -C $DIR log \
+    git --no-pager -C $DIR log \
         --reverse \
         --format="%C(blue)%h %C(green)(%ad) %C(white)%s" \
         --date=format-local:'%b %e %H:%M' \
