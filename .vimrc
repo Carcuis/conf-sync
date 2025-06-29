@@ -2037,6 +2037,7 @@ if has("nvim")
     require("mason-update-all").setup()
 
     local mason_lsp_ensure_installed = { "tombi" }
+    local packages_to_remove = {}
     if vim.fn.has("win32") == 1 then
         vim.list_extend(mason_lsp_ensure_installed, {
             "powershell_es",
@@ -2051,6 +2052,16 @@ if has("nvim")
             end
         end
         vim.env.PATH = table.concat(current_paths, ';')
+    end
+    if vim.fn.has("android") == 1 then
+        vim.list_extend(packages_to_remove, { "tombi" })
+    end
+    if #packages_to_remove > 0 then
+        for i = #mason_lsp_ensure_installed, 1, -1 do
+            if vim.tbl_contains(packages_to_remove, mason_lsp_ensure_installed[i]) then
+                table.remove(mason_lsp_ensure_installed, i)
+            end
+        end
     end
     require("mason-lspconfig").setup({
         ensure_installed = mason_lsp_ensure_installed,
