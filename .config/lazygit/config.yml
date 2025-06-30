@@ -5,5 +5,5 @@ gui:
 git:
   paging:
     colorArg: always
-    pager: delta --dark --paging=never --hyperlinks --hyperlinks-file-link-format="lazygit-edit://{path}:{line}"
+    pager: delta --no-gitconfig --line-numbers --tabs=4 --dark --paging=never --hyperlinks --hyperlinks-file-link-format="lazygit-edit://{path}:{line}"
 
