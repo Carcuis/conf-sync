@@ -305,6 +305,12 @@ if exists("g:neovide")
         imap <D-Right> <M-Right>
         tmap <D-Right> <M-Right>
     endif
+
+    if has("win32")
+        if getcwd() ==? "^C:\\Windows\\System32"
+            let &cdpath = expand("%:p:h")
+        endif
+    endif
 endif
 
 " ===============
