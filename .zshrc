@@ -295,6 +295,16 @@ function lsc() {
     done
 }
 
+# watch CPU iowait
+function iow() {
+    local interval=${1:-1}
+    trap 'echo; return 0' INT
+    while true; do
+        echo -ne "\r$(top -b -n 1 | grep '^%Cpu')"
+        sleep $interval
+    done
+}
+
 # ================================
 # ============ alias =============
 # ================================
