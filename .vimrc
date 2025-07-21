@@ -1886,49 +1886,49 @@ if has("nvim")
             end,
         },
     })
+    local filetype_cmds = {
+        go = "go run",
+        python = "python",
+        sh = "bash",
+        zsh = "zsh",
+        lua = "lua",
+        ps1 = "pwsh -NoLogo -NoProfile -NonInteractive -File",
+        c = function()
+            local filename = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(0), ':~:.')
+            local output = filename:gsub("%.c$", "")
+            local run_prefix = ""
+            if vim.fn.has("win32") == 1 then
+                if not output:find("\\") then run_prefix = ".\\" end
+                output = output .. ".exe"
+            else
+                if not output:find("/") then run_prefix = "./" end
+                output = output .. ".out"
+            end
+            return "gcc " .. filename .. " -o " .. output .. " && " .. run_prefix .. output
+        end,
+        cpp = function()
+            local filename = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(0), ':~:.')
+            local output = filename:gsub("%.cpp$", "")
+            local run_prefix = ""
+            if vim.fn.has("win32") == 1 then
+                if not output:find("\\") then run_prefix = ".\\" end
+                output = output .. ".exe"
+            else
+                if not output:find("/") then run_prefix = "./" end
+                output = output .. ".out"
+            end
+            return "g++ " .. filename .. " -o " .. output .. " && " .. run_prefix .. output
+        end,
+        java = function()
+            local filename = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(0), ':~:.')
+            local output = filename:gsub("%.java$", "")
+            return "javac -d class " .. filename .. " && java -cp class " .. output
+        end,
+    }
     overseer.register_template({
         name = "run this file",
         builder = function(params)
-            local cmds = {
-                go = "go run",
-                python = "python",
-                sh = "bash",
-                zsh = "zsh",
-                lua = "lua",
-                ps1 = "pwsh -NoLogo -NoProfile -NonInteractive -File",
-                c = function()
-                    local filename = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(0), ':~:.')
-                    local output = filename:gsub("%.c$", "")
-                    local run_prefix = ""
-                    if vim.fn.has("win32") == 1 then
-                        if not output:find("\\") then run_prefix = ".\\" end
-                        output = output .. ".exe"
-                    else
-                        if not output:find("/") then run_prefix = "./" end
-                        output = output .. ".out"
-                    end
-                    return "gcc " .. filename .. " -o " .. output .. " && " .. run_prefix .. output
-                end,
-                cpp = function()
-                    local filename = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(0), ':~:.')
-                    local output = filename:gsub("%.cpp$", "")
-                    local run_prefix = ""
-                    if vim.fn.has("win32") == 1 then
-                        if not output:find("\\") then run_prefix = ".\\" end
-                        output = output .. ".exe"
-                    else
-                        if not output:find("/") then run_prefix = "./" end
-                        output = output .. ".out"
-                    end
-                    return "g++ " .. filename .. " -o " .. output .. " && " .. run_prefix .. output
-                end,
-                java = function()
-                    local filename = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(0), ':~:.')
-                    local output = filename:gsub("%.java$", "")
-                    return "javac -d class " .. filename .. " && java -cp class " .. output
-                end,
-            }
-            local cmd = cmds[vim.bo.filetype]
+            local cmd = filetype_cmds[vim.bo.filetype]
             if type(cmd) == "function" then
                 return {
                     cmd = cmd(),
@@ -1941,7 +1941,7 @@ if has("nvim")
             end
         end,
         condition = {
-            filetype = { "go", "python", "sh", "zsh", "lua", "ps1", "c", "cpp", "java" },
+            filetype = vim.tbl_keys(filetype_cmds),
         },
     })
 
@@ -1985,7 +1985,7 @@ if has("nvim")
                 pre_overseer_run()
                 local tasks = overseer.list_tasks({ recent_first = true })
                 if vim.tbl_isempty(tasks) then
-                    vim.notify("No tasks found", vim.log.levels.WARN, { title = "Overseer Restart Last" })
+                    vim.notify("No previous tasks found", vim.log.levels.WARN, { title = "Overseer Restart Last" })
                 else
                     overseer.run_action(tasks[1], "restart")
                 end
@@ -1993,11 +1993,20 @@ if has("nvim")
         },
         {
             mode = "n", key = "<leader>rp", desc = "Run Project", func = function()
+                if vim.fn.filereadable("main.py") ~= 1 then
+                    vim.notify("No main.py found in current directory", vim.log.levels.WARN, { title = "Overseer Run Project" })
+                    return
+                end
                 require('overseer').run_template({name = 'run project'})
             end
         },
         {
             mode = "n", key = "<leader>ru", desc = "Run This File", func = function()
+                local filetype = vim.bo.filetype
+                if filetype_cmds[filetype] == nil then
+                    vim.notify("No command found for filetype: " .. filetype, vim.log.levels.WARN, { title = "Overseer Run This File" })
+                    return
+                end
                 require('overseer').run_template({name = 'run this file'})
             end
         },
