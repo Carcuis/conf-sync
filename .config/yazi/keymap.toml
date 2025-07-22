@@ -5,6 +5,8 @@ prepend_keymap = [
     { on = "<A-v>", run = "visual_mode --unset", desc = "Enter visual mode (unset mode)" },
     { on = "<A-w>", run = "quit", desc = "Quit the process" },
     { on = "<A-y>", run = "quit", desc = "Quit the process" },
+    { on = "<Backspace>", run = "leave", desc = "Back to the parent directory" },
+    { on = "<Enter>", run = "plugin smart-enter", desc = "Enter the child directory, or open the file" },
     { on = "D", run = "remove", desc = "Trash selected files" },
     { on = "T", run = 'shell "YAZI_SHELL=1 $SHELL" --block', desc = "Open $SHELL here", for = "unix" },
     { on = "T", run = 'shell "set YAZI_SHELL=1&& pwsh.exe -NoLogo" --block', desc = "Open PowerShell here", for = "windows" },
