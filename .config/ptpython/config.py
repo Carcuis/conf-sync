@@ -157,7 +157,8 @@ def configure(repl):
 
     # Typing ControlE twice should also execute the current command.
     # (Alternative for Meta-Enter.)
-    @repl.add_key_binding("c-e", "c-e")
+    # @repl.add_key_binding("c-e", "c-e")
+    @repl.add_key_binding("c-s")
     def _(event):
         event.current_buffer.validate_and_handle()
 
