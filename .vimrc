@@ -1309,13 +1309,14 @@ if has("nvim")
                 },
                 {
                     function()
-                        local b = vim.api.nvim_get_current_buf()
-                        if next(vim.treesitter.highlighter.active[b]) then
-                            return ""
-                        end
-                        return ""
+                        return ""
                     end,
-                    color = { fg = "Green" },
+                    color = function()
+                        local buf = vim.api.nvim_get_current_buf()
+                        local color = vim.treesitter.highlighter.active[buf] and "Green" or "Grey"
+                        return { fg = color }
+                    end,
+                    on_click = function() vim.cmd.TSBufToggle("highlight") end,
                     padding = { left = 1, right = 0 },
                 },
                 {
