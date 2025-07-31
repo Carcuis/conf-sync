@@ -90,6 +90,11 @@
         "command": "inlineChat.close",
         "when": "inlineChatHasProvider && inlineChatVisible"
     },
+    {
+        "key": "q",
+        "command": "workbench.action.toggleSidebarVisibility",
+        "when": "filesExplorerFocus && !inputFocus"
+    },
 
     // disabled keybindings
     {
@@ -164,6 +169,23 @@
         "command": "git.stageSelectedRanges",
         "when": "editorTextFocus && isInDiffEditor && isInDiffRightEditor && !operationInProgress && resourceScheme != 'git'",
     },
+
+    // diff editor keybindings
+    {
+        "key": "alt+h",
+        "command": "workbench.action.focusFirstSideEditor",
+        "when": "editorTextFocus && isInDiffEditor && isInDiffRightEditor",
+    },
+    {
+        "key": "alt+l",
+        "command": "workbench.action.focusFirstSideEditor",
+        "when": "filesExplorerFocus && !inputFocus && activeEditor == 'workbench.editors.textDiffEditor'",
+    },
+    {
+        "key": "alt+l",
+        "command": "workbench.action.focusSecondSideEditor",
+        "when": "editorTextFocus && isInDiffEditor && isInDiffLeftEditor",
+    },
     {
         "key": "q",
         "command": "runCommands",
@@ -175,6 +197,16 @@
             ]
         },
         "when": "editorTextFocus && isInDiffEditor"
+    },
+    {
+        "key": "z shift+m",
+        "command": "diffEditor.collapseAllUnchangedRegions",
+        "when": "editorTextFocus && isInDiffEditor",
+    },
+    {
+        "key": "z shift+o",
+        "command": "diffEditor.showAllUnchangedRegions",
+        "when": "editorTextFocus && isInDiffEditor",
     },
 
     // other keybindings
