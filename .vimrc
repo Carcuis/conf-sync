@@ -223,6 +223,9 @@ set confirm
 if has("nvim")
     if has("win32")
         let g:python3_host_prog = stdpath('data') . '/pynvim/venv/Scripts/python.exe'
+        if getcwd() ==? "C:\\Windows\\System32"
+            cd %:p:h
+        endif
     else
         let g:python3_host_prog = stdpath('data') . '/pynvim/venv/bin/python3'
     endif
@@ -304,12 +307,6 @@ if exists("g:neovide")
         map <D-Right> <M-Right>
         imap <D-Right> <M-Right>
         tmap <D-Right> <M-Right>
-    endif
-
-    if has("win32")
-        if getcwd() ==? "^C:\\Windows\\System32"
-            let &cdpath = expand("%:p:h")
-        endif
     endif
 endif
 
