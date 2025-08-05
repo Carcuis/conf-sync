@@ -86,6 +86,41 @@ disable=SC2164
 disable=SC2206
 
 # @see: https://www.shellcheck.net/wiki/Optional
+#
+# Suggest removing unnecessary comparison negations
+#
+# problem code:
+#     [ ! "$var" -eq 1 ]
+# correct code:
+#     [ "$var" -ne 1 ]
+enable=avoid-negated-conditions
+
+# @see: https://www.shellcheck.net/wiki/Optional
+#
+# Warn when uppercase variables are unassigned
+#
+# problem code:
+#     echo $VAR
+# correct code:
+#     VAR=hello; echo $VAR
 enable=check-unassigned-uppercase
+
+# @see: https://www.shellcheck.net/wiki/Optional
+#
+# Suggest 'command -v' instead of 'which'
+#
+# problem code:
+#     which javac
+# correct code:
+#     command -v javac
 enable=deprecate-which
 
+# @see: https://www.shellcheck.net/wiki/Optional
+#
+# Check for Useless Use Of Cat (UUOC)
+#
+# problem code:
+#     cat foo | grep bar
+# correct code:
+#     grep bar foo
+enable=useless-use-of-cat
