@@ -24,6 +24,7 @@
     { "key": "ctrl+alt+right", "command": "vscode-neovim.send", "args": "<A-C-right>", "when": "editorTextFocus && neovim.init" },
     { "key": "ctrl+b", "command": "vscode-neovim.send", "args": "<C-b>", "when": "editorTextFocus && neovim.init && neovim.mode == 'visual'" },
     { "key": "ctrl+f", "command": "vscode-neovim.send", "args": "<C-f>", "when": "editorTextFocus && neovim.init && neovim.mode == 'visual'" },
+    { "key": "ctrl+g", "command": "vscode-neovim.send", "args": "<C-g>", "when": "editorTextFocus && neovim.init" },
     { "key": "ctrl+shift+c", "command": "vscode-neovim.send", "args": "<C-S-c>", "when": "editorTextFocus && neovim.init" },
 
     // navigation keybindings
@@ -104,6 +105,10 @@
     {
         "key": "ctrl+e",
         "command": "-workbench.action.quickOpen"
+    },
+    {
+        "key": "ctrl+g",
+        "command": "-workbench.action.gotoLine"
     },
     {
         "key": "ctrl+j",
