@@ -6,9 +6,8 @@
     "[markdown]": {
         "editor.wordWrap": "off",
     },
-    "[shellscript]": {
-        "editor.defaultFormatter": "foxundermoon.shell-format"
-    },
+    "bashIde.shfmt.caseIndent": true,
+    "bashIde.shfmt.spaceRedirects": true,
     "chat.renderRelatedFiles": true,
     "code-runner.executorMap": {
         "java": "javac -encoding utf8 -d class $fileName && java -Dfile.encoding=UTF-8 -cp class $fileNameWithoutExt",
@@ -39,6 +38,9 @@
     "editor.wordSeparators": "`~!@#$%^&*()-=+[{]}\\|;:'\",.<>/?",
     "extensions.experimental.affinity": {
         "asvetliakov.vscode-neovim": 1
+    },
+    "files.associations": {
+        ".env": "shellscript"
     },
     "files.defaultLanguage": "",
     "files.simpleDialog.enable": true,
@@ -94,7 +96,6 @@
     "remote.SSH.remotePlatform": {
         "host1": "linux"
     },
-    "shellformat.flag": "-ci -sr",
     "taskExplorer.enableSideBar": true,
     "terminal.integrated.allowChords": false,
     "terminal.integrated.defaultProfile.linux": "zsh",
