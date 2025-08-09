@@ -16,6 +16,7 @@
     "code-runner.respectShebang": false,
     "code-runner.saveAllFilesBeforeRun": true,
     "code-runner.saveFileBeforeRun": true,
+    "csv-preview.formatValues": "never",
     "debug.openDebug": "openOnDebugBreak",
     "debug.showBreakpointsInOverviewRuler": true,
     "diffEditor.hideUnchangedRegions.enabled": true,
