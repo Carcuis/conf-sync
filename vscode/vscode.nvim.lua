@@ -286,6 +286,7 @@ function M.load_plugins()
         },
         {
             'gcmt/wildfire.vim',
+            cond = M.not_vscode,
             event = "VeryLazy",
         },
         {
