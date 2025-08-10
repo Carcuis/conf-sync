@@ -214,16 +214,39 @@
         "when": "editorTextFocus && isInDiffEditor",
     },
 
+    // window management
+    {
+        "key": "ctrl+c",
+        "command": "workbench.action.togglePanel",
+        "when": "editorTextFocus && !referenceSearchVisible"
+    },
+    {
+        "key": "ctrl+shift+alt+b",
+        "command": "workbench.action.toggleSidebarVisibility"
+    },
+    {
+        "key": "ctrl+t",
+        "command": "workbench.action.terminal.toggleTerminal",
+        "when": "terminal.active"
+    },
+
+    // smart select
+    {
+        "key": "Backspace",
+        "command": "editor.action.smartSelect.shrink",
+        "when": "editorTextFocus && neovim.init && neovim.mode == 'visual'"
+    },
+    {
+        "key": "Enter",
+        "command": "editor.action.smartSelect.expand",
+        "when": "editorTextFocus && neovim.init && neovim.mode != 'insert'"
+    },
+
     // other keybindings
     {
         "key": "alt+s",
         "command": "workbench.action.files.save",
         "when": "notebookEditorFocused && !inputFocus && !notebookOutputInputFocused"
-    },
-    {
-        "key": "ctrl+c",
-        "command": "workbench.action.togglePanel",
-        "when": "editorTextFocus && !referenceSearchVisible"
     },
     {
         "key": "ctrl+e",
@@ -249,14 +272,5 @@
         "key": "ctrl+s",
         "command": "editor.action.replaceAll",
         "when": "!editorTextFocus && findWidgetVisible"
-    },
-    {
-        "key": "ctrl+shift+alt+b",
-        "command": "workbench.action.toggleSidebarVisibility"
-    },
-    {
-        "key": "ctrl+t",
-        "command": "workbench.action.terminal.toggleTerminal",
-        "when": "terminal.active"
     },
 ]
