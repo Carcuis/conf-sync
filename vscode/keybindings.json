@@ -209,7 +209,7 @@
         "when": "editorTextFocus && isInDiffEditor",
     },
     {
-        "key": "z shift+o",
+        "key": "z shift+r",
         "command": "diffEditor.showAllUnchangedRegions",
         "when": "editorTextFocus && isInDiffEditor",
     },
