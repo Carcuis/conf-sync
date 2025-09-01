@@ -112,7 +112,7 @@ if has("nvim")
     Plug 'OXY2DEV/helpview.nvim'
     Plug 'stevearc/quicker.nvim'
     Plug 'SCJangra/table-nvim'
-    Plug 'linux-cultist/venv-selector.nvim', { 'branch': 'regexp' }
+    Plug 'linux-cultist/venv-selector.nvim'
     Plug 'mikavilpas/yazi.nvim'
     Plug 'kawre/leetcode.nvim'
     Plug 'MunifTanjim/nui.nvim'
