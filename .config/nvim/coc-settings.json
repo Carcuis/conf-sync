@@ -80,7 +80,7 @@
     "[ps1][python]": {
         "semanticTokens.enable": false
     },
-    "coc.preferences.messageDialogKind": "confirm",
+    "coc.preferences.messageDialogKind": "notification",
     "coc.source.nerdfonts.filetypes": [
         "json",
         "lua",
