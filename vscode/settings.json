@@ -55,8 +55,6 @@
     },
     "github.copilot.nextEditSuggestions.enabled": true,
     "github.copilot.nextEditSuggestions.fixes": true,
-    "gitlens.currentLine.enabled": false,
-    "gitlens.launchpad.indicator.enabled": false,
     "inlineChat.accessibleDiffView": "on",
     "Lua.completion.callSnippet": "Replace",
     "Lua.format.defaultConfig": {
@@ -97,7 +95,6 @@
     "remote.SSH.remotePlatform": {
         "host1": "linux"
     },
-    "taskExplorer.enableSideBar": true,
     "terminal.integrated.allowChords": false,
     "terminal.integrated.defaultProfile.linux": "zsh",
     "terminal.integrated.fontLigatures.enabled": true,
