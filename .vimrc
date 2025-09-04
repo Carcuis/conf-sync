@@ -2922,6 +2922,7 @@ nnoremap <M-C> <cmd>tabc<CR>
 noremap <leader>y "+y
 noremap <leader>p "+p
 noremap <leader>P "+P
+noremap <C-S-V> "+P
 inoremap <C-S-V> <C-R>+
 cnoremap <C-S-V> <C-R>+
 
