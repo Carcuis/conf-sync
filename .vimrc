@@ -2945,6 +2945,7 @@ inoremap <M-L> <C-right>
 nnoremap DO <cmd>1,$+1diffget<CR>
 nnoremap DP <cmd>%diffput<CR>
 nnoremap DU <cmd>diffupdate<CR>
+nnoremap <leader>wd <cmd>windo diffthis<CR>
 
 for mapping in ['jj', 'jk', 'kj', 'kk', 'jl', 'jh']
     execute 'inoremap '.mapping.' <esc>'
