@@ -233,7 +233,7 @@ if has("nvim")
     if has("win32") || has("wsl")
         set guifont=CaskaydiaCove\ NFM,Microsoft\ YaHei\ UI:h13:#e-subpixelantialias
     elseif has("linux")
-        set guifont=UbuntuMono\ NF:h16
+        set guifont=CaskaydiaCove\ NFM:h16
     elseif has("mac")
         set guifont=CaskaydiaCove\ Nerd\ Font\ Mono:h18
     endif
