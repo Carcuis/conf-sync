@@ -397,9 +397,13 @@ function M.set_keymaps()
             { "<A-C-Right>", { "editor.action.inlineSuggest.acceptNextLine" }, mode = "i" },
             { "<C-i>", { "inlineChat.start" }, mode = "v" },
 
-            -- cursor movement
+            -- editor tabs
             { "H", { "workbench.action.previousEditor" } },
             { "L", { "workbench.action.nextEditor" } },
+            { "<A-H>", { "workbench.action.moveEditorLeftInGroup" } },
+            { "<A-L>", { "workbench.action.moveEditorRightInGroup" } },
+
+            -- cursor movement
             { "<A-l>", { "tabout" }, mode = "i" },
             { "<C-j>", { "workbench.action.editor.nextChange" } },
             { "<C-k>", { "workbench.action.editor.previousChange" } },
@@ -470,9 +474,14 @@ function M.set_keymaps()
             { "DC", function() vim.api.nvim_input("yypkgccj") end },
             { "DR", function() vim.api.nvim_input("ddkgcc") end },
 
+            -- bufferline
+            { "gb", vim.cmd.BufferLinePick },
+            { "H", vim.cmd.BufferLineCyclePrev },
+            { "L", vim.cmd.BufferLineCycleNext },
+            { "<M-H>", vim.cmd.BufferLineMovePrev },
+            { "<M-L>", vim.cmd.BufferLineMoveNext },
+
             -- cursor movement
-            { "H", vim.cmd.bprevious },
-            { "L", vim.cmd.bnext },
             { "<A-h>", "<C-w>h", noremap = true },
             { "<A-j>", "<C-w>j", noremap = true },
             { "<A-k>", "<C-w>k", noremap = true },
