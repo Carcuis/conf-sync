@@ -846,8 +846,13 @@ EOF
             { '<M-e>', api.node.show_info_popup, 'Info' },
             { 'R', api.fs.rename_sub, 'Rename: Omit Filename' },
             { '<C-r>', api.tree.reload, 'Refresh' },
+            { 'cc', api.fs.copy.absolute_path, 'Copy Absolute Path' },
+            { 'cf', api.fs.copy.filename, 'Copy Name' },
+            { 'cn', api.fs.copy.basename, 'Copy Basename' },
+            { 'cr', api.fs.copy.relative_path, 'Copy Relative Path' },
+            { 'y', api.fs.copy.node, 'Copy' },
         }
-        local delete_keymaps = { '<C-k>' }
+        local delete_keymaps = { '<C-k>', 'c' }
         for _, keymap in ipairs(keymaps) do
             vim.keymap.set('n', keymap[1], keymap[2], opts(keymap[3]))
         end
