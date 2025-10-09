@@ -113,7 +113,7 @@
         "jl": { "command": "vscode-neovim.escape", },
         "jh": { "command": "vscode-neovim.escape", },
     },
-    "vscode-neovim.ctrlKeysForInsertMode": [ "a", "c", "d", "e", "h", "j", "m", "o", "r", "t", "u", "w" ],
+    "vscode-neovim.ctrlKeysForInsertMode": [ "a", "c", "d", "e", "h", "j", "l", "m", "o", "r", "t", "u", "w" ],
     "vscode-neovim.ctrlKeysForNormalMode": [
         "a", "b", "c", "d", "e", "f", "h", "i", "j", "k", "l", "m", "n", "o", "p", "r", "t", "u", "v", "w",
         "x", "y", "z", "/", "]", "right", "left", "up", "down", "backspace", "delete"
