@@ -2024,13 +2024,21 @@ if has("nvim")
     lua << EOF
     require("CopilotChat").setup({
         model = 'gpt-4.1',
-        show_folds = false,
-        context = 'buffers',
+        sticky = {
+            '#buffer',
+        },
         window = {
             layout = 'float',
             width = 0.7,
             height = 0.8,
             border = 'rounded',
+            blend = 10,
+            title = ' Copilot Chat',
+        },
+        headers = {
+            user = '👤 You',
+            assistant = '🤖 Copilot',
+            tool = '🔧 Tool',
         },
     })
     vim.keymap.set({ "i", "n", "v" }, "<M-i>", require('CopilotChat').toggle, { desc = "Toggle Copilot Chat" })
