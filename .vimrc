@@ -2072,7 +2072,7 @@ if has("nvim")
         local current_paths = vim.split(vim.env.PATH or '', ';')
         for _, p in ipairs(new_paths) do
             if not vim.tbl_contains(current_paths, p) then
-                table.insert(current_paths, 1, p)
+                table.insert(current_paths, p)
             end
         end
         vim.env.PATH = table.concat(current_paths, ';')
