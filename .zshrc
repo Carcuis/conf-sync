@@ -10,6 +10,7 @@ _path_list=(
     /home/linuxbrew/.linuxbrew/bin
     $HOME/dev/miniconda3/condabin
     /usr/games
+    /usr/sbin
     /usr/local/bin
 )
 for _path in ${_path_list[@]}; do
