@@ -107,6 +107,8 @@ plugins=(
     brew
     colored-man-pages
     conda-zsh-completion
+    docker
+    docker-compose
     dotenv
     git
     python
@@ -337,6 +339,7 @@ alias nvid='neovide'
 alias lvi='NVIM_APPNAME=lazyvim nvim'
 alias al='la'
 alias lg='lazygit'
+alias lzd='lazydocker'
 alias pp='ptpython'
 alias wd=web_detection
 alias wtr=weather_forecast
