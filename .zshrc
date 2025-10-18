@@ -443,7 +443,7 @@ elif [[ $SYSTEM == "Android" ]]; then
 elif [[ $SYSTEM == "Linux" ]]; then
     alias o='nautilus'
     alias o.='nautilus .'
-    alias px='set_proxy http://127.0.0.1:1089'
+    alias px='set_proxy http://127.0.0.1:10809'
     alias upx=unset_proxy
 elif [[ $SYSTEM == "Darwin" ]]; then
     alias sshon='sudo launchctl load -w /System/Library/LaunchDaemons/ssh.plist'
