@@ -122,8 +122,8 @@ function M.load_plugins()
             'ggandor/leap.nvim',
             event = "VeryLazy",
             keys = {
-                { 'f', '<Plug>(leap-forward-to)', mode = { 'n', 'x', 'o' }, desc = "Leap Forward to" },
-                { 'F', '<Plug>(leap-backward-to)', mode = { 'n', 'x', 'o' }, desc = "Leap Backward to" },
+                { 'f', '<Plug>(leap-forward)', mode = { 'n', 'x', 'o' }, desc = "Leap Forward to" },
+                { 'F', '<Plug>(leap-backward)', mode = { 'n', 'x', 'o' }, desc = "Leap Backward to" },
             },
             opts = {
                 safe_labels = 'fnut/FNLHMUGTZ?',
