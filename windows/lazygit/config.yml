@@ -1,0 +1,11 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/jesseduffield/lazygit/master/schema/config.json
+
+gui:
+  # language: "en"
+  nerdFontsVersion: "3"
+git:
+  pagers:
+    - externalDiffCommand: "~/AppData/Roaming/lazygit/pager.sh"
+os:
+  editPreset: nvim
+promptToReturnFromSubprocess: false
