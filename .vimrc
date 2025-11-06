@@ -2594,6 +2594,9 @@ if has("nvim")
     yazi.setup({
         yazi_floating_window_border = "none",
         yazi_floating_window_winblend = 10,
+        keymaps = {
+            cycle_open_buffers = "<s-tab>",
+        },
     })
     vim.keymap.set("n", "<M-y>", function() yazi.yazi(nil, vim.fn.getcwd()) end, { desc = "Open Yazi in cwd" })
     vim.keymap.set("n", "<M-Y>", yazi.yazi, { desc = "Open Yazi at file" })
