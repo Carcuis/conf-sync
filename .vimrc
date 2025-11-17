@@ -714,6 +714,7 @@ let g:extra_whitespace_ignored_filetypes = [
             \'checkhealth',
             \'NvimTree',
             \'help',
+            \'terminal',
             \'toggleterm',
             \'mason',
             \'leetcode.nvim',
