@@ -1876,7 +1876,6 @@ if has("nvim")
     overseer = require("overseer")
     overseer.register_template({
         name = "run project",
-        strategy = "toggleterm",
         builder = function(params)
             return {
                 cmd = { "python", "main.py" },
@@ -1954,23 +1953,16 @@ if has("nvim")
     overseer.add_template_hook(nil, pre_overseer_run)
 
     overseer.setup({
-        strategy = "terminal",
         task_list = {
-            default_detail = 2,
             min_height = 10,
         },
         component_aliases = {
             default = {
                 "open_output",
-                { "display_duration", detail_level = 3 },
-                { "on_output_summarize", max_lines = 2 },
                 "on_exit_set_status",
                 { "on_complete_notify", statuses = { "FAILURE" } },
                 "unique",
             },
-        },
-        bundles = {
-            autostart_on_load = false,
         },
     })
     require("compiler").setup()
@@ -1999,7 +1991,7 @@ if has("nvim")
                     vim.notify("No main.py found in current directory", vim.log.levels.WARN, { title = "Overseer Run Project" })
                     return
                 end
-                require('overseer').run_template({name = 'run project'})
+                require('overseer').run_task({name = 'run project'})
             end
         },
         {
@@ -2009,7 +2001,7 @@ if has("nvim")
                     vim.notify("No command found for filetype: " .. filetype, vim.log.levels.WARN, { title = "Overseer Run This File" })
                     return
                 end
-                require('overseer').run_template({name = 'run this file'})
+                require('overseer').run_task({name = 'run this file'})
             end
         },
         { mode = "n", key = "<leader>ro", func = vim.cmd.OverseerRun, desc = "Run Task" },
@@ -3026,6 +3018,9 @@ if has("nvim")
     autocmd WinEnter term://*[^#toggleterm#]* if g:terminal_running | startinsert!
     autocmd TermClose term://*[^#toggleterm#]* let g:terminal_running = v:false | stopinsert
 endif
+
+" set filetype for terminal buffers
+autocmd BufEnter * if &buftype == 'terminal' | set filetype=terminal | endif
 
 " set wrap in markdown files
 autocmd FileType markdown setlocal wrap
