@@ -2,14 +2,10 @@
 gui:
   # language: "en"
   nerdFontsVersion: "3"
-
 git:
-  paging:
-    colorArg: always
-    pager: delta --no-gitconfig --line-numbers --tabs=4 --dark --paging=never --hyperlinks --hyperlinks-file-link-format="lazygit-edit://{path}:{line}"
-
+  pagers:
+    - colorArg: always
+      pager: delta --no-gitconfig --line-numbers --tabs=4 --dark --paging=never --hyperlinks --hyperlinks-file-link-format="lazygit-edit://{path}:{line}"
 os:
   editPreset: nvim
-
 promptToReturnFromSubprocess: false
-
