@@ -1442,6 +1442,7 @@ if has("nvim")
             render.setVirt(0, lnum - 1, col - 1, chunks, nearest)
         end
     })
+    require("hlslens").setup()
 
     local kopts = {noremap = true, silent = true}
     vim.api.nvim_set_keymap('n', 'n',
