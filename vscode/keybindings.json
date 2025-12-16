@@ -218,7 +218,7 @@
     {
         "key": "ctrl+c",
         "command": "workbench.action.togglePanel",
-        "when": "editorTextFocus && !referenceSearchVisible && neovim.mode != 'insert' || focusedView = 'workbench.panel.output'"
+        "when": "editorTextFocus && !referenceSearchVisible && neovim.mode != 'insert' || focusedView == 'workbench.panel.output'"
     },
     {
         "key": "ctrl+shift+alt+b",
