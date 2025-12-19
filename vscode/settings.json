@@ -94,7 +94,8 @@
     "python.terminal.activateEnvironment": false,
     "redhat.telemetry.enabled": false,
     "remote.SSH.remotePlatform": {
-        "host1": "linux"
+        "host1": "linux",
+        "host2": "linux"
     },
     "terminal.integrated.allowChords": false,
     "terminal.integrated.defaultProfile.linux": "zsh",
