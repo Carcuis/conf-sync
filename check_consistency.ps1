@@ -247,7 +247,7 @@ function Sync-RemoteFiles {
         if (! (Test-HasFile $file.local)) {
             $file_local_dir = Split-Path $file.local
             if (Confirm-Action "$($file.name) not found, create a copy to $($file.local) ?") {
-                if (! (Has-Dir $file_local_dir)) {
+                if (! (Test-HasDir $file_local_dir)) {
                     Write-Info "$file_local_dir not found, creating..."
                     New-Item -ItemType "directory" -Path $file_local_dir | Out-Null
                 }
