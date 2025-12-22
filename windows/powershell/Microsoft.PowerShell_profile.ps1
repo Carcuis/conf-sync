@@ -153,6 +153,53 @@ function Test-WebConnection {
     }
 }
 
+function Set-ProxyJump {
+    param (
+        [string]$host_or_action
+    )
+    $ssh_config = "$HOME\.ssh\config"
+    if (!(Test-Path $ssh_config)) {
+        Write-Error "SSH config file not found: $ssh_config"
+        return
+    }
+    $content = Get-Content $ssh_config -Raw
+    $pattern = '^\s*(#\s*)?ProxyJump\s+(\S+)(?=\s*\r?\n)'
+    $match_result = [regex]::Matches($content, $pattern, 'Multiline')
+    $all_hosts = @()
+    foreach ($m in $match_result) {
+        $all_hosts += $m.Groups[2].Value
+    }
+    $active = $match_result | Where-Object { -not $_.Groups[1].Success }
+    $active_host = $active.Count -gt 0 ? $active[0].Groups[2].Value : "none"
+    if (-not $host_or_action) {
+        Write-Host "Current ProxyJump: $active_host"
+        return
+    }
+    if ($host_or_action -match '^(off|disable|none)$') {
+        $new_content = [regex]::Replace($content, $pattern, {
+            param($m)
+            "    # ProxyJump $($m.Groups[2].Value)"
+        }, 'Multiline')
+        Set-Content $ssh_config $new_content
+        Write-Host "Disabled all ProxyJump entries."
+        return
+    }
+    if ($all_hosts -notcontains $host_or_action) {
+        Write-Host "Host '$host_or_action' does not exist in ProxyJump entries."
+        return
+    }
+    $new_content = [regex]::Replace($content, $pattern, {
+        param($m)
+        if ($m.Groups[2].Value -eq $host_or_action) {
+            "    ProxyJump $($m.Groups[2].Value)"
+        } else {
+            "    # ProxyJump $($m.Groups[2].Value)"
+        }
+    }, 'Multiline')
+    Set-Content $ssh_config $new_content.TrimEnd()
+    Write-Host "Activated ProxyJump: $host_or_action"
+}
+
 # === python environment variables ===
 function Test-CondaHooked {
     if ($env:CONDA_EXE) {
@@ -956,6 +1003,7 @@ function Write-ConfSyncGitLog {
     "px" = "Enable-Proxy"
     "upx" = "Disable-Proxy"
     "wd" = "Test-WebConnection"
+    "pjp" = "Set-ProxyJump"
 
     # miniconda function
     "cdhk" = "Invoke-CondaHook"
