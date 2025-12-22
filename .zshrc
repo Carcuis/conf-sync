@@ -308,6 +308,56 @@ function iow() {
     done
 }
 
+# switch ssh ProxyJump
+function pjp() {
+    local host_or_action="$1"
+    local ssh_config="$HOME/.ssh/config"
+
+    if [[ ! -f "$ssh_config" ]]; then
+        echo "SSH config file not found: $ssh_config" >&2
+        return 1
+    fi
+
+    local all_hosts
+    all_hosts=$(grep -E '^[[:space:]]*#?[[:space:]]*ProxyJump[[:space:]]+' "$ssh_config" \
+                | sed -E 's/^[[:space:]]*#?[[:space:]]*ProxyJump[[:space:]]+//' )
+    local active_host="none"
+    active_host=$(grep -E '^[[:space:]]*ProxyJump[[:space:]]+' "$ssh_config" \
+                  | sed -E 's/^[[:space:]]*ProxyJump[[:space:]]+//' \
+                  | head -n1)
+    [[ -z "$active_host" ]] && active_host="none"
+
+    if [[ -z "$host_or_action" ]]; then
+        echo "Current ProxyJump: $active_host"
+        return 0
+    fi
+
+    if [[ "$host_or_action" =~ ^(off|disable|none)$ ]]; then
+        sed -E -i 's/^([[:space:]]*)ProxyJump[[:space:]]+([^[:space:]]+)/\1# ProxyJump \2/' "$ssh_config"
+        echo "Disabled all ProxyJump entries."
+        return 0
+    fi
+
+    local found=0
+    while IFS= read -r h; do
+        [[ -z "$h" ]] && continue
+        if [[ "$h" == "$host_or_action" ]]; then
+            found=1
+            break
+        fi
+    done <<< "$all_hosts"
+
+    if [[ $found -eq 0 ]]; then
+        echo "Host '$host_or_action' does not exist in ProxyJump entries."
+        return 1
+    fi
+
+    sed -E -i "s/^([[:space:]]*)ProxyJump[[:space:]]+([^[:space:]]+)/\1# ProxyJump \2/" "$ssh_config"
+    sed -E -i "s/^([[:space:]]*)# ProxyJump[[:space:]]+$host_or_action/\1ProxyJump $host_or_action/" "$ssh_config"
+
+    echo "Activated ProxyJump: $host_or_action"
+}
+
 # ================================
 # ============ alias =============
 # ================================
