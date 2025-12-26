@@ -242,6 +242,10 @@ function Install-YaziPackage {
         ya pkg add Lil-Dank/lazygit
         Write-InstallStatus -status $? -content "Yazi plugin lazygit"
     }
+    if (Test-FileNotInstalled -file "$yazi_config_home\plugins\bookmarks.yazi\main.lua" -package "Yazi plugin bookmarks") {
+        ya pkg add dedukun/bookmarks
+        Write-InstallStatus -status $? -content "Yazi plugin bookmarks"
+    }
 }
 
 function New-Symlink {

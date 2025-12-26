@@ -287,6 +287,10 @@ function install_yazi_package() {
         ya pkg add Lil-Dank/lazygit
         successfully_installed $? "Yazi plugin lazygit"
     fi
+    if not_installed_file "$HOME/.config/yazi/plugins/bookmarks.yazi/main.lua" "Yazi plugin bookmarks"; then
+        ya pkg add dedukun/bookmarks
+        successfully_installed $? "Yazi plugin bookmarks"
+    fi
 }
 
 function install_tmux_plugins() {
