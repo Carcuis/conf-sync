@@ -30,6 +30,7 @@ declare -ag extra_file_list=(
     yazi_theme
     tmux_conf
     tmux_nerd_font_window_name_yml
+    tombi_config
 )
 
 # shellcheck disable=SC2034
@@ -74,6 +75,8 @@ function declare_dirs() {
     tmux_conf_local=$HOME/.config/tmux/tmux.conf
     tmux_nerd_font_window_name_yml_remote=$DIR/.config/tmux/tmux-nerd-font-window-name.yml
     tmux_nerd_font_window_name_yml_local=$HOME/.config/tmux/tmux-nerd-font-window-name.yml
+    tombi_config_remote=$DIR/.config/tombi/config.toml
+    tombi_config_local=$HOME/.config/tombi/config.toml
 
     case $SYSTEM in
         Darwin)

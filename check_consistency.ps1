@@ -83,6 +83,11 @@ $condarc = @{
     remote = "$DIR\dot_files\.condarc"
     local = "$HOME\.condarc"
 }
+$tombi = @{
+    name = "tombi config.toml"
+    remote = "$DIR\.config\tombi\config.toml"
+    local = "$HOME\AppData\Roaming\tombi\config.toml"
+}
 $yazi_init = @{
     name = "yazi init.lua"
     remote = "$DIR\.config\yazi\init.lua"
@@ -136,6 +141,7 @@ $extra_file_list = @(
     $clangd
     $tealdeer
     $condarc
+    $tombi
     $yazi_init
     $yazi_config
     $yazi_keymap
