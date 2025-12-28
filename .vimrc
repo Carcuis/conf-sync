@@ -2154,7 +2154,7 @@ if has("nvim")
         } },
     })
     dap.listeners.before.launch.dapui_config = function()
-        vim.cmd.ToggleDapUI()
+        vim.cmd.ToggleDapUI({ bang = true })
     end
 
     local python_debug_project = {
@@ -2330,7 +2330,13 @@ if has("nvim")
         local dapui_windows = require("dapui.windows")
 
         vim.cmd.OverseerClose()
-        dapui.toggle({ layout = tonumber(layout_num.fargs[1]), reset = true })
+
+        opt = { layout = tonumber(layout_num.fargs[1]), reset = true }
+        if layout_num.bang then
+            dapui.open(opt)
+        else
+            dapui.toggle(opt)
+        end
 
         local dapui_side_layout = dapui_windows.layouts[1]
         local dapui_bottom_layout = dapui_windows.layouts[2]
@@ -2346,7 +2352,7 @@ if has("nvim")
                 dapui_bottom_layout:resize()
             end
         end
-    end, { nargs = '?' })
+    end, { nargs = '?', bang = true })
 
     local keymaps = {
         { mode = "n", key = "<C-M-d>", func = vim.cmd.ToggleDapUI, desc = "Toggle DAP UI" },
