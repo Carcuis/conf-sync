@@ -2006,6 +2006,18 @@ if has("nvim")
                 require('overseer').run_task({name = 'run this file'})
             end
         },
+        {
+            mode = "n", key = "<leader>rl", desc = "Run Lua File In Neovim", func = function()
+                local filetype = vim.bo.filetype
+                if filetype ~= "lua" then
+                    vim.notify("Filetype error: " .. filetype, vim.log.levels.WARN, { title = "Run Luafile" })
+                    return
+                end
+                filename = vim.api.nvim_buf_get_name(0)
+                vim.cmd.luafile(filename)
+                vim.notify("Executed Lua file: " .. filename, vim.log.levels.INFO, { title = "Run Luafile" })
+            end
+        },
         { mode = "n", key = "<leader>ro", func = vim.cmd.OverseerRun, desc = "Run Task" },
         { mode = "n", key = "<leader>rc", func = vim.cmd.CompilerOpen, desc = "Open Compiler" },
     }
