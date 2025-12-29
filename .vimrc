@@ -1878,16 +1878,19 @@ if has("nvim")
     overseer = require("overseer")
     overseer.register_template({
         name = "run project",
-        builder = function(params)
-            return {
-                cmd = { "python", "main.py" },
-            }
+        generator = function()
+            if vim.fn.filereadable("main.py") == 1 then
+                return {{
+                    name = "run project",
+                    builder = function(params)
+                        return {
+                            cmd = { "python", "main.py" },
+                        }
+                    end,
+                },}
+            end
+            return {}
         end,
-        condition = {
-            callback = function()
-                return vim.fn.filereadable("main.py") == 1
-            end,
-        },
     })
     local filetype_cmds = {
         go = "go run",
