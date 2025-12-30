@@ -1950,6 +1950,35 @@ if has("nvim")
             filetype = vim.tbl_keys(filetype_cmds),
         },
     })
+    overseer.register_template({
+        name = "run luafile",
+        params = function()
+            return {
+                servername = {
+                    type = "string",
+                    default = vim.v.servername,
+                },
+                filename = {
+                    type = "string",
+                    default = vim.api.nvim_buf_get_name(0),
+                }
+            }
+        end,
+        builder = function(params)
+            return {
+                cmd = "nvim --server " .. params.servername .. " --remote-send \":luafile " .. params.filename ..
+                    "<CR>\" && echo Executing " .. params.filename .. " in Neovim server " .. params.servername,
+                components = {
+                    "on_exit_set_status",
+                    "unique",
+                    "on_complete_notify",
+                },
+            }
+        end,
+        condition = {
+            filetype = "lua",
+        },
+    })
 
     local function pre_overseer_run()
         vim.cmd.wall()
@@ -2010,15 +2039,13 @@ if has("nvim")
             end
         },
         {
-            mode = "n", key = "<leader>rl", desc = "Run Lua File In Neovim", func = function()
+            mode = "n", key = "<leader>rl", desc = "Run Luafile", func = function()
                 local filetype = vim.bo.filetype
                 if filetype ~= "lua" then
-                    vim.notify("Filetype error: " .. filetype, vim.log.levels.WARN, { title = "Run Luafile" })
+                    vim.notify("Filetype error: " .. filetype, vim.log.levels.WARN, { title = "Overseer Run Luafile" })
                     return
                 end
-                filename = vim.api.nvim_buf_get_name(0)
-                vim.cmd.luafile(filename)
-                vim.notify("Executed Lua file: " .. filename, vim.log.levels.INFO, { title = "Run Luafile" })
+                require('overseer').run_task({name = 'run luafile'})
             end
         },
         { mode = "n", key = "<leader>ro", func = vim.cmd.OverseerRun, desc = "Run Task" },
