@@ -6,7 +6,7 @@ show_hidden = true
 
 [open]
 prepend_rules = [
-    { name = "*.m3u*", use = ["edit", "open"] },
+    { url = "*.m3u*", use = ["edit", "open"] },
 ]
 
 [opener]
@@ -19,13 +19,13 @@ edit = [
 
 [plugin]
 prepend_previewers = [
-    { name = "*.m3u*", run = "code" },
+    { url = "*.m3u*", run = "code" },
     { mime = "{image,audio,video}/*", run = "mediainfo" },
     { mime = "application/subrip", run = "code" },
 ]
 prepend_fetchers = [
-    { id = "git", name = "*", run = "git" },
-    { id = "git", name = "*/", run = "git" },
+    { id = "git", url = "*", run = "git" },
+    { id = "git", url = "*/", run = "git" },
 ]
 
 [preview]
