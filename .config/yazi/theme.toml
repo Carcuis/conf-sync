@@ -3,5 +3,23 @@
 [flavor]
 dark = "catppuccin-mocha"
 
+[filetype]
+rules = [
+	# Image
+	{ mime = "image/*", fg = "#94e2d5" },
+	# Media
+	{ mime = "{audio,video}/*", fg = "#f9e2af" },
+	# Archive
+	{ mime = "application/{zip,rar,7z*,tar,gzip,xz,zstd,bzip*,lzma,compress,archive,cpio,arj,xar,ms-cab*}", fg = "#f5c2e7" },
+	# Document
+	{ mime = "application/{pdf,doc,rtf}", fg = "#a6e3a1" },
+	# Virtual file system
+	{ mime = "vfs/{absent,stale}", fg = "#9399b2" },
+	# Fallback
+    { url = "*", is = "link", fg = "#089395" },
+	{ url = "*", fg = "#cdd6f4" },
+	{ url = "*/", fg = "#89b4fa" },
+]
+
 [mgr]
 border_symbol = " "
