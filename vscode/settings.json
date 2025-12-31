@@ -55,6 +55,7 @@
     },
     "github.copilot.nextEditSuggestions.enabled": true,
     "github.copilot.nextEditSuggestions.fixes": true,
+    "gitlens.codeLens.enabled": false,
     "inlineChat.accessibleDiffView": "on",
     "Lua.completion.callSnippet": "Replace",
     "Lua.format.defaultConfig": {
