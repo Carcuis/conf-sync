@@ -2438,6 +2438,7 @@ if has("nvim")
         { key = "<leader>dtE", api = function() dapbp_api.edit_property({ all = true }) end, desc = "Edit All Breakpoint Properties" },
         { key = "<leader>dtv", api = dapbp_api.toggle_virtual_text, desc = "Toggle Breakpoint Virtual Text" },
         { key = "<leader>dtC", api = dapbp_api.clear_all_breakpoints, desc = "Clear All Breakpoints" },
+        { key = "<leader>def", api = dapbp_api.edit_exception_filters, desc = "Edit Exception Breakpoint Filters" },
         { key = "[b", api = dapbp_api.go_to_previous, desc = "Go to Previous Breakpoint" },
         { key = "]b", api = dapbp_api.go_to_next, desc = "Go to Next Breakpoint" },
         { key = "<F9>", api = dapbp_api.go_to_previous, desc = "Go to Previous Breakpoint" },
