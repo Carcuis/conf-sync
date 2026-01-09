@@ -59,7 +59,7 @@ if has("nvim")
     Plug 'alec-gibson/nvim-tetris'
     Plug 'nvim-lua/popup.nvim'
     Plug 'norcalli/nvim-colorizer.lua'
-    Plug 'nvim-treesitter/nvim-treesitter'
+    Plug 'nvim-treesitter/nvim-treesitter', { 'branch': 'master' }
     Plug 'nvim-treesitter/playground'
     Plug 'nvim-lualine/lualine.nvim'
     Plug 'folke/which-key.nvim'
