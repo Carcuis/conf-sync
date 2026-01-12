@@ -97,7 +97,8 @@
     "redhat.telemetry.enabled": false,
     "remote.SSH.remotePlatform": {
         "host1": "linux",
-        "host2": "linux"
+        "host2": "linux",
+        "host3": "linux"
     },
     "terminal.integrated.allowChords": false,
     "terminal.integrated.defaultProfile.linux": "zsh",
