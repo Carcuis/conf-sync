@@ -38,6 +38,7 @@
     "editor.smoothScrolling": true,
     "editor.tabCompletion": "off",
     "editor.wordSeparators": "`~!@#$%^&*()-=+[{]}\\|;:'\",.<>/?",
+    "excel-viewer.showInfo": false,
     "extensions.experimental.affinity": {
         "asvetliakov.vscode-neovim": 1
     },
