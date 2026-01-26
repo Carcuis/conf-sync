@@ -83,7 +83,7 @@ if has("nvim")
     Plug 'kevinhwang91/nvim-hlslens'
     Plug 'NMAC427/guess-indent.nvim'    " indentation-detection
     Plug 'lukas-reineke/virt-column.nvim'
-    Plug 'ggandor/leap.nvim'
+    Plug 'https://codeberg.org/andyg/leap.nvim'
     Plug 'fannheyward/telescope-coc.nvim'
     Plug 'NeogitOrg/neogit'
     Plug 'Bekaboo/dropbar.nvim'
