@@ -17,6 +17,7 @@
     }
   },
   "isChangedAlwaysTranslatedUrls": false,
+  "localUpdatedAt": "2026-01-26T08:36:59.795Z",
   "pcFloatBall": {
     "afterInstalledAt": "2023-10-28",
     "blockUrls": [
@@ -64,7 +65,8 @@
         "[id='watermark-tr']",
         "[class='ltx_personname']",
         "[class='ltx_page_footer']",
-        "[class='ltx_tag ltx_role_refnum ltx_tag_bibitem']"
+        "[class='ltx_tag ltx_role_refnum ltx_tag_bibitem']",
+        "[class='ltx_float ltx_float_algorithm ltx_framed ltx_framed_top']"
       ],
       "matches": [
         "https://arxiv.org/html/*"
@@ -76,7 +78,7 @@
   },
   "terms": {
     "version": 1,
-    "exportedAt": "2026-01-26T06:58:02.551Z",
+    "exportedAt": "2026-01-26T08:37:30.242Z",
     "data": [
       {
         "id": "default",
@@ -189,7 +191,7 @@
     "custom": false
   },
   "translationTheme": "blockquote",
-  "updatedAt": "2026-01-26T06:45:29.445Z",
+  "updatedAt": "2026-01-26T08:36:59.795Z",
   "userTranslationServices": {
     "translationService": "google-free"
   }
