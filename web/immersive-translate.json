@@ -1,165 +1,82 @@
 {
-  "aiAssistantIds": [
-    "bilingual-mix",
-    "twitter",
-    "tech",
-    "reddit",
-    "news",
-    "music",
-    "medical",
-    "legal",
-    "github",
-    "game",
-    "ecommerce",
-    "financial",
-    "fiction",
-    "ao3",
-    "ebook",
-    "design",
-    "web3",
-    "paper",
-    "paraphrase"
-  ],
-  "beta": true,
   "customAiAssistants": [],
-  "enableInputTranslation": true,
+  "enableInputTranslationWithoutTriggerKey": false,
+  "enableMachineTranslateTerms": true,
   "generalRule": {
-    "glossaries": [
-      {
-        "k": "LLM",
-        "v": ""
-      },
-      {
-        "k": "LLMs",
-        "v": ""
-      },
-      {
-        "k": "Abstract"
-      },
-      {
-        "k": "1"
-      },
-      {
-        "k": "2"
-      },
-      {
-        "k": "3"
-      },
-      {
-        "k": "4"
-      },
-      {
-        "k": "5"
-      },
-      {
-        "k": "Acknowledgements"
-      },
-      {
-        "k": "References"
-      }
-    ],
     "mouseHoverHoldKey": "Alt+a",
     "mouseHoverPreferenceKey": "Alt+a",
     "subtitleRule.add": {
+      "autoEnableSubtitle": true,
       "backgroundOpacity": "0",
-      "preTranslation": true,
       "showQuickButton": false,
       "sourceFontFamily": "Noto Sans SC",
-      "sourceFontSize": "90",
-      "sourceTextColor": "#e9e9e9",
+      "sourceFontWeight": "400",
       "textShadowType": "shadow",
       "translationFontFamily": "Noto Sans SC",
-      "translationFontSize": "90",
-      "translationPosition": "top",
-      "translationTextColor": "#e9e9e9",
-      "youtubeAutoEnableSubtitle": true
-    },
-    "touchShortcutsToggleTranslateTouchElement": "touchShortcutsOff",
-    "touchShortcutsToggleTranslateTouchElementPreferenceKey": "multipleClick.2"
+      "translationPosition": "top"
+    }
   },
-  "inputTrailingTriggerKey": "/",
-  "inputTranslationService": "inherit",
-  "interfaceLanguage": "zh-CN",
-  "isChangedAlwaysTranslatedUrls": true,
-  "isShowContextMenu": false,
-  "isShowInputTranslationConsent": false,
-  "localUpdatedAt": "2025-09-08T09:25:11.173Z",
-  "modifiedBySystem": true,
-  "mouseHoverTranslationService": "inherit",
+  "isChangedAlwaysTranslatedUrls": false,
   "pcFloatBall": {
     "afterInstalledAt": "2023-10-28",
     "blockUrls": [
-      "*immersivetranslate.com/preview",
-      "*.immersivetranslate.com/download-subtitle*"
+      "*immersivetranslate.*/preview",
+      "*.immersivetranslate.*/download-subtitle*",
+      "dash.immersivetranslate.*/*"
     ],
     "clickType": "translate",
+    "defaultShowGuideNums": 4,
     "enable": false,
+    "enablePinSidePanel": true,
+    "enableSidePanel": true,
     "fixedPosition": "right",
+    "guideArrowPermanentUrls": [
+      "https://*.immersivetranslate.*/*/intro/step-1",
+      "https://*.immersivetranslate.*/*/tutorial/step-2",
+      "https://*.immersivetranslate.*/*/new-guide/step-3"
+    ],
     "guideBlockUrls": [
-      "https://onboarding.immersivetranslate.com*",
-      "https://immersivetranslate.com/accounts/login*",
-      "https://immersivetranslate.cn/accounts/login*"
+      "https://immersivetranslate.*/accounts/login*",
+      "https://immersivetranslate.*/profile/",
+      "https://onboarding.immersivetranslate.**",
+      "https://*.immersivetranslate.*/*/intro/tutorial/step-1*",
+      "https://*.immersivetranslate.*/*/new-guide/step-1*",
+      "https://*.immersivetranslate.*/*/new-guide/step-2*",
+      "https://*.immersivetranslate.*/*/quickstart/*"
+    ],
+    "guideContentBlockUrls": [
+      "https://*.immersivetranslate.*/*/tutorial/*",
+      "https://*.immersivetranslate.*/*/intro/*",
+      "https://*.immersivetranslate.*/*/init/*",
+      "https://*.immersivetranslate.*/*/new-guide/*"
     ],
     "isPc": true,
-    "upgradeShowLimit": 50,
+    "transparency": 30,
+    "upgradeShowLimit": 20,
     "upgradeVisible": true
   },
-  "pcFloatBallMainBtnTooltipShownCount": 6,
-  "rewardCenterOpenTime": "1755697029615",
-  "subtitleTranslateService": "inherit",
-  "targetLanguage": "zh-CN",
-  "translationService": "google",
-  "translationServiceChangedbyUserAt": "2025-08-17T05:11:19.930Z",
-  "translationServices": {
-    "deeplx": {
-      "dualEnableRichTranslate": true,
-      "enableRichTranslate": true,
-      "url": "https://dplx.xi-xu.me/translate",
-      "visible": true
-    },
-    "deeplx-custom": {
-      "dualEnableRichTranslate": true,
-      "enableRichTranslate": true,
-      "extends": "deeplx",
-      "group": "custom",
-      "migrateFrom": "deeplx",
-      "type": "deeplx",
-      "url": "https://dplx.xi-xu.me/translate",
-      "visible": true
-    },
-    "zhipu": {
-      "dualEnableRichTranslate": true,
-      "enableRichTranslate": true,
-      "visible": true
-    },
-    "zhipu-custom": {
-      "dualEnableRichTranslate": true,
-      "enableRichTranslate": true,
-      "extends": "zhipu",
-      "group": "custom",
-      "migrateFrom": "zhipu",
-      "type": "zhipu",
-      "visible": true
-    },
-    "zhipu-free": {
-      "dualEnableRichTranslate": true,
-      "enableRichTranslate": true,
-      "migrateFrom": "zhipu",
-      "visible": true
+  "rules": [
+    {
+      "excludeSelectors": [
+        "table",
+        "footer",
+        "[id='license-tr']",
+        "[id='watermark-tr']",
+        "[class='ltx_personname']",
+        "[class='ltx_page_footer']",
+        "[class='ltx_tag ltx_role_refnum ltx_tag_bibitem']"
+      ],
+      "matches": [
+        "https://arxiv.org/html/*"
+      ]
     }
-  },
-  "translationTheme": "blockquote",
-  "translationUrlPattern": {
-    "excludeMatches": [],
-    "matches": []
-  },
-  "updatedAt": "2025-09-08T09:25:11.173Z",
-  "userTranslationServices": {
-    "translationService": "google-free"
+  ],
+  "sensitiveConfig": {
+    "telemetry": false
   },
   "terms": {
     "version": 1,
-    "exportedAt": "2025-09-08T09:26:09.558Z",
+    "exportedAt": "2026-01-26T06:58:02.551Z",
     "data": [
       {
         "id": "default",
@@ -171,6 +88,10 @@
         ],
         "glossaries": [
           {
+            "k": "BEV",
+            "v": ""
+          },
+          {
             "k": "LLM",
             "v": ""
           },
@@ -179,36 +100,8 @@
             "v": ""
           },
           {
-            "k": "k",
-            "v": "Abstract"
-          },
-          {
-            "k": "k",
-            "v": "1"
-          },
-          {
-            "k": "k",
-            "v": "2"
-          },
-          {
-            "k": "k",
-            "v": "3"
-          },
-          {
-            "k": "k",
-            "v": "4"
-          },
-          {
-            "k": "k",
-            "v": "5"
-          },
-          {
-            "k": "k",
-            "v": "Acknowledgements"
-          },
-          {
-            "k": "k",
-            "v": "References"
+            "k": "Abstract",
+            "v": ""
           }
         ],
         "order": 0,
@@ -289,5 +182,15 @@
         }
       }
     ]
+  },
+  "translationService": "google",
+  "translationServiceChangedbyUserAt": "2026-01-26T02:47:16.696Z",
+  "translationServiceExpanded": {
+    "custom": false
+  },
+  "translationTheme": "blockquote",
+  "updatedAt": "2026-01-26T06:45:29.445Z",
+  "userTranslationServices": {
+    "translationService": "google-free"
   }
 }
