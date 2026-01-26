@@ -132,15 +132,15 @@
     "name": "https://arxiv.org/html",
     "sections": [
       {
-        "code": "/* =========================\n   1. 删除侧边栏（TOC）\n   ========================= */\n/* 你定位到的目录侧边栏 */\n.ltx_TOC.active,\n.ltx_TOC {\n    display: none !important;\n}\n\n\n/* =========================\n   2. 删除顶栏（Header）\n   ========================= */\n.desktop_header {\n    display: none !important;\n}\n\n\n/* =========================\n   3. 删除悬浮“Report Issue”按钮\n   ========================= */\n#openForm,\nbutton#openForm,\n.btn.btn-primary.hover-rp-button {\n    display: none !important;\n}\n\n\n\n/* =========================\n   4. 删除渲染错误提示块\n   ========================= */\n/* class=\"ltx_ERROR undefined\" */\n.ltx_ERROR.undefined {\n    display: none !important;\n}\n\n\n/* =========================\n   5. 删除左上角 Beta 标志\n   ========================= */\nbody::after {\n    content: none !important;\n    display: none !important;\n}\n\n/* =========================\n   6. 删除 LaTeX package 警告块\n   ========================= */\n/* class=\"package-alerts ltx_document\" */\n.package-alerts.ltx_document {\n    display: none !important;\n}\n\n/* =========================\n   7. arXiv 图片白底垫板（暗黑模式友好）\n   ========================= */\nimg,\nsvg {\n    background-color: white !important;\n}\n\n/* =========================\n   8. 修复 arXiv 表格线框（暗黑模式可读）\n   ========================= */\n.ltx_page_content table,\n.ltx_page_content th,\n.ltx_page_content td {\n    border-color: #ccc !important;\n    /* 浅灰色，和深背景对比 */\n}",
+        "code": "/* =========================\n   1. 删除侧边栏（TOC）\n   ========================= */\n/* 你定位到的目录侧边栏 */\n.ltx_TOC.active,\n.ltx_TOC {\n    display: none !important;\n}\n\n\n/* =========================\n   2. 删除顶栏（Header）\n   ========================= */\n.desktop_header {\n    display: none !important;\n}\n.mob_header {\n    display: none !important;\n}\n\n\n/* =========================\n   3. 删除悬浮“Report Issue”按钮\n   ========================= */\n#openForm,\nbutton#openForm,\n.btn.btn-primary.hover-rp-button {\n    display: none !important;\n}\n\n\n\n/* =========================\n   4. 删除渲染错误提示块\n   ========================= */\n/* class=\"ltx_ERROR undefined\" */\n.ltx_ERROR.undefined {\n    display: none !important;\n}\n\n\n/* =========================\n   5. 删除左上角 Beta 标志\n   ========================= */\nbody::after {\n    content: none !important;\n    display: none !important;\n}\n\n/* =========================\n   6. 删除 LaTeX package 警告块\n   ========================= */\n/* class=\"package-alerts ltx_document\" */\n.package-alerts.ltx_document {\n    display: none !important;\n}\n\n/* =========================\n   7. arXiv 图片白底垫板（暗黑模式友好）\n   ========================= */\nimg,\nsvg {\n    background-color: white !important;\n}\n\n/* =========================\n   8. 修复 arXiv 表格线框（暗黑模式可读）\n   ========================= */\n.ltx_page_content table,\n.ltx_page_content th,\n.ltx_page_content td {\n    border-color: #ccc !important;\n    /* 浅灰色，和深背景对比 */\n}\n\n/* =========================\n   9. 修复 arXiv 宽表格左列被遮挡\n   ========================= */\n.ltx_flex_figure,\n.ltx_flex_cell,\n.ltx_transformed_outer,\n.ltx_transformed_inner {\n    transform: none !important;\n    width: 100% !important;\n}",
         "urlPrefixes": [
           "https://arxiv.org/html/"
         ]
       }
     ],
-    "updateDate": 1769410306224,
+    "updateDate": 1769416268823,
     "_id": "d7922c9f-420e-4a90-afb3-ac189c09735a",
-    "_rev": 1769410306224,
+    "_rev": 1769416268824,
     "id": 2
   }
 ]
