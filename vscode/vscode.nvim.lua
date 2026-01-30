@@ -119,7 +119,7 @@ function M.load_plugins()
             },
         },
         {
-            'ggandor/leap.nvim',
+            'https://codeberg.org/andyg/leap.nvim',
             event = "VeryLazy",
             keys = {
                 { 'f', '<Plug>(leap-forward)', mode = { 'n', 'x', 'o' }, desc = "Leap Forward to" },
