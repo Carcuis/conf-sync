@@ -2474,7 +2474,7 @@ if has("nvim")
     lua << EOF
     require("rip-substitute").setup({
         keymaps = {
-            insertModeConfirm = "<C-s>",
+            insertModeConfirmAndSubstituteInBuffer = "<C-s>",
         },
     })
     local function quit_rip_substitute()
