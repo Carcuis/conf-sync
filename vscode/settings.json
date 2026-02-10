@@ -50,6 +50,7 @@
     "git.autofetch": true,
     "git.confirmSync": false,
     "github.copilot.chat.codesearch.enabled": true,
+    "github.copilot.chat.searchSubagent.enabled": true,
     "github.copilot.enable": {
         "plaintext": true,
         "markdown": true,
@@ -133,6 +134,7 @@
         "editor.lineHighlightBackground": "#262626",
         "editorHoverWidget.background": "#202020ee",
     },
+    "workbench.colorTheme": "Experimental Dark",
     "workbench.editor.highlightModifiedTabs": true,
     "workbench.iconTheme": "material-icon-theme",
     "workbench.list.smoothScrolling": true,
