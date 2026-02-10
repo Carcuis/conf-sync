@@ -415,6 +415,7 @@ function M.set_keymaps()
             -- lsp
             { "<leader>rn", { "editor.action.rename" } },
             { "<A-e>", { "editor.action.showHover" } },
+            { "<A-d>", { "editor.action.inspectTMScopes" } },
             { "<A-f>", { "editor.action.formatDocument" } },
             { "gr", { "editor.action.goToReferences" } },
             { "gp", { "editor.action.showDefinitionPreviewHover" } },

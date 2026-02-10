@@ -2,6 +2,7 @@
     // keybindings send to neovim
     { "key": "alt+a", "command": "vscode-neovim.send", "args": "<A-a>", "when": "editorTextFocus && neovim.init" },
     { "key": "alt+c", "command": "vscode-neovim.send", "args": "<A-c>", "when": "editorTextFocus && neovim.init" },
+    { "key": "alt+d", "command": "vscode-neovim.send", "args": "<A-d>", "when": "editorTextFocus && neovim.init" },
     { "key": "alt+e", "command": "vscode-neovim.send", "args": "<A-e>", "when": "editorTextFocus && neovim.init" },
     { "key": "alt+f", "command": "vscode-neovim.send", "args": "<A-f>", "when": "editorTextFocus && neovim.init" },
     { "key": "alt+h", "command": "vscode-neovim.send", "args": "<A-h>", "when": "editorTextFocus && neovim.init" },
