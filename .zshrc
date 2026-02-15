@@ -112,6 +112,7 @@ plugins=(
     dotenv
     git
     python
+    tailscale
     tmux
     uv
     z
