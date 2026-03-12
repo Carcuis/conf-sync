@@ -8,7 +8,11 @@
     },
     "bashIde.shfmt.caseIndent": true,
     "bashIde.shfmt.spaceRedirects": true,
+    "chat.agent.maxRequests": 500,
+    "chat.editing.explainChanges.enabled": true,
+    "chat.fontSize": 15,
     "chat.renderRelatedFiles": true,
+    "chat.viewProgressBadge.enabled": true,
     "chat.viewSessions.orientation": "stacked",
     "code-runner.executorMap": {
         "java": "javac -encoding utf8 -d class $fileName && java -Dfile.encoding=UTF-8 -cp class $fileNameWithoutExt",
