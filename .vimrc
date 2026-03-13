@@ -204,7 +204,7 @@ set incsearch
 set hlsearch
 set scrolloff=5
 set sidescrolloff=10
-set updatetime=100
+set updatetime=1000
 set hidden
 set ignorecase
 set smartcase
@@ -934,7 +934,7 @@ endif
 
 " === FixCursorHold.nvim ===
 if has("nvim")
-    let g:cursorhold_updatetime = 0
+    let g:cursorhold_updatetime = 50
 endif
 
 " === nvim-terminal.lua ===
