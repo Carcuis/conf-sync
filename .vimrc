@@ -1930,6 +1930,11 @@ if has("nvim")
             local output = filename:gsub("%.java$", "")
             return "javac -d class " .. filename .. " && java -cp class " .. output
         end,
+        mermaid = function()
+            local filename = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(0), ':~:.')
+            local output = filename:gsub("%.mmd$", ""):gsub("%.mermaid$", "") .. ".png"
+            return "mmdc -i " .. filename .. " -o " .. output .. " -s 4"
+        end,
     }
     overseer.register_template({
         name = "run this file",
