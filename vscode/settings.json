@@ -139,7 +139,7 @@
         "editor.lineHighlightBackground": "#262626",
         "editorHoverWidget.background": "#202020ee",
     },
-    "workbench.colorTheme": "VS Code Dark",
+    "workbench.colorTheme": "Dark 2026",
     "workbench.editor.highlightModifiedTabs": true,
     "workbench.iconTheme": "material-icon-theme",
     "workbench.list.smoothScrolling": true,
