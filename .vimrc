@@ -54,7 +54,7 @@ if has("nvim")
     Plug 'kyazdani42/nvim-tree.lua'
     Plug 'antoinemadec/FixCursorHold.nvim'
     Plug 'akinsho/toggleterm.nvim'
-    Plug 'ahmedkhalf/project.nvim'
+    Plug 'DrKJeff16/project.nvim'
     Plug 'norcalli/nvim-terminal.lua'
     Plug 'alec-gibson/nvim-tetris'
     Plug 'nvim-lua/popup.nvim'
@@ -997,10 +997,10 @@ endif
 " === project.nvim ===
 if has("nvim")
     lua << EOF
-    require("project_nvim").setup {
-        exclude_dirs = {
-            "c:", "d:", "e:", "~", "/", "*//*", "build", ".deps"
-        },
+    require("project").setup {
+        -- exclude_dirs = {
+        --     "c:", "d:", "e:", "~", "/", "*//*", "build", ".deps"
+        -- },
     }
     require('telescope').load_extension('projects')
 EOF
