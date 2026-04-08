@@ -58,7 +58,7 @@ if has("nvim")
     Plug 'norcalli/nvim-terminal.lua'
     Plug 'alec-gibson/nvim-tetris'
     Plug 'nvim-lua/popup.nvim'
-    Plug 'norcalli/nvim-colorizer.lua'
+    Plug 'catgoose/nvim-colorizer.lua'
     Plug 'nvim-treesitter/nvim-treesitter', { 'branch': 'master' }
     Plug 'nvim-treesitter/playground'
     Plug 'nvim-lualine/lualine.nvim'
