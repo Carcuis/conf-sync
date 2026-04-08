@@ -55,7 +55,6 @@ if has("nvim")
     Plug 'antoinemadec/FixCursorHold.nvim'
     Plug 'akinsho/toggleterm.nvim'
     Plug 'DrKJeff16/project.nvim'
-    Plug 'norcalli/nvim-terminal.lua'
     Plug 'alec-gibson/nvim-tetris'
     Plug 'nvim-lua/popup.nvim'
     Plug 'catgoose/nvim-colorizer.lua'
@@ -935,11 +934,6 @@ endif
 " === FixCursorHold.nvim ===
 if has("nvim")
     let g:cursorhold_updatetime = 50
-endif
-
-" === nvim-terminal.lua ===
-if has("nvim")
-    lua require'terminal'.setup()
 endif
 
 " === toggleterm.nvim ===
