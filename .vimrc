@@ -1002,7 +1002,14 @@ endif
 
 " === nvim-colorizer.lua ===
 if has("nvim")
-    lua require'colorizer'.setup()
+    lua << EOF
+    require("colorizer").setup({
+        filetypes = {
+            "*",
+            "!NvimTree",
+        },
+    })
+EOF
 endif
 
 " === nvim-treesitter ===
