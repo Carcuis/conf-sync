@@ -2599,7 +2599,10 @@ if has("nvim")
                 command = "$FD '/bin/python$' $FILE_DIR --full-path --color never -E /proc -HI -a -L",
             },
             pipx = {
-                command = "$FD '/bin/python$' ~/.local/share/pipx/venvs ~/.local/pipx/venvs --full-path --color never",
+                command = "$FD '/bin/python$' ~/.local/share/pipx/venvs ~/.local/pipx/venvs --full-path -a --color never",
+            },
+            uv_tool = {
+                command = "$FD '/bin/python$' ~/.local/share/uv/tools --full-path -a --color never"
             },
             venv = {
                 command = "$FD 'venv/bin/python$' ~ --full-path --color never -HI -a -L -E mason",
@@ -2620,34 +2623,45 @@ if has("nvim")
                 })
             end,
             ["Windows_NT"] = function()
-                local dirs = { "D:/dev/scoop/apps/miniconda3/current", "D:/dev/miniconda3" }
-                local conda_path = "D:/"
-                for _, dir in ipairs(dirs) do
+                local conda_dirs = { "D:\\dev\\scoop\\apps\\miniconda3\\current", "D:\\dev\\miniconda3" }
+                local conda_path = "D:\\"
+                for _, dir in ipairs(conda_dirs) do
                     if has_dir(dir) then
                         conda_path = dir
                         break
                     end
                 end
+                local conda_envs_dirs = { "D:\\dev\\python\\conda\\envs" }
+                local conda_envs_path = conda_path.."\\envs"
+                for _, dir in ipairs(conda_envs_dirs) do
+                    if has_dir(dir) then
+                        conda_envs_path = dir
+                        break
+                    end
+                end
                 return vim.tbl_deep_extend("force", default_searches, {
                     cwd = {
-                        command = "$FD Scripts//python.exe$ $CWD --full-path --color never -HI -a -L",
+                        command = "$FD Scripts\\\\python.exe$ $CWD --full-path --color never -HI -a -L",
                     },
                     file = {
-                        command = "$FD Scripts//python.exe$ $FILE_DIR --full-path --color never -HI -a -L",
+                        command = "$FD Scripts\\\\python.exe$ $FILE_DIR --full-path --color never -HI -a -L",
                     },
                     miniconda_env = {
-                        command = "$FD //python.exe$ "..conda_path.."/envs --full-path --color never -a -E Lib",
+                        command = "$FD \\\\python.exe$ "..conda_envs_path.." --full-path --color never -a -E Lib",
                         type = "anaconda",
                     },
                     miniconda_base = {
-                        command = "$FD //python.exe$ "..conda_path.." --full-path -a --color never -E pkgs -E Lib -E envs",
+                        command = "$FD \\\\python.exe$ "..conda_path.." --full-path -a --color never -E pkgs -E Lib -E envs",
                         type = "anaconda",
                     },
                     pipx = {
-                        command = "$FD Scripts//python.exe$ $PIPX_HOME/venvs --full-path -a --color never",
+                        command = "$FD Scripts\\\\python.exe$ $PIPX_HOME\\venvs --full-path -a --color never",
+                    },
+                    uv_tool = {
+                        command = "$FD Scripts\\\\python.exe$ D:\\dev\\python\\uv\\tools --full-path -a --color never",
                     },
                     venv = {
-                        command = "$FD venv//Scripts//python.exe$ D:/ --full-path --color never -HI -a -L",
+                        command = "$FD venv\\\\Scripts\\\\python.exe$ D:\\ --full-path --color never -HI -a -L",
                     },
                 })
             end,
