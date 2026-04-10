@@ -11,7 +11,6 @@
     "chat.agent.maxRequests": 500,
     "chat.editing.explainChanges.enabled": true,
     "chat.fontSize": 15,
-    "chat.renderRelatedFiles": true,
     "chat.viewProgressBadge.enabled": true,
     "chat.viewSessions.orientation": "stacked",
     "code-runner.executorMap": {
@@ -62,8 +61,6 @@
     },
     "github.copilot.nextEditSuggestions.enabled": true,
     "github.copilot.nextEditSuggestions.fixes": true,
-    "gitlens.codeLens.enabled": false,
-    "inlineChat.accessibleDiffView": "on",
     "Lua.completion.callSnippet": "Replace",
     "Lua.format.defaultConfig": {
         "align_array_table": "false"
@@ -131,7 +128,6 @@
     ],
     "vscode-neovim.NVIM_APPNAME": "vscnvim",
     "vscode-neovim.neovimInitVimPaths.win32": "~\\AppData\\Local\\vscnvim\\init.lua",
-    "vsintellicode.python.completionsEnabled": false,
     "window.enableMenuBarMnemonics": false,
     "window.newWindowDimensions": "maximized",
     "window.restoreWindows": "none",
