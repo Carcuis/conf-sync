@@ -128,6 +128,7 @@
     ],
     "vscode-neovim.NVIM_APPNAME": "vscnvim",
     "vscode-neovim.neovimInitVimPaths.win32": "~\\AppData\\Local\\vscnvim\\init.lua",
+    "vscode_custom_css.statusbar": false,
     "window.enableMenuBarMnemonics": false,
     "window.newWindowDimensions": "maximized",
     "window.restoreWindows": "none",
