@@ -1779,7 +1779,7 @@ if has("nvim")
     require("dropbar").setup({
         bar = {
             enable = function(buf, win, _)
-                buf = vim._resolve_bufnr(buf)
+                local buf = vim._resolve_bufnr(buf)
                 if
                     not vim.api.nvim_buf_is_valid(buf)
                     or not vim.api.nvim_win_is_valid(win)
@@ -1787,7 +1787,10 @@ if has("nvim")
                     return false
                 end
 
-                if vim.bo[buf].bt == 'nofile' and vim.bo[buf].ft == 'NvimTree' then return false end
+                local disabled_filetypes = {
+                    '', 'NvimTree', 'DiffviewFiles', 'startify'
+                }
+                if vim.tbl_contains(disabled_filetypes, vim.bo[buf].ft) then return false end
 
                 if
                     not vim.api.nvim_buf_is_valid(buf)
