@@ -2454,7 +2454,7 @@ if has("nvim")
         { mode = "n", key = "<F8>", func = dap.terminate, desc = "DAP Terminate" },
         { mode = "n", key = "<leader>do", func = dap.continue, desc = "DAP Start" },
         { mode = "n", key = "<leader>dl", func = dap.run_last, desc = "DAP Run Last" },
-        { mode = "v", key = "<M-k>", func = dapui.eval, desc = "DAP Eval" },
+        { mode = { "n", "v" }, key = "K", func = dapui.eval, desc = "DAP Eval" },
     }
     for _, keymap in ipairs(keymaps) do
         vim.keymap.set(keymap.mode, keymap.key, keymap.func, { desc = keymap.desc })
