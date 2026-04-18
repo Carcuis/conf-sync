@@ -618,15 +618,19 @@ export TMUX_SYSTEM=$SYSTEM
 # === fzf ===
 if command -v fzf > /dev/null; then
     source <(fzf --zsh)
-    export FZF_DEFAULT_OPTS=$FZF_DEFAULT_OPTS'
+    _FZF_OPTS='
         --color=fg:-1,fg+:#d0d0d0,bg:-1,bg+:#2b2b2b
         --color=hl:#5f87af,hl+:#5fd7ff,info:#afaf87,marker:#87ff00
         --color=prompt:#d7005f,spinner:#af5fff,pointer:#af5fff,header:#87afaf
         --color=border:#262626,label:#aeaeae,query:#d9d9d9
         --bind=ctrl-b:preview-page-up,ctrl-f:preview-page-down
-        --preview="fzf-preview.sh {}"
         --preview-window="border-rounded" --prompt=" " --marker="◆" --pointer=" "
         --separator="─" --scrollbar="│" --layout="reverse"'
+    export FZF_DEFAULT_OPTS=$_FZF_OPTS'
+        --preview="fzf-preview.sh {}"'
+    export FZF_CTRL_R_OPTS=$_FZF_OPTS'
+        --preview="echo {2..} | bat --color=always --wrap=character --terminal-width=$FZF_PREVIEW_COLUMNS -pl zsh"'
+    unset _FZF_OPTS
 fi
 
 # === Java ===
