@@ -49,6 +49,24 @@ $PsFzfOption = @{
     PSReadlineChordSetLocation = 'Alt+c'
 }
 Set-PsFzfOption @PsFzfOption
+$FZF_OPTS = '
+    --color=fg:-1,fg+:#d0d0d0,bg:-1,bg+:#2b2b2b
+    --color=hl:#5f87af,hl+:#5fd7ff,info:#afaf87,marker:#87ff00
+    --color=prompt:#d7005f,spinner:#af5fff,pointer:#af5fff,header:#87afaf
+    --color=border:#262626,label:#aeaeae,query:#d9d9d9
+    --bind=ctrl-b:preview-page-up,ctrl-f:preview-page-down
+    --preview-window="border-rounded" --prompt=" " --marker="◆" --pointer=" "
+    --separator="─" --scrollbar="│" --layout="reverse"
+'
+$env:FZF_DEFAULT_OPTS = $FZF_OPTS + '
+    --preview="bat --style=numbers --color=always --pager=never -- {}"
+'
+$env:FZF_CTRL_R_OPTS = $FZF_OPTS + '
+    --preview="echo {} | sed -e \"s/^\\\"//;s/\\\" $//\" | bat --color=always --terminal-width=%FZF_PREVIEW_COLUMNS% --wrap=character -pl powershell"
+'
+$env:FZF_ALT_C_OPTS = $FZF_OPTS + '
+    --preview="dir /a /b {}"
+'
 
 # === util functions ===
 function Test-HasCommand { param([string]$cmd)   return (Get-Command $cmd -ErrorAction SilentlyContinue).length -gt 0 }
