@@ -630,6 +630,13 @@ if command -v fzf > /dev/null; then
         --preview="fzf-preview.sh {}"'
     export FZF_CTRL_R_OPTS=$_FZF_OPTS'
         --preview="echo {2..} | bat --color=always --wrap=character --terminal-width=$FZF_PREVIEW_COLUMNS -pl zsh"'
+    if command -v eza > /dev/null; then
+        export FZF_ALT_C_OPTS=$_FZF_OPTS'
+            --preview="eza --hyperlink --icons=auto -a1 --git --color=always {}"'
+    else
+        export FZF_ALT_C_OPTS=$_FZF_OPTS'
+            --preview="ls -A1F --color=always {}"'
+    fi
     unset _FZF_OPTS
 fi
 
