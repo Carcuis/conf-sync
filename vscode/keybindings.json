@@ -162,8 +162,28 @@
     // copilot chat submit keybindings
     {
         "key": "ctrl+enter",
+        "command": "workbench.action.chat.queueMessage",
+        "when": "chatInputHasText && inChatInput && chatEditingSentRequest == 'q' && chatEditingSentRequest != 's' || chatInputHasText && chatSessionRequestInProgress && inChatInput && chatEditingSentRequest == 'q' && chatEditingSentRequest != 's' || chatInputHasText && inChatInput && chatEditingSentRequest == 'q' && chatEditingSentRequest == 'st' && chatEditingSentRequest != 's' || chatInputHasText && chatSessionRequestInProgress && inChatInput && chatEditingSentRequest != 'q' && chatEditingSentRequest != 's' && chatEditingSentRequest != 'st' && config.chat.requestQueuing.defaultAction != 'steer'"
+    },
+    {
+        "key": "ctrl+enter",
+        "command": "workbench.action.chat.steerWithMessage",
+        "when": "chatInputHasText && inChatInput && chatEditingSentRequest == 'st' && chatEditingSentRequest != 's' || chatInputHasText && chatSessionRequestInProgress && inChatInput && chatEditingSentRequest == 'st' && chatEditingSentRequest != 's' || chatInputHasText && inChatInput && chatEditingSentRequest == 'q' && chatEditingSentRequest == 'st' && chatEditingSentRequest != 's' || chatInputHasText && chatSessionRequestInProgress && inChatInput && config.chat.requestQueuing.defaultAction == 'steer' && chatEditingSentRequest != 'q' && chatEditingSentRequest != 's' && chatEditingSentRequest != 'st'"
+    },
+    {
+        "key": "ctrl+enter",
         "command": "workbench.action.chat.submit",
         "when": "chatInputHasText && chatSessionOptionsValid && inChatInput && !chatSessionRequestInProgress && !withinEditSessionDiff || chatInputHasText && chatSessionOptionsValid && inChatInput && !withinEditSessionDiff && chatEditingSentRequest == 's'"
+    },
+    {
+        "key": "enter",
+        "command": "-workbench.action.chat.queueMessage",
+        "when": "chatInputHasText && inChatInput && chatEditingSentRequest == 'q' && chatEditingSentRequest != 's' || chatInputHasText && chatSessionRequestInProgress && inChatInput && chatEditingSentRequest == 'q' && chatEditingSentRequest != 's' || chatInputHasText && inChatInput && chatEditingSentRequest == 'q' && chatEditingSentRequest == 'st' && chatEditingSentRequest != 's' || chatInputHasText && chatSessionRequestInProgress && inChatInput && chatEditingSentRequest != 'q' && chatEditingSentRequest != 's' && chatEditingSentRequest != 'st' && config.chat.requestQueuing.defaultAction != 'steer'"
+    },
+    {
+        "key": "enter",
+        "command": "-workbench.action.chat.steerWithMessage",
+        "when": "chatInputHasText && inChatInput && chatEditingSentRequest == 'st' && chatEditingSentRequest != 's' || chatInputHasText && chatSessionRequestInProgress && inChatInput && chatEditingSentRequest == 'st' && chatEditingSentRequest != 's' || chatInputHasText && inChatInput && chatEditingSentRequest == 'q' && chatEditingSentRequest == 'st' && chatEditingSentRequest != 's' || chatInputHasText && chatSessionRequestInProgress && inChatInput && config.chat.requestQueuing.defaultAction == 'steer' && chatEditingSentRequest != 'q' && chatEditingSentRequest != 's' && chatEditingSentRequest != 'st'"
     },
     {
         "key": "enter",
