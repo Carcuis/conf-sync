@@ -50,6 +50,7 @@
     },
     "files.defaultLanguage": "",
     "files.simpleDialog.enable": true,
+    "git.addAICoAuthor": "off",
     "git.autofetch": true,
     "git.confirmSync": false,
     "github.copilot.chat.codesearch.enabled": true,
