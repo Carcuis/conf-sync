@@ -1283,7 +1283,8 @@ if has("nvim")
                         local conda_prefix = os.getenv("CONDA_PREFIX")
                         local virtual_env = os.getenv("VIRTUAL_ENV")
                         local venv = conda_prefix or virtual_env
-                        local venv_name = venv:match("envs[/\\]([^/\\]+)$")
+                        local conda_env_name = os.getenv("CONDA_DEFAULT_ENV")
+                        local venv_name = conda_env_name or venv:match("envs[/\\]([^/\\]+)$")
                         if venv_name then
                             return ":"..venv_name
                         elseif conda_prefix ~= nil then
