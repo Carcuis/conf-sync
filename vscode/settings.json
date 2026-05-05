@@ -3,6 +3,9 @@
         "editor.fontSize": 14,
         "editor.guides.indentation": false
     },
+    "[latex]": {
+        "editor.wordWrap": "on",
+    },
     "[markdown]": {
         "editor.wordWrap": "off",
     },
