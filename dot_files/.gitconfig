@@ -30,3 +30,5 @@
 	username = Carcuis
 	helper = !gh auth git-credential
 
+[credential "https://git.overleaf.com"]
+	provider = generic
