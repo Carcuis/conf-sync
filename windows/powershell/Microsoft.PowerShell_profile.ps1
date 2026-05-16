@@ -82,7 +82,7 @@ function Start-EditFile {
         nvim $file
     } elseif (Test-HasCommand vim) {
         vim $file
-    } elseif (Test-HasCommand gvim) {
+    } elseif (Test-HasCommand code) {
         code $file
     } else {
         notepad $file
