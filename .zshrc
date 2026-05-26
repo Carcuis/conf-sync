@@ -1,7 +1,7 @@
 # If you come from bash you might have to change your $PATH.
 function add-path() {
     local _path=$1
-    [[ -d $_path ]] && [[ ! $PATH == *$_path* ]] && export PATH=$_path:$PATH
+    [[ -d $_path ]] && [[ $PATH != *$_path* ]] && export PATH=$_path:$PATH
 }
 _path_list=(
     $HOME/.local/bin
