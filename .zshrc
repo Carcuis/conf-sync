@@ -677,27 +677,9 @@ function get_conda_envs() {
     done
 }
 
-# override func in python plugin to support uv and venv
-function auto_vrun() {
-    if (( $+functions[deactivate] )) && [[ $PWD != ${VIRTUAL_ENV:h}* ]]
-    then
-        deactivate > /dev/null 2>&1
-    fi
-    if [[ $PWD != ${VIRTUAL_ENV:h} ]]
-    then
-        for _file in "${PYTHON_VENV_NAME}"*/bin/activate(N.) .venv/bin/activate(N.)
-        do
-            (( $+functions[deactivate] )) && deactivate > /dev/null 2>&1
-            source $_file > /dev/null 2>&1
-            break
-        done
-    fi
-}
-
 # re-define func in python plugin to support uv, venv and conda
 eval "$(typeset -f vrun | sed 's/^vrun/activate_venv/')"
 function vrun() {
-    local venv="${PYTHON_VENV_NAME:-venv}"
     local name="${1:-}"
 
     if [[ -z $name ]]; then
