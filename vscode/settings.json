@@ -16,6 +16,8 @@
     "chat.fontSize": 16,
     "chat.viewProgressBadge.enabled": true,
     "chat.viewSessions.orientation": "stacked",
+    "chatgpt.composerEnterBehavior": "cmdIfMultiline",
+    "chatgpt.followUpQueueMode": "steer",
     "code-runner.executorMap": {
         "java": "javac -encoding utf8 -d class $fileName && java -Dfile.encoding=UTF-8 -cp class $fileNameWithoutExt",
         "python": "set PYTHONIOENCODING=utf8 && $pythonPath $fullFileName",
