@@ -2,6 +2,8 @@
 
 [mgr]
 prepend_keymap = [
+    { on = ">", run = "arrow bot", desc = "Go to bottom" },
+    { on = "<", run = "arrow top", desc = "Go to top" },
     { on = "<A-v>", run = "visual_mode --unset", desc = "Enter visual mode (unset mode)" },
     { on = "<A-w>", run = "quit", desc = "Quit the process" },
     { on = "<A-y>", run = "quit", desc = "Quit the process" },
