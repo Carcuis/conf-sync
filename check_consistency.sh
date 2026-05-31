@@ -120,6 +120,9 @@ function declare_dirs() {
         Codespace)
             exclude_file_list+=(ideavimrc kitty_config)
             ;;
+        STB)
+            exclude_file_list+=(coc_settings ideavimrc shellcheckrc kitty_config kitty_linux vifmrc condarc tombi_config)
+            ;;
     esac
 
     if [[ ${#exclude_file_list[@]} != 0 ]]; then

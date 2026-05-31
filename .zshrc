@@ -188,6 +188,8 @@ function detect_system() {
         SYSTEM="WSL1"
     elif [[ $_uname_a =~ WSL2 ]]; then
         SYSTEM="WSL2"
+    elif [[ $_uname_a =~ [0-9\.]+-ophub ]]; then
+        SYSTEM="STB"
     elif [[ -n $CODESPACE_NAME ]]; then
         SYSTEM="Codespace"
     elif [[ "$OSTYPE" =~ ^darwin ]]; then

@@ -202,6 +202,11 @@ function install_ohmyzsh_plugins() {
 }
 
 function install_vim_plug() {
+    if [[ $SYSTEM == "STB" ]]; then
+        info "Skip installing Vim-Plug on Armbian STB."
+        return
+    fi
+
     if not_installed_file "$HOME/.vim/autoload/plug.vim" "Vim-Plug"; then
         download https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim "$HOME/.vim/autoload/plug.vim"
         successfully_installed $? "Vim-Plug"
@@ -225,6 +230,11 @@ function install_vim_plug() {
 }
 
 function install_vifm_custom() {
+    if [[ $SYSTEM == "STB" ]]; then
+        info "Skip installing Vifm custom on Armbian STB."
+        return
+    fi
+
     if ! has_command vifm; then
         warning "Warning: Vifm is not installed, skip installing Vifm custom."
         no_error=false
@@ -350,7 +360,11 @@ function link_files() {
         successfully_installed $? "$DIR/.vimrc to $vimrc" "Copied" "Failed to copy"
     fi
 
-    create_symlink "$vimrc" "$HOME/.config/nvim/init.vim"
+    if [[ $SYSTEM == "STB" ]]; then
+        info "Skip linking init.nvim on Armbian STB."
+    else
+        create_symlink "$vimrc" "$HOME/.config/nvim/init.vim"
+    fi
     create_symlink "$DIR/scripts/check_all.sh" "$HOME/.local/bin/csc"
     create_symlink "$DIR/scripts/git_log.sh" "$HOME/.local/bin/csl"
     create_symlink "$DIR/scripts/open_lazygit.sh" "$HOME/.local/bin/csg"
