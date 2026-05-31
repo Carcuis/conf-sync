@@ -128,13 +128,20 @@ function Enable-SshServiceInWsl { wsl -- sudo service ssh start }
 function Disable-SshServiceInWsl { wsl -- sudo service ssh stop }
 
 # === network ===
+function Set-Proxy {
+    param (
+        [string]$proxy_server
+    )
+    $proxy_port = $proxy_server -split ':' | Select-Object -Last 1
+    $env:ALL_PROXY = $proxy_server
+    $env:HTTP_PROXY = $proxy_server
+    $env:HTTPS_PROXY = $proxy_server
+    $env:PROXY_PORT = $proxy_port
+}
+
 function Enable-Proxy {
     $proxy_server = (Get-ItemProperty -Path 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Internet Settings').ProxyServer
-    $proxy_port = $proxy_server -split ':' | Select-Object -Last 1
-    $env:ALL_PROXY = "http://$proxy_server"
-    $env:HTTP_PROXY = "http://$proxy_server"
-    $env:HTTPS_PROXY = "http://$proxy_server"
-    $env:PROXY_PORT = $proxy_port
+    Set-Proxy http://$proxy_server
 }
 
 function Disable-Proxy {
