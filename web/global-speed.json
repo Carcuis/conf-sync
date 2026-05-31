@@ -1,30 +1,12 @@
 {
-    "audioFx": {
-        "delay": 0,
-        "eq": {
-            "enabled": false,
-            "factor": 1,
-            "values": [
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0
-            ]
-        },
-        "pitch": 0,
-        "volume": 1
-    },
+    "browserKeybinds": [],
     "circleWidget": false,
     "darkTheme": true,
     "enabled": true,
     "firstUse": 1718380558626,
     "freshKeybinds": false,
+    "gptWebsiteCounter": 5,
+    "hideBadge": false,
     "hideMediaView": false,
     "keybinds": [
         {
@@ -270,12 +252,437 @@
             "trigger": 2
         }
     ],
-    "lastSpeed": 2.1,
+    "keybindsUrlCondition": {
+        "allowParts": [],
+        "block": true,
+        "blockParts": [
+            {
+                "id": "3831695211",
+                "type": "STARTS_WITH",
+                "valueContains": "https://docs.google.com",
+                "valueRegex": "",
+                "valueStartsWith": "https://docs.google.com"
+            },
+            {
+                "id": "5597219930",
+                "type": "STARTS_WITH",
+                "valueContains": "https://play.geforcenow.com",
+                "valueRegex": "",
+                "valueStartsWith": "https://play.geforcenow.com"
+            },
+            {
+                "id": "9939321369",
+                "type": "STARTS_WITH",
+                "valueContains": "https://www.xbox.com",
+                "valueRegex": "",
+                "valueStartsWith": "https://www.xbox.com"
+            },
+            {
+                "id": "6312384385",
+                "type": "STARTS_WITH",
+                "valueContains": "https://docs.qq.com",
+                "valueRegex": "",
+                "valueStartsWith": "https://docs.qq.com"
+            },
+            {
+                "id": "3833025982",
+                "type": "STARTS_WITH",
+                "valueContains": "https://www.playstation.com",
+                "valueRegex": "",
+                "valueStartsWith": "https://www.playstation.com"
+            },
+            {
+                "id": "459340553",
+                "type": "STARTS_WITH",
+                "valueContains": "https://excalidraw.com",
+                "valueRegex": "",
+                "valueStartsWith": "https://excalidraw.com"
+            },
+            {
+                "id": "4957655776",
+                "type": "STARTS_WITH",
+                "valueContains": "https://www.photopea.com",
+                "valueRegex": "",
+                "valueStartsWith": "https://www.photopea.com"
+            },
+            {
+                "id": "9833936164",
+                "type": "STARTS_WITH",
+                "valueContains": "https://www.canva.com",
+                "valueRegex": "",
+                "valueStartsWith": "https://www.canva.com"
+            },
+            {
+                "id": "7939558393",
+                "type": "STARTS_WITH",
+                "valueContains": "http://luna.amazon.com",
+                "valueRegex": "",
+                "valueStartsWith": "http://luna.amazon.com"
+            },
+            {
+                "id": "8610420137",
+                "type": "STARTS_WITH",
+                "valueContains": "https://ys.mihoyo.com",
+                "valueRegex": "",
+                "valueStartsWith": "https://ys.mihoyo.com"
+            },
+            {
+                "id": "5823631894",
+                "type": "STARTS_WITH",
+                "valueContains": "https://www.youtube.com/playables",
+                "valueRegex": "",
+                "valueStartsWith": "https://www.youtube.com/playables"
+            },
+            {
+                "id": "8087115997",
+                "type": "STARTS_WITH",
+                "valueContains": "https://chatgpt.com",
+                "valueRegex": "",
+                "valueStartsWith": "https://chatgpt.com"
+            },
+            {
+                "id": "7496481398",
+                "type": "STARTS_WITH",
+                "valueContains": "https://claude.ai",
+                "valueRegex": "",
+                "valueStartsWith": "https://claude.ai"
+            },
+            {
+                "id": "4135426401",
+                "type": "STARTS_WITH",
+                "valueContains": "https://gemini.google.com",
+                "valueRegex": "",
+                "valueStartsWith": "https://gemini.google.com"
+            },
+            {
+                "id": "5741705023",
+                "type": "STARTS_WITH",
+                "valueContains": "https://www.deepseek.com",
+                "valueRegex": "",
+                "valueStartsWith": "https://www.deepseek.com"
+            },
+            {
+                "id": "7694549242",
+                "type": "STARTS_WITH",
+                "valueContains": "https://luna.amazon.com",
+                "valueRegex": "",
+                "valueStartsWith": "https://luna.amazon.com"
+            },
+            {
+                "id": "2213385256",
+                "type": "STARTS_WITH",
+                "valueContains": "https://www.4399.com",
+                "valueRegex": "",
+                "valueStartsWith": "https://www.4399.com"
+            },
+            {
+                "id": "5228405565",
+                "type": "STARTS_WITH",
+                "valueContains": "https://www.7k7k.com",
+                "valueRegex": "",
+                "valueStartsWith": "https://www.7k7k.com"
+            },
+            {
+                "id": "8999474473",
+                "type": "STARTS_WITH",
+                "valueContains": "https://poki.com",
+                "valueRegex": "",
+                "valueStartsWith": "https://poki.com"
+            },
+            {
+                "id": "4413943381",
+                "type": "STARTS_WITH",
+                "valueContains": "https://now.gg",
+                "valueRegex": "",
+                "valueStartsWith": "https://now.gg"
+            },
+            {
+                "id": "7163741219",
+                "type": "STARTS_WITH",
+                "valueContains": "https://coderpad.io",
+                "valueRegex": "",
+                "valueStartsWith": "https://coderpad.io"
+            },
+            {
+                "id": "686044118",
+                "type": "STARTS_WITH",
+                "valueContains": "https://reemo.io",
+                "valueRegex": "",
+                "valueStartsWith": "https://reemo.io"
+            },
+            {
+                "id": "2670771586",
+                "type": "STARTS_WITH",
+                "valueContains": "https://web.parsec.app",
+                "valueRegex": "",
+                "valueStartsWith": "https://web.parsec.app"
+            },
+            {
+                "id": "3615465571",
+                "type": "STARTS_WITH",
+                "valueContains": "https://remotedesktop.google.com",
+                "valueRegex": "",
+                "valueStartsWith": "https://remotedesktop.google.com"
+            },
+            {
+                "id": "1175534153",
+                "type": "STARTS_WITH",
+                "valueContains": "https://godbolt.org",
+                "valueRegex": "",
+                "valueStartsWith": "https://godbolt.org"
+            },
+            {
+                "id": "1937494413",
+                "type": "STARTS_WITH",
+                "valueContains": "https://github.dev",
+                "valueRegex": "",
+                "valueStartsWith": "https://github.dev"
+            }
+        ],
+        "blockPorts": []
+    },
+    "lastSpeed": 3,
     "latestViaShortcut": false,
+    "menuKeybinds": [
+        {
+            "command": "intoPopup",
+            "contextLabel": "转为弹出窗口",
+            "enabled": false,
+            "greedy": true,
+            "id": "5399615275",
+            "labelGsm": "command.intoPopup",
+            "labelGsmLang": "zh-CN",
+            "trigger": 2,
+            "valuePopupRect": {
+                "height": 800,
+                "left": 524,
+                "top": 176,
+                "width": 1000
+            }
+        },
+        {
+            "command": "drawPage",
+            "contextLabel": "在页面上绘制",
+            "enabled": false,
+            "greedy": true,
+            "id": "7246290987",
+            "labelGsm": "command.drawPage",
+            "labelGsmLang": "zh-CN",
+            "trigger": 2
+        },
+        {
+            "command": "cinema",
+            "contextLabel": "加深背景",
+            "enabled": false,
+            "greedy": true,
+            "id": "4452050006",
+            "labelGsm": "command.cinema",
+            "labelGsmLang": "zh-CN",
+            "trigger": 2,
+            "valueState": "toggle"
+        },
+        {
+            "adjustMode": 4,
+            "command": "fxFilter",
+            "contextLabel": "Fx :: 视频亮度",
+            "enabled": false,
+            "filterOption": "brightness",
+            "filterTarget": "element",
+            "greedy": true,
+            "id": "1249277240",
+            "labelGsm": "menuLabels.videoBrightness",
+            "labelGsmLang": "zh-CN",
+            "labelGsmPrefix": "Fx :: ",
+            "trigger": 2,
+            "valueItcMax": 2,
+            "valueItcMin": 0.5
+        },
+        {
+            "adjustMode": 4,
+            "command": "fxFilter",
+            "contextLabel": "Fx :: 视频对比度",
+            "enabled": false,
+            "filterOption": "contrast",
+            "filterTarget": "element",
+            "greedy": true,
+            "id": "528954717",
+            "labelGsm": "menuLabels.videoContrast",
+            "labelGsmLang": "zh-CN",
+            "labelGsmPrefix": "Fx :: ",
+            "trigger": 2,
+            "valueItcMax": 1.25,
+            "valueItcMin": 0.75
+        },
+        {
+            "command": "fxReset",
+            "contextLabel": "Fx :: 重置",
+            "enabled": false,
+            "filterTarget": "both",
+            "greedy": true,
+            "id": "6303407196",
+            "labelGsm": "token.reset",
+            "labelGsmLang": "zh-CN",
+            "labelGsmPrefix": "Fx :: ",
+            "trigger": 2
+        },
+        {
+            "adjustMode": 4,
+            "command": "afxPitch",
+            "contextLabel": "音高",
+            "enabled": false,
+            "greedy": true,
+            "id": "3483466196",
+            "labelGsm": "command.afxPitch",
+            "labelGsmLang": "zh-CN",
+            "trigger": 2
+        },
+        {
+            "adjustMode": 4,
+            "command": "afxGain",
+            "contextLabel": "音量增强",
+            "enabled": false,
+            "greedy": true,
+            "id": "2736983832",
+            "labelGsm": "command.afxGain",
+            "labelGsmLang": "zh-CN",
+            "trigger": 2
+        },
+        {
+            "command": "afxReset",
+            "contextLabel": "音频重置",
+            "enabled": false,
+            "greedy": true,
+            "id": "7742672669",
+            "labelGsm": "command.afxReset",
+            "labelGsmLang": "zh-CN",
+            "trigger": 2
+        }
+    ],
+    "pageKeybinds": [
+        {
+            "adjustMode": 2,
+            "command": "speed",
+            "enabled": false,
+            "greedy": true,
+            "id": "6868352239",
+            "key": "KeyA",
+            "valueNumber": -0.1
+        },
+        {
+            "command": "speed",
+            "enabled": false,
+            "greedy": true,
+            "id": "2286626167",
+            "key": "KeyS",
+            "valueNumber": 1
+        },
+        {
+            "adjustMode": 2,
+            "command": "speed",
+            "enabled": false,
+            "greedy": true,
+            "id": "9196031244",
+            "key": "KeyD",
+            "valueNumber": 0.1
+        },
+        {
+            "command": "temporarySpeed",
+            "enabled": false,
+            "greedy": true,
+            "id": "3939498309",
+            "key": "KeyG",
+            "spacing": 1,
+            "valueNumber": 3
+        },
+        {
+            "adjustMode": 2,
+            "command": "seek",
+            "enabled": false,
+            "greedy": true,
+            "id": "457071597",
+            "key": "KeyZ",
+            "valueNumber": -5
+        },
+        {
+            "adjustMode": 2,
+            "command": "seek",
+            "enabled": false,
+            "greedy": true,
+            "id": "7936453688",
+            "key": "KeyX",
+            "valueNumber": 10
+        },
+        {
+            "adjustMode": 2,
+            "command": "seek",
+            "duration": 2,
+            "enabled": false,
+            "greedy": true,
+            "id": "112585108",
+            "key": {
+                "code": "KeyZ",
+                "shiftKey": true
+            },
+            "valueNumber": -1
+        },
+        {
+            "adjustMode": 2,
+            "command": "seek",
+            "duration": 2,
+            "enabled": false,
+            "greedy": true,
+            "id": "5895859780",
+            "key": {
+                "code": "KeyX",
+                "shiftKey": true
+            },
+            "spacing": 1,
+            "valueNumber": 1
+        },
+        {
+            "command": "fullscreen",
+            "direct": true,
+            "enabled": false,
+            "greedy": true,
+            "id": "4495085623",
+            "key": {
+                "code": "KeyF",
+                "shiftKey": true
+            }
+        },
+        {
+            "command": "setMark",
+            "enabled": false,
+            "greedy": true,
+            "id": "1068204972",
+            "key": {
+                "code": "KeyW",
+                "shiftKey": true
+            },
+            "valueString": "mark1"
+        },
+        {
+            "command": "seekMark",
+            "enabled": false,
+            "greedy": true,
+            "id": "9266491818",
+            "key": "KeyW",
+            "valueString": "mark1"
+        },
+        {
+            "command": "loop",
+            "enabled": false,
+            "greedy": true,
+            "id": "4388195698",
+            "key": "KeyR",
+            "valueString": "mark1"
+        }
+    ],
+    "qrCodeSeenCounter": 61,
     "rules": [
         {
             "condition": {
-                "parts": [
+                "allowParts": [
                     {
                         "id": "7728909975",
                         "type": "CONTAINS",
@@ -310,19 +717,36 @@
                         "valueContains": "mytvsuper.com",
                         "valueRegex": "example\\.com",
                         "valueStartsWith": "https://example.com"
+                    },
+                    {
+                        "id": "5756283369",
+                        "type": "CONTAINS",
+                        "valueContains": "5140/player",
+                        "valueRegex": "example\\.com",
+                        "valueStartsWith": "https://example.com"
+                    },
+                    {
+                        "id": "1896872838",
+                        "type": "CONTAINS",
+                        "valueContains": "lofi.88lin.eu.org",
+                        "valueRegex": "example\\.com",
+                        "valueStartsWith": "https://example.com"
                     }
-                ]
+                ],
+                "blockPorts": []
             },
             "enabled": true,
             "id": "4226903471",
             "overrideJs": "// code here\n",
             "overrideSpeed": 1,
-            "spacing": 2,
+            "spacing": 0,
+            "strictness": 3,
             "type": "SPEED"
         }
     ],
-    "speed": 2,
+    "speed": 1.25,
     "speedBigStep": 1,
+    "speedChangeCounter": 1910,
     "speedPresetPadding": 5.8,
     "speedPresets": [
         0.25,
@@ -343,5 +767,34 @@
         "min": 0.1
     },
     "speedSmallStep": 0.1,
-    "version": 12
+    "version": 14,
+    "websitesAddedToUrlConditionsExclusion": [
+        "starts_https://docs.google.com",
+        "starts_https://play.geforcenow.com",
+        "starts_https://www.xbox.com",
+        "starts_https://docs.qq.com",
+        "starts_https://www.playstation.com",
+        "starts_https://excalidraw.com",
+        "starts_https://www.photopea.com",
+        "starts_https://www.canva.com",
+        "starts_http://luna.amazon.com",
+        "starts_https://ys.mihoyo.com",
+        "starts_https://www.youtube.com/playables",
+        "contains_game",
+        "starts_https://chatgpt.com",
+        "starts_https://claude.ai",
+        "starts_https://gemini.google.com",
+        "starts_https://www.deepseek.com",
+        "starts_https://luna.amazon.com",
+        "starts_https://www.4399.com",
+        "starts_https://www.7k7k.com",
+        "starts_https://poki.com",
+        "starts_https://now.gg",
+        "starts_https://coderpad.io",
+        "starts_https://reemo.io",
+        "starts_https://web.parsec.app",
+        "starts_https://remotedesktop.google.com",
+        "starts_https://godbolt.org",
+        "starts_https://github.dev"
+    ]
 }
