@@ -68,6 +68,10 @@
     },
     "github.copilot.nextEditSuggestions.enabled": true,
     "github.copilot.nextEditSuggestions.fixes": true,
+    "isort.args": [
+        "--line-length", "120",
+        "--multi-line", "3",
+    ],
     "Lua.completion.callSnippet": "Replace",
     "Lua.format.defaultConfig": {
         "align_array_table": "false"
