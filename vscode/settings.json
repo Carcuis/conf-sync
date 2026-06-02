@@ -28,6 +28,7 @@
     "csv-preview.formatValues": "never",
     "debug.breakpointsView.presentation": "tree",
     "debug.showBreakpointsInOverviewRuler": true,
+    "deepseek-copilot.experimental.stabilizeToolList": true,
     "diffEditor.hideUnchangedRegions.enabled": true,
     "editor.bracketPairColorization.enabled": false,
     "editor.cursorSmoothCaretAnimation": "on",
