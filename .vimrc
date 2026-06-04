@@ -58,8 +58,7 @@ if has("nvim")
     Plug 'alec-gibson/nvim-tetris'
     Plug 'nvim-lua/popup.nvim'
     Plug 'catgoose/nvim-colorizer.lua'
-    Plug 'nvim-treesitter/nvim-treesitter', { 'branch': 'master' }
-    Plug 'nvim-treesitter/playground'
+    Plug 'romus204/tree-sitter-manager.nvim'
     Plug 'nvim-lualine/lualine.nvim'
     Plug 'folke/which-key.nvim'
     Plug 'lukas-reineke/indent-blankline.nvim'
@@ -99,7 +98,6 @@ if has("nvim")
     Plug 'rcarriga/nvim-dap-ui'
     Plug 'nvim-telescope/telescope-dap.nvim'
     Plug 'theHamsta/nvim-dap-virtual-text'
-    Plug 'LiadOz/nvim-dap-repl-highlights'
     Plug 'mason-org/mason.nvim'
     Plug 'mason-org/mason-lspconfig.nvim'
     Plug 'RubixDev/mason-update-all'
@@ -224,6 +222,9 @@ if has("nvim")
         let g:python3_host_prog = stdpath('data') . '/pynvim/venv/Scripts/python.exe'
         if getcwd() ==? "C:\\Windows\\System32"
             cd %:p:h
+        endif
+        if !exists('$CC') || $CC == ''
+            let $CC = 'gcc'
         endif
     else
         let g:python3_host_prog = stdpath('data') . '/pynvim/venv/bin/python3'
@@ -1014,29 +1015,18 @@ if has("nvim")
 EOF
 endif
 
-" === nvim-treesitter ===
+" === tree-sitter-manager.nvim ===
 if has("nvim")
     lua << EOF
-    require('nvim-treesitter.configs').setup {
+    require('tree-sitter-manager').setup({
         ensure_installed = {
             "python", "c", "cpp", "lua", "bash", "vim", "vimdoc", "go", "css", "javascript", "typescript", "make",
-            "markdown", "markdown_inline", "toml", "yaml", "xml", "git_config", "json", "json5", "jsonc", "sql",
+            "zsh", "markdown", "markdown_inline", "toml", "yaml", "xml", "git_config", "json", "json5", "sql",
             "latex", "regex", "powershell", "java", "gitattributes", "gitignore", "cmake", "html", "hlsplaylist",
             "ssh_config"
         },
-        highlight = {
-            enable = true,
-            additional_vim_regex_highlighting = false,
-        },
-        playground = {
-            enable = true,
-            disable = {},
-            updatetime = 25, -- Debounced time for highlighting nodes in the playground from source code
-            persist_queries = false, -- Whether the query persists across vim sessions
-        },
-    }
+    })
 EOF
-    nnoremap <M-c> <cmd>TSHighlightCapturesUnderCursor<CR>
 endif
 
 " === nvim-treesitter-context ===
@@ -2415,10 +2405,6 @@ if has("nvim")
     end, {})
 
     vim.api.nvim_create_user_command("ToggleDapUI", function(layout_num)
-        require('nvim-dap-repl-highlights').setup()
-        if #vim.api.nvim_get_runtime_file("parser/dap_repl.so", false) < 1 then
-            vim.cmd.TSInstallSync("dap_repl")
-        end
         local nvim_tree = require("nvim-tree.api").tree
         local dapui_windows = require("dapui.windows")
 
