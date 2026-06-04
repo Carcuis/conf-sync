@@ -2102,7 +2102,7 @@ endif
 if has("nvim")
     lua << EOF
     require("CopilotChat").setup({
-        model = 'gpt-4.1',
+        model = 'auto',
         sticky = {
             '#buffer',
         },
