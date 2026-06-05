@@ -394,6 +394,8 @@ alias al='la'
 alias lg='lazygit'
 alias lzd='lazydocker'
 alias pp='ptpython'
+alias px='set_proxy http://127.0.0.1:10809'
+alias upx=unset_proxy
 alias wd=web_detection
 alias wtr=weather_forecast
 alias histc="$EDITOR ~/.zsh_history"
@@ -480,7 +482,6 @@ if [[ $SYSTEM =~ "WSL[12]" ]]; then
     alias no='nautilus'
     alias no.='nautilus .'
     alias px="set_proxy http://$(wsl_get_proxy_server):$(wsl_get_proxy_port)"
-    alias upx=unset_proxy
     alias nvid='neovide.exe --wsl'
 
     if [[ $SYSTEM == "WSL1" ]]; then
@@ -496,8 +497,6 @@ elif [[ $SYSTEM == "Android" ]]; then
 elif [[ $SYSTEM == "Linux" ]]; then
     alias o='nautilus'
     alias o.='nautilus .'
-    alias px='set_proxy http://127.0.0.1:10809'
-    alias upx=unset_proxy
 elif [[ $SYSTEM == "Darwin" ]]; then
     alias sshon='sudo launchctl load -w /System/Library/LaunchDaemons/ssh.plist'
     alias sshoff='sudo launchctl unload -w /System/Library/LaunchDaemons/ssh.plist'
@@ -506,7 +505,6 @@ elif [[ $SYSTEM == "Darwin" ]]; then
     alias o='open'
     alias o.='open .'
     alias px='set_proxy http://127.0.0.1:1087'
-    alias upx=unset_proxy
 fi
 
 # ================================
