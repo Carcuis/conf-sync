@@ -646,6 +646,9 @@ if command -v java > /dev/null; then
 fi
 
 # === Python ===
+# do not use system python in uv
+export UV_MANAGED_PYTHON=1
+
 function cdhk() {
     if ! command -v conda > /dev/null; then
         echo "Error: conda not found."
