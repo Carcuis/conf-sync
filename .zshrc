@@ -7,6 +7,7 @@ _path_list=(
     $HOME/.local/bin
     $HOME/.cargo/bin
     $HOME/.fzf/bin
+    /home/linuxbrew/.linuxbrew/opt/python3/libexec/bin
     /home/linuxbrew/.linuxbrew/bin
     $HOME/dev/miniconda3/condabin
     /usr/games
@@ -610,6 +611,9 @@ function _proxy() {
 }
 POWERLEVEL9K_CUSTOM_PROXY_FOREGROUND=31
 POWERLEVEL9K_CUSTOM_PROXY="_proxy"
+
+# === Homebrew ===
+export HOMEBREW_NO_ASK=true
 
 # === tmux ===
 export TMUX_TITLE_HOST=${_HOST_NAME:-$HOST}
