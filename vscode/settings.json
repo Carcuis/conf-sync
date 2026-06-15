@@ -59,6 +59,7 @@
     "git.addAICoAuthor": "off",
     "git.autofetch": true,
     "git.confirmSync": false,
+    "git.openRepositoryInParentFolders": "never",
     "github.copilot.chat.codesearch.enabled": true,
     "github.copilot.chat.searchSubagent.enabled": true,
     "github.copilot.enable": {
