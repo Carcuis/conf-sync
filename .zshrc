@@ -515,6 +515,7 @@ if [[ $SYSTEM =~ "WSL[12]" ]]; then
     if [[ $SYSTEM == "WSL1" ]]; then
         export DISPLAY=127.0.0.1:0.0
     fi
+    export GTK_THEME=Adwaita:dark
 
     # autostart ssh-agent - deprecated, use Github CLI instead
     # if [ -z "$SSH_AUTH_SOCK" ] ; then
