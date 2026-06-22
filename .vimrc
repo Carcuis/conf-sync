@@ -68,7 +68,7 @@ if has("nvim")
         let &rtp=&rtp
         UpdateRemotePlugins
     endfunction
-    Plug 'gelguy/wilder.nvim', { 'do': function('UpdateRemotePlugins') }
+    Plug 'wookayin/wilder.nvim', { 'do': function('UpdateRemotePlugins') }
     Plug 'famiu/bufdelete.nvim'
     Plug 'rcarriga/nvim-notify'
     Plug 'JoosepAlviste/nvim-ts-context-commentstring'
