@@ -611,15 +611,6 @@ if has("nvim")
     " Disable error bracket highlight in coc-sumneko-lua hover message
     highlight link LuaParenError Normal
     highlight link LuaError Normal
-
-    " Auto close coc-tree
-    autocmd BufEnter CocTree* ++nested
-        \ let layout = winlayout() |
-        \ if len(layout) == 2 && layout[0] == 'leaf' && getbufvar(winbufnr(layout[1]), '&filetype') == 'coctree' ||
-        \     len(layout[1]) == 2 && layout[0] == 'row' && layout[1][0][0] == 'leaf' && layout[1][1][0] == 'leaf' &&
-        \     getbufvar(winbufnr(layout[1][0][1]), '&filetype') == 'NvimTree' &&
-        \     getbufvar(winbufnr(layout[1][1][1]), '&filetype') == 'coctree' |
-        \ quit | endif
 endif
 
 " === vim-which-key ===
@@ -825,12 +816,6 @@ EOF
     if (winwidth(0) >= 130) && argc() < 2
         autocmd VimEnter,TabNewEntered * call OpenUnfocusedNvimTreeInNewWindow()
     endif
-
-    " Auto close NvimTree when it is the last buffer in the session or tab
-    autocmd BufEnter NvimTree_* ++nested
-            \ let layout = winlayout() |
-            \ if len(layout) == 2 && layout[0] == 'leaf' && getbufvar(winbufnr(layout[1]), '&filetype') == 'NvimTree' |
-            \ quit | endif
 
     lua << EOF
     local function on_attach(bufnr)
@@ -3132,4 +3117,28 @@ command -nargs=0 FixEOL %s/\r$//
 
 " fix wrong spaces often seen in obsidian
 command -nargs=0 FixSpaces %s/ / /g
+
+" auto close last windows
+function CloseWindowsIfLast()
+    let filetypes = ['NvimTree', 'coctree', 'dapui_watches', 'dapui_stacks', 'dapui_breakpoints', 'dapui_scopes',
+                \ 'dapui_console', 'dap-repl', 'OverseerList', 'OverseerOutput']
+    for w in range(1, winnr('$'))
+        let ft = getbufvar(winbufnr(w), '&filetype')
+
+        if index(filetypes, ft) == -1
+            return
+        endif
+    endfor
+    if tabpagenr('$') > 1
+        tabclose
+    else
+        qall
+    endif
+endfunction
+autocmd BufEnter * ++nested
+            \ if tabpagenr('$') == 1 |
+            \     call CloseWindowsIfLast() |
+            \ else |
+            \     call timer_start(0, { -> CloseWindowsIfLast() }) |
+            \ endif
 
