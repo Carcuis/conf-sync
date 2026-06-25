@@ -1,5 +1,6 @@
 [wsl2]
 autoProxy = false
+MaxCrashDumpCount = -1
 
 # vim: ft=toml
 
