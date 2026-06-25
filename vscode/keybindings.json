@@ -130,8 +130,8 @@
     },
     {
         "key": "ctrl+shift+v",
-        "command": "-markdown.showPreview",
-        "when": "!notebookEditorFocused && editorLangId == 'markdown'"
+        "command": "-markdown.togglePreview",
+        "when": "!terminalFocus && activeCustomEditorId == 'vscode.markdown.preview.editor' || editorFocus && !notebookEditorFocused && !terminalFocus && resourceLangId =~ /^(markdown|prompt|instructions|chatagent|skill)$/"
     },
     {
         "key": "ctrl+shift+y",
