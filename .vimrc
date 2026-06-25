@@ -3119,26 +3119,30 @@ command -nargs=0 FixEOL %s/\r$//
 command -nargs=0 FixSpaces %s/ / /g
 
 " auto close last windows
-function CloseWindowsIfLast()
-    let filetypes = ['NvimTree', 'coctree', 'dapui_watches', 'dapui_stacks', 'dapui_breakpoints', 'dapui_scopes',
-                \ 'dapui_console', 'dap-repl', 'OverseerList', 'OverseerOutput']
-    for w in range(1, winnr('$'))
-        let ft = getbufvar(winbufnr(w), '&filetype')
-
-        if index(filetypes, ft) == -1
-            return
+if has("nvim")
+    function CloseWindowsIfLast()
+        let filetypes = ['NvimTree', 'coctree', 'dapui_watches', 'dapui_stacks', 'dapui_breakpoints', 'dapui_scopes',
+                    \ 'dapui_console', 'dap-repl', 'OverseerList', 'OverseerOutput']
+        for winid in nvim_list_wins()
+            if !empty(nvim_win_get_config(winid).relative)
+                continue
+            endif
+            let ft = getbufvar(winbufnr(winid), '&filetype')
+            if index(filetypes, ft) == -1
+                return
+            endif
+        endfor
+        if tabpagenr('$') > 1
+            tabclose
+        else
+            qall
         endif
-    endfor
-    if tabpagenr('$') > 1
-        tabclose
-    else
-        qall
-    endif
-endfunction
-autocmd BufEnter * ++nested
-            \ if tabpagenr('$') == 1 |
-            \     call CloseWindowsIfLast() |
-            \ else |
-            \     call timer_start(0, { -> CloseWindowsIfLast() }) |
-            \ endif
+    endfunction
+    autocmd BufEnter * ++nested
+                \ if tabpagenr('$') == 1 |
+                \     call CloseWindowsIfLast() |
+                \ else |
+                \     call timer_start(0, { -> CloseWindowsIfLast() }) |
+                \ endif
+endif
 
