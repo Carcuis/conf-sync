@@ -1,12 +1,12 @@
 #:schema https://yazi-rs.github.io/schemas/yazi.json
 
 [mgr]
-ratio = [1, 3, 4]
+ratio = [ 1, 3, 4 ]
 show_hidden = true
 
 [open]
 prepend_rules = [
-    { url = "*.m3u*", use = ["edit", "open"] },
+    { url = "*.m3u*", use = [ "edit", "open" ] },
 ]
 
 [opener]
