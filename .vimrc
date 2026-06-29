@@ -3123,7 +3123,7 @@ if has("nvim")
     function CloseWindowsIfLast()
         let filetypes = ['NvimTree', 'coctree', 'dapui_watches', 'dapui_stacks', 'dapui_breakpoints', 'dapui_scopes',
                     \ 'dapui_console', 'dap-repl', 'OverseerList', 'OverseerOutput']
-        for winid in nvim_list_wins()
+        for winid in nvim_tabpage_list_wins(nvim_get_current_tabpage())
             if !empty(nvim_win_get_config(winid).relative)
                 continue
             endif
