@@ -1117,7 +1117,7 @@ if has("nvim")
                     lualine_c = {
                         {
                             function()
-                                if vim.g.terminal_running then
+                                if vim.b.terminal_running then
                                     return ""
                                 end
                                 return ""
@@ -1134,7 +1134,7 @@ if has("nvim")
                         }
                     },
                 },
-                filetypes = {'terminal'},
+                filetypes = {'terminal', 'OverseerOutput'},
             },
             {
                 sections = { lualine_b = { capsule({
@@ -1166,8 +1166,8 @@ if has("nvim")
                 "dapui_watches", "dapui_stacks", "dapui_breakpoints",
             },
             ignore_focus = {
-                "dapui_watches", "dapui_stacks", "dapui_breakpoints", "dapui_scopes", "dapui_console",
-                "NvimTree", "coctree", "OverseerList", "terminal", "toggleterm"
+                "dapui_watches", "dapui_stacks", "dapui_breakpoints", "dapui_scopes", "dapui_console", "dap-repl",
+                "NvimTree", "coctree", "OverseerList", "OverseerOutput", "terminal", "toggleterm"
             },
         },
         sections = {
@@ -3101,13 +3101,13 @@ autocmd VimEnter * clearjumps
 
 " auto switch mode for terminal
 if has("nvim")
-    autocmd TermOpen term://*[^#toggleterm#]* let g:terminal_running = v:true | set filetype=terminal
-    autocmd WinEnter term://*[^#toggleterm#]* if g:terminal_running | startinsert!
-    autocmd TermClose term://*[^#toggleterm#]* let g:terminal_running = v:false | stopinsert
+    augroup TerminalInsertMode
+        autocmd!
+        autocmd TermOpen * let b:terminal_running = v:true | if &filetype == '' | setlocal filetype=terminal | endif
+        autocmd BufEnter * call timer_start(1, { -> &filetype ==# 'terminal' && get(b:, 'terminal_running', v:false) ? execute('startinsert!') : 0 })
+        autocmd TermClose * let b:terminal_running = v:false
+    augroup END
 endif
-
-" set filetype for terminal buffers
-autocmd BufEnter * if &buftype == 'terminal' | set filetype=terminal | endif
 
 " set wrap in markdown files
 autocmd FileType markdown setlocal wrap
