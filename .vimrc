@@ -711,6 +711,7 @@ let g:extra_whitespace_ignored_filetypes = [
             \'toggleterm',
             \'mason',
             \'leetcode.nvim',
+            \'OverseerList',
             \]
 
 " === bufferline.nvim ===
