@@ -18,6 +18,9 @@ prepend_keymap = [
     { on = "<Enter>", run = "plugin smart-enter", desc = "Enter the child directory, or open the file" },
     { on = "l", run = "plugin smart-enter", desc = "Enter the child directory, or open the file" },
 
+    # chmod.yazi
+    { on = [ "c", "m" ], run = "plugin chmod", desc = "Chmod on selected files", for = "unix" },
+
     # lazygit.yazi
     { on = [ "g", "i" ], run = "plugin lazygit", desc = "run lazygit" },
 

@@ -289,6 +289,10 @@ function install_yazi_package() {
         ya pkg add yazi-rs/plugins:git
         successfully_installed $? "Yazi plugin git"
     fi
+    if not_installed_file "$HOME/.config/yazi/plugins/chmod.yazi/main.lua" "Yazi plugin chmod"; then
+        ya pkg add yazi-rs/plugins:chmod
+        successfully_installed $? "Yazi plugin chmod"
+    fi
     if not_installed_file "$HOME/.config/yazi/plugins/mediainfo.yazi/main.lua" "Yazi plugin mediainfo"; then
         ya pkg add boydaihungst/mediainfo
         successfully_installed $? "Yazi plugin mediainfo"
