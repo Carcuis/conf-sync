@@ -50,13 +50,8 @@ $ideavimrc = @{
 }
 $lazygit = @{
     name = "lazygit config.yml"
-    remote = "$DIR\windows\lazygit\config.yml"
+    remote = "$DIR\.config\lazygit\config.yml"
     local = "$HOME\AppData\Roaming\lazygit\config.yml"
-}
-$lazygit_pager_sh = @{
-    name = "lazygit pager.sh"
-    remote = "$DIR\windows\lazygit\pager.sh"
-    local = "$HOME\AppData\Roaming\lazygit\pager.sh"
 }
 $git_config = @{
     name = "Globle git config"
@@ -135,7 +130,6 @@ $extra_file_list = @(
     $ptpython
     $ideavimrc
     $lazygit
-    $lazygit_pager_sh
     $git_config
     $vifmrc
     $clangd
