@@ -115,7 +115,8 @@
         "host1": "linux",
         "host2": "linux",
         "host3": "linux",
-        "host3b": "linux"
+        "host3b": "linux",
+        "host4": "linux",
     },
     "terminal.integrated.allowChords": false,
     "terminal.integrated.defaultProfile.linux": "zsh",
