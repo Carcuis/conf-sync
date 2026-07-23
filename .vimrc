@@ -1767,7 +1767,7 @@ if has("nvim")
                 end
 
                 local disabled_filetypes = {
-                    '', 'NvimTree', 'DiffviewFiles', 'DiffviewFileHistory', 'startify', 'coctree'
+                    '', 'NvimTree', 'DiffviewFiles', 'DiffviewFileHistory', 'startify', 'coctree', 'OverseerList'
                 }
                 if vim.tbl_contains(disabled_filetypes, vim.bo[buf].ft) then return false end
 
