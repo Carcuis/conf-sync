@@ -2141,9 +2141,6 @@ if has("nvim")
         end
         vim.env.PATH = table.concat(current_paths, ';')
     end
-    if vim.fn.has("android") == 1 then
-        vim.list_extend(packages_to_remove, { "tombi" })
-    end
     if #packages_to_remove > 0 then
         for i = #mason_lsp_ensure_installed, 1, -1 do
             if vim.tbl_contains(packages_to_remove, mason_lsp_ensure_installed[i]) then
