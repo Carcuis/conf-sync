@@ -173,7 +173,7 @@
     {
         "key": "ctrl+enter",
         "command": "workbench.action.chat.submit",
-        "when": "chatInputHasSendableContent && chatSessionOptionsValid && inChatInput && !chatSessionRequestInProgress && !withinEditSessionDiff || chatInputHasSendableContent && chatSessionOptionsValid && inChatInput && !withinEditSessionDiff && chatEditingSentRequest == 's'"
+        "when": "chatInputHasSendableContent && chatSessionOptionsValid && inChatInput && !chatInputSubmitPending && !chatSessionRequestInProgress && !withinEditSessionDiff || chatInputHasSendableContent && chatSessionOptionsValid && inChatInput && !chatInputSubmitPending && !withinEditSessionDiff && chatEditingSentRequest == 's'"
     },
     {
         "key": "enter",
@@ -188,7 +188,7 @@
     {
         "key": "enter",
         "command": "-workbench.action.chat.submit",
-        "when": "chatInputHasSendableContent && chatSessionOptionsValid && inChatInput && !chatSessionRequestInProgress && !withinEditSessionDiff || chatInputHasSendableContent && chatSessionOptionsValid && inChatInput && !withinEditSessionDiff && chatEditingSentRequest == 's'"
+        "when": "chatInputHasSendableContent && chatSessionOptionsValid && inChatInput && !chatInputSubmitPending && !chatSessionRequestInProgress && !withinEditSessionDiff || chatInputHasSendableContent && chatSessionOptionsValid && inChatInput && !chatInputSubmitPending && !withinEditSessionDiff && chatEditingSentRequest == 's'"
     },
 
     // git diff keybindings
