@@ -18,6 +18,7 @@
     "chat.agent.maxRequests": 500,
     "chat.editing.explainChanges.enabled": true,
     "chat.fontSize": 16,
+    "chat.permissions.default": "autopilot",
     "chat.viewProgressBadge.enabled": true,
     "chat.viewSessions.orientation": "stacked",
     "chatgpt.composerEnterBehavior": "cmdIfMultiline",
