@@ -302,7 +302,7 @@ function install_yazi_package() {
         successfully_installed $? "Yazi plugin lazygit"
     fi
     if not_installed_file "$HOME/.config/yazi/plugins/bookmarks.yazi/main.lua" "Yazi plugin bookmarks"; then
-        ya pkg add dedukun/bookmarks
+        ya pkg add qw457812/bookmarks
         successfully_installed $? "Yazi plugin bookmarks"
     fi
 }

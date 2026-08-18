@@ -243,7 +243,7 @@ function Install-YaziPackage {
         Write-InstallStatus -status $? -content "Yazi plugin lazygit"
     }
     if (Test-FileNotInstalled -file "$yazi_config_home\plugins\bookmarks.yazi\main.lua" -package "Yazi plugin bookmarks") {
-        ya pkg add dedukun/bookmarks
+        ya pkg add qw457812/bookmarks
         Write-InstallStatus -status $? -content "Yazi plugin bookmarks"
     }
 }
