@@ -71,13 +71,13 @@
           "powerline_symbol": "",
           "invert_powerline": true,
           "foreground": "#193549",
-          "background": "#ffeb3b",
+          "background": "#2e9732",
           "background_templates": [
             "{{ if eq \"Full\" .State.String }}#2e9732{{ end }}",
             "{{ if eq \"Charging\" .State.String }}#40c4ff{{ end }}",
             "{{ if eq \"Discharging\" .State.String }}#5391f0{{ end }}"
           ],
-          "template": " {{ if not .Error }}{{ .Icon }}{{ .Percentage }}{{ end }}{{ .Error }} "
+          "template": " {{ if not .Error }}{{ .Percentage }}{{ end }}{{ .Error }} "
         },
         {
           "type": "time",
