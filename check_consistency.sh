@@ -152,6 +152,11 @@ function usage() {
     mesg "  -v, --verbose    Show detailed information"
 }
 
+function make_sync_force() {
+    force_sync=true
+    diff_command="backup_and_copy"
+}
+
 function cmd_parser() {
     while [ "$#" -gt 0 ]; do
         case "$1" in
@@ -170,11 +175,6 @@ function cmd_parser() {
         esac
         shift
     done
-}
-
-function make_sync_force() {
-    force_sync=true
-    diff_command="backup_and_copy"
 }
 
 function backup_and_copy() {
