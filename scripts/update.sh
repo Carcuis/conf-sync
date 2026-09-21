@@ -6,6 +6,7 @@
 #
 
 DIR=$(dirname $(dirname $(realpath ${BASH_SOURCE[0]})))
+# shellcheck source=scripts/check_all.sh
 source $DIR/scripts/check_all.sh
 
 function git_dirty() { [[ -n $(git -C $DIR status -u --porcelain) ]]; }

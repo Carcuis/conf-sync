@@ -6,6 +6,7 @@
 #
 
 DIR=$(dirname $(dirname $(realpath ${BASH_SOURCE[0]})))
+# shellcheck source=../check_consistency.sh
 source $DIR/check_consistency.sh
 
 function add_extra_files() {

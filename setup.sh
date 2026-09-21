@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 DIR=$(dirname $(realpath ${BASH_SOURCE[0]}))
+# shellcheck source=scripts/util.sh
 source $DIR/scripts/util.sh
 
 verbose=false

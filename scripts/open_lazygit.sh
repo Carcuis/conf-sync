@@ -6,6 +6,7 @@
 #
 
 DIR=$(dirname $(dirname $(realpath ${BASH_SOURCE[0]})))
+# shellcheck source=scripts/util.sh
 source $DIR/scripts/util.sh
 
 function usage() {

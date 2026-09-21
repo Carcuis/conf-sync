@@ -6,7 +6,8 @@
 #
 
 DIR=$(dirname $(dirname $(realpath ${BASH_SOURCE[0]})))
-source $DIR/scripts/check_all.sh
+# shellcheck source=scripts/util.sh
+source $DIR/scripts/util.sh
 
 commit_count=8
 
