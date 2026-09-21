@@ -153,7 +153,7 @@ function install_ohmyzsh() {
         exit_code=$?
 
         if [[ $exit_code == 0 ]] && has_file "install.sh"; then
-            CHSH=no RUNZSH=no sh install.sh && rm install.sh
+            CHSH=no RUNZSH=no KEEP_ZSHRC=yes sh install.sh && rm install.sh
             exit_code=$?
         fi
         successfully_installed $exit_code "Oh-My-Zsh"
