@@ -126,7 +126,7 @@ function declare_dirs() {
             exclude_file_list+=(ideavimrc kitty_config)
             ;;
         STB)
-            exclude_file_list+=(coc_settings ideavimrc shellcheckrc kitty_config kitty_linux vifmrc condarc tombi_config)
+            exclude_file_list+=(vimrc coc_settings ideavimrc shellcheckrc kitty_config kitty_linux vifmrc condarc tombi_config)
             ;;
         Cluster)
             exclude_file_list+=(ideavimrc global_gitconfig kitty_config kitty_linux)
@@ -135,7 +135,7 @@ function declare_dirs() {
 
     if [[ ${#exclude_file_list[@]} != 0 ]]; then
         for exclude_file in ${exclude_file_list[@]}; do
-            file_list=(${file_list[@]/$exclude_file/})
+            file_list=(${file_list[@]/#$exclude_file/})
         done
         info "Skipped ${exclude_file_list[*]} on current system: ${GREEN}$SYSTEM ✔"
     fi
