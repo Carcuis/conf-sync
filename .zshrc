@@ -368,6 +368,35 @@ function pjp() {
     echo "Activated ProxyJump: $host_or_action"
 }
 
+# patch dotenv plugin to use `source` instead of `_parse_dotenv_content`
+() {
+  local body
+  body="${functions[source_env]}"
+  [[ -n "$body" ]] || return 1
+
+  local old_pipe=$'\t\t_parse_dotenv_content "$content"'
+  local new_pipe=$'\t\tsource /dev/stdin <<< "$content"'
+
+  local old_file=$'\tparse_dotenv "$ZSH_DOTENV_FILE"'
+  local new_file=$'\tsource "$ZSH_DOTENV_FILE"'
+
+  [[ "$body" == *"$old_pipe"* ]] || {
+    print -u2 'patch_dotenv_source_env: pipe branch not found'
+    return 1
+  }
+
+  [[ "$body" == *"$old_file"* ]] || {
+    print -u2 'patch_dotenv_source_env: file branch not found'
+    return 1
+  }
+
+  body="${body/$old_pipe/$new_pipe}"
+  body="${body/$old_file/$new_file}"
+
+  functions[source_env]="$body"
+}
+source_env
+
 # ================================
 # ============ alias =============
 # ================================
