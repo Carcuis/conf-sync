@@ -208,14 +208,18 @@ function install_vim_plug() {
         return
     fi
 
-    if not_installed_file "$HOME/.vim/autoload/plug.vim" "Vim-Plug"; then
-        download https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim "$HOME/.vim/autoload/plug.vim"
-        successfully_installed $? "Vim-Plug"
-    fi
-    if not_installed_in_dir "$HOME/.vim/plugged" "Vim plugins"; then
-        sed -n '/call plug#begin/,/call plug#end/p' "$DIR/.vimrc" |
-            vim -es -u NONE -i NONE -c "source /dev/stdin" -c "PlugInstall" -c "qa"
-        successfully_installed $? "Vim plugins"
+    if [[ $SYSTEM =~ (STB|Cluster) ]]; then
+        info "Skip installing Vim-Plug on $SYSTEM."
+    else
+        if not_installed_file "$HOME/.vim/autoload/plug.vim" "Vim-Plug"; then
+            download https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim "$HOME/.vim/autoload/plug.vim"
+            successfully_installed $? "Vim-Plug"
+        fi
+        if not_installed_in_dir "$HOME/.vim/plugged" "Vim plugins"; then
+            sed -n '/call plug#begin/,/call plug#end/p' "$DIR/.vimrc" |
+                vim -es -u NONE -i NONE -c "source /dev/stdin" -c "PlugInstall" -c "qa"
+            successfully_installed $? "Vim plugins"
+        fi
     fi
 
     if not_installed_file "$HOME/.local/share/nvim/site/autoload/plug.vim" "Vim-Plug for Neovim"; then
@@ -359,15 +363,14 @@ function create_symlink() {
 function link_files() {
     local vimrc=$HOME/.vimrc
 
-    if ! has_file "$vimrc"; then
-        info "$vimrc not found."
-        copy_file "$DIR/.vimrc" "$vimrc"
-        successfully_installed $? "$DIR/.vimrc to $vimrc" "Copied" "Failed to copy"
-    fi
-
-    if [[ $SYSTEM == "STB" ]]; then
-        info "Skip linking init.nvim on Armbian STB."
+    if [[ $SYSTEM =~ (STB|Cluster) ]]; then
+        info "Skip linking init.nvim on $SYSTEM."
     else
+        if ! has_file "$vimrc"; then
+            info "$vimrc not found."
+            copy_file "$DIR/.vimrc" "$vimrc"
+            successfully_installed $? "$DIR/.vimrc to $vimrc" "Copied" "Failed to copy"
+        fi
         create_symlink "$vimrc" "$HOME/.config/nvim/init.vim"
     fi
     create_symlink "$DIR/scripts/check_all.sh" "$HOME/.local/bin/csc"

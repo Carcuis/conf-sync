@@ -185,6 +185,10 @@ fi
 function detect_system() {
     local _uname_a=$(uname -a)
 
+    if [[ $SYSTEM == "Cluster" ]]; then
+        return
+    fi
+
     if [[ $_uname_a =~ Microsoft ]]; then
         SYSTEM="WSL1"
     elif [[ $_uname_a =~ WSL2 ]]; then
@@ -506,6 +510,19 @@ elif [[ $SYSTEM == "Darwin" ]]; then
     alias o='open'
     alias o.='open .'
     alias px='set_proxy http://127.0.0.1:1087'
+elif [[ $SYSTEM == "Cluster" ]]; then
+    function tmux_cui() {
+        if [[ -n "$@" ]]; then
+            command tmux -L cui "$@"
+            return $?
+        fi
+        local -a tmux_cmd
+        tmux_cmd=(command tmux -L cui)
+        if ! $tmux_cmd attach 2>/dev/null; then
+            $tmux_cmd new-session
+        fi
+    }
+    alias tm=tmux_cui
 fi
 
 # ================================
@@ -558,6 +575,8 @@ elif [[ $SYSTEM == "Linux" ]]; then
     # alias src-openvino-env='source /opt/intel/openvino/bin/setupvars.sh'
 
 elif [[ $SYSTEM == "Darwin" ]]; then
+elif [[ $SYSTEM == "Cluster" ]]; then
+    export TMUX_USER=cui
 fi
 
 # === Powerlevel10k ===

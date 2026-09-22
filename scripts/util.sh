@@ -74,6 +74,10 @@ function exist_and_backup() {
 function detect_system() {
     local _uname_a=$(uname -a)
 
+    if [[ $SYSTEM == "Cluster" ]]; then
+        return
+    fi
+
     if [[ $_uname_a =~ Microsoft ]]; then
         SYSTEM="WSL1"
     elif [[ $_uname_a =~ WSL2 ]]; then

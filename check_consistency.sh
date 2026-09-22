@@ -100,6 +100,10 @@ function declare_dirs() {
         Codespace)
             global_gitconfig_remote=$DIR/misc/codespace/.gitconfig
             ;;
+        Cluster)
+            vimrc_local=$HOME/.config/nvim/init.vim
+            tmux_conf_local=$HOME/.config/tmux/cui/tmux.conf
+            ;;
     esac
 
     local -a exclude_file_list
@@ -123,6 +127,9 @@ function declare_dirs() {
             ;;
         STB)
             exclude_file_list+=(coc_settings ideavimrc shellcheckrc kitty_config kitty_linux vifmrc condarc tombi_config)
+            ;;
+        Cluster)
+            exclude_file_list+=(ideavimrc global_gitconfig kitty_config kitty_linux)
             ;;
     esac
 
