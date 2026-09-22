@@ -171,6 +171,8 @@ bindkey "^[[1;5C" forward-word
 bindkey "^[[1;3C" forward-word
 bindkey "^[[1;5D" backward-word
 bindkey "^[[1;3D" backward-word
+_run_yazi() { yazi </dev/tty; zle reset-prompt } && zle -N _run_yazi && bindkey "^[y" _run_yazi
+_run_nvim() { nvim </dev/tty; zle reset-prompt } && zle -N _run_nvim && bindkey "^[n" _run_nvim
 
 # set editor
 if command -v nvim > /dev/null; then
