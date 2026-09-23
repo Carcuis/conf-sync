@@ -203,13 +203,13 @@ function install_ohmyzsh_plugins() {
 }
 
 function install_vim_plug() {
-    if [[ $SYSTEM == "STB" ]]; then
+    if [[ $SYSTEM == STB ]]; then
         info "Skip installing Vim-Plug on Armbian STB."
         return
     fi
 
-    if [[ $SYSTEM =~ (STB|Cluster) ]]; then
-        info "Skip installing Vim-Plug on $SYSTEM."
+    if [[ $SYSTEM == Cluster ]]; then
+        info "Skip installing Vim-Plug on Cluster."
     else
         if not_installed_file "$HOME/.vim/autoload/plug.vim" "Vim-Plug"; then
             download https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim "$HOME/.vim/autoload/plug.vim"
@@ -235,7 +235,7 @@ function install_vim_plug() {
 }
 
 function install_vifm_custom() {
-    if [[ $SYSTEM == "STB" ]]; then
+    if [[ $SYSTEM == STB ]]; then
         info "Skip installing Vifm custom on Armbian STB."
         return
     fi
