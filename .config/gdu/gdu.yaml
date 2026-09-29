@@ -1,0 +1,22 @@
+browse-parent-dirs: true
+mouse: true
+no-confirm-quit: true
+show-item-count: true
+show-mtime: true
+show-symlink-target: true
+style:
+    footer:
+        text-color: '#a9b7c6'
+        background-color: '#313335'
+        number-color: '#6897bb'
+    header:
+        text-color: '#a9b7c6'
+        background-color: '#313335'
+        hidden: false
+    result-row:
+        number-color: '#cc7832'
+        directory-color: '#287bde'
+    selected-row:
+        text-color: '#ffffff'
+        background-color: '#214283'
+    show-bar-percentage: true

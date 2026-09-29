@@ -118,6 +118,11 @@ $vscode_settings = @{
     remote = "$DIR\vscode\settings.json"
     local = "$HOME\AppData\Roaming\Code\User\settings.json"
 }
+$gdu = @{
+    name = "gdu config yaml"
+    remote = "$DIR\.config\gdu\gdu.yaml"
+    local = "$HOME\.config\gdu\gdu.yaml"
+}
 $file_list = @(
     $psprofile
     $vimrc
@@ -143,6 +148,7 @@ $extra_file_list = @(
     $vscode_nvim_lua
     $vscode_keybindings
     $vscode_settings
+    $gdu
 )
 
 function Show-Usage {

@@ -32,6 +32,7 @@ declare -ag extra_file_list=(
     tmux_conf
     tmux_nerd_font_window_name_yml
     tombi_config
+    gdu_config
 )
 
 # shellcheck disable=SC2034
@@ -78,6 +79,8 @@ function declare_dirs() {
     tmux_nerd_font_window_name_yml_local=$HOME/.config/tmux/tmux-nerd-font-window-name.yml
     tombi_config_remote=$DIR/.config/tombi/config.toml
     tombi_config_local=$HOME/.config/tombi/config.toml
+    gdu_config_remote=$DIR/.config/gdu/gdu.yaml
+    gdu_config_local=$HOME/.config/gdu/gdu.yaml
 
     case $SYSTEM in
         Darwin)
