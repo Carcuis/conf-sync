@@ -43,6 +43,20 @@ foreach ($key in $PSReadLineKeyHandler.GetEnumerator()) {
     Set-PSReadLineKeyHandler -Key $key.Key -Function $key.Value
 }
 
+function Set-QuickCommand {
+    param([string]$Chord, [string]$Command)
+    Set-PSReadLineKeyHandler -Chord $Chord -ScriptBlock {
+        [Microsoft.PowerShell.PSConsoleReadLine]::DeleteLine()
+        [Microsoft.PowerShell.PSConsoleReadLine]::Insert($Command)
+        [Microsoft.PowerShell.PSConsoleReadLine]::AcceptLine()
+    }.GetNewClosure()
+}
+$bindings = @{
+    "alt+n" = "nvim"
+    "alt+y" = "yazi"
+}
+$bindings.GetEnumerator() | ForEach-Object { Set-QuickCommand $_.Key $_.Value }
+
 $PsFzfOption = @{
     PSReadlineChordProvider = 'Ctrl+t'
     PSReadlineChordReverseHistory = 'Ctrl+r'
