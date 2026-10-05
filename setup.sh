@@ -298,6 +298,10 @@ function install_yazi_package() {
         ya pkg add yazi-rs/plugins:chmod
         successfully_installed $? "Yazi plugin chmod"
     fi
+    if not_installed_file "$HOME/.config/yazi/plugins/toggle-pane.yazi/main.lua" "Yazi plugin toggle-pane"; then
+        ya pkg add yazi-rs/plugins:toggle-pane
+        successfully_installed $? "Yazi plugin toggle-pane"
+    fi
     if not_installed_file "$HOME/.config/yazi/plugins/mediainfo.yazi/main.lua" "Yazi plugin mediainfo"; then
         ya pkg add boydaihungst/mediainfo
         successfully_installed $? "Yazi plugin mediainfo"

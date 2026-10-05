@@ -234,6 +234,10 @@ function Install-YaziPackage {
         ya pkg add yazi-rs/plugins:git
         Write-InstallStatus -status $? -content "Yazi plugin git"
     }
+    if (Test-FileNotInstalled -file "$yazi_config_home\plugins\toggle-pane.yazi\main.lua" -package "Yazi plugin toggle-pane") {
+        ya pkg add yazi-rs/plugins:toggle-pane
+        Write-InstallStatus -status $? -content "Yazi plugin toggle-pane"
+    }
     if (Test-FileNotInstalled -file "$yazi_config_home\plugins\mediainfo.yazi\main.lua" -package "Yazi plugin mediainfo") {
         ya pkg add boydaihungst/mediainfo
         Write-InstallStatus -status $? -content "Yazi plugin mediainfo"
