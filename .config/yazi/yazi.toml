@@ -30,3 +30,5 @@ prepend_fetchers = [
 
 [preview]
 image_delay = 0
+max_height = 65535
+max_width = 65535
