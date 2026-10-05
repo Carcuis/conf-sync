@@ -108,7 +108,6 @@
     "outline.sortBy": "position",
     "outline.detailAsDescription": false,
     "outline.showLineNumber": false,
-    "outline.followCursor": false,
     "snippets.ultisnips.enable": true,
     "languageserver": {
         "powershell": {
