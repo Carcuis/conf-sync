@@ -1533,6 +1533,12 @@ if has("nvim")
         stages = "fade",
         timeout = 10,
     })
+    vim.api.nvim_create_autocmd("FileType", {
+        pattern = "notify",
+        callback = function()
+            vim.keymap.set("n", "q", vim.cmd.quit, { buffer = true, desc = "Close Notify" })
+        end
+    })
 EOF
 endif
 
