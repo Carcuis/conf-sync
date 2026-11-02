@@ -11,7 +11,7 @@
         "editor.wordWrap": "on",
     },
     "[markdown]": {
-        "editor.wordWrap": "off",
+        "editor.wordWrap": "on",
     },
     "bashIde.shfmt.caseIndent": true,
     "bashIde.shfmt.spaceRedirects": true,
