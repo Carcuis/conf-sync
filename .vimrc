@@ -1394,7 +1394,7 @@ endif
 " === nvim-hlslens ===
 if has("nvim")
     lua << EOF
-    require("scrollbar.handlers.search").setup({
+    require("hlslens").setup({
         calm_down = true,
         override_lens = function(render, posList, nearest, idx, relIdx)
             local sfw = vim.v.searchforward == 1
@@ -1424,7 +1424,6 @@ if has("nvim")
             render.setVirt(0, lnum - 1, col - 1, chunks, nearest)
         end
     })
-    require("hlslens").setup()
 
     local kopts = {noremap = true, silent = true}
     vim.api.nvim_set_keymap('n', 'n',
@@ -1444,28 +1443,71 @@ endif
 if has("nvim")
     lua << EOF
     require("scrollbar").setup {
-        hide_if_all_visible = true,
-        excluded_buftypes = {
-            "nofile",
-        },
-        excluded_filetypes = {
-            "dropbar_menu",
-            "NvimTree",
-            "TelescopePrompt",
+        exclude = {
+            buftypes = {
+                "nofile",
+            },
+            filetypes = {
+                "dropbar_menu",
+                "NvimTree",
+                "TelescopePrompt",
+            },
         },
         marks = {
             Cursor = {
                 text = "",
             },
         },
-        handlers = {
-            cursor = true,
-            diagnostic = true,
+        providers = {
+            coc = true,
             gitsigns = true,
-            handle = true,
-            search = true,
-        }
+            qflist = true,
+        },
+        minimap = {
+            enabled = true,
+            columns_per_dot = 2,
+            scale = 4,
+            width = 12,
+            blend = 10,
+        },
+        scrollbar = {
+            preset = "intellij",
+        },
     }
+
+    -- hide minimap on diff window
+    local group = vim.api.nvim_create_augroup("MinimapDiffVisibility", { clear = true })
+    local hidden_for_diff = false
+    local function sync_minimap()
+        local has_diff_window = false
+
+        for _, win in ipairs(vim.api.nvim_list_wins()) do
+            if vim.api.nvim_get_option_value("diff", { win = win }) then
+                has_diff_window = true
+                break
+            end
+        end
+
+        if has_diff_window and not hidden_for_diff then
+            hidden_for_diff = true
+            vim.cmd("MinimapHide")
+        elseif not has_diff_window and hidden_for_diff then
+            hidden_for_diff = false
+            vim.cmd("MinimapShow")
+        end
+    end
+    local function schedule_sync()
+        vim.schedule(sync_minimap)
+    end
+    vim.api.nvim_create_autocmd({ "VimEnter", "WinEnter", "WinNew", "WinClosed" }, {
+        group = group,
+        callback = schedule_sync,
+    })
+    vim.api.nvim_create_autocmd("OptionSet", {
+        group = group,
+        pattern = "diff",
+        callback = schedule_sync,
+    })
 EOF
 endif
 
