@@ -526,7 +526,7 @@ if has("nvim")
                 \ 'coc-json', 'coc-vimlsp', 'coc-marketplace', 'coc-markdownlint', 'coc-markdown-preview-enhanced',
                 \ 'coc-basedpyright', 'coc-sh', 'coc-clangd', 'coc-webview',
                 \ 'coc-cmake', 'coc-actions', 'coc-translator', 'coc-snippets', 'coc-gitignore',
-                \ 'coc-sumneko-lua', 'coc-tsserver', 'coc-eslint', 'https://github.com/Carcuis/coc-nav',
+                \ 'coc-luals', 'coc-tsserver', 'coc-eslint', 'https://github.com/Carcuis/coc-nav',
                 \ 'coc-xml', 'coc-yaml', 'coc-java', 'coc-css', 'coc-sql',
                 \ 'coc-word', 'coc-emoji', 'coc-nerdfonts']
     if has("win32")

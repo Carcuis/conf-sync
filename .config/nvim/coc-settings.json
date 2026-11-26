@@ -167,8 +167,8 @@
         "youdao",
         "haici"
     ],
-    "sumneko-lua.enableNvimLuaDev": true,
-    "sumneko-lua.locale": "zh-cn",
+    "luals.nvimLua.enable": true,
+    "luals.locale": "zh-cn",
     "Lua.codeLens.enable": true,
     "Lua.completion.callSnippet": "Replace",
     "Lua.format.defaultConfig": {
