@@ -178,4 +178,8 @@
     "basedpyright.analysis.typeCheckingMode": "standard",
     "bashIde.shfmt.caseIndent": true,
     "bashIde.shfmt.spaceRedirects": true,
+    "json.schemaDownload.trustedDomains": {
+      "https://www.schemastore.org": true,
+      "https://json.schemastore.org": true
+    },
 }
