@@ -159,40 +159,6 @@
         "when": "editorTextFocus && inlineEditIsVisible && tabShouldJumpToInlineEdit && !editorHoverFocused && !editorTabMovesFocus && !suggestWidgetVisible"
     },
 
-    // copilot chat submit keybindings
-    {
-        "key": "ctrl+enter",
-        "command": "workbench.action.chat.queueMessage",
-        "when": "chatInputHasText && inChatInput && !chatTranscriptProgressActive && chatEditingSentRequest == 'q' && chatEditingSentRequest != 's' || chatInputHasText && inChatInput && !chatTranscriptProgressActive && chatEditingSentRequest == 'q' && chatEditingSentRequest == 'st' && chatEditingSentRequest != 's' || chatInputHasText && chatSessionRequestInProgress && inChatInput && !chatTranscriptProgressActive && chatEditingSentRequest == 'q' && chatEditingSentRequest != 's' || chatInputHasText && chatSessionRequestInProgress && inChatInput && !chatTranscriptProgressActive && chatEditingSentRequest != 'q' && chatEditingSentRequest != 's' && chatEditingSentRequest != 'st' && config.chat.requestQueuing.defaultAction != 'steer'"
-    },
-    {
-        "key": "ctrl+enter",
-        "command": "workbench.action.chat.steerWithMessage",
-        "when": "chatInputHasText && inChatInput && !chatTranscriptProgressActive && chatEditingSentRequest == 'q' || chatInputHasText && inChatInput && !chatTranscriptProgressActive && chatEditingSentRequest != 'q' && chatEditingSentRequest != 'st' && config.chat.requestQueuing.defaultAction != 'steer'"
-    },
-    {
-        "key": "ctrl+enter",
-        "command": "workbench.action.chat.submit",
-        "when": "chatInputHasSendableContent && chatSessionOptionsValid && inChatInput && !chatSessionRequestInProgress && !chatTranscriptProgressActive && !withinEditSessionDiff || chatInputHasSendableContent && chatSessionOptionsValid && inChatInput && !chatTranscriptProgressActive && !withinEditSessionDiff && chatEditingSentRequest == 's'"
-    },
-    {
-        "key": "ctrl+enter",
-        "command": "-chatEditing.acceptAllFiles",
-        "when": "hasUndecidedChatEditingResource && inChatInput"
-    },
-    {
-        "key": "enter",
-        "command": "-workbench.action.chat.queueMessage",
-    },
-    {
-        "key": "enter",
-        "command": "-workbench.action.chat.steerWithMessage",
-    },
-    {
-        "key": "enter",
-        "command": "-workbench.action.chat.submit",
-    },
-
     // git diff keybindings
     {
         "key": "d o",
