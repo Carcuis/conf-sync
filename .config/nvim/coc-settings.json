@@ -175,6 +175,7 @@
         "align_array_table": "false",
     },
     "Lua.runtime.version": "Lua 5.1",
+    "Lua.window.statusBar": false,
     "basedpyright.analysis.typeCheckingMode": "standard",
     "bashIde.shfmt.caseIndent": true,
     "bashIde.shfmt.spaceRedirects": true,
