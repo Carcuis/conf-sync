@@ -1446,11 +1446,13 @@ if has("nvim")
         exclude = {
             buftypes = {
                 "nofile",
+                "prompt",
             },
             filetypes = {
                 "dropbar_menu",
                 "NvimTree",
                 "TelescopePrompt",
+                "dapui_console",
             },
         },
         marks = {
